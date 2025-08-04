@@ -1,1 +1,17 @@
 # created by virtualenv automatically
+# Archivos de caché de Python
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales
+env/
+venv/
+.venv/
+
+# Archivos de configuración locales
+*.env
+*.DS_Store
+
+# Archivos temporales del sistema
+*.swp
+*.swo
