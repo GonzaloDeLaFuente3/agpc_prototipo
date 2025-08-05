@@ -28,3 +28,7 @@ def obtener_contextos():
 @app.get("/contexto/relacionados/")
 def obtener_relacionados(id: str):
     return grafo.obtener_relacionados(id)
+
+@app.get("/contexto/sugerencias/")
+def sugerir_relaciones(id: str):
+    return grafo.sugerir_relaciones(id)
