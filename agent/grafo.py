@@ -31,6 +31,8 @@ def agregar_contexto(id, texto, relacionados=None):
 
     claves = extraer_palabras_clave(texto)
 
+    claves = extraer_palabras_clave(texto)
+
     contextos[id] = {
         "texto": texto,
         "relaciones": relacionados,
@@ -60,7 +62,7 @@ def sugerir_relaciones(id):
             continue
         claves_otro = set(datos.get("palabras_clave", []))
         coincidencias = claves_base.intersection(claves_otro)
-        
+
         if coincidencias:
             sugerencias.append({
                 "id": otro_id,
