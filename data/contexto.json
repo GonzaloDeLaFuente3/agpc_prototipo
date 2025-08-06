@@ -1,0 +1,37 @@
+{
+  "c2": {
+    "texto": "Utiliza grafos y modelos de lenguaje.",
+    "relaciones": [
+      "c1"
+    ],
+    "palabras_clave": [
+      "grafo",
+      "utiliza",
+      "lenguaje",
+      "modelo"
+    ]
+  },
+  "c1": {
+    "texto": "El sistema AGPC gestiona contextos difusos.",
+    "relaciones": [],
+    "palabras_clave": [
+      "difuso",
+      "agpc",
+      "sistema",
+      "gestionar",
+      "contexto"
+    ]
+  },
+  "c3": {
+    "texto": "El modelo AGPC utiliza grafos para representar contextos.",
+    "relaciones": [],
+    "palabras_clave": [
+      "representar",
+      "grafo",
+      "modelo",
+      "agpc",
+      "utilizar",
+      "contexto"
+    ]
+  }
+}

@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from agent import responder
 
+grafo.cargar_desde_disco()# ← cargar contexto si existe
 app = FastAPI()
 
 class EntradaContexto(BaseModel):

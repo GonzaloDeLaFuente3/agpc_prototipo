@@ -1,8 +1,29 @@
 # agent/grafo.py
 
 from agent.extractor import extraer_palabras_clave
+import json
+import os
 
+ARCHIVO_JSON = "data/contexto.json"
 contextos = {}
+
+# ---------------------------
+# Funciones de persistencia
+# ---------------------------
+
+def guardar_en_disco():
+    os.makedirs("data", exist_ok=True)
+    with open(ARCHIVO_JSON, "w", encoding="utf-8") as f:
+        json.dump(contextos, f, ensure_ascii=False, indent=2)
+
+def cargar_desde_disco():
+    global contextos
+    if os.path.exists(ARCHIVO_JSON):
+        with open(ARCHIVO_JSON, "r", encoding="utf-8") as f:
+            contextos = json.load(f)
+    else:
+        contextos = {}
+# ----------------------------------------------------------------
 
 def agregar_contexto(id, texto, relacionados=None):
     if relacionados is None:
@@ -15,6 +36,7 @@ def agregar_contexto(id, texto, relacionados=None):
         "relaciones": relacionados,
         "palabras_clave": claves
     }
+    guardar_en_disco()
 
 def obtener_todos():
     return contextos
@@ -38,6 +60,7 @@ def sugerir_relaciones(id):
             continue
         claves_otro = set(datos.get("palabras_clave", []))
         coincidencias = claves_base.intersection(claves_otro)
+        
         if coincidencias:
             sugerencias.append({
                 "id": otro_id,
