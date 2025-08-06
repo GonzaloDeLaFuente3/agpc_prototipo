@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from agent import grafo
 from pydantic import BaseModel
 from typing import List, Optional
+from agent import responder
 
 app = FastAPI()
 
@@ -28,3 +29,34 @@ def obtener_contextos():
 @app.get("/contexto/relacionados/")
 def obtener_relacionados(id: str):
     return grafo.obtener_relacionados(id)
+
+@app.get("/contexto/sugerencias/")
+def sugerir_relaciones(id: str):
+    return grafo.sugerir_relaciones(id)
+
+
+
+@app.get("/preguntar/")
+def preguntar(pregunta: str, id: str):
+    pregunta = pregunta.strip()
+    id = id.strip()  # <- esto elimina espacios y saltos de línea
+
+    print(f"ID solicitado: '{id}'")
+
+    # Verificar que el contexto existe
+    todos_contextos = grafo.obtener_todos()
+    
+    if id not in todos_contextos:
+        return {"respuesta": f"[ERROR] No se encontró el contexto con id: {id}"}
+
+    relacionados = grafo.obtener_relacionados(id)
+    
+    relacionados[id] = todos_contextos[id]  # incluir el nodo base
+    
+
+    # Verificar que hay contextos para procesar
+    if not relacionados:
+        return {"respuesta": "[ERROR] No se encontraron contextos relacionados"}
+
+    respuesta = responder.responder_con_huggingface(pregunta, relacionados)
+    return {"respuesta": respuesta}
