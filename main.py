@@ -5,18 +5,22 @@ from agent import grafo
 from pydantic import BaseModel
 from typing import List, Optional
 from agent import responder
+from fastapi.staticfiles import StaticFiles
+import os
 
 grafo.cargar_desde_disco()# ← cargar contexto si existe
 app = FastAPI()
+
+
 
 class EntradaContexto(BaseModel):
     id: str
     texto: str
     relacionados: Optional[List[str]] = []
 
-@app.get("/")
-def read_root():
-    return {"message": "AGPC prototipo funcionando"}
+# @app.get("/")
+# def read_root():
+#     return {"message": "AGPC prototipo funcionando"}
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
@@ -61,3 +65,9 @@ def preguntar(pregunta: str, id: str):
 
     respuesta = responder.responder_con_huggingface(pregunta, relacionados)
     return {"respuesta": respuesta}
+
+
+# Asegurar que la carpeta static existe
+os.makedirs("static", exist_ok=True)
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")

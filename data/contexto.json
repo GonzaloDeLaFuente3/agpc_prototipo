@@ -33,5 +33,86 @@
       "utilizar",
       "contexto"
     ]
+  },
+  "c4": {
+    "texto": "GPT-4, por su parte, ofrece una comprensión y generación de texto de altísima calidad, destacando en tareas multilingües, generación creativa y razonamiento lógico. Su principal ventaja es su capacidad generalista y versatilidad. No obstante, al ser una solución cerrada, presenta limitaciones en la personalización directa, dependencia de API externa, mayores costos y menor transparencia en su arquitectura interna.",
+    "relaciones": [],
+    "palabras_clave": [
+      "capacidad",
+      "ofrecer",
+      "cerrado",
+      "directo",
+      "altísimo",
+      "multilingü",
+      "solución",
+      "lógico",
+      "presentar",
+      "dependencia",
+      "texto",
+      "arquitectura",
+      "mayor",
+      "limitación",
+      "destacar",
+      "transparencia",
+      "tarea",
+      "personalización",
+      "menor",
+      "costo",
+      "externo",
+      "interno",
+      "ventaja",
+      "razonamiento",
+      "calidad",
+      "principal",
+      "generación",
+      "versatilidad",
+      "obstante",
+      "comprensión",
+      "generalista",
+      "creativo"
+    ]
+  },
+  "c5": {
+    "texto": "La inteligencia contextual es la capacidad de comprender e interpretar un contexto específico, incluyendo los aspectos sociales, culturales y situacionales, para tomar decisiones más acertadas y relevantes.",
+    "relaciones": [
+      "c1",
+      "c3"
+    ],
+    "palabras_clave": [
+      "situacional",
+      "inteligencia",
+      "aspecto",
+      "acertado",
+      "incluir",
+      "contextual",
+      "social",
+      "específico",
+      "relevante",
+      "contexto",
+      "tomar",
+      "comprender",
+      "cultural",
+      "interpretar",
+      "capacidad",
+      "decisión"
+    ]
+  },
+  "c6": {
+    "texto": "ChatGPT es un modelo de lenguaje desarrollado por OpenAI, diseñado para mantener conversaciones naturales con los usuarios. ",
+    "relaciones": [
+      "c4"
+    ],
+    "palabras_clave": [
+      "chatgpt",
+      "modelo",
+      "openai",
+      "conversación",
+      "desarrollado",
+      "usuario",
+      "mantener",
+      "diseñado",
+      "lenguaje",
+      "natural"
+    ]
   }
 }

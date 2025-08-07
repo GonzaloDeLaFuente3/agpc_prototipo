@@ -1,0 +1,106 @@
+<!-- static/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Agente Experto en Gestión Probabilística de Contextos (AGPC) - Prototipo</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6 font-sans">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-4">Agente Experto en Gestión Probabilística de Contextos (AGPC) Prototipo</h1>
+
+        <div class="bg-white p-4 rounded shadow mb-6">
+        <h2 class="text-xl font-semibold mb-2">Agregar Contexto</h2>
+        <input id="id" placeholder="ID del nodo" class="border p-2 w-full mb-2" />
+        <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full mb-2"></textarea>
+        <input id="relaciones" placeholder="IDs relacionados separados por coma" class="border p-2 w-full mb-2" />
+        <button onclick="agregarContexto()" class="bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow mb-6">
+        <h2 class="text-xl font-semibold mb-2">Preguntar al Sistema</h2>
+        <input id="pregunta" placeholder="Escribí tu pregunta..." class="border p-2 w-full mb-2" />
+        <input id="idConsulta" placeholder="ID del nodo base" class="border p-2 w-full mb-2" />
+        <button onclick="preguntar()" class="bg-green-600 text-white px-4 py-2 rounded">Preguntar</button>
+        <div id="respuesta" class="mt-3 text-gray-700 font-medium"></div>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow mb-6">
+            <h2 class="text-xl font-semibold mb-2">Todos los Contextos</h2>
+            <button onclick="mostrarContextos()" class="mb-2 bg-indigo-600 text-white px-4 py-2 rounded">Cargar Contextos</button>
+            <div id="todosContextos" class="text-sm whitespace-pre-wrap bg-gray-100 p-3 rounded"></div>
+        </div>
+
+
+        <div class="bg-white p-4 rounded shadow mb-6">
+        <h2 class="text-xl font-semibold mb-2">Visualización del Grafo</h2>
+        <div id="grafo" style="height: 400px;"></div>
+        <button onclick="cargarGrafo()" class="mt-3 bg-purple-600 text-white px-4 py-2 rounded">Actualizar Grafo</button>
+        </div>
+    </div>
+
+    <script>
+        async function agregarContexto() {
+        const id = document.getElementById('id').value;
+        const texto = document.getElementById('texto').value;
+        const relaciones = document.getElementById('relaciones').value.split(',').map(s => s.trim()).filter(Boolean);
+
+        await axios.post('/contexto/', { id, texto, relacionados: relaciones });
+        alert('Contexto agregado!');
+        }
+
+        async function preguntar() {
+        const pregunta = document.getElementById('pregunta').value;
+        const id = document.getElementById('idConsulta').value;
+
+        const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}&id=${encodeURIComponent(id)}`);
+        document.getElementById('respuesta').innerText = res.data.respuesta;
+        }
+
+        async function cargarGrafo() {
+        const res = await axios.get('/contexto/');
+        const contextos = res.data;
+
+        const nodes = Object.keys(contextos).map(id => ({
+            id: id,
+            label: id
+        }));
+
+        const edges = [];
+        for (const [id, data] of Object.entries(contextos)) {
+            data.relaciones.forEach(rel => {
+            edges.push({ from: id, to: rel });
+            });
+        }
+
+        const container = document.getElementById('grafo');
+        const network = new vis.Network(container, {
+            nodes: new vis.DataSet(nodes),
+            edges: new vis.DataSet(edges)
+        }, {
+            nodes: { shape: 'dot', size: 12 },
+            edges: { arrows: 'to' },
+            physics: { stabilization: true }
+        });
+        }
+
+        cargarGrafo(); // carga inicial
+
+        async function mostrarContextos() {
+            const res = await axios.get('/contexto/');
+            const contextos = res.data;
+
+            let salida = "";
+            for (const [id, datos] of Object.entries(contextos)) {
+                salida += `🟦 ID: ${id}\n📄 Texto: ${datos.texto}\n🔗 Relacionados: ${datos.relaciones.join(', ') || 'Ninguno'}\n🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
+            }
+
+            document.getElementById("todosContextos").innerText = salida || "No hay contextos almacenados aún.";
+        }
+
+    </script>
+</body>
+</html>
