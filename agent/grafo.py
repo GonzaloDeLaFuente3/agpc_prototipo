@@ -4,6 +4,7 @@ from agent.extractor import extraer_palabras_clave
 import json
 import os
 from agent.semantica import indexar_documento
+import uuid
 
 
 ARCHIVO_JSON = "data/contexto.json"
@@ -27,10 +28,11 @@ def cargar_desde_disco():
         contextos = {}
 # ----------------------------------------------------------------
 
-def agregar_contexto(id, texto):
+def agregar_contexto(titulo, texto):
+    id = str(uuid.uuid4())  # Generar ID único
     claves = extraer_palabras_clave(texto)
 
-    # Buscar relaciones automáticas por coincidencia de palabras clave
+    # Buscar relaciones automáticas
     sugerencias = []
     for otro_id, datos in contextos.items():
         if otro_id == id:
@@ -41,6 +43,7 @@ def agregar_contexto(id, texto):
             sugerencias.append(otro_id)
 
     contextos[id] = {
+        "titulo": titulo,
         "texto": texto,
         "relaciones": sugerencias,
         "palabras_clave": claves
@@ -48,6 +51,7 @@ def agregar_contexto(id, texto):
 
     guardar_en_disco()
     indexar_documento(id, texto)
+    return id
 
 def obtener_todos():
     return contextos

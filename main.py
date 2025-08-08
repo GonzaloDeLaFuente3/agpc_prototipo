@@ -19,7 +19,7 @@ app = FastAPI()
 
 
 class EntradaContexto(BaseModel):
-    id: str
+    titulo: str
     texto: str
 
 # @app.get("/")
@@ -28,8 +28,8 @@ class EntradaContexto(BaseModel):
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
-    grafo.agregar_contexto(entrada.id, entrada.texto)
-    return {"status": "agregado"}
+    nuevo_id = grafo.agregar_contexto(entrada.titulo, entrada.texto)
+    return {"status": "agregado", "id": nuevo_id}
 
 @app.get("/contexto/")
 def obtener_contextos():
