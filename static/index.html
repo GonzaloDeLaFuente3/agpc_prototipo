@@ -13,11 +13,10 @@
         <h1 class="text-3xl font-bold mb-4">Agente Experto en Gestión Probabilística de Contextos (AGPC) Prototipo</h1>
 
         <div class="bg-white p-4 rounded shadow mb-6">
-        <h2 class="text-xl font-semibold mb-2">Agregar Contexto</h2>
-        <input id="id" placeholder="ID del nodo" class="border p-2 w-full mb-2" />
-        <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full mb-2"></textarea>
-        <input id="relaciones" placeholder="IDs relacionados separados por coma" class="border p-2 w-full mb-2" />
-        <button onclick="agregarContexto()" class="bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
+            <h2 class="text-xl font-semibold mb-2">Agregar Contexto</h2>
+            <input id="id" placeholder="ID del nodo" class="border p-2 w-full mb-2" />
+            <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full mb-2"></textarea>
+            <button onclick="agregarContexto()" class="bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-6">
@@ -50,12 +49,11 @@
 
     <script>
         async function agregarContexto() {
-        const id = document.getElementById('id').value;
-        const texto = document.getElementById('texto').value;
-        const relaciones = document.getElementById('relaciones').value.split(',').map(s => s.trim()).filter(Boolean);
+            const id = document.getElementById('id').value;
+            const texto = document.getElementById('texto').value;
 
-        await axios.post('/contexto/', { id, texto, relacionados: relaciones });
-        alert('Contexto agregado!');
+            await axios.post('/contexto/', { id, texto});
+            alert('Contexto agregado automáticamente con relaciones detectadas!');
         }
 
         async function preguntar() {
