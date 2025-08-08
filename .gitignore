@@ -16,3 +16,12 @@ venv/
 # Archivos temporales del sistema
 *.swp
 *.swo
+
+Lib/
+venv/
+env/
+*.dll
+*.lib
+__pycache__/
+*.pyc
+
