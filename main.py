@@ -7,6 +7,11 @@ from typing import List, Optional
 from agent import responder
 from fastapi.staticfiles import StaticFiles
 import os
+from agent.semantica import indexar_documento
+
+# Reindexar lo que ya está guardado en contexto.json
+for id, datos in grafo.obtener_todos().items():
+    indexar_documento(id, datos["texto"])
 
 grafo.cargar_desde_disco()# ← cargar contexto si existe
 app = FastAPI()
@@ -65,6 +70,19 @@ def preguntar(pregunta: str, id: str):
 
     respuesta = responder.responder_con_huggingface(pregunta, relacionados)
     return {"respuesta": respuesta}
+
+@app.get("/buscar/")
+def buscar_por_texto(texto: str):
+    from agent import grafo
+    from agent.semantica import buscar_similares
+
+    texto = texto.strip()
+    ids_similares = buscar_similares(texto)
+    todos = grafo.obtener_todos()
+    resultados = {id: todos[id] for id in ids_similares if id in todos}
+    return resultados
+
+
 
 
 # Asegurar que la carpeta static existe
