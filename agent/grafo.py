@@ -27,18 +27,25 @@ def cargar_desde_disco():
         contextos = {}
 # ----------------------------------------------------------------
 
-def agregar_contexto(id, texto, relacionados=None):
-    if relacionados is None:
-        relacionados = []
-
+def agregar_contexto(id, texto):
     claves = extraer_palabras_clave(texto)
+
+    # Buscar relaciones automáticas por coincidencia de palabras clave
+    sugerencias = []
+    for otro_id, datos in contextos.items():
+        if otro_id == id:
+            continue
+        claves_otro = set(datos.get("palabras_clave", []))
+        coincidencias = set(claves).intersection(claves_otro)
+        if coincidencias:
+            sugerencias.append(otro_id)
 
     contextos[id] = {
         "texto": texto,
-        "relaciones": relacionados,
+        "relaciones": sugerencias,
         "palabras_clave": claves
     }
-    
+
     guardar_en_disco()
     indexar_documento(id, texto)
 

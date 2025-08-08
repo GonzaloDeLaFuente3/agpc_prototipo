@@ -153,5 +153,46 @@
       "grafo",
       "utiliza"
     ]
+  },
+  "c10": {
+    "texto": "La inteligencia artificial es una rama de la informática.",
+    "relaciones": [
+      "c5",
+      "c7"
+    ],
+    "palabras_clave": [
+      "informática",
+      "rama",
+      "inteligencia",
+      "artificial"
+    ]
+  },
+  "c11": {
+    "texto": "La informática estudia el procesamiento de datos.",
+    "relaciones": [
+      "c10"
+    ],
+    "palabras_clave": [
+      "dato",
+      "procesamiento",
+      "informática",
+      "estudiar"
+    ]
+  },
+  "c12": {
+    "texto": "El procesamiento de datos es clave en la inteligencia artificial.",
+    "relaciones": [
+      "c5",
+      "c7",
+      "c10",
+      "c11"
+    ],
+    "palabras_clave": [
+      "inteligencia",
+      "procesamiento",
+      "artificial",
+      "dato",
+      "clave"
+    ]
   }
 }

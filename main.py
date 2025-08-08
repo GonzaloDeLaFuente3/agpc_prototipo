@@ -21,7 +21,6 @@ app = FastAPI()
 class EntradaContexto(BaseModel):
     id: str
     texto: str
-    relacionados: Optional[List[str]] = []
 
 # @app.get("/")
 # def read_root():
@@ -29,7 +28,7 @@ class EntradaContexto(BaseModel):
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
-    grafo.agregar_contexto(entrada.id, entrada.texto, entrada.relacionados)
+    grafo.agregar_contexto(entrada.id, entrada.texto)
     return {"status": "agregado"}
 
 @app.get("/contexto/")
