@@ -52,8 +52,16 @@
             const titulo = document.getElementById('titulo').value;
             const texto = document.getElementById('texto').value;
 
+            if (!titulo || !texto) {
+                alert("Por favor completá título y texto.");
+                return;
+            }
+
             const res = await axios.post('/contexto/', { titulo, texto });
             alert(`Contexto agregado automáticamente con relaciones detectadas! ID interno: ${res.data.id}`);
+            //actualizar automáticamente
+            cargarGrafo();
+            mostrarContextos();
         }
 
         async function preguntar() {

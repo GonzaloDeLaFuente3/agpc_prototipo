@@ -9,11 +9,12 @@ from fastapi.staticfiles import StaticFiles
 import os
 from agent.semantica import indexar_documento
 
+grafo.cargar_desde_disco()# ← cargar contexto si existe
+
 # Reindexar lo que ya está guardado en contexto.json
 for id, datos in grafo.obtener_todos().items():
     indexar_documento(id, datos["texto"])
 
-grafo.cargar_desde_disco()# ← cargar contexto si existe
 app = FastAPI()
 
 

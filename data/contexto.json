@@ -3,7 +3,11 @@
     "titulo": "Contextos con grafos y modelos de lenguaje",
     "texto": "Utiliza grafos y modelos de lenguaje.",
     "relaciones": [
-      "c1"
+      "c3",
+      "c6",
+      "c7",
+      "c9",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
     ],
     "palabras_clave": [
       "grafo",
@@ -15,7 +19,11 @@
   "c1": {
     "titulo": "Contextos difusos en AGPC",
     "texto": "El sistema AGPC gestiona contextos difusos.",
-    "relaciones": [],
+    "relaciones": [
+      "c3",
+      "c5",
+      "c8"
+    ],
     "palabras_clave": [
       "difuso",
       "agpc",
@@ -27,7 +35,16 @@
   "c3": {
     "titulo": "Grafos en AGPC ",
     "texto": "El modelo AGPC utiliza grafos para representar contextos.",
-    "relaciones": [],
+    "relaciones": [
+      "c2",
+      "c1",
+      "c5",
+      "c6",
+      "c7",
+      "c8",
+      "c9",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
+    ],
     "palabras_clave": [
       "representar",
       "grafo",
@@ -40,7 +57,11 @@
   "c4": {
     "titulo": "Ventajas y limitaciones de GPT-4 ",
     "texto": "GPT-4, por su parte, ofrece una comprensión y generación de texto de altísima calidad, destacando en tareas multilingües, generación creativa y razonamiento lógico. Su principal ventaja es su capacidad generalista y versatilidad. No obstante, al ser una solución cerrada, presenta limitaciones en la personalización directa, dependencia de API externa, mayores costos y menor transparencia en su arquitectura interna.",
-    "relaciones": [],
+    "relaciones": [
+      "c5",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
+    ],
     "palabras_clave": [
       "capacidad",
       "ofrecer",
@@ -81,7 +102,13 @@
     "texto": "La inteligencia contextual es la capacidad de comprender e interpretar un contexto específico, incluyendo los aspectos sociales, culturales y situacionales, para tomar decisiones más acertadas y relevantes.",
     "relaciones": [
       "c1",
-      "c3"
+      "c3",
+      "c4",
+      "c7",
+      "c8",
+      "c10",
+      "c12",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879"
     ],
     "palabras_clave": [
       "situacional",
@@ -106,7 +133,12 @@
     "titulo": "ChatGPT",
     "texto": "ChatGPT es un modelo de lenguaje desarrollado por OpenAI, diseñado para mantener conversaciones naturales con los usuarios. ",
     "relaciones": [
-      "c4"
+      "c2",
+      "c3",
+      "c7",
+      "c9",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
     ],
     "palabras_clave": [
       "chatgpt",
@@ -125,8 +157,14 @@
     "titulo": "GPT-5 por OpenAI",
     "texto": "OpenAI lanza GPT-5, su modelo más avanzado de inteligencia artificial",
     "relaciones": [
+      "c2",
+      "c3",
+      "c5",
       "c6",
-      "c4"
+      "c9",
+      "c10",
+      "c12",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
     ],
     "palabras_clave": [
       "artificial",
@@ -140,7 +178,11 @@
   "c8": {
     "titulo": "Análisis de patrones difusos en AGPC",
     "texto": "El sistema AGPC analiza patrones en contextos difusos.",
-    "relaciones": [],
+    "relaciones": [
+      "c1",
+      "c3",
+      "c5"
+    ],
     "palabras_clave": [
       "sistema",
       "patrón",
@@ -153,7 +195,13 @@
   "c9": {
     "titulo": "Inferencia mediante grafos y modelos de lenguaje",
     "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
-    "relaciones": [],
+    "relaciones": [
+      "c2",
+      "c3",
+      "c6",
+      "c7",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
+    ],
     "palabras_clave": [
       "lenguaje",
       "modelo",
@@ -168,7 +216,9 @@
     "texto": "La inteligencia artificial es una rama de la informática.",
     "relaciones": [
       "c5",
-      "c7"
+      "c7",
+      "c11",
+      "c12"
     ],
     "palabras_clave": [
       "informática",
@@ -181,7 +231,8 @@
     "titulo": "La informática y el procesamiento de datos",
     "texto": "La informática estudia el procesamiento de datos.",
     "relaciones": [
-      "c10"
+      "c10",
+      "c12"
     ],
     "palabras_clave": [
       "dato",
@@ -213,7 +264,8 @@
     "relaciones": [
       "c4",
       "c5",
-      "c6"
+      "c6",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
     ],
     "palabras_clave": [
       "capacidad",
@@ -235,6 +287,43 @@
       "velocidad",
       "claude",
       "contenido"
+    ]
+  },
+  "f589c7b1-0876-4913-acda-0424aac7e076": {
+    "titulo": "Gemini IA",
+    "texto": "La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.",
+    "relaciones": [
+      "c2",
+      "c3",
+      "c4",
+      "c6",
+      "c7",
+      "c9",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879"
+    ],
+    "palabras_clave": [
+      "modelo",
+      "acceso",
+      "intercambiar",
+      "obtener",
+      "encontrar",
+      "gemini",
+      "rápidamente",
+      "drive",
+      "aprender",
+      "idea",
+      "contenido",
+      "gmail",
+      "ayuda",
+      "móviles",
+      "escribir",
+      "google",
+      "resumir",
+      "dispositivo",
+      "directo",
+      "familia",
+      "información",
+      "poder"
     ]
   }
 }
