@@ -1,5 +1,6 @@
 {
   "c2": {
+    "titulo": "Contextos con grafos y modelos de lenguaje",
     "texto": "Utiliza grafos y modelos de lenguaje.",
     "relaciones": [
       "c1"
@@ -12,6 +13,7 @@
     ]
   },
   "c1": {
+    "titulo": "Contextos difusos en AGPC",
     "texto": "El sistema AGPC gestiona contextos difusos.",
     "relaciones": [],
     "palabras_clave": [
@@ -23,6 +25,7 @@
     ]
   },
   "c3": {
+    "titulo": "Grafos en AGPC ",
     "texto": "El modelo AGPC utiliza grafos para representar contextos.",
     "relaciones": [],
     "palabras_clave": [
@@ -35,6 +38,7 @@
     ]
   },
   "c4": {
+    "titulo": "Ventajas y limitaciones de GPT-4 ",
     "texto": "GPT-4, por su parte, ofrece una comprensión y generación de texto de altísima calidad, destacando en tareas multilingües, generación creativa y razonamiento lógico. Su principal ventaja es su capacidad generalista y versatilidad. No obstante, al ser una solución cerrada, presenta limitaciones en la personalización directa, dependencia de API externa, mayores costos y menor transparencia en su arquitectura interna.",
     "relaciones": [],
     "palabras_clave": [
@@ -73,6 +77,7 @@
     ]
   },
   "c5": {
+    "titulo": "Inteligencia contextual",
     "texto": "La inteligencia contextual es la capacidad de comprender e interpretar un contexto específico, incluyendo los aspectos sociales, culturales y situacionales, para tomar decisiones más acertadas y relevantes.",
     "relaciones": [
       "c1",
@@ -98,6 +103,7 @@
     ]
   },
   "c6": {
+    "titulo": "ChatGPT",
     "texto": "ChatGPT es un modelo de lenguaje desarrollado por OpenAI, diseñado para mantener conversaciones naturales con los usuarios. ",
     "relaciones": [
       "c4"
@@ -116,6 +122,7 @@
     ]
   },
   "c7": {
+    "titulo": "GPT-5 por OpenAI",
     "texto": "OpenAI lanza GPT-5, su modelo más avanzado de inteligencia artificial",
     "relaciones": [
       "c6",
@@ -131,6 +138,7 @@
     ]
   },
   "c8": {
+    "titulo": "Análisis de patrones difusos en AGPC",
     "texto": "El sistema AGPC analiza patrones en contextos difusos.",
     "relaciones": [],
     "palabras_clave": [
@@ -143,6 +151,7 @@
     ]
   },
   "c9": {
+    "titulo": "Inferencia mediante grafos y modelos de lenguaje",
     "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
     "relaciones": [],
     "palabras_clave": [
@@ -155,6 +164,7 @@
     ]
   },
   "c10": {
+    "titulo": "La inteligencia artificial",
     "texto": "La inteligencia artificial es una rama de la informática.",
     "relaciones": [
       "c5",
@@ -168,6 +178,7 @@
     ]
   },
   "c11": {
+    "titulo": "La informática y el procesamiento de datos",
     "texto": "La informática estudia el procesamiento de datos.",
     "relaciones": [
       "c10"
@@ -180,6 +191,7 @@
     ]
   },
   "c12": {
+    "titulo": "Procesamiento de datos en la ia",
     "texto": "El procesamiento de datos es clave en la inteligencia artificial.",
     "relaciones": [
       "c5",
@@ -193,6 +205,36 @@
       "artificial",
       "dato",
       "clave"
+    ]
+  },
+  "55f31229-71d2-4c84-9dcb-b9bd0482c879": {
+    "titulo": "Claude AI",
+    "texto": "Un chatbot diseñado para la seguridad\nEl código ético de Claude, su velocidad y su capacidad para procesar grandes volúmenes de información le permiten aprovechar la IA de forma eficiente para análisis complejos y la generación de contenido.",
+    "relaciones": [
+      "c4",
+      "c5",
+      "c6"
+    ],
+    "palabras_clave": [
+      "capacidad",
+      "generación",
+      "aprovechar",
+      "forma",
+      "ético",
+      "información",
+      "diseñado",
+      "eficiente",
+      "volumen",
+      "procesar",
+      "permitir",
+      "complejo",
+      "análisis",
+      "chatbot",
+      "código",
+      "seguridad",
+      "velocidad",
+      "claude",
+      "contenido"
     ]
   }
 }

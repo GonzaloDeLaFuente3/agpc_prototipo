@@ -14,7 +14,7 @@
 
         <div class="bg-white p-4 rounded shadow mb-6">
             <h2 class="text-xl font-semibold mb-2">Agregar Contexto</h2>
-            <input id="id" placeholder="ID del nodo" class="border p-2 w-full mb-2" />
+            <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full mb-2" />
             <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full mb-2"></textarea>
             <button onclick="agregarContexto()" class="bg-blue-600 text-white px-4 py-2 rounded">Agregar</button>
         </div>
@@ -49,11 +49,11 @@
 
     <script>
         async function agregarContexto() {
-            const id = document.getElementById('id').value;
+            const titulo = document.getElementById('titulo').value;
             const texto = document.getElementById('texto').value;
 
-            await axios.post('/contexto/', { id, texto});
-            alert('Contexto agregado automáticamente con relaciones detectadas!');
+            const res = await axios.post('/contexto/', { titulo, texto });
+            alert(`Contexto agregado automáticamente con relaciones detectadas! ID interno: ${res.data.id}`);
         }
 
         async function preguntar() {
@@ -70,7 +70,7 @@
 
         const nodes = Object.keys(contextos).map(id => ({
             id: id,
-            label: id
+            label: contextos[id].titulo
         }));
 
         const edges = [];
@@ -99,7 +99,7 @@
 
             let salida = "";
             for (const [id, datos] of Object.entries(contextos)) {
-                salida += `🟦 ID: ${id}\n📄 Texto: ${datos.texto}\n🔗 Relacionados: ${datos.relaciones.join(', ') || 'Ninguno'}\n🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
+                salida += `🟦 Título: ${datos.titulo}\n📄 Texto: ${datos.texto}\n🔗 Relacionados: ${datos.relaciones.map(rid => contextos[rid]?.titulo || rid).join(', ') || 'Ninguno'}\n🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
             }
 
             document.getElementById("todosContextos").innerText = salida || "No hay contextos almacenados aún.";
