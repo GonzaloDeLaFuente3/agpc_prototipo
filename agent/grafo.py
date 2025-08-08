@@ -3,6 +3,8 @@
 from agent.extractor import extraer_palabras_clave
 import json
 import os
+from agent.semantica import indexar_documento
+
 
 ARCHIVO_JSON = "data/contexto.json"
 contextos = {}
@@ -31,14 +33,14 @@ def agregar_contexto(id, texto, relacionados=None):
 
     claves = extraer_palabras_clave(texto)
 
-    claves = extraer_palabras_clave(texto)
-
     contextos[id] = {
         "texto": texto,
         "relaciones": relacionados,
         "palabras_clave": claves
     }
+    
     guardar_en_disco()
+    indexar_documento(id, texto)
 
 def obtener_todos():
     return contextos

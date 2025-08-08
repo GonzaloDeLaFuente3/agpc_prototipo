@@ -6,6 +6,9 @@ Instalar:
 # pip install spacy
 terminal :python -m spacy download es_core_news_sm
 # pip install requests
+# pip install sentence_transformers
+
+
 
 
 # Comando para ejecutar : uvicorn main:app --reload

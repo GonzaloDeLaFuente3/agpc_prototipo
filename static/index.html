@@ -34,6 +34,12 @@
             <div id="todosContextos" class="text-sm whitespace-pre-wrap bg-gray-100 p-3 rounded"></div>
         </div>
 
+        <div class="bg-white p-4 rounded shadow mb-6">
+            <h2 class="text-xl font-semibold mb-2">Búsqueda Semántica</h2>
+            <input id="textoBusqueda" placeholder="Escribí algo relacionado al contenido..." class="border p-2 w-full mb-2" />
+            <button onclick="buscarSemantico()" class="bg-pink-600 text-white px-4 py-2 rounded">Buscar</button>
+            <div id="resultadosBusqueda" class="mt-4 text-sm space-y-3"></div>
+        </div>
 
         <div class="bg-white p-4 rounded shadow mb-6">
         <h2 class="text-xl font-semibold mb-2">Visualización del Grafo</h2>
@@ -100,6 +106,33 @@
 
             document.getElementById("todosContextos").innerText = salida || "No hay contextos almacenados aún.";
         }
+
+        async function buscarSemantico() {
+            const texto = document.getElementById('textoBusqueda').value.trim();
+            if (!texto) return;
+
+            const res = await axios.get(`/buscar/?texto=${encodeURIComponent(texto)}`);
+            const datos = res.data;
+
+            const container = document.getElementById('resultadosBusqueda');
+            container.innerHTML = '';
+
+            if (Object.keys(datos).length === 0) {
+                container.innerHTML = "<p>No se encontraron resultados.</p>";
+                return;
+            }
+
+            for (const [id, info] of Object.entries(datos)) {
+                const div = document.createElement("div");
+                div.className = "p-3 bg-gray-100 rounded border-l-4 border-pink-600 shadow";
+                div.innerHTML = `
+                <strong>🟣 ID:</strong> ${id}<br>
+                <strong>📄 Texto:</strong> ${info.texto}
+                `;
+                container.appendChild(div);
+            }
+        }
+
 
     </script>
 </body>

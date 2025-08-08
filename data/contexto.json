@@ -114,5 +114,44 @@
       "lenguaje",
       "natural"
     ]
+  },
+  "c7": {
+    "texto": "OpenAI lanza GPT-5, su modelo más avanzado de inteligencia artificial",
+    "relaciones": [
+      "c6",
+      "c4"
+    ],
+    "palabras_clave": [
+      "artificial",
+      "inteligencia",
+      "lanza",
+      "modelo",
+      "avanzado",
+      "openai"
+    ]
+  },
+  "c8": {
+    "texto": "El sistema AGPC analiza patrones en contextos difusos.",
+    "relaciones": [],
+    "palabras_clave": [
+      "sistema",
+      "patrón",
+      "agpc",
+      "contexto",
+      "analizar",
+      "difuso"
+    ]
+  },
+  "c9": {
+    "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
+    "relaciones": [],
+    "palabras_clave": [
+      "lenguaje",
+      "modelo",
+      "inferir",
+      "significado",
+      "grafo",
+      "utiliza"
+    ]
   }
 }
