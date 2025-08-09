@@ -8,6 +8,7 @@ from agent import responder
 from fastapi.staticfiles import StaticFiles
 import os
 from agent.semantica import indexar_documento
+from agent.semantica import buscar_similares
 
 grafo.cargar_desde_disco()# ← cargar contexto si existe
 
@@ -35,28 +36,48 @@ def obtener_relacionados(id: str):
     return grafo.obtener_relacionados(id)
 
 @app.get("/preguntar/")
-def preguntar(pregunta: str, id: str):
+def preguntar(pregunta: str):
     pregunta = pregunta.strip()
-    id = id.strip()  # <- esto elimina espacios y saltos de línea
+    
+    print(f"Pregunta recibida: '{pregunta}'")
 
-    print(f"ID solicitado: '{id}'")
-
-    # Verificar que el contexto existe
     todos_contextos = grafo.obtener_todos()
     
-    if id not in todos_contextos:
-        return {"respuesta": f"[ERROR] No se encontró el contexto con id: {id}"}
-
-    relacionados = grafo.obtener_relacionados(id)
+    # Si no hay contextos almacenados
+    if not todos_contextos:
+        return {"respuesta": "[ERROR] No hay contextos almacenados en el sistema", "contextos_utilizados": []}
     
-    relacionados[id] = todos_contextos[id]  # incluir el nodo base
-
+    # Búsqueda automática usando embeddings semánticos
+    print("Buscando contextos relevantes automáticamente...")
+    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes
+    print(f"IDs encontrados: {ids_similares}")
+    
+    contextos_relevantes = {}
+    contextos_utilizados_info = []
+    
+    for id_similar in ids_similares:
+        if id_similar in todos_contextos:
+            contextos_relevantes[id_similar] = todos_contextos[id_similar]
+            contextos_utilizados_info.append({
+                "titulo": todos_contextos[id_similar]["titulo"],
+                "id": id_similar
+            })
+    
     # Verificar que hay contextos para procesar
-    if not relacionados:
-        return {"respuesta": "[ERROR] No se encontraron contextos relacionados"}
+    if not contextos_relevantes:
+        return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
-    respuesta = responder.responder_con_huggingface(pregunta, relacionados)
-    return {"respuesta": respuesta}
+    print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
+    respuesta = responder.responder_con_huggingface(pregunta, contextos_relevantes)
+    
+    # Agregar información sobre contextos utilizados a la respuesta
+    titulos_utilizados = [info["titulo"] for info in contextos_utilizados_info]
+    respuesta_completa = f"{respuesta}\n\n📚 Contextos utilizados: {', '.join(titulos_utilizados)}"
+    
+    return {
+        "respuesta": respuesta_completa,
+        "contextos_utilizados": contextos_utilizados_info
+    }
 
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):

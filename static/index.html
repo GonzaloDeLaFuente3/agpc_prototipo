@@ -20,11 +20,17 @@
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-6">
-        <h2 class="text-xl font-semibold mb-2">Preguntar al Sistema</h2>
-        <input id="pregunta" placeholder="Escribí tu pregunta..." class="border p-2 w-full mb-2" />
-        <input id="idConsulta" placeholder="ID del nodo base" class="border p-2 w-full mb-2" />
-        <button onclick="preguntar()" class="bg-green-600 text-white px-4 py-2 rounded">Preguntar</button>
-        <div id="respuesta" class="mt-3 text-gray-700 font-medium"></div>
+            <h2 class="text-xl font-semibold mb-2">Preguntar al Sistema</h2>
+            <input id="pregunta" placeholder="Escribí tu pregunta..." class="border p-2 w-full mb-2" />
+            <button onclick="preguntar()" class="bg-green-600 text-white px-4 py-2 rounded">Preguntar</button>
+            
+            <div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded">
+                <p class="text-sm text-blue-700">
+                    🤖 <strong>IA Automática:</strong> El sistema buscará automáticamente los contextos más relevantes para tu pregunta.
+                </p>
+            </div>
+            
+            <div id="respuesta" class="mt-3 p-3 bg-gray-50 border rounded whitespace-pre-wrap text-gray-700"></div>
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-6">
@@ -65,11 +71,23 @@
         }
 
         async function preguntar() {
-        const pregunta = document.getElementById('pregunta').value;
-        const id = document.getElementById('idConsulta').value;
+            const pregunta = document.getElementById('pregunta').value;
 
-        const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}&id=${encodeURIComponent(id)}`);
-        document.getElementById('respuesta').innerText = res.data.respuesta;
+            if (!pregunta.trim()) {
+                alert("Por favor escribí una pregunta.");
+                return;
+            }
+
+            // Mostrar indicador de carga
+            const respuestaDiv = document.getElementById('respuesta');
+            respuestaDiv.innerHTML = "🔍 Buscando contextos relevantes y generando respuesta...";
+
+            try {
+                const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}`);
+                respuestaDiv.innerText = res.data.respuesta;
+            } catch (error) {
+                respuestaDiv.innerText = `Error: ${error.message}`;
+            }
         }
 
         async function cargarGrafo() {
