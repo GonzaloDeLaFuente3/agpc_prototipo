@@ -47,9 +47,14 @@
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-6">
-        <h2 class="text-xl font-semibold mb-2">Visualización del Grafo</h2>
-        <div id="grafo" style="height: 400px;"></div>
-        <button onclick="cargarGrafo()" class="mt-3 bg-purple-600 text-white px-4 py-2 rounded">Actualizar Grafo</button>
+            <h2 class="text-xl font-semibold mb-2">Visualización del Grafo</h2>
+            <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
+                <p class="text-sm text-purple-700">
+                    🕸️ <strong>Grafo Inteligente:</strong> Hacé click en cualquier nodo para ver su información completa. Los nodos muestran los títulos de los contextos y las flechas indican las relaciones automáticas.
+                </p>
+            </div>
+            <div id="grafo" style="height: 400px; border: 1px solid #e5e7eb; border-radius: 8px;"></div>
+            <button onclick="cargarGrafo()" class="mt-3 bg-purple-600 text-white px-4 py-2 rounded">Actualizar Grafo</button>
         </div>
     </div>
 
@@ -91,30 +96,87 @@
         }
 
         async function cargarGrafo() {
-        const res = await axios.get('/contexto/');
-        const contextos = res.data;
+            const res = await axios.get('/contexto/');
+            const contextos = res.data;
 
-        const nodes = Object.keys(contextos).map(id => ({
-            id: id,
-            label: contextos[id].titulo
-        }));
+            // Crear nodos con títulos como etiquetas y styling mejorado
+            const nodes = Object.keys(contextos).map(id => ({
+                id: id,
+                label: contextos[id].titulo,
+                title: `ID: ${id}\n\nTexto: ${contextos[id].texto.substring(0, 100)}${contextos[id].texto.length > 100 ? '...' : ''}`, // Tooltip con info adicional
+                color: {
+                    background: '#e3f2fd',
+                    border: '#1976d2',
+                    highlight: {
+                        background: '#bbdefb',
+                        border: '#0d47a1'
+                    }
+                },
+                font: { 
+                    color: '#1565c0', 
+                    size: 12,
+                    face: 'Arial'
+                }
+            }));
 
-        const edges = [];
-        for (const [id, data] of Object.entries(contextos)) {
-            data.relaciones.forEach(rel => {
-            edges.push({ from: id, to: rel });
+            const edges = [];
+            for (const [id, data] of Object.entries(contextos)) {
+                data.relaciones.forEach(rel => {
+                    edges.push({ 
+                        from: id, 
+                        to: rel,
+                        color: {
+                            color: '#90a4ae',
+                            highlight: '#37474f'
+                        },
+                        width: 2
+                    });
+                });
+            }
+
+            const container = document.getElementById('grafo');
+            
+            // Verificar si hay nodos para mostrar
+            if (nodes.length === 0) {
+                container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>No hay contextos para visualizar. Agregá algunos contextos primero.</p></div>';
+                return;
+            }
+
+            const network = new vis.Network(container, {
+                nodes: new vis.DataSet(nodes),
+                edges: new vis.DataSet(edges)
+            }, {
+                nodes: { 
+                    shape: 'box',
+                    size: 20,
+                    borderWidth: 2,
+                    shadow: true,
+                    margin: 10
+                },
+                edges: { 
+                    arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+                    smooth: { enabled: true, type: 'continuous' }
+                },
+                physics: { 
+                    stabilization: { iterations: 200 },
+                    barnesHut: { gravitationalConstant: -8000, springConstant: 0.001, springLength: 200 }
+                },
+                interaction: { hover: true },
+                layout: { 
+                    improvedLayout: true 
+                }
             });
-        }
 
-        const container = document.getElementById('grafo');
-        const network = new vis.Network(container, {
-            nodes: new vis.DataSet(nodes),
-            edges: new vis.DataSet(edges)
-        }, {
-            nodes: { shape: 'dot', size: 12 },
-            edges: { arrows: 'to' },
-            physics: { stabilization: true }
-        });
+            // Agregar evento de click para mostrar información del nodo
+            network.on("click", function(params) {
+                if (params.nodes.length > 0) {
+                    const nodeId = params.nodes[0];
+                    const contexto = contextos[nodeId];
+                    if (contexto) {
+                        alert(`📋 ${contexto.titulo}\n\n📝 ${contexto.texto}\n\n🔗 Relacionados: ${contexto.relaciones.map(rid => contextos[rid]?.titulo || rid).join(', ') || 'Ninguno'}\n\n🏷️ Palabras clave: ${contexto.palabras_clave.join(', ')}`);
+                    }
+                }
+            });
         }
 
         cargarGrafo(); // carga inicial
