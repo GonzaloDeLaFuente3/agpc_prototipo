@@ -1,13 +1,13 @@
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
-# ✅ Cliente persistente nuevo
+# Cliente persistente nuevo
 client = chromadb.PersistentClient(path="./chroma_db")
 
-# ✅ Función de embeddings
+# Función de embeddings
 embedding_function = SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
 
-# ✅ Crear colección
+# Crear colección
 coleccion = client.get_or_create_collection(name="contextos", embedding_function=embedding_function)
 
 def indexar_documento(id, texto):
