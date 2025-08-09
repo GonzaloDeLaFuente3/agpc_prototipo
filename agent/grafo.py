@@ -1,15 +1,12 @@
 # agent/grafo.py
-
 from agent.extractor import extraer_palabras_clave
 import json
 import os
 from agent.semantica import indexar_documento
 import uuid
 
-
 ARCHIVO_JSON = "data/contexto.json"
 contextos = {}
-
 
 # Funciones de persistencia
 def guardar_en_disco():
@@ -64,25 +61,3 @@ def obtener_relacionados(id):
         return {}
     relacionados = contextos[id]["relaciones"]
     return {rid: contextos[rid] for rid in relacionados if rid in contextos}
-
-def sugerir_relaciones(id):
-    if id not in contextos:
-        return []
-
-    claves_base = set(contextos[id]["palabras_clave"])
-    sugerencias = []
-
-    for otro_id, datos in contextos.items():
-        if otro_id == id:
-            continue
-        claves_otro = set(datos.get("palabras_clave", []))
-        coincidencias = claves_base.intersection(claves_otro)
-
-        if coincidencias:
-            sugerencias.append({
-                "id": otro_id,
-                "coincidencias": list(coincidencias)
-            })
-
-    return sugerencias
-

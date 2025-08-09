@@ -7,7 +7,8 @@
       "c6",
       "c7",
       "c9",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "grafo",
@@ -43,7 +44,8 @@
       "c7",
       "c8",
       "c9",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "representar",
@@ -60,7 +62,8 @@
     "relaciones": [
       "c5",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "capacidad",
@@ -108,7 +111,8 @@
       "c8",
       "c10",
       "c12",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879"
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "situacional",
@@ -138,7 +142,8 @@
       "c7",
       "c9",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "chatgpt",
@@ -164,7 +169,8 @@
       "c9",
       "c10",
       "c12",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "artificial",
@@ -200,7 +206,8 @@
       "c3",
       "c6",
       "c7",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "lenguaje",
@@ -265,7 +272,8 @@
       "c4",
       "c5",
       "c6",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "capacidad",
@@ -299,7 +307,8 @@
       "c6",
       "c7",
       "c9",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879"
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
     ],
     "palabras_clave": [
       "modelo",
@@ -324,6 +333,38 @@
       "familia",
       "información",
       "poder"
+    ]
+  },
+  "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614": {
+    "titulo": "Claude 3.5 Sonnet v2",
+    "texto": "es un modelo de última generación para tareas de ingeniería de software del mundo real y capacidades de agentes. Claude 3.5 Sonnet v2 ofrece estos avances al mismo precio y velocidad que Claude 3.5 Sonnet.",
+    "relaciones": [
+      "c2",
+      "c3",
+      "c4",
+      "c5",
+      "c6",
+      "c7",
+      "c9",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "f589c7b1-0876-4913-acda-0424aac7e076"
+    ],
+    "palabras_clave": [
+      "software",
+      "claude",
+      "sonnet",
+      "real",
+      "capacidad",
+      "velocidad",
+      "ingeniería",
+      "precio",
+      "generación",
+      "mundo",
+      "modelo",
+      "agente",
+      "avance",
+      "tarea",
+      "ofrecer"
     ]
   }
 }

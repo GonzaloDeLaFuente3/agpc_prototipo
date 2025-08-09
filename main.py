@@ -17,15 +17,9 @@ for id, datos in grafo.obtener_todos().items():
 
 app = FastAPI()
 
-
-
 class EntradaContexto(BaseModel):
     titulo: str
     texto: str
-
-# @app.get("/")
-# def read_root():
-#     return {"message": "AGPC prototipo funcionando"}
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
@@ -39,12 +33,6 @@ def obtener_contextos():
 @app.get("/contexto/relacionados/")
 def obtener_relacionados(id: str):
     return grafo.obtener_relacionados(id)
-
-@app.get("/contexto/sugerencias/")
-def sugerir_relaciones(id: str):
-    return grafo.sugerir_relaciones(id)
-
-
 
 @app.get("/preguntar/")
 def preguntar(pregunta: str, id: str):
@@ -62,7 +50,6 @@ def preguntar(pregunta: str, id: str):
     relacionados = grafo.obtener_relacionados(id)
     
     relacionados[id] = todos_contextos[id]  # incluir el nodo base
-    
 
     # Verificar que hay contextos para procesar
     if not relacionados:
@@ -81,9 +68,6 @@ def buscar_por_texto(texto: str):
     todos = grafo.obtener_todos()
     resultados = {id: todos[id] for id in ids_similares if id in todos}
     return resultados
-
-
-
 
 # Asegurar que la carpeta static existe
 os.makedirs("static", exist_ok=True)
