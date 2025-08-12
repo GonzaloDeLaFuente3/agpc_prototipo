@@ -428,5 +428,195 @@
       "posibilidad",
       "proporcionado"
     ]
+  },
+  "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6": {
+    "titulo": "Claude 3.5 Sonnet v2",
+    "texto": "es un modelo de última generación para tareas de ingeniería de software del mundo real y capacidades de agentes. Claude 3.5 Sonnet v2 ofrece estos avances al mismo precio y velocidad que Claude 3.5 Sonnet.",
+    "palabras_clave": [
+      "sonnet",
+      "generación",
+      "software",
+      "ofrecer",
+      "avance",
+      "tarea",
+      "claude",
+      "precio",
+      "velocidad",
+      "real",
+      "mundo",
+      "capacidad",
+      "agente",
+      "ingeniería",
+      "modelo"
+    ],
+    "created_at": "2025-08-12T15:24:05.660178",
+    "relaciones": [
+      "ab837fd9-05af-46ec-949a-e334f42dbf88",
+      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f"
+    ]
+  },
+  "a4365ed1-4f0b-4b04-a45b-512eee998233": {
+    "titulo": "Gemini IA",
+    "texto": "La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.",
+    "palabras_clave": [
+      "gmail",
+      "gemini",
+      "encontrar",
+      "idea",
+      "resumir",
+      "dispositivo",
+      "aprender",
+      "móviles",
+      "escribir",
+      "contenido",
+      "google",
+      "obtener",
+      "rápidamente",
+      "intercambiar",
+      "drive",
+      "ayuda",
+      "familia",
+      "directo",
+      "acceso",
+      "modelo",
+      "información",
+      "poder"
+    ],
+    "created_at": "2025-08-12T15:24:52.804826",
+    "relaciones": []
+  },
+  "ab837fd9-05af-46ec-949a-e334f42dbf88": {
+    "titulo": "Claude AI",
+    "texto": "Un chatbot diseñado para la seguridad\\nEl código ético de Claude, su velocidad y su capacidad para procesar grandes volúmenes de información le permiten aprovechar la IA de forma eficiente para análisis complejos y la generación de contenido.",
+    "palabras_clave": [
+      "generación",
+      "información",
+      "procesar",
+      "ético",
+      "análisis",
+      "complejo",
+      "diseñado",
+      "permitir",
+      "forma",
+      "claude",
+      "volumen",
+      "eficiente",
+      "contenido",
+      "velocidad",
+      "chatbot",
+      "capacidad",
+      "aprovechar",
+      "código"
+    ],
+    "created_at": "2025-08-12T15:25:09.607828",
+    "relaciones": [
+      "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6"
+    ]
+  },
+  "71a9aa3b-0419-4e87-b83d-a36a2dceb3b7": {
+    "titulo": "La informática y el procesamiento de datos",
+    "texto": "La informática estudia el procesamiento de datos.",
+    "palabras_clave": [
+      "procesamiento",
+      "informática",
+      "estudiar",
+      "dato"
+    ],
+    "created_at": "2025-08-12T15:42:14.261710",
+    "relaciones": [
+      "334964a8-b5ee-4394-8be7-3fb691c8d833"
+    ]
+  },
+  "334964a8-b5ee-4394-8be7-3fb691c8d833": {
+    "titulo": "La inteligencia artificial",
+    "texto": "La inteligencia artificial es una rama de la informática.",
+    "palabras_clave": [
+      "informática",
+      "inteligencia",
+      "rama",
+      "artificial"
+    ],
+    "created_at": "2025-08-12T15:42:29.950847",
+    "relaciones": [
+      "71a9aa3b-0419-4e87-b83d-a36a2dceb3b7"
+    ]
+  },
+  "5c0e8c71-1d4b-4756-bfd7-585008025da7": {
+    "titulo": "Inferencia mediante grafos y modelos de lenguaje",
+    "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
+    "palabras_clave": [
+      "lenguaje",
+      "inferir",
+      "grafo",
+      "significado",
+      "utiliza",
+      "modelo"
+    ],
+    "created_at": "2025-08-12T15:42:45.262962",
+    "relaciones": [
+      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3",
+      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f"
+    ]
+  },
+  "bf0a46b2-270e-4af5-8564-4a00313930a3": {
+    "titulo": "GPT-5",
+    "texto": " es más inteligente en todos los ámbitos y ofrece respuestas más útiles en matemáticas, ciencias, finanzas, derecho y mucho más.",
+    "palabras_clave": [
+      "ámbito",
+      "respuesta",
+      "ofrecer",
+      "inteligente",
+      "útil",
+      "matemática",
+      "finanza",
+      "ciencia",
+      "derecho"
+    ],
+    "created_at": "2025-08-12T15:46:09.872077",
+    "relaciones": []
+  },
+  "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3": {
+    "titulo": "GPT-4",
+    "texto": "es un modelo de lenguaje grande desarrollado por OpenAI, y es la cuarta generación de la serie de modelos GPT",
+    "palabras_clave": [
+      "serie",
+      "generación",
+      "openai",
+      "lenguaje",
+      "cuarto",
+      "desarrollado",
+      "modelo"
+    ],
+    "created_at": "2025-08-12T15:48:16.382038",
+    "relaciones": [
+      "5c0e8c71-1d4b-4756-bfd7-585008025da7",
+      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f"
+    ]
+  },
+  "c0660a5a-aa66-415d-bd2b-d708d1a6e15f": {
+    "titulo": "¿Qué es GPT-5?",
+    "texto": "es el modelo de gran lenguaje de última generación de OpenAI, lanzado oficialmente el 7 de agosto de 2025. Se basa en la arquitectura GPT e integra los avances de los modelos de razonamiento como o1 y o3. Antes del lanzamiento de GPT, OpenAI introdujo GPT.",
+    "palabras_clave": [
+      "generación",
+      "openai",
+      "lenguaje",
+      "integrar",
+      "lanzamiento",
+      "oficialmente",
+      "agosto",
+      "basar",
+      "avance",
+      "introducir",
+      "lanzado",
+      "arquitectura",
+      "razonamiento",
+      "modelo"
+    ],
+    "created_at": "2025-08-12T15:49:13.962608",
+    "relaciones": [
+      "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6",
+      "5c0e8c71-1d4b-4756-bfd7-585008025da7",
+      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3"
+    ]
   }
 }
