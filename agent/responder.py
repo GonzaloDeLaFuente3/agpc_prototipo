@@ -6,9 +6,14 @@ import os
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDfgYQq3a0bAZ0pgDCkuy8xmmytv8FfvO8")  # Obtén en https://aistudio.google.com/
 
 def construir_prompt(pregunta, contextos):
-    prompt = "Usando los siguientes fragmentos de contexto, respondé a la siguiente pregunta:\n\n"
+    prompt = """Usando los siguientes fragmentos de contexto, respondé a la siguiente pregunta.
+Cuando necesites referenciar un fragmento, usa su título entre paréntesis.
+
+Fragmentos:
+"""
     for id, c in contextos.items():
-        prompt += f"- ({id}): {c['texto']}\n"
+        prompt += f"- {c['titulo']}: {c['texto']}\n"
+    
     prompt += f"\nPregunta: {pregunta}\nRespuesta:"
     return prompt
 

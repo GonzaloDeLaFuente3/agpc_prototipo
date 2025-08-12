@@ -30,10 +30,6 @@ def agregar_contexto(entrada: EntradaContexto):
 def obtener_contextos():
     return grafo.obtener_todos()
 
-@app.get("/contexto/relacionados/")
-def obtener_relacionados(id: str):
-    return grafo.obtener_relacionados(id)
-
 @app.get("/preguntar/")
 def preguntar(pregunta: str):
     pregunta = pregunta.strip()
@@ -97,38 +93,6 @@ def obtener_estadisticas():
 def obtener_contextos_centrales(k: int = 5):
     """Obtiene los contextos más centrales del grafo"""
     return grafo.obtener_contextos_centrales(k)
-
-@app.get("/grafo/camino/")
-def obtener_camino_mas_corto(origen: str, destino: str):
-    """Encuentra el camino más corto entre dos contextos"""
-    camino = grafo.obtener_camino_mas_corto(origen, destino)
-    
-    # Enriquecer con información de contextos
-    if camino:
-        todos_contextos = grafo.obtener_todos()
-        camino_detallado = []
-        for nodo_id in camino:
-            if nodo_id in todos_contextos:
-                camino_detallado.append({
-                    "id": nodo_id,
-                    "titulo": todos_contextos[nodo_id]["titulo"]
-                })
-        return {"camino": camino_detallado, "longitud": len(camino)}
-    
-    return {"camino": [], "longitud": 0}
-
-@app.get("/grafo/buscar/")
-def buscar_contextos_por_patron(patron: str):
-    """Busca contextos por patrón en título o contenido"""
-    ids_encontrados = grafo.buscar_contextos_por_patron(patron)
-    todos_contextos = grafo.obtener_todos()
-    
-    resultados = {}
-    for id_ctx in ids_encontrados:
-        if id_ctx in todos_contextos:
-            resultados[id_ctx] = todos_contextos[id_ctx]
-    
-    return resultados
 
 @app.get("/grafo/visualizacion/")
 def exportar_para_visualizacion():

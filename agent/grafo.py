@@ -199,15 +199,6 @@ def obtener_estadisticas() -> Dict:
     
     return stats
 
-def obtener_camino_mas_corto(id_origen: str, id_destino: str) -> List[str]:
-    """Encuentra el camino más corto entre dos contextos"""
-    try:
-        if id_origen in grafo_contextos and id_destino in grafo_contextos:
-            return nx.shortest_path(grafo_contextos.to_undirected(), id_origen, id_destino)
-        return []
-    except nx.NetworkXNoPath:
-        return []
-
 def obtener_contextos_centrales(k: int = 5) -> List[Dict]:
     """Obtiene los k contextos más centrales en el grafo"""
     if grafo_contextos.number_of_nodes() == 0:
@@ -228,20 +219,6 @@ def obtener_contextos_centrales(k: int = 5) -> List[Dict]:
             resultado.append(info)
     
     return resultado
-
-def buscar_contextos_por_patron(patron: str) -> List[str]:
-    """Busca contextos que coincidan con un patrón en título o texto"""
-    patron_lower = patron.lower()
-    resultados = []
-    
-    for nodo_id, metadatos in metadatos_contextos.items():
-        titulo = metadatos.get("titulo", "").lower()
-        texto = metadatos.get("texto", "").lower()
-        
-        if patron_lower in titulo or patron_lower in texto:
-            resultados.append(nodo_id)
-    
-    return resultados
 
 def exportar_grafo_para_visualizacion() -> Dict:
     """Exporta el grafo en formato para vis.js o similar"""
@@ -269,10 +246,3 @@ def exportar_grafo_para_visualizacion() -> Dict:
         })
     
     return {"nodes": nodos, "edges": edges}
-
-# Funciones de utilidad avanzadas
-def recalcular_relaciones():
-    """Función pública para recalcular relaciones"""
-    _recalcular_relaciones()
-    _actualizar_listas_relaciones()
-    _guardar_grafo()
