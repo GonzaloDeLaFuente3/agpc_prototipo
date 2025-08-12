@@ -7,8 +7,7 @@ from typing import List, Optional
 from agent import responder
 from fastapi.staticfiles import StaticFiles
 import os
-from agent.semantica import indexar_documento
-from agent.semantica import buscar_similares
+from agent.semantica import indexar_documento, buscar_similares
 
 grafo.cargar_desde_disco()# ← cargar contexto si existe
 
@@ -89,6 +88,52 @@ def buscar_por_texto(texto: str):
     todos = grafo.obtener_todos()
     resultados = {id: todos[id] for id in ids_similares if id in todos}
     return resultados
+
+@app.get("/estadisticas/")
+def obtener_estadisticas():
+    return grafo.obtener_estadisticas()
+
+@app.get("/grafo/centrales/")
+def obtener_contextos_centrales(k: int = 5):
+    """Obtiene los contextos más centrales del grafo"""
+    return grafo.obtener_contextos_centrales(k)
+
+@app.get("/grafo/camino/")
+def obtener_camino_mas_corto(origen: str, destino: str):
+    """Encuentra el camino más corto entre dos contextos"""
+    camino = grafo.obtener_camino_mas_corto(origen, destino)
+    
+    # Enriquecer con información de contextos
+    if camino:
+        todos_contextos = grafo.obtener_todos()
+        camino_detallado = []
+        for nodo_id in camino:
+            if nodo_id in todos_contextos:
+                camino_detallado.append({
+                    "id": nodo_id,
+                    "titulo": todos_contextos[nodo_id]["titulo"]
+                })
+        return {"camino": camino_detallado, "longitud": len(camino)}
+    
+    return {"camino": [], "longitud": 0}
+
+@app.get("/grafo/buscar/")
+def buscar_contextos_por_patron(patron: str):
+    """Busca contextos por patrón en título o contenido"""
+    ids_encontrados = grafo.buscar_contextos_por_patron(patron)
+    todos_contextos = grafo.obtener_todos()
+    
+    resultados = {}
+    for id_ctx in ids_encontrados:
+        if id_ctx in todos_contextos:
+            resultados[id_ctx] = todos_contextos[id_ctx]
+    
+    return resultados
+
+@app.get("/grafo/visualizacion/")
+def exportar_para_visualizacion():
+    """Exporta el grafo optimizado para visualización"""
+    return grafo.exportar_grafo_para_visualizacion()
 
 # Asegurar que la carpeta static existe
 os.makedirs("static", exist_ok=True)
