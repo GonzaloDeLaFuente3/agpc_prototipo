@@ -23,7 +23,8 @@
     "relaciones": [
       "c3",
       "c5",
-      "c8"
+      "c8",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "difuso",
@@ -45,7 +46,8 @@
       "c8",
       "c9",
       "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "representar",
@@ -63,7 +65,8 @@
       "c5",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
       "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "capacidad",
@@ -112,7 +115,8 @@
       "c10",
       "c12",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "situacional",
@@ -170,7 +174,8 @@
       "c10",
       "c12",
       "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "artificial",
@@ -187,7 +192,8 @@
     "relaciones": [
       "c1",
       "c3",
-      "c5"
+      "c5",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "sistema",
@@ -225,7 +231,8 @@
       "c5",
       "c7",
       "c11",
-      "c12"
+      "c12",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "informática",
@@ -239,7 +246,8 @@
     "texto": "La informática estudia el procesamiento de datos.",
     "relaciones": [
       "c10",
-      "c12"
+      "c12",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "dato",
@@ -255,7 +263,8 @@
       "c5",
       "c7",
       "c10",
-      "c11"
+      "c11",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "inteligencia",
@@ -273,7 +282,8 @@
       "c5",
       "c6",
       "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "capacidad",
@@ -308,7 +318,8 @@
       "c7",
       "c9",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "modelo",
@@ -347,7 +358,8 @@
       "c7",
       "c9",
       "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076"
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
     ],
     "palabras_clave": [
       "software",
@@ -365,6 +377,56 @@
       "avance",
       "tarea",
       "ofrecer"
+    ]
+  },
+  "d9c1bd52-532e-4faa-8560-c1507bad1d0b": {
+    "titulo": "ia va a dominar el mundo",
+    "texto": "Los fragmentos de texto proporcionados describen qué es la inteligencia artificial (IA) y algunos de sus componentes, pero no ofrecen información sobre si dominará el mundo.  La IA, como se define en los fragmentos, es una rama de la informática que se centra en el procesamiento de datos.  Si bien el procesamiento de datos es clave para la IA y la IA puede gestionar contextos complejos (como indica el fragmento sobre inteligencia contextual),  no hay nada en estos fragmentos que sugiera o refute la posibilidad de que la IA domine el mundo.  La pregunta es especulativa y no puede ser respondida basándose en la información proporcionada.",
+    "relaciones": [
+      "c1",
+      "c3",
+      "c4",
+      "c5",
+      "c7",
+      "c8",
+      "c10",
+      "c11",
+      "c12",
+      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
+      "f589c7b1-0876-4913-acda-0424aac7e076",
+      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
+    ],
+    "palabras_clave": [
+      "inteligencia",
+      "indicar",
+      "procesamiento",
+      "texto",
+      "gestionar",
+      "clave",
+      "complejo",
+      "pregunta",
+      "centrar",
+      "mundo",
+      "sugerir",
+      "contextual",
+      "ofrecer",
+      "dominar",
+      "información",
+      "responder",
+      "artificial",
+      "informática",
+      "contexto",
+      "especulativo",
+      "fragmento",
+      "describir",
+      "componente",
+      "rama",
+      "refute",
+      "basar él",
+      "dato",
+      "definir",
+      "posibilidad",
+      "proporcionado"
     ]
   }
 }

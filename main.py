@@ -68,7 +68,7 @@ def preguntar(pregunta: str):
         return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
     print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
-    respuesta = responder.responder_con_huggingface(pregunta, contextos_relevantes)
+    respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
     
     # Agregar información sobre contextos utilizados a la respuesta
     titulos_utilizados = [info["titulo"] for info in contextos_utilizados_info]

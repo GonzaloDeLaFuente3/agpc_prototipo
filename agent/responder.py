@@ -54,6 +54,6 @@ def responder_con_google_gemini(pregunta, contextos):
         return f"[ERROR Google] {str(e)}"
 
 # Función principal
-def responder_con_huggingface(pregunta, contextos):
+def responder_con_ia(pregunta, contextos):
     """Wrapper para mantener compatibilidad con main.py"""
     return responder_con_google_gemini(pregunta, contextos)
