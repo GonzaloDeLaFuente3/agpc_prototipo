@@ -1,13 +1,14 @@
 # agent/grafo.py
-import networkx as nx
-import pickle
-import json
+#base de datos en forma de grafo que almacena documentos/contextos y automáticamente encuentra relaciones entre ellos basándose en su contenido semántico.
+import networkx as nx #librería para crear y manipular grafos
+import pickle # Guarda el grafo de manera eficiente (formato binario)
+import json # Guarda metadatos en formato JSON (legible y fácil de depurar)
 import os
 import uuid
 from typing import Dict, List, Optional, Set
 from agent.extractor import extraer_palabras_clave
 from agent.semantica import indexar_documento
-import threading
+import threading # Para operaciones seguras en múltiples hilos
 from datetime import datetime
 
 
@@ -53,7 +54,9 @@ def _cargar_grafo():
     else:
         metadatos_contextos = {}
 
-def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:
+def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:## Similitud de Jaccard: palabras_comunes / palabras_totales
+    #Compara documentos por palabras clave compartidas
+    #Si similitud > 0.1 → crea conexión automática
     """Calcula similitud semántica entre dos conjuntos de palabras clave"""
     if not claves_a or not claves_b:
         return 0.0
@@ -98,8 +101,8 @@ def guardar_en_disco():
 
 def agregar_contexto(titulo: str, texto: str) -> str:
     """Agrega un nuevo contexto al grafo"""
-    id_contexto = str(uuid.uuid4())
-    palabras_clave = extraer_palabras_clave(texto)
+    id_contexto = str(uuid.uuid4()) # Genera un ID único para el contexto
+    palabras_clave = extraer_palabras_clave(texto) # extrae palabras clave del texto
     
     # Agregar nodo al grafo
     grafo_contextos.add_node(id_contexto, titulo=titulo)

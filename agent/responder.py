@@ -6,6 +6,9 @@ import os
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDfgYQq3a0bAZ0pgDCkuy8xmmytv8FfvO8")  # Obtén en https://aistudio.google.com/
 
 def construir_prompt(pregunta, contextos):
+    #Toma la pregunta del usuario
+    # Toma los contextos relacionados (que vienen del grafo)
+    # Construye un prompt estructurado
     prompt = """Usando los siguientes fragmentos de contexto, respondé a la siguiente pregunta.
 Cuando necesites referenciar un fragmento, usa su título entre paréntesis.
 
@@ -33,10 +36,10 @@ def responder_con_google_gemini(pregunta, contextos):
             }]
         }],
         "generationConfig": {
-            "temperature": 0.7,
-            "maxOutputTokens": 150,
-            "topP": 0.8,
-            "topK": 10
+            "temperature": 0.7,# Creatividad moderada
+            "maxOutputTokens": 150,# Respuestas concisas
+            "topP": 0.8,# Control de coherencia
+            "topK": 10# Diversidad limitada
         }
     }
 
