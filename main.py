@@ -17,7 +17,7 @@ for id, datos in grafo.obtener_todos().items():
 
 app = FastAPI()
 
-class EntradaContexto(BaseModel):
+class EntradaContexto(BaseModel):# Estructura de entrada para agregar contexto
     titulo: str
     texto: str
 
@@ -44,7 +44,7 @@ def preguntar(pregunta: str):
     
     # Búsqueda automática usando embeddings semánticos
     print("Buscando contextos relevantes automáticamente...")
-    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes
+    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes, buscando similitud semántica
     print(f"IDs encontrados: {ids_similares}")
     
     contextos_relevantes = {}
@@ -52,6 +52,7 @@ def preguntar(pregunta: str):
     
     for id_similar in ids_similares:
         if id_similar in todos_contextos:
+            # Agregar contexto relevante
             contextos_relevantes[id_similar] = todos_contextos[id_similar]
             contextos_utilizados_info.append({
                 "titulo": todos_contextos[id_similar]["titulo"],
@@ -63,6 +64,7 @@ def preguntar(pregunta: str):
         return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
     print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
+    #generar respuesta usando Google Gemini
     respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
     
     # Agregar información sobre contextos utilizados a la respuesta
@@ -76,6 +78,7 @@ def preguntar(pregunta: str):
 
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):
+    #Solo busca y muestra, no genera respuesta con IA.
     from agent import grafo
     from agent.semantica import buscar_similares
 
