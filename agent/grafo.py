@@ -1,63 +1,251 @@
 # agent/grafo.py
-from agent.extractor import extraer_palabras_clave
-import json
+#base de datos en forma de grafo que almacena documentos/contextos y automáticamente encuentra relaciones entre ellos basándose en su contenido semántico.
+import networkx as nx #librería para crear y manipular grafos
+import pickle # Guarda el grafo de manera eficiente (formato binario)
+import json # Guarda metadatos en formato JSON (legible y fácil de depurar)
 import os
-from agent.semantica import indexar_documento
 import uuid
+from typing import Dict, List, Optional, Set
+from agent.extractor import extraer_palabras_clave
+from agent.semantica import indexar_documento
+import threading # Para operaciones seguras en múltiples hilos
+from datetime import datetime
 
-ARCHIVO_JSON = "data/contexto.json"
-contextos = {}
 
-# Funciones de persistencia
-def guardar_en_disco():
-    os.makedirs("data", exist_ok=True)
-    with open(ARCHIVO_JSON, "w", encoding="utf-8") as f:
-        json.dump(contextos, f, ensure_ascii=False, indent=2)
+# Archivos de persistencia
+ARCHIVO_GRAFO = "data/grafo_contextos.pickle"
+ARCHIVO_METADATOS = "data/contexto.json"
 
-def cargar_desde_disco():
-    global contextos
-    if os.path.exists(ARCHIVO_JSON):
-        with open(ARCHIVO_JSON, "r", encoding="utf-8") as f:
-            contextos = json.load(f)
+# Grafo principal (NetworkX DiGraph para relaciones dirigidas)
+grafo_contextos = nx.DiGraph()
+metadatos_contextos = {}  # Información adicional de cada nodo
+
+# Lock para operaciones thread-safe
+_lock = threading.Lock()
+
+def _guardar_grafo():
+    """Guarda el grafo y metadatos en disco"""
+    with _lock:
+        os.makedirs("data", exist_ok=True)
+        
+        # Guardar grafo en pickle (eficiente para NetworkX)
+        with open(ARCHIVO_GRAFO, 'wb') as f:
+            pickle.dump(grafo_contextos, f)
+        
+        # Guardar metadatos en JSON (legible y debuggeable)
+        with open(ARCHIVO_METADATOS, 'w', encoding='utf-8') as f:
+            json.dump(metadatos_contextos, f, ensure_ascii=False, indent=2)
+
+def _cargar_grafo():
+    """Carga el grafo y metadatos desde disco"""
+    global grafo_contextos, metadatos_contextos
+    
+    # Cargar grafo
+    if os.path.exists(ARCHIVO_GRAFO):
+        with open(ARCHIVO_GRAFO, 'rb') as f:
+            grafo_contextos = pickle.load(f)
     else:
-        contextos = {}
-# ---------------------------
+        grafo_contextos = nx.DiGraph()
+    
+    # Cargar metadatos
+    if os.path.exists(ARCHIVO_METADATOS):
+        with open(ARCHIVO_METADATOS, 'r', encoding='utf-8') as f:
+            metadatos_contextos = json.load(f)
+    else:
+        metadatos_contextos = {}
 
-# Relaciones automáticas
-def recalcular_relaciones():
-    """Recalcula relaciones entre todos los contextos"""
-    for id_a, datos_a in contextos.items():
-        claves_a = set(datos_a.get("palabras_clave", []))
-        relaciones = []
-        for id_b, datos_b in contextos.items():
-            if id_a == id_b:
-                continue
-            claves_b = set(datos_b.get("palabras_clave", []))
-            if claves_a & claves_b:
-                relaciones.append(id_b)
-        datos_a["relaciones"] = relaciones
+def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:## Similitud de Jaccard: palabras_comunes / palabras_totales
+    #Compara documentos por palabras clave compartidas
+    #Si similitud > 0.1 → crea conexión automática
+    """Calcula similitud semántica entre dos conjuntos de palabras clave"""
+    if not claves_a or not claves_b:
+        return 0.0
+    
+    interseccion = len(claves_a & claves_b)
+    union = len(claves_a | claves_b)
+    
+    # Similitud de Jaccard
+    return interseccion / union if union > 0 else 0.0
 
-def agregar_contexto(titulo, texto):
-    id = str(uuid.uuid4())  # Generar ID único
-    claves = extraer_palabras_clave(texto)
+def _recalcular_relaciones():
+    """Recalcula todas las relaciones basadas en similitud semántica"""
+    # Limpiar edges existentes
+    grafo_contextos.clear_edges()
+    
+    nodos = list(grafo_contextos.nodes())
+    
+    for i, nodo_a in enumerate(nodos):
+        metadatos_a = metadatos_contextos.get(nodo_a, {})
+        claves_a = set(metadatos_a.get("palabras_clave", []))
+        
+        for nodo_b in nodos[i+1:]:  # Evitar duplicados
+            metadatos_b = metadatos_contextos.get(nodo_b, {})
+            claves_b = set(metadatos_b.get("palabras_clave", []))
+            
+            similitud = _calcular_similitud_semantica(claves_a, claves_b)
+            
+            # Crear relación si similitud > umbral
+            if similitud > 0.1:  # Umbral configurable
+                # Relación bidireccional con peso
+                grafo_contextos.add_edge(nodo_a, nodo_b, peso=similitud, tipo="semantica")
+                grafo_contextos.add_edge(nodo_b, nodo_a, peso=similitud, tipo="semantica")
 
-    contextos[id] = {
+# Funciones principales de la API
+def cargar_desde_disco():
+    """Carga el grafo desde disco"""
+    _cargar_grafo()
+
+def guardar_en_disco():
+    """Guarda el grafo en disco"""
+    _guardar_grafo()
+
+def agregar_contexto(titulo: str, texto: str) -> str:
+    """Agrega un nuevo contexto al grafo"""
+    id_contexto = str(uuid.uuid4()) # Genera un ID único para el contexto
+    palabras_clave = extraer_palabras_clave(texto) # extrae palabras clave del texto
+    
+    # Agregar nodo al grafo
+    grafo_contextos.add_node(id_contexto, titulo=titulo)
+    
+    # Agregar metadatos
+    metadatos_contextos[id_contexto] = {
         "titulo": titulo,
         "texto": texto,
-        "relaciones": [],# se llenará al recalcular
-        "palabras_clave": claves
+        "palabras_clave": palabras_clave,
+        "created_at": datetime.now().isoformat(),
+        "relaciones": []  # Se calculará después
     }
+    
+    # Recalcular relaciones con todos los nodos
+    _recalcular_relaciones()
+    
+    # Actualizar lista de relaciones en metadatos
+    _actualizar_listas_relaciones()
+    
+    # Persistir
+    _guardar_grafo()
+    
+    # Indexar para búsqueda semántica
+    indexar_documento(id_contexto, texto)
+    
+    return id_contexto
 
-    recalcular_relaciones()  # recalcula para todos
-    guardar_en_disco()
-    indexar_documento(id, texto)
-    return id
+def _actualizar_listas_relaciones():
+    """Actualiza las listas de relaciones en metadatos"""
+    for nodo in grafo_contextos.nodes():
+        if nodo in metadatos_contextos:
+            # Obtener vecinos (nodos conectados)
+            vecinos = list(grafo_contextos.neighbors(nodo))
+            metadatos_contextos[nodo]["relaciones"] = vecinos
 
-def obtener_todos():
-    return contextos
+def obtener_todos() -> Dict:
+    """Obtiene todos los contextos en formato compatible con la API anterior"""
+    resultado = {}
+    
+    for nodo in grafo_contextos.nodes():
+        if nodo in metadatos_contextos:
+            metadatos = metadatos_contextos[nodo].copy()
+            # Asegurar que tiene la estructura esperada
+            if "relaciones" not in metadatos:
+                metadatos["relaciones"] = list(grafo_contextos.neighbors(nodo))
+            resultado[nodo] = metadatos
+    
+    return resultado
 
-def obtener_relacionados(id):
-    if id not in contextos:
+def obtener_relacionados(id_contexto: str) -> Dict:
+    """Obtiene contextos relacionados a un ID específico"""
+    if id_contexto not in grafo_contextos:
         return {}
-    relacionados = contextos[id]["relaciones"]
-    return {rid: contextos[rid] for rid in relacionados if rid in contextos}
+    
+    relacionados = {}
+    vecinos = grafo_contextos.neighbors(id_contexto)
+    
+    for vecino in vecinos:
+        if vecino in metadatos_contextos:
+            relacionados[vecino] = metadatos_contextos[vecino]
+    
+    return relacionados
+
+def obtener_estadisticas() -> Dict:
+    """Obtiene estadísticas del grafo"""
+    stats = {
+        "storage_type": "NetworkX Graph Database",
+        "total_contextos": grafo_contextos.number_of_nodes(),
+        "total_relaciones": grafo_contextos.number_of_edges(),
+        "archivo_grafo": ARCHIVO_GRAFO,
+        "archivo_metadatos": ARCHIVO_METADATOS
+    }
+    
+    # Tamaños de archivos
+    for archivo, key in [(ARCHIVO_GRAFO, "tamaño_grafo_mb"), (ARCHIVO_METADATOS, "tamaño_metadatos_mb")]:
+        if os.path.exists(archivo):
+            stats[key] = round(os.path.getsize(archivo) / (1024*1024), 3)
+    
+    # Estadísticas del grafo
+    if grafo_contextos.number_of_nodes() > 0:
+        # Densidad del grafo
+        stats["densidad"] = round(nx.density(grafo_contextos), 3)
+        
+        # Componentes conectados
+        stats["componentes_conectados"] = nx.number_weakly_connected_components(grafo_contextos)
+        
+        # Nodo con más conexiones (centralidad de grado)
+        grados = dict(grafo_contextos.degree())
+        if grados:
+            nodo_max_grado = max(grados.items(), key=lambda x: x[1])
+            titulo_max = metadatos_contextos.get(nodo_max_grado[0], {}).get("titulo", "Desconocido")
+            stats["nodo_mas_conectado"] = {
+                "id": nodo_max_grado[0],
+                "titulo": titulo_max,
+                "conexiones": nodo_max_grado[1]
+            }
+    
+    return stats
+
+def obtener_contextos_centrales(k: int = 5) -> List[Dict]:
+    """Obtiene los k contextos más centrales en el grafo"""
+    if grafo_contextos.number_of_nodes() == 0:
+        return []
+    
+    # Calcular centralidad de cercanía
+    centralidad = nx.closeness_centrality(grafo_contextos.to_undirected())
+    
+    # Obtener los k más centrales
+    nodos_centrales = sorted(centralidad.items(), key=lambda x: x[1], reverse=True)[:k]
+    
+    resultado = []
+    for nodo_id, centralidad_valor in nodos_centrales:
+        if nodo_id in metadatos_contextos:
+            info = metadatos_contextos[nodo_id].copy()
+            info["centralidad"] = round(centralidad_valor, 3)
+            info["id"] = nodo_id
+            resultado.append(info)
+    
+    return resultado
+
+def exportar_grafo_para_visualizacion() -> Dict:
+    """Exporta el grafo en formato para vis.js o similar"""
+    nodos = []
+    edges = []
+    
+    # Nodos
+    for nodo_id in grafo_contextos.nodes():
+        if nodo_id in metadatos_contextos:
+            metadatos = metadatos_contextos[nodo_id]
+            nodos.append({
+                "id": nodo_id,
+                "label": metadatos.get("titulo", "Sin título"),
+                "title": f"{metadatos.get('titulo', '')}\n{metadatos.get('texto', '')[:100]}...",
+                "group": len(metadatos.get("palabras_clave", [])),  # Agrupar por cantidad de palabras clave
+            })
+    
+    # Edges
+    for origen, destino, datos in grafo_contextos.edges(data=True):
+        edges.append({
+            "from": origen,
+            "to": destino,
+            "weight": datos.get("peso", 1),
+            "title": f"Similitud: {datos.get('peso', 0):.2f}"
+        })
+    
+    return {"nodes": nodos, "edges": edges}
