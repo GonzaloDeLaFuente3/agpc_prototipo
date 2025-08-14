@@ -7,8 +7,7 @@ from typing import List, Optional
 from agent import responder
 from fastapi.staticfiles import StaticFiles
 import os
-from agent.semantica import indexar_documento
-from agent.semantica import buscar_similares
+from agent.semantica import indexar_documento, buscar_similares
 
 grafo.cargar_desde_disco()# ← cargar contexto si existe
 
@@ -18,7 +17,7 @@ for id, datos in grafo.obtener_todos().items():
 
 app = FastAPI()
 
-class EntradaContexto(BaseModel):
+class EntradaContexto(BaseModel):# Estructura de entrada para agregar contexto
     titulo: str
     texto: str
 
@@ -30,10 +29,6 @@ def agregar_contexto(entrada: EntradaContexto):
 @app.get("/contexto/")
 def obtener_contextos():
     return grafo.obtener_todos()
-
-@app.get("/contexto/relacionados/")
-def obtener_relacionados(id: str):
-    return grafo.obtener_relacionados(id)
 
 @app.get("/preguntar/")
 def preguntar(pregunta: str):
@@ -49,7 +44,7 @@ def preguntar(pregunta: str):
     
     # Búsqueda automática usando embeddings semánticos
     print("Buscando contextos relevantes automáticamente...")
-    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes
+    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes, buscando similitud semántica
     print(f"IDs encontrados: {ids_similares}")
     
     contextos_relevantes = {}
@@ -57,6 +52,7 @@ def preguntar(pregunta: str):
     
     for id_similar in ids_similares:
         if id_similar in todos_contextos:
+            # Agregar contexto relevante
             contextos_relevantes[id_similar] = todos_contextos[id_similar]
             contextos_utilizados_info.append({
                 "titulo": todos_contextos[id_similar]["titulo"],
@@ -68,6 +64,7 @@ def preguntar(pregunta: str):
         return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
     print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
+    #generar respuesta usando Google Gemini
     respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
     
     # Agregar información sobre contextos utilizados a la respuesta
@@ -81,6 +78,7 @@ def preguntar(pregunta: str):
 
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):
+    #Solo busca y muestra, no genera respuesta con IA.
     from agent import grafo
     from agent.semantica import buscar_similares
 
@@ -89,6 +87,20 @@ def buscar_por_texto(texto: str):
     todos = grafo.obtener_todos()
     resultados = {id: todos[id] for id in ids_similares if id in todos}
     return resultados
+
+@app.get("/estadisticas/")
+def obtener_estadisticas():
+    return grafo.obtener_estadisticas()
+
+@app.get("/grafo/centrales/")
+def obtener_contextos_centrales(k: int = 5):
+    """Obtiene los contextos más centrales del grafo"""
+    return grafo.obtener_contextos_centrales(k)
+
+@app.get("/grafo/visualizacion/")
+def exportar_para_visualizacion():
+    """Exporta el grafo optimizado para visualización"""
+    return grafo.exportar_grafo_para_visualizacion()
 
 # Asegurar que la carpeta static existe
 os.makedirs("static", exist_ok=True)
