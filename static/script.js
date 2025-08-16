@@ -149,7 +149,7 @@ async function mostrarContextos() {
             salida = `📊 Total: ${numContextos} contextos\n\n`;
             for (const [id, datos] of Object.entries(contextos)) {
                 salida += `🟦 ${datos.titulo}\n`;
-                salida += `📄 ${datos.texto.substring(0, 100)}${datos.texto.length > 100 ? '...' : ''}\n`;
+                salida += `📄 ${datos.texto.substring(0, 150)}${datos.texto.length > 150 ? '...' : ''}\n`;
                 salida += `🔗 Relacionados: ${datos.relaciones.map(rid => contextos[rid]?.titulo || rid).join(', ') || 'Ninguno'}\n`;
                 salida += `🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
             }

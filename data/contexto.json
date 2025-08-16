@@ -641,7 +641,27 @@
     "created_at": "2025-08-12T16:15:35.315297",
     "relaciones": [
       "5c0e8c71-1d4b-4756-bfd7-585008025da7",
-      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3"
+      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3",
+      "d3dc9806-946d-4046-aa00-d0c31b4cb676"
+    ]
+  },
+  "d3dc9806-946d-4046-aa00-d0c31b4cb676": {
+    "titulo": "ventana de contexto",
+    "texto": "se refiere a la cantidad de texto que el modelo puede considerar o \"recordar\" en un momento dado al procesar información.",
+    "palabras_clave": [
+      "procesar",
+      "cantidad",
+      "información",
+      "considerar",
+      "momento",
+      "modelo",
+      "recordar",
+      "texto",
+      "referir"
+    ],
+    "created_at": "2025-08-16T18:17:11.945082",
+    "relaciones": [
+      "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
     ]
   }
 }
