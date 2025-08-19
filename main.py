@@ -21,6 +21,10 @@ class EntradaContexto(BaseModel):# Estructura de entrada para agregar contexto
     titulo: str
     texto: str
 
+class EditarContexto(BaseModel):
+    titulo: Optional[str] = None
+    texto: Optional[str] = None
+
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
     nuevo_id = grafo.agregar_contexto(entrada.titulo, entrada.texto)
@@ -29,6 +33,28 @@ def agregar_contexto(entrada: EntradaContexto):
 @app.get("/contexto/")
 def obtener_contextos():
     return grafo.obtener_todos()
+
+@app.put("/contexto/{id_contexto}")
+def editar_contexto(id_contexto: str, entrada: EditarContexto):
+    """Edita un contexto existente"""
+    print(f"🔍 Recibida petición PUT para contexto: {id_contexto}")
+    print(f"🔍 Datos recibidos: titulo={entrada.titulo}, texto={entrada.texto}")
+    
+    try:
+        exito = grafo.editar_contexto(id_contexto, entrada.titulo, entrada.texto)
+        print(f"🔍 Resultado de editar_contexto: {exito}")
+        
+        if exito:
+            print("✅ Contexto editado exitosamente")
+            return {"status": "editado", "id": id_contexto}
+        else:
+            print("❌ Contexto no encontrado")
+            return {"status": "error", "message": "Contexto no encontrado"}
+    except Exception as e:
+        print(f"❌ Error editando contexto: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {"status": "error", "message": f"Error interno: {str(e)}"}
 
 @app.get("/preguntar/")
 def preguntar(pregunta: str):

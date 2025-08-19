@@ -663,5 +663,19 @@
     "relaciones": [
       "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
     ]
+  },
+  "14004a20-1a38-416b-98ad-66c249b8a37f": {
+    "titulo": "a",
+    "texto": "a",
+    "palabras_clave": [],
+    "created_at": "2025-08-18T17:12:40.697220",
+    "relaciones": []
+  },
+  "78180f2a-0b01-4cb2-91bb-37d5c2f6a6bc": {
+    "titulo": "b",
+    "texto": "b",
+    "palabras_clave": [],
+    "created_at": "2025-08-18T17:37:58.511808",
+    "relaciones": []
   }
 }

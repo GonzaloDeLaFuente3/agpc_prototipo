@@ -249,3 +249,42 @@ def exportar_grafo_para_visualizacion() -> Dict:
         })
     
     return {"nodes": nodos, "edges": edges}
+
+def editar_contexto(id_contexto: str, nuevo_titulo: str = None, nuevo_texto: str = None) -> bool:
+    """Edita un contexto existente y recalcula las relaciones automáticamente"""
+    if id_contexto not in grafo_contextos:
+        return False
+    
+    if id_contexto not in metadatos_contextos:
+        return False
+    
+    with _lock:
+        # Actualizar título si se proporciona
+        if nuevo_titulo is not None:
+            metadatos_contextos[id_contexto]["titulo"] = nuevo_titulo
+            # Actualizar también en el nodo del grafo
+            grafo_contextos.nodes[id_contexto]["titulo"] = nuevo_titulo
+        
+        # Actualizar texto y recalcular palabras clave si se proporciona
+        if nuevo_texto is not None:
+            metadatos_contextos[id_contexto]["texto"] = nuevo_texto
+            # Extraer nuevas palabras clave
+            nuevas_palabras_clave = extraer_palabras_clave(nuevo_texto)
+            metadatos_contextos[id_contexto]["palabras_clave"] = nuevas_palabras_clave
+            
+            # Actualizar timestamp de modificación
+            metadatos_contextos[id_contexto]["updated_at"] = datetime.now().isoformat()
+            
+            # Recalcular todas las relaciones del grafo (porque cambió el contenido semántico)
+            _recalcular_relaciones()
+            
+            # Actualizar listas de relaciones en metadatos
+            _actualizar_listas_relaciones()
+            
+            # Reindexar el documento para búsqueda semántica
+            indexar_documento(id_contexto, nuevo_texto)
+        
+        # Persistir cambios
+        _guardar_grafo()
+        
+        return True

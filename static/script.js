@@ -3,39 +3,65 @@
 // Variables globales
 let ultimaRespuesta = "";
 let ultimaPregunta = "";
+let contextoEditando = null;
 
 // Event listeners para cuando la página carga
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("✅ Página cargada, configurando event listeners...");
+    
     // Toggle para mostrar/ocultar formulario de agregar contexto
-    document.getElementById('toggleAgregarContexto').addEventListener('click', function() {
-        const form = document.getElementById('formAgregarContexto');
-        form.classList.toggle('hidden');
-        if (!form.classList.contains('hidden')) {
-            document.getElementById('titulo').focus();
-        }
-    });
+    const toggleButton = document.getElementById('toggleAgregarContexto');
+    if (toggleButton) {
+        toggleButton.addEventListener('click', function() {
+            const form = document.getElementById('formAgregarContexto');
+            if (form) {
+                form.classList.toggle('hidden');
+                if (!form.classList.contains('hidden')) {
+                    const tituloInput = document.getElementById('titulo');
+                    if (tituloInput) {
+                        tituloInput.focus();
+                    }
+                }
+            }
+        });
+        console.log("✅ Toggle agregar contexto configurado");
+    }
 
     // Cancelar agregar contexto
-    document.getElementById('cancelarAgregar').addEventListener('click', function() {
-        document.getElementById('formAgregarContexto').classList.add('hidden');
-        document.getElementById('titulo').value = '';
-        document.getElementById('texto').value = '';
-    });
+    const cancelarButton = document.getElementById('cancelarAgregar');
+    if (cancelarButton) {
+        cancelarButton.addEventListener('click', function() {
+            const form = document.getElementById('formAgregarContexto');
+            const tituloInput = document.getElementById('titulo');
+            const textoInput = document.getElementById('texto');
+            
+            if (form) form.classList.add('hidden');
+            if (tituloInput) tituloInput.value = '';
+            if (textoInput) textoInput.value = '';
+        });
+        console.log("✅ Botón cancelar configurado");
+    }
 
     // Enter en campos de input para ejecutar acciones
-    document.getElementById('pregunta').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            preguntar();
-        }
-    });
+    const preguntaInput = document.getElementById('pregunta');
+    if (preguntaInput) {
+        preguntaInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                preguntar();
+            }
+        });
+    }
 
-    document.getElementById('textoBusqueda').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            buscarSemantico();
-        }
-    });
-
-    // Cargar grafo inicial (se cargará cuando se abra el modal)
+    const busquedaInput = document.getElementById('textoBusqueda');
+    if (busquedaInput) {
+        busquedaInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarSemantico();
+            }
+        });
+    }
+    
+    console.log("✅ Todos los event listeners configurados correctamente");
 });
 
 // Funciones principales
@@ -49,19 +75,44 @@ async function agregarContexto() {
     }
 
     try {
+        // Mostrar indicador de carga (opcional)
+        const botonGuardar = document.querySelector('button[onclick="agregarContexto()"]');
+        const textoOriginal = botonGuardar.innerHTML;
+        botonGuardar.innerHTML = "⏳ Guardando...";
+        botonGuardar.disabled = true;
+
+        // Enviar petición
         const res = await axios.post('/contexto/', { titulo, texto });
-        alert(`✅ Contexto agregado automáticamente con relaciones detectadas! ID interno: ${res.data.id}`);
         
-        // Limpiar campos
-        document.getElementById('titulo').value = '';
-        document.getElementById('texto').value = '';
-        document.getElementById('formAgregarContexto').classList.add('hidden');
-        
-        // Actualizar automáticamente
-        mostrarContextos();
+        // Verificar respuesta
+        if (res.data && res.data.id) {
+            alert(`✅ Contexto agregado exitosamente!\n\nTítulo: "${titulo}"\nID: ${res.data.id}\n\nRelaciones automáticas calculadas.`);
+            
+            // Limpiar campos
+            document.getElementById('titulo').value = '';
+            document.getElementById('texto').value = '';
+            
+            // Ocultar formulario
+            document.getElementById('formAgregarContexto').classList.add('hidden');
+            
+            // Actualizar lista de contextos automáticamente
+            await mostrarContextos();
+            
+            console.log("✅ Contexto agregado y visualización actualizada");
+        } else {
+            throw new Error("Respuesta inválida del servidor");
+        }
         
     } catch (error) {
-        alert(`❌ Error al agregar contexto: ${error.message}`);
+        console.error("❌ Error agregando contexto:", error);
+        alert(`❌ Error al agregar contexto: ${error.response?.data?.detail || error.message}`);
+    } finally {
+        // Restaurar botón
+        const botonGuardar = document.querySelector('button[onclick="agregarContexto()"]');
+        if (botonGuardar) {
+            botonGuardar.innerHTML = "✅ Guardar";
+            botonGuardar.disabled = false;
+        }
     }
 }
 
@@ -140,26 +191,298 @@ async function mostrarContextos() {
         const res = await axios.get('/contexto/');
         const contextos = res.data;
 
-        let salida = "";
+        const container = document.getElementById("todosContextos");
         const numContextos = Object.keys(contextos).length;
         
         if (numContextos === 0) {
-            salida = "No hay contextos almacenados aún.";
-        } else {
-            salida = `📊 Total: ${numContextos} contextos\n\n`;
-            for (const [id, datos] of Object.entries(contextos)) {
-                salida += `🟦 ${datos.titulo}\n`;
-                salida += `📄 ${datos.texto.substring(0, 150)}${datos.texto.length > 150 ? '...' : ''}\n`;
-                salida += `🔗 Relacionados: ${datos.relaciones.map(rid => contextos[rid]?.titulo || rid).join(', ') || 'Ninguno'}\n`;
-                salida += `🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
-            }
+            container.innerHTML = "<p class='text-gray-500 italic'>No hay contextos almacenados aún.</p>";
+            return;
         }
 
-        document.getElementById("todosContextos").innerText = salida;
+        // Header con estadísticas
+        let html = `<div class='mb-3 p-2 bg-blue-50 border border-blue-200 rounded'>
+                     <p class='text-sm font-semibold text-blue-800'>📊 Total: ${numContextos} contextos</p>
+                    </div>`;
+
+        // Lista de contextos con botones de acción
+        for (const [id, datos] of Object.entries(contextos)) {
+            const relacionados = datos.relaciones.map(rid => 
+                contextos[rid]?.titulo || rid
+            ).join(', ') || 'Ninguno';
+
+            html += `
+                <div class='mb-4 p-3 bg-white border border-gray-200 rounded-lg shadow-sm'>
+                    <div class='flex justify-between items-start mb-2'>
+                        <h4 class='font-semibold text-blue-800 text-sm break-words flex-1 mr-2'>${datos.titulo}</h4>
+                        <button onclick="editarContexto('${id}')" 
+                                class='bg-yellow-500 text-white px-3 py-1 rounded-lg text-xs hover:bg-yellow-600 transition-colors flex-shrink-0 font-medium'
+                                title="Editar contexto">
+                            ✏️ Editar
+                        </button>
+                    </div>
+                    
+                    <p class='text-xs text-gray-700 mb-2 break-words'>
+                        📄 ${datos.texto.substring(0, 120)}${datos.texto.length > 120 ? '...' : ''}
+                    </p>
+                    
+                    <div class='text-xs text-gray-500 space-y-1'>
+                        <p><strong>🔗 Relacionados:</strong> ${relacionados}</p>
+                        <p><strong>🔑 Palabras clave:</strong> ${datos.palabras_clave.join(', ') || 'Ninguna'}</p>
+                        <p><strong>🆔 ID:</strong> <code class='bg-gray-100 px-1 rounded'>${id}</code></p>
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+        
     } catch (error) {
-        document.getElementById("todosContextos").innerText = `Error cargando contextos: ${error.message}`;
+        document.getElementById("todosContextos").innerHTML = 
+            `<p class="text-red-600 text-sm">Error cargando contextos: ${error.message}</p>`;
     }
 }
+
+async function editarContexto(id) {
+    try {
+        // Obtener datos actuales del contexto
+        const res = await axios.get('/contexto/');
+        const contexto = res.data[id];
+        
+        if (!contexto) {
+            alert("❌ Contexto no encontrado");
+            return;
+        }
+
+        // Modal de edición usando prompts simples (luego podemos mejorarlo)
+        const nuevoTitulo = prompt(`✏️ Editar título:\n\n(Deja en blanco para mantener el actual)`, contexto.titulo);
+        
+        // Si el usuario canceló
+        if (nuevoTitulo === null) {
+            return;
+        }
+
+        const nuevoTexto = prompt(`✏️ Editar texto:\n\n(Deja en blanco para mantener el actual)`, contexto.texto);
+        
+        // Si el usuario canceló
+        if (nuevoTexto === null) {
+            return;
+        }
+
+        // Preparar datos para enviar (solo enviar si hay cambios)
+        const datosEdicion = {};
+        
+        if (nuevoTitulo.trim() && nuevoTitulo.trim() !== contexto.titulo) {
+            datosEdicion.titulo = nuevoTitulo.trim();
+        }
+        
+        if (nuevoTexto.trim() && nuevoTexto.trim() !== contexto.texto) {
+            datosEdicion.texto = nuevoTexto.trim();
+        }
+
+        // Si no hay cambios
+        if (Object.keys(datosEdicion).length === 0) {
+            alert("ℹ️ No se detectaron cambios");
+            return;
+        }
+
+        // Confirmar antes de guardar
+        const cambios = [];
+        if (datosEdicion.titulo) cambios.push("título");
+        if (datosEdicion.texto) cambios.push("texto y relaciones automáticas");
+        
+        const confirmacion = confirm(`¿Confirmar cambios en: ${cambios.join(', ')}?\n\n${datosEdicion.texto ? '⚠️ Cambiar el texto recalculará todas las relaciones automáticamente.' : ''}`);
+        
+        if (!confirmacion) {
+            return;
+        }
+
+        // Enviar edición
+        const editRes = await axios.put(`/contexto/${id}`, datosEdicion);
+        
+        if (editRes.data.status === "editado") {
+            alert(`✅ Contexto editado exitosamente!\n\n${datosEdicion.texto ? '🔄 Las relaciones se recalcularon automáticamente.' : ''}`);
+            
+            // Actualizar visualización
+            mostrarContextos();
+        } else {
+            alert(`❌ Error: ${editRes.data.message || 'No se pudo editar'}`);
+        }
+        
+    } catch (error) {
+        alert(`❌ Error editando contexto: ${error.message}`);
+    }
+}
+
+function cerrarModalEditar() {
+    console.log("🚪 Cerrando modal de edición...");
+    
+    // Ocultar modal
+    const modal = document.getElementById('modalEditarContexto');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+    
+    // Limpiar formulario
+    const campos = ['editarId', 'editarTitulo', 'editarTexto'];
+    campos.forEach(campoId => {
+        const campo = document.getElementById(campoId);
+        if (campo) {
+            campo.value = '';
+        }
+    });
+    
+    // Restaurar botón si estaba en estado de carga
+    const botonGuardar = document.querySelector('button[onclick="guardarEdicionContexto()"]');
+    if (botonGuardar) {
+        botonGuardar.innerHTML = "💾 Guardar Cambios";
+        botonGuardar.disabled = false;
+    }
+    
+    // Limpiar variable de contexto
+    contextoEditando = null;
+    
+    console.log("✅ Modal cerrado y limpiado correctamente");
+}
+
+async function guardarEdicionContexto() {
+    console.log("🔄 Iniciando proceso de edición...");
+    
+    if (!contextoEditando) {
+        console.error("❌ No hay contexto para editar");
+        alert("❌ No hay contexto para editar");
+        return;
+    }
+
+    // Obtener valores del formulario
+    const nuevoTitulo = document.getElementById('editarTitulo').value.trim();
+    const nuevoTexto = document.getElementById('editarTexto').value.trim();
+
+    console.log("📝 Datos del formulario:", { nuevoTitulo, nuevoTexto });
+    console.log("📝 Datos originales:", { 
+        titulo: contextoEditando.tituloOriginal, 
+        texto: contextoEditando.textoOriginal 
+    });
+
+    // Validaciones
+    if (!nuevoTitulo) {
+        alert("❌ El título no puede estar vacío");
+        document.getElementById('editarTitulo').focus();
+        return;
+    }
+
+    if (!nuevoTexto) {
+        alert("❌ El contenido no puede estar vacío");
+        document.getElementById('editarTexto').focus();
+        return;
+    }
+
+    // Verificar si hay cambios
+    const hayCambioTitulo = nuevoTitulo !== contextoEditando.tituloOriginal;
+    const hayCambioTexto = nuevoTexto !== contextoEditando.textoOriginal;
+
+    console.log("🔍 Análisis de cambios:", { hayCambioTitulo, hayCambioTexto });
+
+    if (!hayCambioTitulo && !hayCambioTexto) {
+        console.log("ℹ️ No se detectaron cambios");
+        alert("ℹ️ No se detectaron cambios");
+        return;
+    }
+
+    // Preparar datos para enviar
+    const datosEdicion = {};
+    
+    if (hayCambioTitulo) {
+        datosEdicion.titulo = nuevoTitulo;
+    }
+    
+    if (hayCambioTexto) {
+        datosEdicion.texto = nuevoTexto;
+    }
+
+    console.log("📤 Datos que se enviarán:", datosEdicion);
+
+    // Confirmación con resumen de cambios
+    let mensajeConfirmacion = "¿Confirmar los siguientes cambios?\n\n";
+    
+    if (hayCambioTitulo) {
+        mensajeConfirmacion += `📝 Título: "${contextoEditando.tituloOriginal}" → "${nuevoTitulo}"\n`;
+    }
+    
+    if (hayCambioTexto) {
+        mensajeConfirmacion += `📄 Contenido: Se modificará el texto\n`;
+        mensajeConfirmacion += `⚠️ Se recalcularán automáticamente las relaciones\n`;
+    }
+
+    const confirmacion = confirm(mensajeConfirmacion);
+    if (!confirmacion) {
+        console.log("❌ Usuario canceló la edición");
+        return;
+    }
+
+    try {
+        console.log("🚀 Enviando petición de edición...");
+        
+        // Mostrar indicador de carga
+        const botonGuardar = document.querySelector('button[onclick="guardarEdicionContexto()"]');
+        const textoOriginal = botonGuardar.innerHTML;
+        botonGuardar.innerHTML = "⏳ Guardando...";
+        botonGuardar.disabled = true;
+
+        // Enviar edición
+        const editRes = await axios.put(`/contexto/${contextoEditando.id}`, datosEdicion);
+        
+        console.log("📥 Respuesta del servidor:", editRes.data);
+        
+        if (editRes.data.status === "editado") {
+            console.log("✅ Contexto editado exitosamente!");
+            alert(`✅ Contexto editado exitosamente!\n\n${hayCambioTexto ? '🔄 Las relaciones se recalcularon automáticamente.' : ''}`);
+            
+            // Cerrar modal
+            cerrarModalEditar();
+            
+            // Actualizar visualización
+            console.log("🔄 Actualizando lista de contextos...");
+            await mostrarContextos();
+            console.log("✅ Lista actualizada correctamente");
+            
+        } else {
+            console.error("❌ Error en la respuesta:", editRes.data);
+            alert(`❌ Error: ${editRes.data.message || 'No se pudo editar'}`);
+        }
+        
+    } catch (error) {
+        console.error("❌ Error editando contexto:", error);
+        alert(`❌ Error editando contexto: ${error.response?.data?.detail || error.message}`);
+    } finally {
+        // Restaurar botón
+        const botonGuardar = document.querySelector('button[onclick="guardarEdicionContexto()"]');
+        if (botonGuardar) {
+            botonGuardar.innerHTML = "💾 Guardar Cambios";
+            botonGuardar.disabled = false;
+        }
+        console.log("🔧 Botón restaurado");
+    }
+}
+
+// Event listener para cerrar modal con Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        if (!document.getElementById('modalEditarContexto').classList.contains('hidden')) {
+            cerrarModalEditar();
+        } else {
+            cerrarModalGrafo();
+        }
+    }
+});
+
+// Event listener para guardar con Ctrl+Enter en el modal de edición
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key === 'Enter') {
+        if (!document.getElementById('modalEditarContexto').classList.contains('hidden')) {
+            guardarEdicionContexto();
+        }
+    }
+});
 
 async function buscarSemantico() {
     const texto = document.getElementById('textoBusqueda').value.trim();
