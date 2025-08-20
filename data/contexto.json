@@ -663,5 +663,40 @@
     "relaciones": [
       "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
     ]
+  },
+  "d75cf4fc-1c17-44b6-8c66-4dcf74464228": {
+    "titulo": "Reunión proyecto X",
+    "texto": "El proyecto x se trata de como se puede realizar un prototipo de ingeniería de contexto ",
+    "palabras_clave": [
+      "prototipo",
+      "contexto",
+      "proyecto",
+      "ingeniería"
+    ],
+    "created_at": "2025-08-20T17:02:18.849060",
+    "es_temporal": true,
+    "relaciones": [
+      "57e7d506-cea7-4052-8985-c87019133c3d"
+    ],
+    "timestamp": "2025-08-20T17:02:18.849060"
+  },
+  "57e7d506-cea7-4052-8985-c87019133c3d": {
+    "titulo": "Deadline proyecto Y",
+    "texto": "Deadline proyecto Y, esto se relaciona con el proyecto x que toma tema de ingeniería de contexto ",
+    "palabras_clave": [
+      "relacionar",
+      "contexto",
+      "tema",
+      "proyecto",
+      "ingeniería",
+      "deadline",
+      "tomar"
+    ],
+    "created_at": "2025-08-20T17:03:25.107048",
+    "es_temporal": true,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228"
+    ],
+    "timestamp": "2025-08-20T17:03:25.107048"
   }
 }

@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agente Experto en Gestión Probabilística de Contextos (AGPC) - Prototipo</title>
+    <title>Agente Experto en Gestión Probabilística de Contextos (AGPC) Temporal - Prototipo</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans min-h-screen">
     <!-- Header -->
-    <header class=" shadow-md p-4 mb-4 bg-blue-200">
+    <header class="shadow-md p-4 mb-4 bg-gradient-to-r from-blue-200 to-purple-200">
         <h1 class="text-2xl font-bold text-center text-gray-800">
-            Agente Experto en Gestión Probabilística de Contextos (AGPC) - Prototipo
+            AGPC Temporal - Prototipo v2 🕒
         </h1>
+        <p class="text-center text-sm text-gray-600 mt-1">
+            Gestión Probabilística de Contextos con Dimensión Temporal
+        </p>
     </header>
 
     <!-- Main Content - 3 Columnas -->
@@ -23,7 +26,7 @@
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
             <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contextos</h2>
             
-            <!-- Agregar Contexto -->
+            <!-- Agregar Contexto con opción temporal -->
             <div class="mb-6">
                 <button id="toggleAgregarContexto" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mb-3">
                     ➕ Agregar Nuevo Contexto
@@ -32,6 +35,18 @@
                 <div id="formAgregarContexto" class="hidden space-y-3">
                     <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full rounded text-sm" />
                     <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full rounded text-sm h-20 resize-none"></textarea>
+                    
+                    <!-- NUEVO: Checkbox para contexto temporal -->
+                    <div class="flex items-center space-x-2 bg-yellow-50 p-2 rounded border border-yellow-200">
+                        <input type="checkbox" id="esTemporal" class="text-blue-600">
+                        <label for="esTemporal" class="text-sm font-medium text-yellow-800">
+                            🕒 Contexto temporal (fecha/hora actual)
+                        </label>
+                    </div>
+                    <div class="text-xs text-gray-600 -mt-1">
+                        💡 Los contextos temporales se relacionan considerando proximidad en el tiempo
+                    </div>
+                    
                     <div class="flex gap-2">
                         <button onclick="agregarContexto()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
                             ✅ Guardar
@@ -73,7 +88,7 @@
                     
                     <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                         <p class="text-sm text-blue-700">
-                            🤖 <strong>IA Automática:</strong> El sistema buscará automáticamente los contextos más relevantes para tu pregunta.
+                            🤖 <strong>IA Automática:</strong> El sistema buscará automáticamente los contextos más relevantes considerando similitud semántica Y proximidad temporal.
                         </p>
                     </div>
                     
@@ -111,17 +126,36 @@
         <!-- COLUMNA DERECHA - Visualización y Estadísticas -->
         <div class="w-1/4 space-y-4 ">
             
+            <!-- NUEVO: Sección de Control Temporal -->
+            <div class="bg-yellow-100 rounded-lg shadow-md p-4 border-l-4 border-yellow-500">
+                <h2 class="text-lg font-semibold mb-4 text-yellow-800 border-b pb-2">🕒 Control Temporal</h2>
+                
+                <div class="space-y-3">
+                    <button onclick="actualizarPesosTemporal()" class="w-full bg-yellow-600 text-white px-4 py-3 rounded-lg hover:bg-yellow-700 transition-colors font-medium">
+                        ⚡ Actualizar Pesos Temporales
+                    </button>
+                    
+                    <div class="text-xs text-yellow-700 bg-yellow-50 p-2 rounded">
+                        <p><strong>🕒 Sistema Temporal:</strong> Recalcula las relaciones considerando el paso del tiempo. Los contextos más recientes tendrán mayor peso.</p>
+                    </div>
+                    
+                    <div id="resultadoActualizacion" class="hidden text-xs bg-green-50 p-2 rounded border border-green-200">
+                        <!-- Resultado de actualización aparecerá aquí -->
+                    </div>
+                </div>
+            </div>
+
             <!-- Visualización del Grafo -->
             <div class="bg-gray-300 rounded-lg shadow-md p-4">
                 <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización</h2>
                 
                 <div class="space-y-3">
                     <button onclick="abrirModalGrafo()" class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
-                        📊 Ver Grafo Completo
+                        📊 Ver Grafo Temporal
                     </button>
                     
                     <div class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
-                        <p><strong>🕸️ Grafo Inteligente:</strong> Visualiza las conexiones entre contextos y explora las relaciones automáticas.</p>
+                        <p><strong>🕸️ Grafo Inteligente:</strong> Visualiza conexiones semánticas y temporales. Los nodos azules son temporales, los grises son atemporales.</p>
                     </div>
                 </div>
             </div>
@@ -159,7 +193,7 @@
         <div class="bg-white rounded-lg shadow-xl w-11/12 h-5/6 max-w-6xl flex flex-col">
             <!-- Header del Modal -->
             <div class="flex justify-between items-center p-4 border-b">
-                <h3 class="text-xl font-semibold text-purple-800">🕸️ Visualización del Grafo de Contextos</h3>
+                <h3 class="text-xl font-semibold text-purple-800">🕸️ Visualización del Grafo Temporal</h3>
                 <button onclick="cerrarModalGrafo()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             </div>
             
@@ -167,7 +201,7 @@
             <div class="flex-1 p-4">
                 <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
                     <p class="text-sm text-purple-700">
-                        🕸️ <strong>Instrucciones:</strong> Haz clic en cualquier nodo para ver su información completa. Los nodos muestran los títulos de los contextos y las líneas indican las relaciones automáticas basadas en similitud semántica.
+                        🕸️ <strong>Instrucciones:</strong> Los nodos <span class="bg-blue-200 px-1 rounded">azules</span> son contextos temporales, los <span class="bg-gray-200 px-1 rounded">grises</span> son atemporales. Las líneas muestran peso estructural, relevancia temporal y peso efectivo. Haz clic en cualquier elemento para más información.
                     </p>
                 </div>
                 
@@ -177,9 +211,12 @@
                     </div>
                 </div>
                 
-                <div class="mt-3 flex justify-center">
+                <div class="mt-3 flex justify-center space-x-2">
                     <button onclick="cargarGrafo()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
                         🔄 Actualizar Grafo
+                    </button>
+                    <button onclick="actualizarPesosTemporal(); setTimeout(cargarGrafo, 1000);" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors">
+                        ⚡ Recalcular & Actualizar
                     </button>
                 </div>
             </div>
