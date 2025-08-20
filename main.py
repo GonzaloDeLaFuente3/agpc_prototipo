@@ -1,5 +1,4 @@
-#Comando para ejecutar : uvicorn main:app --reload
-# main.py
+# main.py - PASO 1: API con soporte temporal
 from fastapi import FastAPI
 from agent import grafo
 from pydantic import BaseModel
@@ -9,22 +8,27 @@ from fastapi.staticfiles import StaticFiles
 import os
 from agent.semantica import indexar_documento, buscar_similares
 
-grafo.cargar_desde_disco()# ← cargar contexto si existe
+grafo.cargar_desde_disco()
 
-# Reindexar lo que ya está guardado en contexto.json
+# Reindexar lo que ya está guardado
 for id, datos in grafo.obtener_todos().items():
     indexar_documento(id, datos["texto"])
 
 app = FastAPI()
 
-class EntradaContexto(BaseModel):# Estructura de entrada para agregar contexto
+class EntradaContexto(BaseModel):
     titulo: str
     texto: str
+    es_temporal: Optional[bool] = False  # NUEVO: campo para indicar si es temporal
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
-    nuevo_id = grafo.agregar_contexto(entrada.titulo, entrada.texto)
-    return {"status": "agregado", "id": nuevo_id}
+    nuevo_id = grafo.agregar_contexto(entrada.titulo, entrada.texto, entrada.es_temporal)
+    return {
+        "status": "agregado", 
+        "id": nuevo_id,
+        "es_temporal": entrada.es_temporal
+    }
 
 @app.get("/contexto/")
 def obtener_contextos():
@@ -38,13 +42,12 @@ def preguntar(pregunta: str):
 
     todos_contextos = grafo.obtener_todos()
     
-    # Si no hay contextos almacenados
     if not todos_contextos:
         return {"respuesta": "[ERROR] No hay contextos almacenados en el sistema", "contextos_utilizados": []}
     
     # Búsqueda automática usando embeddings semánticos
     print("Buscando contextos relevantes automáticamente...")
-    ids_similares = buscar_similares(pregunta, k=5)  # Top 5 más relevantes, buscando similitud semántica
+    ids_similares = buscar_similares(pregunta, k=5)
     print(f"IDs encontrados: {ids_similares}")
     
     contextos_relevantes = {}
@@ -52,24 +55,32 @@ def preguntar(pregunta: str):
     
     for id_similar in ids_similares:
         if id_similar in todos_contextos:
-            # Agregar contexto relevante
             contextos_relevantes[id_similar] = todos_contextos[id_similar]
+            ctx = todos_contextos[id_similar]
             contextos_utilizados_info.append({
-                "titulo": todos_contextos[id_similar]["titulo"],
-                "id": id_similar
+                "titulo": ctx["titulo"],
+                "id": id_similar,
+                "es_temporal": ctx.get("es_temporal", False),
+                "timestamp": ctx.get("timestamp")
             })
     
-    # Verificar que hay contextos para procesar
     if not contextos_relevantes:
         return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
     print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
-    #generar respuesta usando Google Gemini
+    
     respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
     
-    # Agregar información sobre contextos utilizados a la respuesta
     titulos_utilizados = [info["titulo"] for info in contextos_utilizados_info]
-    respuesta_completa = f"{respuesta}\n\n📚 Contextos utilizados: {', '.join(titulos_utilizados)}"
+    
+    # Agregar información temporal si hay contextos temporales
+    temporales = [info for info in contextos_utilizados_info if info.get("es_temporal")]
+    if temporales:
+        info_temporal = f" (🕒 {len(temporales)} temporales)"
+    else:
+        info_temporal = ""
+    
+    respuesta_completa = f"{respuesta}\n\n📚 Contextos utilizados: {', '.join(titulos_utilizados)}{info_temporal}"
     
     return {
         "respuesta": respuesta_completa,
@@ -78,7 +89,6 @@ def preguntar(pregunta: str):
 
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):
-    #Solo busca y muestra, no genera respuesta con IA.
     from agent import grafo
     from agent.semantica import buscar_similares
 
@@ -102,7 +112,12 @@ def exportar_para_visualizacion():
     """Exporta el grafo optimizado para visualización"""
     return grafo.exportar_grafo_para_visualizacion()
 
-# Asegurar que la carpeta static existe
-os.makedirs("static", exist_ok=True)
+# NUEVO: Endpoint para actualizar pesos temporales manualmente
+@app.post("/grafo/actualizar-temporal/")
+def actualizar_pesos_temporales():
+    """Actualiza todos los pesos temporales en el grafo"""
+    resultado = grafo.actualizar_pesos_temporales()
+    return resultado
 
+os.makedirs("static", exist_ok=True)
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
