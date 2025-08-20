@@ -1,6 +1,8 @@
 // Variables globales
         let ultimaRespuesta = "";
         let ultimaPregunta = "";
+        let networkInstance = null;
+        let mostrandoLabels = true;
 
         // Event listeners para cuando la página carga
         document.addEventListener('DOMContentLoaded', function() {
@@ -29,9 +31,16 @@
             document.getElementById('textoBusqueda').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') buscarSemantico();
             });
+
+            // Listener para el checkbox de labels
+            document.getElementById('mostrarLabelsAristas').addEventListener('change', function() {
+                mostrandoLabels = this.checked;
+                if (networkInstance) {
+                    cargarGrafo(); // Recargar con la nueva configuración
+                }
+            });
         });
 
-        // NUEVA: Función para agregar contexto con soporte temporal
         async function agregarContexto() {
             const titulo = document.getElementById('titulo').value;
             const texto = document.getElementById('texto').value;
@@ -66,7 +75,6 @@
             }
         }
 
-        // NUEVA: Función para actualizar pesos temporales
         async function actualizarPesosTemporal() {
             const boton = event.target;
             const textoOriginal = boton.textContent;
@@ -90,12 +98,10 @@
                 `;
                 container.classList.remove('hidden');
                 
-                // Ocultar resultado después de 5 segundos
                 setTimeout(() => {
                     container.classList.add('hidden');
                 }, 5000);
                 
-                // Actualizar estadísticas automáticamente
                 cargarEstadisticas();
                 
             } catch (error) {
@@ -150,7 +156,6 @@
                 return;
             }
 
-            // Preguntar si quiere que sea temporal
             const esTemporal = confirm("🕒 ¿Querés que este contexto sea TEMPORAL (con fecha/hora actual)?\n\n✅ SÍ = Temporal (relevante por proximidad de tiempo)\n❌ NO = Atemporal (relevante solo por contenido)");
 
             try {
@@ -184,7 +189,6 @@
                 if (numContextos === 0) {
                     salida = "No hay contextos almacenados aún.";
                 } else {
-                    // Contar temporales vs atemporales
                     const temporales = Object.values(contextos).filter(ctx => ctx.es_temporal).length;
                     const atemporales = numContextos - temporales;
                     
@@ -247,11 +251,46 @@
 
         function abrirModalGrafo() {
             document.getElementById('modalGrafo').classList.remove('hidden');
+            mostrandoLabels = document.getElementById('mostrarLabelsAristas').checked;
             setTimeout(() => cargarGrafo(), 100);
         }
 
         function cerrarModalGrafo() {
             document.getElementById('modalGrafo').classList.add('hidden');
+            document.getElementById('panelInfo').classList.add('hidden');
+        }
+
+        function toggleLabelsAristas() {
+            mostrandoLabels = !mostrandoLabels;
+            document.getElementById('mostrarLabelsAristas').checked = mostrandoLabels;
+            if (networkInstance) {
+                cargarGrafo();
+            }
+        }
+
+        // NUEVA: Función para mostrar información detallada
+        function mostrarInfoDetallada(info) {
+            const panel = document.getElementById('panelInfo');
+            const content = document.getElementById('infoContent');
+            
+            content.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold text-gray-800">${info.titulo || 'Información'}</p>
+                        ${info.tipo ? `<p class="text-sm">Tipo: ${info.tipo}</p>` : ''}
+                        ${info.peso_estructural ? `<p class="text-sm">Peso Estructural: ${info.peso_estructural}</p>` : ''}
+                        ${info.relevancia_temporal !== undefined ? `<p class="text-sm">Relevancia Temporal: ${info.relevancia_temporal}</p>` : ''}
+                        ${info.peso_efectivo ? `<p class="text-sm">Peso Efectivo: ${info.peso_efectivo}</p>` : ''}
+                    </div>
+                    <div>
+                        ${info.timestamp ? `<p class="text-sm">Timestamp: ${new Date(info.timestamp).toLocaleString()}</p>` : ''}
+                        ${info.es_temporal !== undefined ? `<p class="text-sm">Es temporal: ${info.es_temporal ? 'Sí' : 'No'}</p>` : ''}
+                        ${info.conexiones ? `<p class="text-sm">Conexiones: ${info.conexiones}</p>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            panel.classList.remove('hidden');
         }
 
         async function cargarGrafo() {
@@ -267,87 +306,218 @@
 
                 const container = document.getElementById('grafo');
                 
-                // Procesar nodos con colores basados en temporalidad
-                const nodes = datos.nodes.map(node => ({
-                    ...node,
-                    color: {
-                        background: node.es_temporal ? '#bbdefb' : '#f5f5f5', // Azul para temporales, gris para atemporales
-                        border: node.es_temporal ? '#1976d2' : '#757575',
-                        highlight: { 
-                            background: node.es_temporal ? '#90caf9' : '#e0e0e0', 
-                            border: node.es_temporal ? '#0d47a1' : '#424242' 
-                        }
-                    },
-                    font: { 
-                        color: node.es_temporal ? '#1565c0' : '#424242', 
-                        size: 12, 
-                        face: 'Arial' 
-                    }
-                }));
-
-                // Procesar edges con información temporal completa
-                const edges = datos.edges.map(edge => {
-                    const esTemporal = edge.tipo === 'semantica_temporal';
+                // Procesar nodos con colores mejorados basados en temporalidad
+                const nodes = datos.nodes.map(node => {
+                    const esTemporal = node.es_temporal;
                     return {
-                        ...edge,
+                        ...node,
                         color: {
-                            color: esTemporal ? '#4caf50' : '#90a4ae', // Verde para temporales, gris para semánticas
-                            highlight: '#37474f'
+                            background: esTemporal ? '#bbdefb' : '#f5f5f5',
+                            border: esTemporal ? '#1976d2' : '#757575',
+                            highlight: { 
+                                background: esTemporal ? '#90caf9' : '#e0e0e0', 
+                                border: esTemporal ? '#0d47a1' : '#424242' 
+                            }
                         },
-                        width: Math.max(1, edge.peso_efectivo * 5), // Grosor basado en peso efectivo
-                        smooth: { enabled: true, type: 'continuous' },
-                        title: `Estructural: ${edge.peso_estructural.toFixed(3)}\nTemporal: ${edge.relevancia_temporal.toFixed(3)}\nEfectivo: ${edge.peso_efectivo.toFixed(3)}\nTipo: ${edge.tipo}`
+                        font: { 
+                            color: esTemporal ? '#1565c0' : '#424242', 
+                            size: 12, 
+                            face: 'Arial',
+                            strokeWidth: 1,
+                            strokeColor: '#ffffff'
+                        },
+                        borderWidth: 3,
+                        shadow: {
+                            enabled: true,
+                            color: esTemporal ? '#1976d2' : '#757575',
+                            size: 10,
+                            x: 2,
+                            y: 2
+                        }
                     };
                 });
 
-                const network = new vis.Network(container, {
-                    nodes: new vis.DataSet(nodes),
-                    edges: new vis.DataSet(edges)
-                }, {
-                    nodes: { 
-                        shape: 'box',
-                        size: 20,
-                        borderWidth: 2,
-                        shadow: true,
-                        margin: 10
-                    },
-                    edges: { 
-                        arrows: { to: { enabled: true, scaleFactor: 0.5 } }
-                    },
-                    physics: { 
-                        stabilization: { iterations: 200 },
-                        barnesHut: { 
-                            gravitationalConstant: -8000, 
-                            springConstant: 0.001, 
-                            springLength: 200 
-                        }
-                    },
-                    interaction: { hover: true },
-                    layout: { improvedLayout: true }
+                // Procesar edges con labels y colores mejorados
+                const edges = datos.edges.map(edge => {
+                    const esTemporal = edge.tipo === 'semantica_temporal';
+                    const pesoEstructural = edge.peso_estructural || 0;
+                    const relevanciaTemp = edge.relevancia_temporal || 0;
+                    const pesoEfectivo = edge.peso_efectivo || pesoEstructural;
+                    
+                    // Determinar color basado en el peso efectivo
+                    let color = '#90a4ae'; // Por defecto gris
+                    if (esTemporal) {
+                        // Verde intensidad basada en peso efectivo
+                        const intensidad = Math.floor(pesoEfectivo * 255);
+                        color = `rgb(76, ${Math.max(175, intensidad)}, 80)`;
+                    }
+                    
+                    // Label compacto que se muestra en la arista
+                    let label = '';
+                    if (mostrandoLabels) {
+                        label = `E:${pesoEstructural.toFixed(2)}|T:${relevanciaTemp.toFixed(2)}|Ef:${pesoEfectivo.toFixed(2)}`;
+                    }
+                    
+                    return {
+                        ...edge,
+                        label: label,
+                        color: {
+                            color: color,
+                            highlight: '#37474f',
+                            opacity: 0.8
+                        },
+                        width: Math.max(1, pesoEfectivo * 6), // Grosor basado en peso efectivo
+                        smooth: { 
+                            enabled: true, 
+                            type: 'continuous',
+                            roundness: 0.5
+                        },
+                        font: {
+                            size: 10,
+                            color: '#333333',
+                            background: 'rgba(255,255,255,0.8)',
+                            strokeWidth: 1,
+                            strokeColor: '#ffffff'
+                        },
+                        title: `🔗 Relación ${esTemporal ? 'Temporal' : 'Semántica'}\n\n📊 Peso Estructural: ${pesoEstructural.toFixed(3)}\n⏰ Relevancia Temporal: ${relevanciaTemp.toFixed(3)}\n⚡ Peso Efectivo: ${pesoEfectivo.toFixed(3)}\n\n${esTemporal ? '🕒 Esta relación considera proximidad temporal' : '📋 Esta relación es puramente semántica'}`
+                    };
                 });
 
-                // Evento de click mejorado con información temporal
-                network.on("click", async function(params) {
+                // Configuración mejorada del network
+                const options = {
+                    nodes: { 
+                        shape: 'box',
+                        scaling: {
+                            min: 16,
+                            max: 32,
+                            label: {
+                                enabled: true,
+                                min: 12,
+                                max: 16,
+                            }
+                        },
+                        margin: {
+                            top: 5,
+                            right: 5,
+                            bottom: 5,
+                            left: 5
+                        }
+                    },
+                    edges: {
+                        arrows: { 
+                            to: { enabled: true, scaleFactor: 0.5 }
+                        },
+                        smooth: { type: 'continuous' }
+                    },
+                    physics: {
+                        enabled: true,
+                        barnesHut: {
+                            gravitationalConstant: -2000,
+                            centralGravity: 0.3,
+                            springLength: 95,
+                            springConstant: 0.04,
+                            damping: 0.09
+                        },
+                        stabilization: {
+                            iterations: 200,
+                            fit: true
+                        }
+                    },
+                    interaction: {
+                        hover: true,
+                        navigationButtons: true,
+                        keyboard: true,
+                        zoomView: true,
+                        dragView: true
+                    },
+                    layout: {
+                        improvedLayout: true,
+                        hierarchical: false
+                    },
+                    height: '100%',
+                    width: '100%',
+                    autoResize: true
+                };
+
+                networkInstance = new vis.Network(container, {
+                    nodes: new vis.DataSet(nodes),
+                    edges: new vis.DataSet(edges)
+                }, options);
+
+                // Eventos mejorados
+                networkInstance.on("click", async function(params) {
                     if (params.nodes.length > 0) {
+                        // Click en nodo
                         const nodeId = params.nodes[0];
                         try {
                             const contextoRes = await axios.get('/contexto/');
                             const contexto = contextoRes.data[nodeId];
                             if (contexto) {
-                                const relacionados = contexto.relaciones.map(rid => 
-                                    contextoRes.data[rid]?.titulo || rid
-                                ).join(', ') || 'Ninguno';
-                                
-                                const tipoContexto = contexto.es_temporal ? "TEMPORAL 🕒" : "ATEMPORAL 📋";
-                                const timestamp = contexto.timestamp ? `\n\n⏰ Creado: ${new Date(contexto.timestamp).toLocaleString()}` : "";
-                                
-                                alert(`${tipoContexto}\n📋 ${contexto.titulo}\n\n📝 ${contexto.texto}${timestamp}\n\n🔗 Relacionados: ${relacionados}\n\n🏷️ Palabras clave: ${contexto.palabras_clave.join(', ')}\n\n🆔 ID: ${nodeId}`);
+                                mostrarInfoDetallada({
+                                    titulo: `🎯 ${contexto.titulo}`,
+                                    tipo: contexto.es_temporal ? 'Temporal 🕒' : 'Atemporal 📋',
+                                    timestamp: contexto.timestamp,
+                                    es_temporal: contexto.es_temporal,
+                                    conexiones: contexto.relaciones.length
+                                });
                             }
                         } catch (error) {
-                            alert(`Error cargando información del contexto: ${error.message}`);
+                            console.error('Error cargando contexto:', error);
+                        }
+                    } else if (params.edges.length > 0) {
+                        // Click en arista
+                        const edgeId = params.edges[0];
+                        const edgeData = datos.edges.find(e => 
+                            (e.from + '-' + e.to) === edgeId || (e.to + '-' + e.from) === edgeId
+                        );
+                        
+                        if (edgeData) {
+                            mostrarInfoDetallada({
+                                titulo: `🔗 Relación ${edgeData.tipo === 'semantica_temporal' ? 'Temporal' : 'Semántica'}`,
+                                tipo: edgeData.tipo,
+                                peso_estructural: edgeData.peso_estructural.toFixed(3),
+                                relevancia_temporal: edgeData.relevancia_temporal.toFixed(3),
+                                peso_efectivo: edgeData.peso_efectivo.toFixed(3)
+                            });
                         }
                     }
                 });
+
+                // Hover mejorado para nodos
+                networkInstance.on("hoverNode", function(params) {
+                    const nodeId = params.node;
+                    const node = datos.nodes.find(n => n.id === nodeId);
+                    if (node) {
+                        // Resaltar conexiones del nodo
+                        const connectedEdges = networkInstance.getConnectedEdges(nodeId);
+                        const connectedNodes = networkInstance.getConnectedNodes(nodeId);
+                        
+                        // Actualizar estilos temporalmente
+                        const updates = {
+                            nodes: connectedNodes.map(id => ({
+                                id: id,
+                                opacity: 1.0,
+                                borderWidth: 4
+                            })),
+                            edges: connectedEdges.map(id => ({
+                                id: id,
+                                width: 6,
+                                opacity: 1.0
+                            }))
+                        };
+                    }
+                });
+
+                // Resetear hover
+                networkInstance.on("blurNode", function(params) {
+                    // Restaurar estilos originales
+                    networkInstance.setData({
+                        nodes: new vis.DataSet(nodes),
+                        edges: new vis.DataSet(edges)
+                    });
+                });
+
+                console.log(`✅ Grafo cargado: ${nodes.length} nodos, ${edges.length} aristas`);
                 
             } catch (error) {
                 console.error('Error cargando grafo:', error);
@@ -366,7 +536,7 @@
                         <div class="flex justify-between">
                             <span class="font-medium">🗃️ Sistema:</span>
                             <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">
-                                Temporal
+                                Temporal v2.1
                             </span>
                         </div>
                         <div class="flex justify-between">
@@ -388,6 +558,10 @@
                         <div class="flex justify-between">
                             <span>⚡ Temporales:</span>
                             <span class="font-bold text-green-600">${stats.aristas_temporales || 0}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>📋 Semánticas:</span>
+                            <span class="font-bold text-gray-600">${stats.aristas_semanticas || 0}</span>
                         </div>
                         <div class="flex justify-between">
                             <span>🎯 Densidad:</span>
@@ -445,5 +619,12 @@
 
         // Cerrar modal con Escape
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') cerrarModalGrafo();
+            if (e.key === 'Escape') {
+                cerrarModalGrafo();
+            }
         });
+window.addEventListener('resize', function() {
+    if (networkInstance) {
+        networkInstance.fit();
+    }
+});
