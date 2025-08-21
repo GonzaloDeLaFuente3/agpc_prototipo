@@ -676,7 +676,8 @@
     "created_at": "2025-08-20T17:02:18.849060",
     "es_temporal": true,
     "relaciones": [
-      "57e7d506-cea7-4052-8985-c87019133c3d"
+      "57e7d506-cea7-4052-8985-c87019133c3d",
+      "9d66f592-5459-4534-a369-29ad35c8177d"
     ],
     "timestamp": "2025-08-20T17:02:18.849060"
   },
@@ -695,8 +696,28 @@
     "created_at": "2025-08-20T17:03:25.107048",
     "es_temporal": true,
     "relaciones": [
-      "d75cf4fc-1c17-44b6-8c66-4dcf74464228"
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "9d66f592-5459-4534-a369-29ad35c8177d"
     ],
     "timestamp": "2025-08-20T17:03:25.107048"
+  },
+  "9d66f592-5459-4534-a369-29ad35c8177d": {
+    "titulo": "Reunión Tesis ",
+    "texto": "Mañana tengo reunión con mi director de Tesis, sobre ingeniería de contexto y contextos temporales ",
+    "palabras_clave": [
+      "ingeniería",
+      "mañana",
+      "tesis",
+      "reunión",
+      "contexto",
+      "director",
+      "temporal"
+    ],
+    "created_at": "2025-08-21T11:21:20.673207",
+    "es_temporal": false,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "57e7d506-cea7-4052-8985-c87019133c3d"
+    ]
   }
 }

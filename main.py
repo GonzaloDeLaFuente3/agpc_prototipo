@@ -37,54 +37,64 @@ def obtener_contextos():
 @app.get("/preguntar/")
 def preguntar(pregunta: str):
     pregunta = pregunta.strip()
-    
-    print(f"Pregunta recibida: '{pregunta}'")
-
     todos_contextos = grafo.obtener_todos()
-    
+
     if not todos_contextos:
-        return {"respuesta": "[ERROR] No hay contextos almacenados en el sistema", "contextos_utilizados": []}
-    
-    # Búsqueda automática usando embeddings semánticos
-    print("Buscando contextos relevantes automáticamente...")
+        return {
+            "respuesta": "[ERROR] No hay contextos almacenados en el sistema",
+            "contextos_utilizados": [],
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
+        }
+
+    # Recuperar contextos relevantes (por embeddings)
     ids_similares = buscar_similares(pregunta, k=5)
-    print(f"IDs encontrados: {ids_similares}")
-    
+
     contextos_relevantes = {}
     contextos_utilizados_info = []
     
-    for id_similar in ids_similares:
-        if id_similar in todos_contextos:
-            contextos_relevantes[id_similar] = todos_contextos[id_similar]
-            ctx = todos_contextos[id_similar]
+    for id_ctx in ids_similares:
+        if id_ctx in todos_contextos:
+            contextos_relevantes[id_ctx] = todos_contextos[id_ctx]
+            ctx = todos_contextos[id_ctx]
             contextos_utilizados_info.append({
                 "titulo": ctx["titulo"],
-                "id": id_similar,
+                "id": id_ctx,
                 "es_temporal": ctx.get("es_temporal", False),
                 "timestamp": ctx.get("timestamp")
             })
-    
-    if not contextos_relevantes:
-        return {"respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta", "contextos_utilizados": []}
 
-    print(f"Contextos que se enviarán a Gemini: {list(contextos_relevantes.keys())}")
-    
+    if not contextos_relevantes:
+        return {
+            "respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta",
+            "contextos_utilizados": [],
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
+        }
+
+    # Llamada a la IA
     respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
-    
-    titulos_utilizados = [info["titulo"] for info in contextos_utilizados_info]
-    
-    # Agregar información temporal si hay contextos temporales
-    temporales = [info for info in contextos_utilizados_info if info.get("es_temporal")]
-    if temporales:
-        info_temporal = f" (🕒 {len(temporales)} temporales)"
-    else:
-        info_temporal = ""
-    
+
+    titulos_utilizados = [c["titulo"] for c in contextos_utilizados_info]
+    temporales = [c for c in contextos_utilizados_info if c.get("es_temporal")]
+    info_temporal = f" (🕒 {len(temporales)} temporales)" if temporales else ""
     respuesta_completa = f"{respuesta}\n\n📚 Contextos utilizados: {', '.join(titulos_utilizados)}{info_temporal}"
-    
+
+    # Construcción del subgrafo efímero (NO se guarda en grafo principal)
+    try:
+        arbol = grafo.construir_arbol_consulta(pregunta, list(contextos_relevantes.keys()))
+        print(f"Subgrafo construido: {len(arbol.get('nodes', []))} nodos, {len(arbol.get('edges', []))} aristas")
+    except Exception as e:
+        print(f"Error construyendo subgrafo: {e}")
+        arbol = {"nodes": [], "edges": [], "meta": {"error": str(e)}}
+
     return {
         "respuesta": respuesta_completa,
-        "contextos_utilizados": contextos_utilizados_info
+        "contextos_utilizados": contextos_utilizados_info,
+        "subgrafo": arbol,
+        "debug": {
+            "ids_similares": ids_similares,
+            "contextos_encontrados": len(contextos_relevantes),
+            "subgrafo_valido": len(arbol.get('nodes', [])) > 0
+        }
     }
 
 @app.get("/buscar/")
