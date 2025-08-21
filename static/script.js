@@ -254,12 +254,28 @@ function abrirModalArbol(subgrafo) {
         const nodes = subgrafo.nodes.map(n => {
             let color;
             let shape = "box";
+            let fontConfig = { 
+                size: 12,
+                color: "#374151",
+                align: "center" // ⬅️ Por defecto centro
+            };
             
             if (n.group === "pregunta") {
                 color = { background: "#fef3c7", border: "#f59e0b", highlight: { background: "#fed7aa", border: "#ea580c" } };
                 shape = "diamond";
+                fontConfig = { 
+                    size: 14,
+                    color: "#92400e",
+                    align: "top",        // ⬅️ CAMBIO: texto en la parte superior
+                    vadjust: -80       // ⬅️ NUEVO: ajuste vertical hacia arriba
+                };
             } else if (n.group === "temporal") {
                 color = { background: "#dbeafe", border: "#2563eb", highlight: { background: "#bfdbfe", border: "#1d4ed8" } };
+                fontConfig = { 
+                    size: 12,
+                    color: "#1e40af",
+                    align: "center" 
+                };
             } else {
                 color = { background: "#f3f4f6", border: "#6b7280", highlight: { background: "#e5e7eb", border: "#4b5563" } };
             }
@@ -270,11 +286,8 @@ function abrirModalArbol(subgrafo) {
                 title: n.title || n.label || n.id,
                 color: color,
                 shape: shape,
-                font: { 
-                    size: n.group === "pregunta" ? 14 : 12,
-                    color: n.group === "pregunta" ? "#92400e" : (n.group === "temporal" ? "#1e40af" : "#374151")
-                },
-                margin: { top: 5, right: 5, bottom: 5, left: 5 }
+                font: fontConfig,
+                margin: { top: 10, right: 10, bottom: 10, left: 10 } // ⬅️ Más margen para el rombo
             };
         });
 
@@ -289,7 +302,7 @@ function abrirModalArbol(subgrafo) {
                 arrows: { to: { enabled: true, scaleFactor: 1 } },
                 label: e.label || "",
                 title: `Peso Estructural: ${e.peso_estructural}\nRelevancia Temporal: ${e.relevancia_temporal}\nPeso Efectivo: ${e.peso_efectivo}`,
-                font: { size: 10, align: "middle" },
+                font: { size: 10, align: "top" },
                 color: { color: "#059669", highlight: "#047857" },
                 width: width,
                 smooth: { type: "cubicBezier", roundness: 0.4 }
@@ -302,7 +315,7 @@ function abrirModalArbol(subgrafo) {
             layout: {
                 hierarchical: {
                     enabled: true,
-                    direction: "UD", // top-bottom
+                    direction: "UD", // (Down-Up = pregunta arriba)
                     sortMethod: "directed",
                     nodeSpacing: 150,
                     levelSeparation: 100
@@ -323,7 +336,14 @@ function abrirModalArbol(subgrafo) {
                 hover: true,
                 zoomView: true,
                 dragView: true,
-                dragNodes: false // Evitar que se muevan los nodos del árbol
+                dragNodes: true,
+                tooltipDelay: 100
+            },
+            physics: {
+                enabled: true,
+                solver: "forceAtlas2Based",
+                stabilization: { iterations: 150 },
+                barnesHut: { gravitationalConstant: -2000, springLength: 150, springConstant: 0.04 }
             }
         };
 
