@@ -363,3 +363,92 @@ def exportar_grafo_para_visualizacion() -> Dict:
         })
     
     return {"nodes": nodos, "edges": edges}
+
+def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None) -> Dict:
+    """
+    Construye un subgrafo en forma de ÁRBOL para una consulta.
+    - Raíz: la pregunta (NO se persiste).
+    - Ramas: nodos contextuales recuperados.
+    - Cada arista incluye: Ws (peso_estructural), Rt (relevancia_temporal), We (peso_efectivo = Ws * (1 + Rt)).
+
+    Nota: Ws se calcula como similitud (Jaccard) entre palabras clave de la pregunta
+    y del contexto. Rt se calcula contra 'referencia_temporal' (por defecto, ahora).
+    """
+    if not contextos_ids:
+        return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos para procesar"}}
+    
+    raiz_id = "consulta"
+    ref_dt = datetime.fromisoformat(referencia_temporal) if referencia_temporal else datetime.now()
+
+    # Palabras clave de la pregunta
+    try:
+        claves_pregunta = set(extraer_palabras_clave(pregunta))
+    except Exception as e:
+        print(f"Error extrayendo palabras clave: {e}")
+        claves_pregunta = set()
+
+    # Truncar pregunta para el label si es muy larga
+    pregunta_corta = pregunta[:50] + "..." if len(pregunta) > 50 else pregunta
+    
+    nodos = [{
+        "id": raiz_id,
+        "label": f"❓ {pregunta_corta}",
+        "title": f"Pregunta: {pregunta}",
+        "group": "pregunta",
+        "es_temporal": False
+    }]
+    edges = []
+
+    contextos_procesados = 0
+    
+    for cid in contextos_ids:
+        meta = metadatos_contextos.get(cid, {})
+        if not meta:
+            print(f"Warning: Contexto {cid} no encontrado en metadatos")
+            continue
+
+        # Nodo del contexto
+        titulo = meta.get("titulo", f"Contexto {cid}")
+        nodos.append({
+            "id": cid,
+            "label": titulo[:30] + "..." if len(titulo) > 30 else titulo,
+            "title": f"{titulo}\n{meta.get('texto', '')[:100]}...",
+            "group": "temporal" if meta.get("es_temporal") else "atemporal",
+            "es_temporal": bool(meta.get("es_temporal")),
+            "timestamp": meta.get("timestamp"),
+        })
+
+        # Ws: similitud por palabras clave (Jaccard)
+        claves_ctx = set(meta.get("palabras_clave", []))
+        ws = _calcular_similitud_semantica(claves_pregunta, claves_ctx)
+
+        # Rt: relevancia temporal del nodo respecto a la referencia
+        ts = meta.get("timestamp")
+        rt = _calcular_relevancia_temporal(ts, ref_dt.isoformat()) if ts else 0.0
+
+        # We: combinado
+        we = _calcular_peso_efectivo(ws, rt)
+
+        edges.append({
+            "from": raiz_id,
+            "to": cid,
+            "tipo": "consulta",
+            "peso_estructural": round(ws, 3),        # Ws
+            "relevancia_temporal": round(rt, 3),     # Rt
+            "peso_efectivo": round(we, 3),           # We = Ws * (1 + Rt)
+            # label listo para UI si querés usarlo directo
+            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|Ef:{round(we,2)}"
+        })
+        
+        contextos_procesados += 1
+
+    return {
+        "nodes": nodos,
+        "edges": edges,
+        "meta": {
+            "referencia_temporal": ref_dt.isoformat(),
+            "contextos_procesados": contextos_procesados,
+            "total_solicitados": len(contextos_ids),
+            "pregunta_original": pregunta
+        }
+    }

@@ -3,6 +3,7 @@ let ultimaRespuesta = "";
 let ultimaPregunta = "";
 let networkInstance = null;
 let mostrandoLabels = true;
+let ultimoSubgrafo = null;
 
 // Event listeners para cuando la página carga
 document.addEventListener('DOMContentLoaded', function() {
@@ -113,7 +114,10 @@ async function actualizarPesosTemporal() {
 }
 
 async function preguntar() {
+    console.log("🔍 INICIO - función preguntar()");
+    
     const pregunta = document.getElementById('pregunta').value;
+    console.log("📝 Pregunta:", pregunta);
 
     if (!pregunta.trim()) {
         alert("Por favor escribí una pregunta.");
@@ -122,23 +126,238 @@ async function preguntar() {
 
     const respuestaDiv = document.getElementById('respuesta');
     const botonDiv = document.getElementById('botonAgregarRespuesta');
+    const botonArbolDiv = document.getElementById('botonVerArbol');
+    
+    console.log("🎯 Elementos DOM encontrados:");
+    console.log("  - respuestaDiv:", !!respuestaDiv);
+    console.log("  - botonDiv:", !!botonDiv);
+    console.log("  - botonArbolDiv:", !!botonArbolDiv);
+    
     respuestaDiv.innerHTML = "🔍 Buscando contextos relevantes (semánticos + temporales) y generando respuesta...";
     botonDiv.style.display = 'none';
+    botonArbolDiv.style.display = 'none';
 
     try {
+        console.log("📡 Enviando request al servidor...");
         const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}`);
+        
+        console.log("✅ Respuesta completa del servidor:");
+        console.log(JSON.stringify(res.data, null, 2));
+        
         respuestaDiv.innerText = res.data.respuesta;
         
         ultimaRespuesta = res.data.respuesta;
         ultimaPregunta = pregunta;
         
+        // Mostrar botón agregar respuesta si la respuesta es válida
         if (res.data.respuesta && !res.data.respuesta.startsWith("[ERROR]")) {
             botonDiv.style.display = 'block';
+            console.log("✅ Botón agregar respuesta mostrado");
+        } else {
+            console.log("❌ Botón agregar respuesta NO mostrado - respuesta inválida");
+        }
+
+        // DIAGNÓSTICO DETALLADO DEL SUBGRAFO
+        console.log("\n🌳 === ANÁLISIS DEL SUBGRAFO ===");
+        
+        const subgrafo = res.data.subgrafo;
+        console.log("1. subgrafo existe:", !!subgrafo);
+        console.log("2. subgrafo completo:", subgrafo);
+        
+        if (subgrafo) {
+            console.log("3. subgrafo.nodes existe:", !!subgrafo.nodes);
+            console.log("4. subgrafo.nodes:", subgrafo.nodes);
+            console.log("5. subgrafo.nodes.length:", subgrafo.nodes ? subgrafo.nodes.length : "N/A");
+            console.log("6. subgrafo.edges existe:", !!subgrafo.edges);
+            console.log("7. subgrafo.edges:", subgrafo.edges);
+            console.log("8. subgrafo.edges.length:", subgrafo.edges ? subgrafo.edges.length : "N/A");
+            console.log("9. subgrafo.meta:", subgrafo.meta);
         }
         
+        // CONDICIÓN PARA MOSTRAR BOTÓN
+        const condicion1 = subgrafo;
+        const condicion2 = subgrafo && subgrafo.nodes;
+        const condicion3 = subgrafo && subgrafo.nodes && subgrafo.nodes.length > 0;
+        
+        console.log("\n🔍 === EVALUACIÓN DE CONDICIONES ===");
+        console.log("  subgrafo existe:", condicion1);
+        console.log("  subgrafo.nodes existe:", condicion2);
+        console.log("  subgrafo.nodes.length > 0:", condicion3);
+        
+        if (condicion3) {
+            ultimoSubgrafo = subgrafo;
+            botonArbolDiv.style.display = 'block';
+            console.log("✅ ÉXITO: Botón de árbol MOSTRADO");
+            console.log("  ultimoSubgrafo asignado:", !!ultimoSubgrafo);
+        } else {
+            ultimoSubgrafo = null;
+            botonArbolDiv.style.display = 'none';
+            console.log("❌ FALLO: Botón de árbol NO mostrado");
+            console.log("  Razones:");
+            if (!subgrafo) console.log("    - subgrafo no existe");
+            if (subgrafo && !subgrafo.nodes) console.log("    - subgrafo.nodes no existe");
+            if (subgrafo && subgrafo.nodes && subgrafo.nodes.length === 0) console.log("    - subgrafo.nodes está vacío");
+        }
+        
+        // Debug adicional si hay información
+        if (res.data.debug) {
+            console.log("\n🔧 === INFO DE DEBUG DEL SERVIDOR ===");
+            console.log(res.data.debug);
+        }
+        
+        console.log("\n✅ FINAL - función preguntar() completada");
+        
     } catch (error) {
+        console.log("💥 ERROR en preguntar():");
+        console.error(error);
         respuestaDiv.innerText = `Error: ${error.message}`;
         botonDiv.style.display = 'none';
+        botonArbolDiv.style.display = 'none';
+    }
+}
+
+function mostrarArbolConsulta() {
+    console.log("\n🌳 === MOSTRAR ÁRBOL CONSULTA ===");
+    console.log("ultimoSubgrafo:", ultimoSubgrafo);
+    
+    if (ultimoSubgrafo && ultimoSubgrafo.nodes && ultimoSubgrafo.nodes.length > 0) {
+        console.log("✅ Llamando a abrirModalArbol()...");
+        abrirModalArbol(ultimoSubgrafo);
+    } else {
+        console.log("❌ No se puede mostrar - ultimoSubgrafo inválido");
+        alert("❌ No hay subgrafo disponible para mostrar.\n\nVerifica la consola del navegador (F12) para más detalles.");
+    }
+}
+
+function abrirModalArbol(subgrafo) {
+    console.log("Abriendo modal con subgrafo:", subgrafo); // Debug
+    
+    const modal = document.getElementById('modalArbol');
+    modal.classList.remove('hidden');
+
+    const container = document.getElementById('arbolConsulta');
+
+    if (!subgrafo || !subgrafo.nodes || subgrafo.nodes.length === 0) {
+        const errorMsg = subgrafo?.meta?.error || "Subgrafo vacío o inválido";
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-500 flex-col">
+                <p class="text-lg mb-2">❌ No se puede mostrar el árbol</p>
+                <p class="text-sm">${errorMsg}</p>
+                ${subgrafo?.meta ? `<p class="text-xs mt-2 text-gray-400">Meta: ${JSON.stringify(subgrafo.meta)}</p>` : ''}
+            </div>
+        `;
+        return;
+    }
+
+    try {
+        // Nodos estilizados con mejor diferenciación visual
+        const nodes = subgrafo.nodes.map(n => {
+            let color;
+            let shape = "box";
+            
+            if (n.group === "pregunta") {
+                color = { background: "#fef3c7", border: "#f59e0b", highlight: { background: "#fed7aa", border: "#ea580c" } };
+                shape = "diamond";
+            } else if (n.group === "temporal") {
+                color = { background: "#dbeafe", border: "#2563eb", highlight: { background: "#bfdbfe", border: "#1d4ed8" } };
+            } else {
+                color = { background: "#f3f4f6", border: "#6b7280", highlight: { background: "#e5e7eb", border: "#4b5563" } };
+            }
+
+            return {
+                id: n.id,
+                label: n.label || n.id,
+                title: n.title || n.label || n.id,
+                color: color,
+                shape: shape,
+                font: { 
+                    size: n.group === "pregunta" ? 14 : 12,
+                    color: n.group === "pregunta" ? "#92400e" : (n.group === "temporal" ? "#1e40af" : "#374151")
+                },
+                margin: { top: 5, right: 5, bottom: 5, left: 5 }
+            };
+        });
+
+        // Aristas con mejor visualización de pesos
+        const edges = subgrafo.edges.map(e => {
+            const pesoEfectivo = e.peso_efectivo || 0;
+            const width = Math.max(2, pesoEfectivo * 8); // Más grosor para mejor visibilidad
+            
+            return {
+                from: e.from,
+                to: e.to,
+                arrows: { to: { enabled: true, scaleFactor: 1 } },
+                label: e.label || "",
+                title: `Peso Estructural: ${e.peso_estructural}\nRelevancia Temporal: ${e.relevancia_temporal}\nPeso Efectivo: ${e.peso_efectivo}`,
+                font: { size: 10, align: "middle" },
+                color: { color: "#059669", highlight: "#047857" },
+                width: width,
+                smooth: { type: "cubicBezier", roundness: 0.4 }
+            };
+        });
+
+        console.log(`Renderizando ${nodes.length} nodos y ${edges.length} aristas`); // Debug
+
+        const options = {
+            layout: {
+                hierarchical: {
+                    enabled: true,
+                    direction: "UD", // top-bottom
+                    sortMethod: "directed",
+                    nodeSpacing: 150,
+                    levelSeparation: 100
+                }
+            },
+            physics: {
+                enabled: false // Deshabilitado para layout jerárquico
+            },
+            edges: {
+                smooth: { type: "cubicBezier", roundness: 0.4 },
+                width: 2
+            },
+            nodes: { 
+                borderWidth: 2,
+                shadow: { enabled: true, color: 'rgba(0,0,0,0.2)', size: 5 }
+            },
+            interaction: {
+                hover: true,
+                zoomView: true,
+                dragView: true,
+                dragNodes: false // Evitar que se muevan los nodos del árbol
+            }
+        };
+
+        // Crear la visualización
+        const network = new vis.Network(
+            container, 
+            { 
+                nodes: new vis.DataSet(nodes), 
+                edges: new vis.DataSet(edges) 
+            }, 
+            options
+        );
+
+        // Evento para mostrar información al hacer click
+        network.on("click", function(params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const node = subgrafo.nodes.find(n => n.id === nodeId);
+                if (node) {
+                    console.log("Click en nodo:", node);
+                }
+            }
+        });
+
+        console.log("✅ Árbol de consulta renderizado correctamente");
+        
+    } catch (error) {
+        console.error("Error renderizando árbol:", error);
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-red-500 flex-col">
+                <p class="text-lg mb-2">❌ Error al renderizar</p>
+                <p class="text-sm">${error.message}</p>
+            </div>
+        `;
     }
 }
 
@@ -259,6 +478,11 @@ function cerrarModalGrafo() {
     document.getElementById('modalGrafo').classList.add('hidden');
     document.getElementById('panelInfo').classList.add('hidden');
 }
+
+function cerrarModalArbol() {
+    document.getElementById('modalArbol').classList.add('hidden');
+}
+
 
 function toggleLabelsAristas() {
     mostrandoLabels = !mostrandoLabels;

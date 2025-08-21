@@ -103,6 +103,13 @@
                         </button>
                         <p class="text-sm text-gray-600 mt-1">💡 Útil para guardar respuestas valiosas y que el sistema las use en futuras consultas</p>
                     </div>
+                    <!-- Botón para ver árbol de consulta -->
+                    <div id="botonVerArbol" class="hidden mt-2">
+                        <button onclick="mostrarArbolConsulta()" 
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            🌳 Ver Árbol de la Consulta
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -198,63 +205,92 @@
 
     <!-- Modal para el Grafo -->
     <div id="modalGrafo" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto p-4 z-50">
-    <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-6xl mx-auto my-4 flex flex-col">
-        <div class="p-4 flex flex-col h-full max-h-[90vh]">
-            <!-- Leyenda del grafo -->
-            <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <p class="font-semibold text-purple-800 mb-2">🎯 Nodos:</p>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 bg-blue-200 border border-blue-600 rounded mr-2"></div>
-                                <span>🕒 Contextos temporales</span>
+        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-6xl mx-auto my-4 flex flex-col">
+            <div class="p-4 flex flex-col h-full max-h-[90vh]">
+                <!-- Leyenda del grafo -->
+                <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="font-semibold text-purple-800 mb-2">🎯 Nodos:</p>
+                            <div class="space-y-1 text-xs">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-blue-200 border border-blue-600 rounded mr-2"></div>
+                                    <span>🕒 Contextos temporales</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-gray-200 border border-gray-600 rounded mr-2"></div>
+                                    <span>📋 Contextos atemporales</span>
+                                </div>
                             </div>
-                            <div class="flex items-center">
-                                <div class="w-4 h-4 bg-gray-200 border border-gray-600 rounded mr-2"></div>
-                                <span>📋 Contextos atemporales</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-purple-800 mb-2">🔗 Aristas:</p>
+                            <div class="space-y-1 text-xs">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-1 bg-green-500 mr-2"></div>
+                                    <span>⚡ Relaciones temporales</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-6 h-1 bg-gray-400 mr-2"></div>
+                                    <span>📋 Relaciones semánticas</span>
+                                </div>
+                                <p class="text-gray-600 mt-1">Grosor = peso efectivo, Labels = E|T|Ef</p>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <p class="font-semibold text-purple-800 mb-2">🔗 Aristas:</p>
-                        <div class="space-y-1 text-xs">
-                            <div class="flex items-center">
-                                <div class="w-6 h-1 bg-green-500 mr-2"></div>
-                                <span>⚡ Relaciones temporales</span>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-6 h-1 bg-gray-400 mr-2"></div>
-                                <span>📋 Relaciones semánticas</span>
-                            </div>
-                            <p class="text-gray-600 mt-1">Grosor = peso efectivo, Labels = E|T|Ef</p>
-                        </div>
+                </div>
+                
+                <!-- Contenedor del grafo con altura fija -->
+                <div id="grafo" class="w-full h-[50vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
+                    <div class="flex items-center justify-center h-full text-gray-500">
+                        <p>Cargando grafo...</p>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Contenedor del grafo con altura fija -->
-            <div id="grafo" class="w-full h-[50vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
-                <div class="flex items-center justify-center h-full text-gray-500">
-                    <p>Cargando grafo...</p>
+                
+                <!-- Botones siempre visibles -->
+                <div class="mt-auto flex justify-center space-x-2 sticky bottom-0 bg-white py-2">
+                    <button onclick="cargarGrafo()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
+                        🔄 Actualizar Grafo
+                    </button>
+                    <button onclick="actualizarPesosTemporal(); setTimeout(cargarGrafo, 1000);" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors">
+                        ⚡ Recalcular & Actualizar
+                    </button>
+                    <button onclick="toggleLabelsAristas()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
+                        🏷️ Toggle Labels
+                    </button>
                 </div>
-            </div>
-            
-            <!-- Botones siempre visibles -->
-            <div class="mt-auto flex justify-center space-x-2 sticky bottom-0 bg-white py-2">
-                <button onclick="cargarGrafo()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
-                    🔄 Actualizar Grafo
-                </button>
-                <button onclick="actualizarPesosTemporal(); setTimeout(cargarGrafo, 1000);" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors">
-                    ⚡ Recalcular & Actualizar
-                </button>
-                <button onclick="toggleLabelsAristas()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-                    🏷️ Toggle Labels
-                </button>
             </div>
         </div>
     </div>
-</div>
+    <!-- Modal Árbol de Consulta -->
+    <div id="modalArbol" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-4xl mx-auto my-4 flex flex-col">
+            <div class="p-4 flex flex-col h-full max-h-[90vh]">
+            <h2 class="text-lg font-bold text-center text-blue-800 mb-2">
+                🌳 Árbol de Consulta
+            </h2>
+            <p class="text-sm text-gray-600 text-center mb-3">
+                Raíz = pregunta ❓ | Ramas = contextos recuperados 📋🕒
+            </p>
+
+            <!-- Contenedor del árbol -->
+            <div id="arbolConsulta" class="w-full h-[55vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
+                <div class="flex items-center justify-center h-full text-gray-500">
+                <p>Esperando datos...</p>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-auto flex justify-center space-x-2 sticky bottom-0 bg-white py-2">
+                <button onclick="cerrarModalArbol()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                ❌ Cerrar
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- Scripts -->
     <script src="script.js"></script>
