@@ -10,6 +10,7 @@ from agent.semantica import indexar_documento
 import threading
 from datetime import datetime, timedelta
 import math
+from agent.temporal_parser import parsear_referencia_temporal, extraer_referencias_del_texto
 
 # Archivos de persistencia
 ARCHIVO_GRAFO = "data/grafo_contextos.pickle"
@@ -145,10 +146,15 @@ def guardar_en_disco():
     """Guarda el grafo en disco"""
     _guardar_grafo()
 
-def agregar_contexto(titulo: str, texto: str, es_temporal: bool = False) -> str:
+def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
     """
-    Agrega un nuevo contexto al grafo
-    es_temporal: si True, asigna timestamp actual; si False, contexto atemporal
+    Agrega un nuevo contexto al grafo con detección automática de temporalidad
+    
+    Args:
+        titulo: título del contexto
+        texto: contenido del contexto  
+        es_temporal: None = auto-detectar, True = forzar temporal, False = forzar atemporal
+        referencia_temporal: referencia explícita opcional
     """
     id_contexto = str(uuid.uuid4())
     palabras_clave = extraer_palabras_clave(texto)
@@ -156,23 +162,72 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = False) -> str:
     # Agregar nodo al grafo
     grafo_contextos.add_node(id_contexto, titulo=titulo)
     
+    # DETECCIÓN AUTOMÁTICA DE TEMPORALIDAD
+    texto_completo = f"{titulo} {texto}"  # Buscar en título Y texto
+    referencias_encontradas = extraer_referencias_del_texto(texto_completo)
+    
+    # Determinar si es temporal
+    if es_temporal is None:  # Auto-detección
+        es_temporal_detectado = len(referencias_encontradas) > 0
+        print(f"🔍 Auto-detección: {'TEMPORAL' if es_temporal_detectado else 'ATEMPORAL'} ({len(referencias_encontradas)} referencias encontradas)")
+    else:  # Forzado por usuario
+        es_temporal_detectado = es_temporal
+        print(f"👤 Usuario especificó: {'TEMPORAL' if es_temporal_detectado else 'ATEMPORAL'}")
+    
     # Metadatos base
     metadatos = {
         "titulo": titulo,
         "texto": texto,
         "palabras_clave": palabras_clave,
         "created_at": datetime.now().isoformat(),
-        "es_temporal": es_temporal,
-        "relaciones": []
+        "es_temporal": es_temporal_detectado,
+        "relaciones": [],
+        "deteccion_automatica": es_temporal is None  # Indicar si fue auto-detectado
     }
     
-    # Agregar timestamp solo si es temporal
-    if es_temporal:
-        metadatos["timestamp"] = datetime.now().isoformat()
+    # LÓGICA TEMPORAL
+    if es_temporal_detectado:
+        timestamp_usado = None
+        referencia_usada = None
+        tipo_usado = None
+        
+        # 1. PRIORIDAD: Referencia explícita del usuario
+        if referencia_temporal:
+            timestamp_usado, tipo_usado = parsear_referencia_temporal(referencia_temporal)
+            referencia_usada = referencia_temporal
+            print(f"✅ Usando referencia explícita: '{referencia_temporal}'")
+        
+        # 2. FALLBACK: Referencias detectadas automáticamente
+        elif referencias_encontradas:
+            referencia_texto, timestamp_detectado, tipo_detectado = referencias_encontradas[0]
+            timestamp_usado = timestamp_detectado
+            referencia_usada = referencia_texto
+            tipo_usado = tipo_detectado
+            print(f"🔍 Usando referencia detectada: '{referencia_texto}'")
+        
+        # Aplicar resultado
+        if timestamp_usado:
+            metadatos.update({
+                "timestamp": timestamp_usado,
+                "referencia_original": referencia_usada,
+                "tipo_referencia": tipo_usado
+            })
+            
+            # Guardar referencias adicionales si las hay
+            if len(referencias_encontradas) > 1:
+                metadatos["referencias_adicionales"] = referencias_encontradas[1:]
+                
+        else:
+            # Contexto temporal pero sin referencias parseables → timestamp actual
+            metadatos.update({
+                "timestamp": datetime.now().isoformat(),
+                "tipo_referencia": "timestamp_automatico"
+            })
+            print(f"⚠️ Contexto temporal pero sin referencias válidas, usando timestamp actual")
     
     metadatos_contextos[id_contexto] = metadatos
     
-    # Recalcular relaciones
+    # Recalcular relaciones y guardar
     _recalcular_relaciones()
     _actualizar_listas_relaciones()
     _guardar_grafo()
@@ -181,6 +236,76 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = False) -> str:
     indexar_documento(id_contexto, texto)
     
     return id_contexto
+
+# Previsualización de detección
+def previsualizar_deteccion_temporal(titulo: str, texto: str) -> dict:
+    """
+    Previsualiza qué detectará el sistema sin guardar nada
+    Útil para la UI
+    """
+    texto_completo = f"{titulo} {texto}"
+    referencias_encontradas = extraer_referencias_del_texto(texto_completo)
+    
+    resultado = {
+        "sera_temporal": len(referencias_encontradas) > 0,
+        "total_referencias": len(referencias_encontradas),
+        "referencias": []
+    }
+    
+    for referencia_texto, timestamp, tipo in referencias_encontradas:
+        try:
+            fecha_obj = datetime.fromisoformat(timestamp)
+            fecha_legible = fecha_obj.strftime("%d/%m/%Y %H:%M")
+            es_futuro = fecha_obj > datetime.now()
+            dias_diff = (fecha_obj - datetime.now()).days
+        except:
+            fecha_legible = "Error parsing"
+            es_futuro = None
+            dias_diff = 0
+            
+        resultado["referencias"].append({
+            "texto": referencia_texto,
+            "timestamp": timestamp,
+            "tipo": tipo,
+            "fecha_legible": fecha_legible,
+            "es_futuro": es_futuro,
+            "dias_diferencia": dias_diff
+        })
+    
+    return resultado
+
+# NUEVA FUNCIÓN para obtener información detallada de referencias temporales
+def obtener_info_temporal(id_contexto: str) -> dict:
+    """Obtiene información detallada sobre las referencias temporales de un contexto"""
+    if id_contexto not in metadatos_contextos:
+        return {"error": "Contexto no encontrado"}
+    
+    metadatos = metadatos_contextos[id_contexto]
+    if not metadatos.get("es_temporal", False):
+        return {"es_temporal": False}
+    
+    info = {
+        "es_temporal": True,
+        "timestamp": metadatos.get("timestamp"),
+        "referencia_original": metadatos.get("referencia_original"),
+        "tipo_referencia": metadatos.get("tipo_referencia"),
+    }
+    
+    # Convertir timestamp a fecha legible
+    if info["timestamp"]:
+        try:
+            fecha_obj = datetime.fromisoformat(info["timestamp"])
+            info["fecha_legible"] = fecha_obj.strftime("%d/%m/%Y %H:%M")
+            info["es_futuro"] = fecha_obj > datetime.now()
+            info["dias_diferencia"] = (fecha_obj - datetime.now()).days
+        except:
+            pass
+    
+    # Referencias adicionales si las hay
+    if "referencias_adicionales" in metadatos:
+        info["referencias_adicionales"] = metadatos["referencias_adicionales"]
+    
+    return info
 
 def actualizar_pesos_temporales() -> Dict:
     """

@@ -4,6 +4,7 @@ let ultimaPregunta = "";
 let networkInstance = null;
 let mostrandoLabels = true;
 let ultimoSubgrafo = null;
+let timeoutPreview = null;
 
 // Event listeners para cuando la página carga
 document.addEventListener('DOMContentLoaded', function() {
@@ -40,40 +41,24 @@ document.addEventListener('DOMContentLoaded', function() {
             cargarGrafo(); // Recargar con la nueva configuración
         }
     });
+    // Nuevos listeners para radio buttons
+    const radios = document.querySelectorAll('input[name="modoTemporal"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const container = document.getElementById('referenciaManualContainer');
+            if (this.value === 'temporal') {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        });
+    });
+
 });
 
 async function agregarContexto() {
-    const titulo = document.getElementById('titulo').value;
-    const texto = document.getElementById('texto').value;
-    const esTemporal = document.getElementById('esTemporal').checked;
-
-    if (!titulo || !texto) {
-        alert("Por favor completá título y texto.");
-        return;
-    }
-
-    try {
-        const res = await axios.post('/contexto/', { 
-            titulo, 
-            texto, 
-            es_temporal: esTemporal 
-        });
-        
-        const tipoContexto = esTemporal ? "TEMPORAL 🕒" : "ATEMPORAL 📋";
-        alert(`✅ Contexto ${tipoContexto} agregado con relaciones detectadas!\nID: ${res.data.id}`);
-        
-        // Limpiar campos
-        document.getElementById('titulo').value = '';
-        document.getElementById('texto').value = '';
-        document.getElementById('esTemporal').checked = false;
-        document.getElementById('formAgregarContexto').classList.add('hidden');
-        
-        // Actualizar automáticamente
-        mostrarContextos();
-        
-    } catch (error) {
-        alert(`❌ Error al agregar contexto: ${error.message}`);
-    }
+    // Redirigir a la nueva función
+    return agregarContextoMejorado();
 }
 
 async function actualizarPesosTemporal() {
@@ -435,10 +420,25 @@ async function mostrarContextos() {
             
             for (const [id, datos] of Object.entries(contextos)) {
                 const icono = datos.es_temporal ? "🕒" : "📋";
-                const timestamp = datos.timestamp ? `\n⏰ ${new Date(datos.timestamp).toLocaleString()}` : "";
                 
                 salida += `${icono} ${datos.titulo}\n`;
-                salida += `📄 ${datos.texto.substring(0, 150)}${datos.texto.length > 150 ? '...' : ''}${timestamp}\n`;
+                salida += `📄 ${datos.texto.substring(0, 150)}${datos.texto.length > 150 ? '...' : ''}\n`;
+                
+                // NUEVA: Información temporal detallada
+                if (datos.es_temporal) {
+                    if (datos.referencia_original) {
+                        salida += `📅 Referencia: "${datos.referencia_original}" (${datos.tipo_referencia || 'N/A'})\n`;
+                    }
+                    if (datos.timestamp) {
+                        const fecha = new Date(datos.timestamp);
+                        const ahora = new Date();
+                        const esFuturo = fecha > ahora;
+                        const diasDiff = Math.ceil(Math.abs(fecha - ahora) / (1000 * 60 * 60 * 24));
+                        
+                        salida += `⏰ ${fecha.toLocaleString()} (${esFuturo ? '🔮' : '⏪'} ${diasDiff === 0 ? 'hoy' : diasDiff + ' días'})\n`;
+                    }
+                }
+                
                 salida += `🔗 Relacionados: ${datos.relaciones.map(rid => contextos[rid]?.titulo || rid).join(', ') || 'Ninguno'}\n`;
                 salida += `🔑 Palabras clave: ${datos.palabras_clave.join(', ') || 'Ninguna'}\n\n`;
             }
@@ -862,3 +862,258 @@ window.addEventListener('resize', function() {
         networkInstance.fit();
     }
 });
+
+// Mostrar/ocultar campo de referencia temporal
+function toggleReferenciaTemporalInput() {
+    const checkbox = document.getElementById('esTemporal');
+    const container = document.getElementById('referenciaTemporalContainer');
+    
+    if (checkbox.checked) {
+        container.classList.remove('hidden');
+        document.getElementById('referenciaTemporalInput').focus();
+    } else {
+        container.classList.add('hidden');
+        document.getElementById('referenciaTemporalInput').value = '';
+        document.getElementById('resultadoParser').innerHTML = '';
+    }
+}
+
+// Probar el parser temporal
+async function probarParser() {
+    const referencia = document.getElementById('referenciaTemporalInput').value.trim();
+    const resultadoDiv = document.getElementById('resultadoParser');
+    
+    if (!referencia) {
+        resultadoDiv.innerHTML = '<div class="text-yellow-600">⚠️ Escribe una referencia temporal para probar</div>';
+        return;
+    }
+    
+    try {
+        const res = await axios.get(`/temporal/test/?referencia=${encodeURIComponent(referencia)}`);
+        const data = res.data;
+        
+        if (data.parseado_exitoso) {
+            const esFuturo = data.es_futuro ? "🔮 Futuro" : "⏪ Pasado";
+            const diasDiff = Math.abs(data.dias_diferencia);
+            const tiempoRelativo = diasDiff === 0 ? "hoy" : `${diasDiff} días`;
+            
+            resultadoDiv.innerHTML = `
+                <div class="bg-green-50 border border-green-200 p-2 rounded">
+                    <div class="text-green-800 font-medium">✅ Parseado correctamente</div>
+                    <div class="text-green-700 text-xs">
+                        📅 <strong>${data.fecha_legible}</strong><br>
+                        🕰️ ${esFuturo} (${tiempoRelativo})<br>
+                        🏷️ Tipo: ${data.tipo_referencia}
+                    </div>
+                </div>
+            `;
+        } else {
+            resultadoDiv.innerHTML = `
+                <div class="bg-red-50 border border-red-200 p-2 rounded">
+                    <div class="text-red-800 font-medium">❌ No se pudo parsear</div>
+                    <div class="text-red-700 text-xs">
+                        Tipo: ${data.tipo_referencia}<br>
+                        💡 Intenta con: "mañana", "25/01/2025", "en 3 días"
+                    </div>
+                </div>
+            `;
+        }
+        
+    } catch (error) {
+        resultadoDiv.innerHTML = `<div class="text-red-600 text-xs">❌ Error: ${error.message}</div>`;
+    }
+}
+
+// Previsualización en tiempo real
+async function previewDeteccion() {
+    const titulo = document.getElementById('titulo').value.trim();
+    const texto = document.getElementById('texto').value.trim();
+    const panelPreview = document.getElementById('panelPreview');
+    const contenidoPreview = document.getElementById('contenidoPreview');
+    
+    // Debounce para evitar demasiadas llamadas
+    clearTimeout(timeoutPreview);
+    
+    if (!titulo && !texto) {
+        panelPreview.classList.add('hidden');
+        return;
+    }
+    
+    timeoutPreview = setTimeout(async () => {
+        try {
+            const res = await axios.post('/contexto/previsualizar/', {
+                titulo: titulo,
+                texto: texto,
+                es_temporal: null  // Auto-detección
+            });
+            
+            const data = res.data;
+            panelPreview.classList.remove('hidden');
+            
+            if (data.sera_temporal) {
+                let html = `
+                    <div class="flex items-center mb-2">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                        <span class="font-medium text-blue-800">🕒 Será TEMPORAL</span>
+                        <span class="text-gray-500 ml-2">(${data.total_referencias} referencias encontradas)</span>
+                    </div>
+                `;
+                
+                // Mostrar referencias detectadas
+                data.referencias.forEach((ref, index) => {
+                    const esFuturo = ref.es_futuro ? "🔮" : "⏪";
+                    const diasDiff = Math.abs(ref.dias_diferencia);
+                    const tiempoRelativo = diasDiff === 0 ? "hoy" : `${diasDiff} días`;
+                    
+                    html += `
+                        <div class="bg-blue-50 border border-blue-200 rounded p-2 mb-1">
+                            <div class="font-medium text-blue-900">"${ref.texto}"</div>
+                            <div class="text-blue-700">
+                                📅 ${ref.fecha_legible} ${esFuturo} (${tiempoRelativo})
+                            </div>
+                            <div class="text-blue-600 text-xs">Tipo: ${ref.tipo}</div>
+                        </div>
+                    `;
+                });
+                
+                contenidoPreview.innerHTML = html;
+            } else {
+                contenidoPreview.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 bg-gray-500 rounded-full mr-2"></div>
+                        <span class="font-medium text-gray-700">📋 Será ATEMPORAL</span>
+                        <span class="text-gray-500 ml-2">(sin referencias temporales detectadas)</span>
+                    </div>
+                `;
+            }
+            
+        } catch (error) {
+            contenidoPreview.innerHTML = `
+                <div class="text-red-600">❌ Error en previsualización: ${error.message}</div>
+            `;
+        }
+    }, 500); // Debounce de 500ms
+}
+
+// Probar referencia manual
+async function probarReferenciaManual() {
+    const referencia = document.getElementById('referenciaManualInput').value.trim();
+    const resultadoDiv = document.getElementById('resultadoReferenciaManual');
+    
+    if (!referencia) {
+        resultadoDiv.innerHTML = '<div class="text-yellow-600">⚠️ Escribe una referencia temporal</div>';
+        return;
+    }
+    
+    try {
+        const res = await axios.get(`/temporal/test/?referencia=${encodeURIComponent(referencia)}`);
+        const data = res.data;
+        
+        if (data.parseado_exitoso) {
+            const esFuturo = data.es_futuro ? "🔮 Futuro" : "⏪ Pasado";
+            const diasDiff = Math.abs(data.dias_diferencia);
+            const tiempoRelativo = diasDiff === 0 ? "hoy" : `${diasDiff} días`;
+            
+            resultadoDiv.innerHTML = `
+                <div class="bg-green-50 border border-green-200 p-2 rounded">
+                    <div class="text-green-800 font-medium">✅ ${data.fecha_legible}</div>
+                    <div class="text-green-700 text-xs">${esFuturo} (${tiempoRelativo}) - ${data.tipo_referencia}</div>
+                </div>
+            `;
+        } else {
+            resultadoDiv.innerHTML = `
+                <div class="bg-red-50 border border-red-200 p-2 rounded">
+                    <div class="text-red-800">❌ No se pudo parsear</div>
+                </div>
+            `;
+        }
+    } catch (error) {
+        resultadoDiv.innerHTML = `<div class="text-red-600">❌ Error: ${error.message}</div>`;
+    }
+}
+
+// NUEVA función para agregar contexto con detección automática
+async function agregarContextoMejorado() {
+    const titulo = document.getElementById('titulo').value.trim();
+    const texto = document.getElementById('texto').value.trim();
+    
+    if (!titulo || !texto) {
+        alert("Por favor completá título y texto.");
+        return;
+    }
+    
+    // Determinar modo temporal
+    const modoTemporal = document.querySelector('input[name="modoTemporal"]:checked').value;
+    const referenciaManual = document.getElementById('referenciaManualInput').value.trim();
+    
+    // Preparar payload
+    const payload = { titulo, texto };
+    
+    if (modoTemporal === 'auto') {
+        payload.es_temporal = null; // Auto-detección
+    } else if (modoTemporal === 'temporal') {
+        payload.es_temporal = true;
+        if (referenciaManual) {
+            payload.referencia_temporal = referenciaManual;
+        }
+    } else { // atemporal
+        payload.es_temporal = false;
+    }
+    
+    try {
+        const res = await axios.post('/contexto/', payload);
+        const data = res.data;
+        
+        // Construir mensaje informativo
+        let mensaje = `✅ Contexto agregado!\n`;
+        mensaje += `📋 ID: ${data.id}\n`;
+        
+        if (data.es_temporal) {
+            mensaje += `🕒 Tipo: TEMPORAL`;
+            if (data.fue_autodetectado) {
+                mensaje += ` (detectado automáticamente)`;
+            } else {
+                mensaje += ` (especificado manualmente)`;
+            }
+            
+            // Información temporal detallada
+            if (data.info_temporal) {
+                const info = data.info_temporal;
+                mensaje += `\n\n📅 Información Temporal:`;
+                mensaje += `\n• Fecha: ${info.fecha_legible || 'N/A'}`;
+                if (info.referencia_original) {
+                    mensaje += `\n• Referencia: "${info.referencia_original}"`;
+                }
+                mensaje += `\n• Tipo: ${info.tipo_referencia || 'N/A'}`;
+                if (info.es_futuro !== undefined) {
+                    mensaje += `\n• Tiempo: ${info.es_futuro ? '🔮 Futuro' : '⏪ Pasado'}`;
+                }
+            }
+        } else {
+            mensaje += `📋 Tipo: ATEMPORAL`;
+        }
+        
+        alert(mensaje);
+        
+        // Limpiar formulario
+        limpiarFormulario();
+        
+        // Actualizar vista
+        mostrarContextos();
+        
+    } catch (error) {
+        alert(`❌ Error al agregar contexto: ${error.message}`);
+    }
+}
+
+// Función helper para limpiar formulario
+function limpiarFormulario() {
+    document.getElementById('titulo').value = '';
+    document.getElementById('texto').value = '';
+    document.getElementById('referenciaManualInput').value = '';
+    document.getElementById('resultadoReferenciaManual').innerHTML = '';
+    document.getElementById('panelPreview').classList.add('hidden');
+    document.getElementById('referenciaManualContainer').classList.add('hidden');
+    document.querySelector('#modoAuto').checked = true; // Reset a auto
+    document.getElementById('formAgregarContexto').classList.add('hidden');
+}
