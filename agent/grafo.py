@@ -11,6 +11,7 @@ import threading
 from datetime import datetime, timedelta
 import math
 from agent.temporal_parser import parsear_referencia_temporal, extraer_referencias_del_texto
+from agent.query_analyzer import analizar_intencion_temporal
 
 # Archivos de persistencia
 ARCHIVO_GRAFO = "data/grafo_contextos.pickle"
@@ -489,15 +490,16 @@ def exportar_grafo_para_visualizacion() -> Dict:
     
     return {"nodes": nodos, "edges": edges}
 
-def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None) -> Dict:
+def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, factor_refuerzo_temporal: float = 1.0) -> Dict:
     """
-    Construye un subgrafo en forma de ÁRBOL para una consulta.
+    Construye un subgrafo en forma de ÁRBOL para una consulta con AJUSTE TEMPORAL INTELIGENTE.
     - Raíz: la pregunta (NO se persiste).
     - Ramas: nodos contextuales recuperados.
-    - Cada arista incluye: Ws (peso_estructural), Rt (relevancia_temporal), We (peso_efectivo = Ws * (1 + Rt)).
+    - Cada arista incluye: Ws (peso_estructural), Rt (relevancia_temporal), We (peso_efectivo).
 
-    Nota: Ws se calcula como similitud (Jaccard) entre palabras clave de la pregunta
-    y del contexto. Rt se calcula contra 'referencia_temporal' (por defecto, ahora).
+    NUEVO: El peso efectivo se ajusta según la intención temporal detectada:
+    - Intención fuerte: We = Ws * (1 + Rt * factor_refuerzo_temporal)
+    - Intención nula: We = Ws * (1 + Rt * 0.2) [reduce peso temporal]
     """
     if not contextos_ids:
         return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos para procesar"}}
@@ -515,12 +517,16 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
     # Truncar pregunta para el label si es muy larga
     pregunta_corta = pregunta[:50] + "..." if len(pregunta) > 50 else pregunta
     
+    # NUEVO: Determinar tipo de nodo raíz según intención temporal
+    grupo_pregunta = "pregunta_temporal" if factor_refuerzo_temporal > 1.5 else "pregunta_estructural" if factor_refuerzo_temporal < 0.5 else "pregunta"
+    
     nodos = [{
         "id": raiz_id,
         "label": f"❓ {pregunta_corta}",
-        "title": f"Pregunta: {pregunta}",
-        "group": "pregunta",
-        "es_temporal": False
+        "title": f"Pregunta: {pregunta}\nFactor refuerzo temporal: {factor_refuerzo_temporal}x",
+        "group": grupo_pregunta,
+        "es_temporal": False,
+        "factor_refuerzo": factor_refuerzo_temporal  # NUEVO: metadato
     }]
     edges = []
 
@@ -551,18 +557,38 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
         ts = meta.get("timestamp")
         rt = _calcular_relevancia_temporal(ts, ref_dt.isoformat()) if ts else 0.0
 
-        # We: combinado
-        we = _calcular_peso_efectivo(ws, rt)
+        # NUEVO: We ajustado según intención temporal
+        we_base = _calcular_peso_efectivo(ws, rt)
+        
+        # Aplicar factor de refuerzo temporal
+        if factor_refuerzo_temporal != 1.0:
+            # Recalcular We con el factor ajustado
+            rt_ajustado = rt * factor_refuerzo_temporal
+            we_ajustado = ws * (1 + rt_ajustado)
+            
+            # Límite máximo para evitar valores extremos
+            we_final = min(we_ajustado, ws * 3.0)
+        else:
+            we_final = we_base
+
+        # NUEVO: Determinar tipo de arista según ajuste
+        if factor_refuerzo_temporal > 1.5:
+            tipo_arista = "consulta_temporal_fuerte"
+        elif factor_refuerzo_temporal < 0.5:
+            tipo_arista = "consulta_estructural"  
+        else:
+            tipo_arista = "consulta_mixta"
 
         edges.append({
             "from": raiz_id,
             "to": cid,
-            "tipo": "consulta",
-            "peso_estructural": round(ws, 3),        # Ws
-            "relevancia_temporal": round(rt, 3),     # Rt
-            "peso_efectivo": round(we, 3),           # We = Ws * (1 + Rt)
-            # label listo para UI si querés usarlo directo
-            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|Ef:{round(we,2)}"
+            "tipo": tipo_arista,
+            "peso_estructural": round(ws, 3),
+            "relevancia_temporal": round(rt, 3),
+            "factor_refuerzo": round(factor_refuerzo_temporal, 3),  # NUEVO
+            "peso_efectivo": round(we_final, 3),
+            "peso_efectivo_original": round(we_base, 3),  # NUEVO: para comparación
+            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|F:{round(factor_refuerzo_temporal,2)}x|Ef:{round(we_final,2)}"
         })
         
         contextos_procesados += 1
@@ -574,6 +600,52 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             "referencia_temporal": ref_dt.isoformat(),
             "contextos_procesados": contextos_procesados,
             "total_solicitados": len(contextos_ids),
-            "pregunta_original": pregunta
+            "pregunta_original": pregunta,
+            "factor_refuerzo_temporal": factor_refuerzo_temporal,  # NUEVO
+            "tipo_consulta": grupo_pregunta  # NUEVO
+        }
+    }
+
+# NUEVA FUNCIÓN: Análisis completo de consulta
+def analizar_consulta_completa(pregunta: str) -> Dict:
+    """
+    Analiza una consulta de forma completa: intención + contextos relevantes
+    Devuelve toda la información necesaria para responder inteligentemente
+    """
+    # 1. Analizar intención temporal
+    analisis_intencion = analizar_intencion_temporal(pregunta)
+    
+    # 2. Determinar referencia temporal a usar
+    referencia_temporal = analisis_intencion.get('timestamp_referencia')
+    factor_refuerzo = analisis_intencion.get('factor_refuerzo_temporal', 1.0)
+    
+    # 3. Obtener contextos relevantes semánticamente
+    from agent.semantica import buscar_similares
+    try:
+        ids_similares = buscar_similares(pregunta, k=5)
+    except Exception as e:
+        print(f"Error en búsqueda semántica: {e}")
+        ids_similares = []
+    
+    # 4. Construir árbol con ajuste temporal
+    if ids_similares:
+        arbol = construir_arbol_consulta(
+            pregunta, 
+            ids_similares, 
+            referencia_temporal, 
+            factor_refuerzo
+        )
+    else:
+        arbol = {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
+    
+    return {
+        "analisis_intencion": analisis_intencion,
+        "contextos_recuperados": ids_similares,
+        "arbol_consulta": arbol,
+        "estrategia_aplicada": {
+            "intencion_temporal": analisis_intencion['intencion_temporal'],
+            "factor_refuerzo": factor_refuerzo,
+            "referencia_temporal": referencia_temporal,
+            "explicacion": analisis_intencion['explicacion']
         }
     }
