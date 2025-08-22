@@ -5,6 +5,7 @@ let networkInstance = null;
 let mostrandoLabels = true;
 let ultimoSubgrafo = null;
 let timeoutPreview = null;
+let timeoutIntencion = null;
 
 // Event listeners para cuando la página carga
 document.addEventListener('DOMContentLoaded', function() {
@@ -99,7 +100,7 @@ async function actualizarPesosTemporal() {
 }
 
 async function preguntar() {
-    console.log("🔍 INICIO - función preguntar()");
+    console.log("🔍 INICIO - función preguntar() con análisis de intención");
     
     const pregunta = document.getElementById('pregunta').value;
     console.log("📝 Pregunta:", pregunta);
@@ -112,18 +113,16 @@ async function preguntar() {
     const respuestaDiv = document.getElementById('respuesta');
     const botonDiv = document.getElementById('botonAgregarRespuesta');
     const botonArbolDiv = document.getElementById('botonVerArbol');
+    const panelEstrategia = document.getElementById('panelEstrategia');
+    const contenidoEstrategia = document.getElementById('contenidoEstrategia');
     
-    console.log("🎯 Elementos DOM encontrados:");
-    console.log("  - respuestaDiv:", !!respuestaDiv);
-    console.log("  - botonDiv:", !!botonDiv);
-    console.log("  - botonArbolDiv:", !!botonArbolDiv);
-    
-    respuestaDiv.innerHTML = "🔍 Buscando contextos relevantes (semánticos + temporales) y generando respuesta...";
+    respuestaDiv.innerHTML = "🧠 Analizando intención temporal y buscando contextos relevantes...";
     botonDiv.style.display = 'none';
     botonArbolDiv.style.display = 'none';
+    panelEstrategia.classList.add('hidden');
 
     try {
-        console.log("📡 Enviando request al servidor...");
+        console.log("📡 Enviando request con análisis de intención...");
         const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}`);
         
         console.log("✅ Respuesta completa del servidor:");
@@ -134,6 +133,39 @@ async function preguntar() {
         ultimaRespuesta = res.data.respuesta;
         ultimaPregunta = pregunta;
         
+        // Mostrar información de estrategia aplicada
+        if (res.data.analisis_intencion && res.data.estrategia_aplicada) {
+            const analisis = res.data.analisis_intencion;
+            const estrategia = res.data.estrategia_aplicada;
+            
+            let estrategiaHtml = `
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                        <div class="font-medium">🧠 Intención Detectada:</div>
+                        <div>${analisis.intencion_temporal?.toUpperCase() || 'N/A'}</div>
+                        <div class="text-gray-600">Confianza: ${((analisis.confianza || 0) * 100).toFixed(0)}%</div>
+                    </div>
+                    <div>
+                        <div class="font-medium">⚙️ Factor Aplicado:</div>
+                        <div>${(estrategia.factor_refuerzo || 1.0)}x</div>
+                        <div class="text-gray-600">
+                            ${estrategia.factor_refuerzo > 1.5 ? '🕒 Prioridad temporal' : 
+                              estrategia.factor_refuerzo < 0.5 ? '📋 Prioridad semántica' : 
+                              '⚖️ Balance mixto'}
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 text-xs text-gray-700">
+                    <strong>Explicación:</strong> ${estrategia.explicacion || analisis.explicacion || 'N/A'}
+                </div>
+            `;
+            
+            contenidoEstrategia.innerHTML = estrategiaHtml;
+            panelEstrategia.classList.remove('hidden');
+            
+            console.log("✅ Panel de estrategia mostrado");
+        }
+        
         // Mostrar botón agregar respuesta si la respuesta es válida
         if (res.data.respuesta && !res.data.respuesta.startsWith("[ERROR]")) {
             botonDiv.style.display = 'block';
@@ -142,55 +174,30 @@ async function preguntar() {
             console.log("❌ Botón agregar respuesta NO mostrado - respuesta inválida");
         }
 
-        // DIAGNÓSTICO DETALLADO DEL SUBGRAFO
-        console.log("\n🌳 === ANÁLISIS DEL SUBGRAFO ===");
-        
+        // Análisis del subgrafo (igual que antes)
         const subgrafo = res.data.subgrafo;
-        console.log("1. subgrafo existe:", !!subgrafo);
-        console.log("2. subgrafo completo:", subgrafo);
+        console.log("\n🌳 === ANÁLISIS DEL SUBGRAFO ===");
+        console.log("subgrafo:", subgrafo);
         
-        if (subgrafo) {
-            console.log("3. subgrafo.nodes existe:", !!subgrafo.nodes);
-            console.log("4. subgrafo.nodes:", subgrafo.nodes);
-            console.log("5. subgrafo.nodes.length:", subgrafo.nodes ? subgrafo.nodes.length : "N/A");
-            console.log("6. subgrafo.edges existe:", !!subgrafo.edges);
-            console.log("7. subgrafo.edges:", subgrafo.edges);
-            console.log("8. subgrafo.edges.length:", subgrafo.edges ? subgrafo.edges.length : "N/A");
-            console.log("9. subgrafo.meta:", subgrafo.meta);
-        }
-        
-        // CONDICIÓN PARA MOSTRAR BOTÓN
-        const condicion1 = subgrafo;
-        const condicion2 = subgrafo && subgrafo.nodes;
-        const condicion3 = subgrafo && subgrafo.nodes && subgrafo.nodes.length > 0;
-        
-        console.log("\n🔍 === EVALUACIÓN DE CONDICIONES ===");
-        console.log("  subgrafo existe:", condicion1);
-        console.log("  subgrafo.nodes existe:", condicion2);
-        console.log("  subgrafo.nodes.length > 0:", condicion3);
-        
-        if (condicion3) {
+        if (subgrafo && subgrafo.nodes && subgrafo.nodes.length > 0) {
             ultimoSubgrafo = subgrafo;
             botonArbolDiv.style.display = 'block';
             console.log("✅ ÉXITO: Botón de árbol MOSTRADO");
-            console.log("  ultimoSubgrafo asignado:", !!ultimoSubgrafo);
         } else {
             ultimoSubgrafo = null;
             botonArbolDiv.style.display = 'none';
             console.log("❌ FALLO: Botón de árbol NO mostrado");
-            console.log("  Razones:");
-            if (!subgrafo) console.log("    - subgrafo no existe");
-            if (subgrafo && !subgrafo.nodes) console.log("    - subgrafo.nodes no existe");
-            if (subgrafo && subgrafo.nodes && subgrafo.nodes.length === 0) console.log("    - subgrafo.nodes está vacío");
         }
         
-        // Debug adicional si hay información
+        // Debug del análisis de intención
         if (res.data.debug) {
-            console.log("\n🔧 === INFO DE DEBUG DEL SERVIDOR ===");
+            console.log("\n🔧 === DEBUG INFO ===");
+            console.log("Intención temporal:", res.data.debug.intencion_temporal);
+            console.log("Factor refuerzo:", res.data.debug.factor_refuerzo);
             console.log(res.data.debug);
         }
         
-        console.log("\n✅ FINAL - función preguntar() completada");
+        console.log("\n✅ FINAL - función preguntar() completada con análisis de intención");
         
     } catch (error) {
         console.log("💥 ERROR en preguntar():");
@@ -198,6 +205,7 @@ async function preguntar() {
         respuestaDiv.innerText = `Error: ${error.message}`;
         botonDiv.style.display = 'none';
         botonArbolDiv.style.display = 'none';
+        panelEstrategia.classList.add('hidden');
     }
 }
 
@@ -1116,4 +1124,297 @@ function limpiarFormulario() {
     document.getElementById('referenciaManualContainer').classList.add('hidden');
     document.querySelector('#modoAuto').checked = true; // Reset a auto
     document.getElementById('formAgregarContexto').classList.add('hidden');
+}
+
+// Previsualización de intención temporal en tiempo real
+async function previewIntencionTemporal() {
+    const pregunta = document.getElementById('pregunta').value.trim();
+    const panelIntencion = document.getElementById('panelIntencionTemporal');
+    const contenidoIntencion = document.getElementById('contenidoIntencionTemporal');
+    
+    // Debounce para evitar demasiadas llamadas
+    clearTimeout(timeoutIntencion);
+    
+    if (!pregunta || pregunta.length < 5) {
+        panelIntencion.classList.add('hidden');
+        return;
+    }
+    
+    timeoutIntencion = setTimeout(async () => {
+        try {
+            const res = await axios.get(`/query/analizar/?pregunta=${encodeURIComponent(pregunta)}`);
+            const data = res.data;
+            
+            panelIntencion.classList.remove('hidden');
+            
+            // Emoji y colores según intención
+            const infoIntencion = {
+                'fuerte': { emoji: '🔴', color: 'text-red-700', bg: 'bg-red-50', nombre: 'TEMPORAL FUERTE' },
+                'media': { emoji: '🟡', color: 'text-yellow-700', bg: 'bg-yellow-50', nombre: 'TEMPORAL MEDIA' },
+                'debil': { emoji: '🟢', color: 'text-green-700', bg: 'bg-green-50', nombre: 'TEMPORAL DÉBIL' },
+                'nula': { emoji: '⚫', color: 'text-gray-700', bg: 'bg-gray-50', nombre: 'ESTRUCTURAL' }
+            };
+            
+            const info = infoIntencion[data.intencion_temporal] || infoIntencion['debil'];
+            
+            let html = `
+                <div class="flex items-center mb-2">
+                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: ${info.emoji === '🔴' ? '#ef4444' : info.emoji === '🟡' ? '#eab308' : info.emoji === '🟢' ? '#22c55e' : '#6b7280'}"></div>
+                    <span class="font-medium ${info.color}">${info.emoji} Intención: ${info.nombre}</span>
+                    <span class="text-gray-500 ml-2">(confianza: ${(data.confianza * 100).toFixed(0)}%)</span>
+                </div>
+                
+                <div class="text-gray-600 mb-2">
+                    <strong>Factor de refuerzo temporal:</strong> ${data.factor_refuerzo_temporal}x
+                </div>
+                
+                <div class="text-gray-600 mb-2">
+                    <strong>Explicación:</strong> ${data.explicacion}
+                </div>
+            `;
+            
+            // Mostrar referencia temporal si existe
+            if (data.referencia_temporal_detectada) {
+                html += `
+                    <div class="text-blue-600 mb-2">
+                        <strong>Referencia detectada:</strong> "${data.referencia_temporal_detectada}"
+                    </div>
+                `;
+            }
+            
+            // Mostrar timestamp de referencia si existe
+            if (data.timestamp_referencia) {
+                const fecha = new Date(data.timestamp_referencia);
+                html += `
+                    <div class="text-purple-600 text-xs">
+                        <strong>Timestamp referencia:</strong> ${fecha.toLocaleString()}
+                    </div>
+                `;
+            }
+            
+            // Estrategia que se aplicará
+            let estrategiaTexto = "";
+            if (data.factor_refuerzo_temporal > 1.5) {
+                estrategiaTexto = "🕒 Se priorizarán contextos temporalmente relevantes";
+            } else if (data.factor_refuerzo_temporal < 0.5) {
+                estrategiaTexto = "📋 Se priorizará contenido semántico sobre temporal";
+            } else {
+                estrategiaTexto = "⚖️ Balance entre relevancia semántica y temporal";
+            }
+            
+            html += `
+                <div class="mt-2 p-2 ${info.bg} border border-gray-200 rounded text-xs">
+                    <strong>Estrategia:</strong> ${estrategiaTexto}
+                </div>
+            `;
+            
+            contenidoIntencion.innerHTML = html;
+            
+        } catch (error) {
+            contenidoIntencion.innerHTML = `
+                <div class="text-red-600">❌ Error analizando intención: ${error.message}</div>
+            `;
+        }
+    }, 800); // Debounce de 800ms para análisis de intención
+}
+
+// NUEVA: Función para probar solo el análisis de intención
+async function probarAnalisisIntencion() {
+    const pregunta = document.getElementById('pregunta').value.trim();
+    
+    if (!pregunta) {
+        alert("Escribe una pregunta primero");
+        return;
+    }
+    
+    try {
+        const res = await axios.get(`/query/analisis-completo/?pregunta=${encodeURIComponent(pregunta)}`);
+        console.log("📊 Análisis completo de consulta:", res.data);
+        
+        // Mostrar resultado en un alert detallado
+        const analisis = res.data.analisis_intencion;
+        const estrategia = res.data.estrategia_aplicada;
+        
+        let mensaje = `🧠 ANÁLISIS COMPLETO DE CONSULTA\n\n`;
+        mensaje += `📝 Pregunta: "${pregunta}"\n\n`;
+        mensaje += `🎯 Intención: ${analisis.intencion_temporal?.toUpperCase()}\n`;
+        mensaje += `📊 Confianza: ${((analisis.confianza || 0) * 100).toFixed(0)}%\n`;
+        mensaje += `⚡ Factor refuerzo: ${(estrategia.factor_refuerzo || 1.0)}x\n`;
+        mensaje += `📅 Referencia temporal: ${estrategia.referencia_temporal ? new Date(estrategia.referencia_temporal).toLocaleString() : 'N/A'}\n\n`;
+        mensaje += `💡 Explicación: ${estrategia.explicacion}\n\n`;
+        mensaje += `🔍 Contextos encontrados: ${res.data.contextos_recuperados?.length || 0}`;
+        
+        alert(mensaje);
+        
+    } catch (error) {
+        alert(`❌ Error en análisis: ${error.message}`);
+    }
+}
+
+// NUEVO: Actualizar el árbol de consulta para mostrar información de intención temporal
+function abrirModalArbol(subgrafo) {
+    console.log("Abriendo modal de árbol con información temporal:", subgrafo);
+    
+    const modal = document.getElementById('modalArbol');
+    modal.classList.remove('hidden');
+
+    const container = document.getElementById('arbolConsulta');
+
+    if (!subgrafo || !subgrafo.nodes || subgrafo.nodes.length === 0) {
+        const errorMsg = subgrafo?.meta?.error || "Subgrafo vacío o inválido";
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-gray-500 flex-col">
+                <p class="text-lg mb-2">❌ No se puede mostrar el árbol</p>
+                <p class="text-sm">${errorMsg}</p>
+            </div>
+        `;
+        return;
+    }
+
+    try {
+        // Nodos con información de intención temporal
+        const nodes = subgrafo.nodes.map(n => {
+            let color;
+            let shape = "box";
+            let fontConfig = { 
+                size: 12,
+                color: "#374151",
+                align: "center"
+            };
+            
+            if (n.group === "pregunta_temporal") {
+                // Pregunta con intención temporal fuerte
+                color = { background: "#fef3c7", border: "#f59e0b", highlight: { background: "#fed7aa", border: "#ea580c" } };
+                shape = "diamond";
+                fontConfig = { 
+                    size: 14,
+                    color: "#92400e",
+                    align: "top",
+                    vadjust: -80
+                };
+            } else if (n.group === "pregunta_estructural") {
+                // Pregunta con intención estructural
+                color = { background: "#e5e7eb", border: "#6b7280", highlight: { background: "#f3f4f6", border: "#4b5563" } };
+                shape = "diamond";
+                fontConfig = { 
+                    size: 14,
+                    color: "#374151",
+                    align: "top",
+                    vadjust: -80
+                };
+            } else if (n.group === "pregunta") {
+                // Pregunta mixta
+                color = { background: "#dbeafe", border: "#3b82f6", highlight: { background: "#bfdbfe", border: "#2563eb" } };
+                shape = "diamond";
+                fontConfig = { 
+                    size: 14,
+                    color: "#1e40af",
+                    align: "top",
+                    vadjust: -80
+                };
+            } else if (n.group === "temporal") {
+                color = { background: "#dbeafe", border: "#2563eb", highlight: { background: "#bfdbfe", border: "#1d4ed8" } };
+                fontConfig = { 
+                    size: 12,
+                    color: "#1e40af",
+                    align: "center" 
+                };
+            } else {
+                color = { background: "#f3f4f6", border: "#6b7280", highlight: { background: "#e5e7eb", border: "#4b5563" } };
+            }
+
+            return {
+                id: n.id,
+                label: n.label || n.id,
+                title: n.title || n.label || n.id,
+                color: color,
+                shape: shape,
+                font: fontConfig,
+                margin: { top: 10, right: 10, bottom: 10, left: 10 }
+            };
+        });
+
+        // Aristas con información de factor de refuerzo
+        const edges = subgrafo.edges.map(e => {
+            const pesoEfectivo = e.peso_efectivo || 0;
+            const factorRefuerzo = e.factor_refuerzo || 1.0;
+            const width = Math.max(2, pesoEfectivo * 8);
+            
+            // Color según tipo de consulta
+            let color = "#059669"; // Verde por defecto
+            if (e.tipo === "consulta_temporal_fuerte") {
+                color = "#dc2626"; // Rojo para temporal fuerte
+            } else if (e.tipo === "consulta_estructural") {
+                color = "#6b7280"; // Gris para estructural
+            }
+            
+            return {
+                from: e.from,
+                to: e.to,
+                arrows: { to: { enabled: true, scaleFactor: 1 } },
+                label: e.label || "",
+                title: `Peso Estructural: ${e.peso_estructural}\nRelevancia Temporal: ${e.relevancia_temporal}\nFactor Refuerzo: ${factorRefuerzo}x\nPeso Efectivo: ${e.peso_efectivo}\nTipo: ${e.tipo}`,
+                font: { size: 10, align: "top" },
+                color: { color: color, highlight: color },
+                width: width,
+                smooth: { type: "cubicBezier", roundness: 0.4 }
+            };
+        });
+
+        console.log(`Renderizando árbol temporal: ${nodes.length} nodos, ${edges.length} aristas`);
+
+        const options = {
+            layout: {
+                hierarchical: {
+                    enabled: true,
+                    direction: "UD",
+                    sortMethod: "directed",
+                    nodeSpacing: 150,
+                    levelSeparation: 100
+                }
+            },
+            physics: {
+                enabled: true,
+                solver: "forceAtlas2Based",
+                stabilization: { iterations: 150 },
+                barnesHut: { gravitationalConstant: -2000, springLength: 150, springConstant: 0.04 }
+            },
+            nodes: { 
+                borderWidth: 2,
+                shadow: { enabled: true, color: 'rgba(0,0,0,0.2)', size: 5 }
+            },
+            edges: {
+                smooth: { type: "cubicBezier", roundness: 0.4 },
+                width: 2
+            },
+            interaction: {
+                hover: true,
+                zoomView: true,
+                dragView: true,
+                dragNodes: true,
+                tooltipDelay: 100
+            }
+        };
+
+        // Crear la visualización
+        const network = new vis.Network(
+            container, 
+            { 
+                nodes: new vis.DataSet(nodes), 
+                edges: new vis.DataSet(edges) 
+            }, 
+            options
+        );
+
+        console.log("✅ Árbol de consulta con análisis temporal renderizado correctamente");
+        
+    } catch (error) {
+        console.error("Error renderizando árbol temporal:", error);
+        container.innerHTML = `
+            <div class="flex items-center justify-center h-full text-red-500 flex-col">
+                <p class="text-lg mb-2">❌ Error al renderizar</p>
+                <p class="text-sm">${error.message}</p>
+            </div>
+        `;
+    }
 }

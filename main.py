@@ -7,6 +7,7 @@ from agent import responder
 from fastapi.staticfiles import StaticFiles
 import os
 from agent.semantica import indexar_documento, buscar_similares
+from agent.query_analyzer import analizar_intencion_temporal
 
 grafo.cargar_desde_disco()
 
@@ -102,11 +103,25 @@ def preguntar(pregunta: str):
         return {
             "respuesta": "[ERROR] No hay contextos almacenados en el sistema",
             "contextos_utilizados": [],
-            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}},
+            "analisis_intencion": {"error": "Sin contextos disponibles"}
         }
 
-    # Recuperar contextos relevantes (por embeddings)
-    ids_similares = buscar_similares(pregunta, k=5)
+    # NUEVO: Análisis completo de la consulta con intención temporal
+    try:
+        analisis_completo = grafo.analizar_consulta_completa(pregunta)
+        analisis_intencion = analisis_completo["analisis_intencion"]
+        ids_similares = analisis_completo["contextos_recuperados"]
+        arbol = analisis_completo["arbol_consulta"]
+        estrategia = analisis_completo["estrategia_aplicada"]
+        
+    except Exception as e:
+        print(f"Error en análisis completo: {e}")
+        # Fallback al método anterior
+        ids_similares = buscar_similares(pregunta, k=5)
+        analisis_intencion = {"error": f"Error en análisis: {str(e)}"}
+        estrategia = {"error": "Usando fallback"}
+        arbol = {"nodes": [], "edges": [], "meta": {"error": "Error en construcción"}}
 
     contextos_relevantes = {}
     contextos_utilizados_info = []
@@ -126,35 +141,62 @@ def preguntar(pregunta: str):
         return {
             "respuesta": "[ERROR] No se encontraron contextos relevantes para la pregunta",
             "contextos_utilizados": [],
-            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}},
+            "analisis_intencion": analisis_intencion
         }
 
-    # Llamada a la IA
+    # Llamada a la IA (sin cambios)
     respuesta = responder.responder_con_ia(pregunta, contextos_relevantes)
 
+    # NUEVA: Información enriquecida sobre la estrategia aplicada
     titulos_utilizados = [c["titulo"] for c in contextos_utilizados_info]
     temporales = [c for c in contextos_utilizados_info if c.get("es_temporal")]
-    info_temporal = f" (🕒 {len(temporales)} temporales)" if temporales else ""
-    respuesta_completa = f"{respuesta}\n\n📚 Contextos utilizados: {', '.join(titulos_utilizados)}{info_temporal}"
-
-    # Construcción del subgrafo efímero (NO se guarda en grafo principal)
-    try:
-        arbol = grafo.construir_arbol_consulta(pregunta, list(contextos_relevantes.keys()))
-        print(f"Subgrafo construido: {len(arbol.get('nodes', []))} nodos, {len(arbol.get('edges', []))} aristas")
-    except Exception as e:
-        print(f"Error construyendo subgrafo: {e}")
-        arbol = {"nodes": [], "edges": [], "meta": {"error": str(e)}}
+    
+    # Construir mensaje con información de estrategia
+    info_estrategia = ""
+    if "analisis_intencion" in locals() and "intencion_temporal" in analisis_intencion:
+        intencion = analisis_intencion["intencion_temporal"]
+        factor = analisis_intencion.get("factor_refuerzo_temporal", 1.0)
+        
+        if intencion == "fuerte":
+            info_estrategia = f" 🕒 Consulta temporal (factor: {factor:.1f}x)"
+        elif intencion == "nula":
+            info_estrategia = f" 📋 Consulta estructural (factor: {factor:.1f}x)"
+        elif intencion == "media":
+            info_estrategia = f" ⚡ Consulta mixta (factor: {factor:.1f}x)"
+    
+    info_temporal = f" ({len(temporales)} temporales)" if temporales else ""
+    respuesta_completa = f"{respuesta}\n\n📚 Contextos: {', '.join(titulos_utilizados)}{info_temporal}{info_estrategia}"
 
     return {
         "respuesta": respuesta_completa,
         "contextos_utilizados": contextos_utilizados_info,
         "subgrafo": arbol,
+        "analisis_intencion": analisis_intencion,  # NUEVO
+        "estrategia_aplicada": estrategia,  # NUEVO
         "debug": {
             "ids_similares": ids_similares,
             "contextos_encontrados": len(contextos_relevantes),
-            "subgrafo_valido": len(arbol.get('nodes', [])) > 0
+            "subgrafo_valido": len(arbol.get('nodes', [])) > 0,
+            "intencion_temporal": analisis_intencion.get("intencion_temporal", "error"),
+            "factor_refuerzo": analisis_intencion.get("factor_refuerzo_temporal", 1.0)
         }
     }
+
+# NUEVO ENDPOINT: Solo análisis de intención (para testing)
+@app.get("/query/analizar/")
+def analizar_query(pregunta: str):
+    """Analiza solo la intención temporal de una pregunta sin ejecutarla"""
+    return analizar_intencion_temporal(pregunta)
+
+# NUEVO ENDPOINT: Análisis completo sin respuesta de IA
+@app.get("/query/analisis-completo/")
+def analisis_completo_query(pregunta: str):
+    """Análisis completo de consulta sin llamar a la IA"""
+    try:
+        return grafo.analizar_consulta_completa(pregunta)
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):
