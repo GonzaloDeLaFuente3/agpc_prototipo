@@ -677,7 +677,8 @@
     "es_temporal": true,
     "relaciones": [
       "57e7d506-cea7-4052-8985-c87019133c3d",
-      "9d66f592-5459-4534-a369-29ad35c8177d"
+      "9d66f592-5459-4534-a369-29ad35c8177d",
+      "dd404152-5dff-4c56-b277-ede0202439d0"
     ],
     "timestamp": "2025-08-20T17:02:18.849060"
   },
@@ -717,7 +718,50 @@
     "es_temporal": false,
     "relaciones": [
       "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
-      "57e7d506-cea7-4052-8985-c87019133c3d"
+      "57e7d506-cea7-4052-8985-c87019133c3d",
+      "dd404152-5dff-4c56-b277-ede0202439d0",
+      "d4411ee7-a545-4c8b-b822-daaf9b1a7875"
     ]
+  },
+  "dd404152-5dff-4c56-b277-ede0202439d0": {
+    "titulo": "Planificación de Experimentos",
+    "texto": "Mañana debo validar el modelo de parsing de referencias temporales dentro del prototipo de tesis en Ingeniería en Informática.",
+    "palabras_clave": [
+      "deber",
+      "temporal",
+      "validar",
+      "modelo",
+      "parsing",
+      "referencia",
+      "tesis",
+      "ingeniería",
+      "informática",
+      "prototipo",
+      "mañana"
+    ],
+    "created_at": "2025-08-22T16:48:29.122805",
+    "es_temporal": false,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "9d66f592-5459-4534-a369-29ad35c8177d"
+    ]
+  },
+  "d4411ee7-a545-4c8b-b822-daaf9b1a7875": {
+    "titulo": "Reunión con cliente",
+    "texto": "Revisar propuesta mañana",
+    "palabras_clave": [
+      "mañana",
+      "propuestar",
+      "revisar"
+    ],
+    "created_at": "2025-08-22T17:17:47.224285",
+    "es_temporal": true,
+    "relaciones": [
+      "9d66f592-5459-4534-a369-29ad35c8177d"
+    ],
+    "deteccion_automatica": true,
+    "timestamp": "2025-08-23T17:17:47.224285",
+    "referencia_original": "mañana",
+    "tipo_referencia": "relativa"
   }
 }

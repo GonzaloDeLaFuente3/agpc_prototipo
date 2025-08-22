@@ -19,20 +19,79 @@ app = FastAPI()
 class EntradaContexto(BaseModel):
     titulo: str
     texto: str
-    es_temporal: Optional[bool] = False  # NUEVO: campo para indicar si es temporal
+    es_temporal: Optional[bool] = None  # None = auto-detectar, True/False = forzar
+    referencia_temporal: Optional[str] = None
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
-    nuevo_id = grafo.agregar_contexto(entrada.titulo, entrada.texto, entrada.es_temporal)
+    nuevo_id = grafo.agregar_contexto(
+        entrada.titulo, 
+        entrada.texto, 
+        entrada.es_temporal,  # Puede ser None para auto-detección
+        entrada.referencia_temporal
+    )
+    
+    # Información adicional en la respuesta
+    contexto_creado = grafo.metadatos_contextos[nuevo_id]
+    info_temporal = {}
+    
+    if contexto_creado.get("es_temporal", False):
+        info_temporal = grafo.obtener_info_temporal(nuevo_id)
+        info_temporal["fue_autodetectado"] = contexto_creado.get("deteccion_automatica", False)
+    
     return {
         "status": "agregado", 
         "id": nuevo_id,
-        "es_temporal": entrada.es_temporal
+        "es_temporal": contexto_creado.get("es_temporal", False),
+        "fue_autodetectado": contexto_creado.get("deteccion_automatica", False),
+        "info_temporal": info_temporal
     }
+
+#Previsualización de detección
+@app.post("/contexto/previsualizar/")
+def previsualizar_contexto(entrada: EntradaContexto):
+    """Previsualiza qué detectará el sistema sin guardar"""
+    if not entrada.titulo or not entrada.texto:
+        return {"error": "Título y texto son requeridos"}
+    
+    preview = grafo.previsualizar_deteccion_temporal(entrada.titulo, entrada.texto)
+    
+    # Agregar información adicional
+    preview["modo"] = "auto_deteccion" if entrada.es_temporal is None else "manual"
+    preview["sera_temporal_final"] = preview["sera_temporal"] if entrada.es_temporal is None else entrada.es_temporal
+    
+    return preview
+
+# NUEVO ENDPOINT: Información temporal de un contexto
+@app.get("/contexto/{id_contexto}/temporal/")
+def obtener_info_temporal_contexto(id_contexto: str):
+    return grafo.obtener_info_temporal(id_contexto)
 
 @app.get("/contexto/")
 def obtener_contextos():
     return grafo.obtener_todos()
+
+# NUEVO ENDPOINT: Testing del parser temporal
+@app.get("/temporal/test/")
+def test_parser_temporal(referencia: str):
+    from agent.temporal_parser import parsear_referencia_temporal
+    timestamp, tipo = parsear_referencia_temporal(referencia)
+    
+    resultado = {
+        "referencia_original": referencia,
+        "timestamp": timestamp,
+        "tipo_referencia": tipo,
+        "parseado_exitoso": timestamp is not None
+    }
+    
+    if timestamp:
+        from datetime import datetime
+        fecha_obj = datetime.fromisoformat(timestamp)
+        resultado["fecha_legible"] = fecha_obj.strftime("%d/%m/%Y %H:%M")
+        resultado["es_futuro"] = fecha_obj > datetime.now()
+        resultado["dias_diferencia"] = (fecha_obj - datetime.now()).days
+    
+    return resultado
 
 @app.get("/preguntar/")
 def preguntar(pregunta: str):
