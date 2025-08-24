@@ -1,31 +1,86 @@
-# agent/grafo.py - PASO 1: Agregando soporte temporal
+# agent/grafo.py - Optimizado
 import networkx as nx
 import pickle
 import json
 import os
 import uuid
+import threading
+import math
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set
+
 from agent.extractor import extraer_palabras_clave
 from agent.semantica import indexar_documento
-import threading
-from datetime import datetime, timedelta
-import math
-from agent.temporal_parser import parsear_referencia_temporal, extraer_referencias_del_texto
+from agent.temporal_parser import extraer_referencias_del_texto, parsear_referencia_temporal
 from agent.query_analyzer import analizar_intencion_temporal
 
 # Archivos de persistencia
 ARCHIVO_GRAFO = "data/grafo_contextos.pickle"
 ARCHIVO_METADATOS = "data/contexto.json"
 
-# Grafo principal
+# Grafo y metadatos globales
 grafo_contextos = nx.DiGraph()
 metadatos_contextos = {}
-
-# Lock para operaciones thread-safe
 _lock = threading.Lock()
 
+def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:
+    """Calcula similitud Jaccard entre dos conjuntos."""
+    if not claves_a or not claves_b:
+        return 0.0
+    
+    interseccion = len(claves_a & claves_b)
+    union = len(claves_a | claves_b)
+    return interseccion / union if union > 0 else 0.0
+
+def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str) -> float:
+    """Calcula relevancia temporal con decaimiento exponencial."""
+    if not fecha_a or not fecha_b:
+        return 0.0
+    
+    try:
+        dt_a = datetime.fromisoformat(fecha_a)
+        dt_b = datetime.fromisoformat(fecha_b)
+        
+        diferencia_dias = abs((dt_a - dt_b).days)
+        factor_decaimiento = 30  # 30 días
+        relevancia = math.exp(-diferencia_dias / factor_decaimiento)
+        
+        return min(1.0, max(0.0, relevancia))
+    except (ValueError, TypeError):
+        return 0.0
+
+def _recalcular_relaciones():
+    """Recalcula todas las relaciones del grafo."""
+    grafo_contextos.clear_edges()
+    nodos = list(grafo_contextos.nodes())
+    
+    for i, nodo_a in enumerate(nodos):
+        metadatos_a = metadatos_contextos.get(nodo_a, {})
+        claves_a = set(metadatos_a.get("palabras_clave", []))
+        fecha_a = metadatos_a.get("timestamp")
+        
+        for nodo_b in nodos[i+1:]:
+            metadatos_b = metadatos_contextos.get(nodo_b, {})
+            claves_b = set(metadatos_b.get("palabras_clave", []))
+            fecha_b = metadatos_b.get("timestamp")
+            
+            similitud = _calcular_similitud_semantica(claves_a, claves_b)
+            relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b)
+            peso_efectivo = similitud * (1 + relevancia_temporal)
+            
+            if similitud > 0.1:  # Umbral mínimo
+                datos_arista = {
+                    "peso_estructural": round(similitud, 3),
+                    "relevancia_temporal": round(relevancia_temporal, 3),
+                    "peso_efectivo": round(peso_efectivo, 3),
+                    "tipo": "semantica_temporal" if (fecha_a and fecha_b) else "semantica"
+                }
+                
+                grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
+                grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
+
 def _guardar_grafo():
-    """Guarda el grafo y metadatos en disco"""
+    """Guarda el grafo en disco de forma thread-safe."""
     with _lock:
         os.makedirs("data", exist_ok=True)
         
@@ -35,8 +90,8 @@ def _guardar_grafo():
         with open(ARCHIVO_METADATOS, 'w', encoding='utf-8') as f:
             json.dump(metadatos_contextos, f, ensure_ascii=False, indent=2)
 
-def _cargar_grafo():
-    """Carga el grafo y metadatos desde disco"""
+def cargar_desde_disco():
+    """Carga el grafo desde disco."""
     global grafo_contextos, metadatos_contextos
     
     if os.path.exists(ARCHIVO_GRAFO):
@@ -51,129 +106,18 @@ def _cargar_grafo():
     else:
         metadatos_contextos = {}
 
-def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:
-    """Calcula similitud semántica entre dos conjuntos de palabras clave"""
-    if not claves_a or not claves_b:
-        return 0.0
-    
-    interseccion = len(claves_a & claves_b)
-    union = len(claves_a | claves_b)
-    
-    return interseccion / union if union > 0 else 0.0
-
-def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str) -> float:
-    """
-    Calcula la relevancia temporal entre dos contextos
-    Retorna un valor entre 0.0 y 1.0 donde:
-    - 1.0 = máxima relevancia (mismo día)
-    - 0.5 = relevancia media (1 semana)
-    - 0.1 = baja relevancia (1 mes)
-    - 0.0 = muy baja relevancia (>3 meses)
-    """
-    if not fecha_a or not fecha_b:
-        return 0.0
-    
-    try:
-        dt_a = datetime.fromisoformat(fecha_a)
-        dt_b = datetime.fromisoformat(fecha_b)
-        
-        # Diferencia en días
-        diferencia_dias = abs((dt_a - dt_b).days)
-        
-        # Función de decaimiento exponencial
-        # R_temporal = e^(-diferencia_dias / factor_decaimiento)
-        factor_decaimiento = 30  # 30 días para decaer significativamente
-        relevancia = math.exp(-diferencia_dias / factor_decaimiento)
-        
-        return min(1.0, max(0.0, relevancia))
-        
-    except (ValueError, TypeError):
-        return 0.0
-
-def _calcular_peso_efectivo(peso_estructural: float, relevancia_temporal: float) -> float:
-    """
-    Calcula el peso efectivo combinando estructura y temporalidad
-    W_efectivo = W_estructural × (1 + R_temporal)
-    """
-    return peso_estructural * (1 + relevancia_temporal)
-
-def _recalcular_relaciones():
-    """Recalcula todas las relaciones basadas en similitud semántica Y temporal"""
-    # Limpiar edges existentes
-    grafo_contextos.clear_edges()
-    
-    nodos = list(grafo_contextos.nodes())
-    
-    for i, nodo_a in enumerate(nodos):
-        metadatos_a = metadatos_contextos.get(nodo_a, {})
-        claves_a = set(metadatos_a.get("palabras_clave", []))
-        fecha_a = metadatos_a.get("timestamp")
-        
-        for nodo_b in nodos[i+1:]:
-            metadatos_b = metadatos_contextos.get(nodo_b, {})
-            claves_b = set(metadatos_b.get("palabras_clave", []))
-            fecha_b = metadatos_b.get("timestamp")
-            
-            # Calcular similitud estructural
-            similitud_estructural = _calcular_similitud_semantica(claves_a, claves_b)
-            
-            # Calcular relevancia temporal
-            relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b)
-            
-            # Calcular peso efectivo
-            peso_efectivo = _calcular_peso_efectivo(similitud_estructural, relevancia_temporal)
-            
-            # Crear relación si similitud estructural > umbral mínimo
-            if similitud_estructural > 0.1:
-                # Datos completos en la arista
-                datos_arista = {
-                    "peso_estructural": round(similitud_estructural, 3),
-                    "relevancia_temporal": round(relevancia_temporal, 3),
-                    "peso_efectivo": round(peso_efectivo, 3),
-                    "tipo": "semantica_temporal" if (fecha_a and fecha_b) else "semantica",
-                    "actualizado": datetime.now().isoformat()
-                }
-                
-                # Relación bidireccional
-                grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
-                grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
-
-# Funciones principales de la API
-def cargar_desde_disco():
-    """Carga el grafo desde disco"""
-    _cargar_grafo()
-
-def guardar_en_disco():
-    """Guarda el grafo en disco"""
-    _guardar_grafo()
-
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
-    """
-    Agrega un nuevo contexto al grafo con detección automática de temporalidad
-    
-    Args:
-        titulo: título del contexto
-        texto: contenido del contexto  
-        es_temporal: None = auto-detectar, True = forzar temporal, False = forzar atemporal
-        referencia_temporal: referencia explícita opcional
-    """
+    """Agrega un nuevo contexto con detección temporal automática."""
     id_contexto = str(uuid.uuid4())
     palabras_clave = extraer_palabras_clave(texto)
     
-    # Agregar nodo al grafo
     grafo_contextos.add_node(id_contexto, titulo=titulo)
     
-    # DETECCIÓN AUTOMÁTICA DE TEMPORALIDAD
-    texto_completo = f"{titulo} {texto}"  # Buscar en título Y texto
+    # Detección temporal
+    texto_completo = f"{titulo} {texto}"
     referencias_encontradas = extraer_referencias_del_texto(texto_completo)
     
-    # Determinar si es temporal
-    if es_temporal is None:  # Auto-detección
-        es_temporal_detectado = len(referencias_encontradas) > 0
-        print(f"🔍 Auto-detección: {'TEMPORAL' if es_temporal_detectado else 'ATEMPORAL'} ({len(referencias_encontradas)} referencias encontradas)")
-    else:  # Forzado por usuario
-        es_temporal_detectado = es_temporal
-        print(f"👤 Usuario especificó: {'TEMPORAL' if es_temporal_detectado else 'ATEMPORAL'}")
+    es_temporal_final = len(referencias_encontradas) > 0 if es_temporal is None else es_temporal
     
     # Metadatos base
     metadatos = {
@@ -181,56 +125,27 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
         "texto": texto,
         "palabras_clave": palabras_clave,
         "created_at": datetime.now().isoformat(),
-        "es_temporal": es_temporal_detectado,
-        "relaciones": [],
-        "deteccion_automatica": es_temporal is None  # Indicar si fue auto-detectado
+        "es_temporal": es_temporal_final,
     }
     
-    # LÓGICA TEMPORAL
-    if es_temporal_detectado:
+    # Procesamiento temporal
+    if es_temporal_final:
         timestamp_usado = None
-        referencia_usada = None
-        tipo_usado = None
         
-        # 1. PRIORIDAD: Referencia explícita del usuario
         if referencia_temporal:
-            timestamp_usado, tipo_usado = parsear_referencia_temporal(referencia_temporal)
-            referencia_usada = referencia_temporal
-            print(f"✅ Usando referencia explícita: '{referencia_temporal}'")
-        
-        # 2. FALLBACK: Referencias detectadas automáticamente
+            timestamp_usado, _ = parsear_referencia_temporal(referencia_temporal)
         elif referencias_encontradas:
-            referencia_texto, timestamp_detectado, tipo_detectado = referencias_encontradas[0]
-            timestamp_usado = timestamp_detectado
-            referencia_usada = referencia_texto
-            tipo_usado = tipo_detectado
-            print(f"🔍 Usando referencia detectada: '{referencia_texto}'")
+            _, timestamp_usado, _ = referencias_encontradas[0]
         
-        # Aplicar resultado
         if timestamp_usado:
-            metadatos.update({
-                "timestamp": timestamp_usado,
-                "referencia_original": referencia_usada,
-                "tipo_referencia": tipo_usado
-            })
-            
-            # Guardar referencias adicionales si las hay
-            if len(referencias_encontradas) > 1:
-                metadatos["referencias_adicionales"] = referencias_encontradas[1:]
-                
+            metadatos["timestamp"] = timestamp_usado
         else:
-            # Contexto temporal pero sin referencias parseables → timestamp actual
-            metadatos.update({
-                "timestamp": datetime.now().isoformat(),
-                "tipo_referencia": "timestamp_automatico"
-            })
-            print(f"⚠️ Contexto temporal pero sin referencias válidas, usando timestamp actual")
+            metadatos["timestamp"] = datetime.now().isoformat()
     
     metadatos_contextos[id_contexto] = metadatos
     
-    # Recalcular relaciones y guardar
+    # Recalcular y guardar
     _recalcular_relaciones()
-    _actualizar_listas_relaciones()
     _guardar_grafo()
     
     # Indexar para búsqueda semántica
@@ -238,224 +153,30 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     
     return id_contexto
 
-# Previsualización de detección
-def previsualizar_deteccion_temporal(titulo: str, texto: str) -> dict:
-    """
-    Previsualiza qué detectará el sistema sin guardar nada
-    Útil para la UI
-    """
-    texto_completo = f"{titulo} {texto}"
-    referencias_encontradas = extraer_referencias_del_texto(texto_completo)
-    
-    resultado = {
-        "sera_temporal": len(referencias_encontradas) > 0,
-        "total_referencias": len(referencias_encontradas),
-        "referencias": []
-    }
-    
-    for referencia_texto, timestamp, tipo in referencias_encontradas:
-        try:
-            fecha_obj = datetime.fromisoformat(timestamp)
-            fecha_legible = fecha_obj.strftime("%d/%m/%Y %H:%M")
-            es_futuro = fecha_obj > datetime.now()
-            dias_diff = (fecha_obj - datetime.now()).days
-        except:
-            fecha_legible = "Error parsing"
-            es_futuro = None
-            dias_diff = 0
-            
-        resultado["referencias"].append({
-            "texto": referencia_texto,
-            "timestamp": timestamp,
-            "tipo": tipo,
-            "fecha_legible": fecha_legible,
-            "es_futuro": es_futuro,
-            "dias_diferencia": dias_diff
-        })
-    
-    return resultado
-
-# NUEVA FUNCIÓN para obtener información detallada de referencias temporales
-def obtener_info_temporal(id_contexto: str) -> dict:
-    """Obtiene información detallada sobre las referencias temporales de un contexto"""
-    if id_contexto not in metadatos_contextos:
-        return {"error": "Contexto no encontrado"}
-    
-    metadatos = metadatos_contextos[id_contexto]
-    if not metadatos.get("es_temporal", False):
-        return {"es_temporal": False}
-    
-    info = {
-        "es_temporal": True,
-        "timestamp": metadatos.get("timestamp"),
-        "referencia_original": metadatos.get("referencia_original"),
-        "tipo_referencia": metadatos.get("tipo_referencia"),
-    }
-    
-    # Convertir timestamp a fecha legible
-    if info["timestamp"]:
-        try:
-            fecha_obj = datetime.fromisoformat(info["timestamp"])
-            info["fecha_legible"] = fecha_obj.strftime("%d/%m/%Y %H:%M")
-            info["es_futuro"] = fecha_obj > datetime.now()
-            info["dias_diferencia"] = (fecha_obj - datetime.now()).days
-        except:
-            pass
-    
-    # Referencias adicionales si las hay
-    if "referencias_adicionales" in metadatos:
-        info["referencias_adicionales"] = metadatos["referencias_adicionales"]
-    
-    return info
-
-def actualizar_pesos_temporales() -> Dict:
-    """
-    Actualiza todos los pesos temporales en el grafo
-    Útil para ejecutar manualmente o en intervalos
-    """
-    inicio = datetime.now()
-    
-    # Recalcular todas las relaciones
-    _recalcular_relaciones()
-    _actualizar_listas_relaciones()
-    _guardar_grafo()
-    
-    fin = datetime.now()
-    duracion = (fin - inicio).total_seconds()
-    
-    return {
-        "status": "actualizado",
-        "timestamp": fin.isoformat(),
-        "duracion_segundos": round(duracion, 3),
-        "total_aristas": grafo_contextos.number_of_edges(),
-        "aristas_temporales": len([
-            math.e for _, _, datos in grafo_contextos.edges(data=True) 
-            if datos.get("tipo") == "semantica_temporal"
-        ])
-    }
-
-def _actualizar_listas_relaciones():
-    """Actualiza las listas de relaciones en metadatos"""
-    for nodo in grafo_contextos.nodes():
-        if nodo in metadatos_contextos:
-            vecinos = list(grafo_contextos.neighbors(nodo))
-            metadatos_contextos[nodo]["relaciones"] = vecinos
-
 def obtener_todos() -> Dict:
-    """Obtiene todos los contextos"""
-    resultado = {}
-    
-    for nodo in grafo_contextos.nodes():
-        if nodo in metadatos_contextos:
-            metadatos = metadatos_contextos[nodo].copy()
-            if "relaciones" not in metadatos:
-                metadatos["relaciones"] = list(grafo_contextos.neighbors(nodo))
-            resultado[nodo] = metadatos
-    
-    return resultado
-
-def obtener_relacionados(id_contexto: str) -> Dict:
-    """Obtiene contextos relacionados a un ID específico"""
-    if id_contexto not in grafo_contextos:
-        return {}
-    
-    relacionados = {}
-    vecinos = grafo_contextos.neighbors(id_contexto)
-    
-    for vecino in vecinos:
-        if vecino in metadatos_contextos:
-            relacionados[vecino] = metadatos_contextos[vecino]
-    
-    return relacionados
+    """Obtiene todos los contextos."""
+    return metadatos_contextos
 
 def obtener_estadisticas() -> Dict:
-    """Obtiene estadísticas del grafo incluyendo información temporal"""
+    """Obtiene estadísticas básicas del grafo."""
     stats = {
-        "storage_type": "NetworkX Graph Database (Temporal)",
         "total_contextos": grafo_contextos.number_of_nodes(),
         "total_relaciones": grafo_contextos.number_of_edges(),
-        "archivo_grafo": ARCHIVO_GRAFO,
-        "archivo_metadatos": ARCHIVO_METADATOS
     }
     
-    # Contar contextos temporales vs atemporales
-    contextos_temporales = sum(1 for ctx in metadatos_contextos.values() 
-                              if ctx.get("es_temporal", False))
-    stats["contextos_temporales"] = contextos_temporales
-    stats["contextos_atemporales"] = stats["total_contextos"] - contextos_temporales
-    
-    # Contar aristas temporales vs semánticas
-    aristas_temporales = 0
-    aristas_semanticas = 0
-    
-    for _, _, datos in grafo_contextos.edges(data=True):
-        if datos.get("tipo") == "semantica_temporal":
-            aristas_temporales += 1
-        else:
-            aristas_semanticas += 1
-    
-    stats["aristas_temporales"] = aristas_temporales
-    stats["aristas_semanticas"] = aristas_semanticas
-    
-    # Tamaños de archivos
-    for archivo, key in [(ARCHIVO_GRAFO, "tamaño_grafo_mb"), (ARCHIVO_METADATOS, "tamaño_metadatos_mb")]:
-        if os.path.exists(archivo):
-            stats[key] = round(os.path.getsize(archivo) / (1024*1024), 3)
-    
-    # Estadísticas del grafo
-    if grafo_contextos.number_of_nodes() > 0:
-        stats["densidad"] = round(nx.density(grafo_contextos), 3)
-        stats["componentes_conectados"] = nx.number_weakly_connected_components(grafo_contextos)
-        
-        grados = dict(grafo_contextos.degree())
-        if grados:
-            nodo_max_grado = max(grados.items(), key=lambda x: x[1])
-            titulo_max = metadatos_contextos.get(nodo_max_grado[0], {}).get("titulo", "Desconocido")
-            stats["nodo_mas_conectado"] = {
-                "id": nodo_max_grado[0],
-                "titulo": titulo_max,
-                "conexiones": nodo_max_grado[1]
-            }
+    # Contar temporales vs atemporales
+    temporales = sum(1 for ctx in metadatos_contextos.values() 
+                    if ctx.get("es_temporal", False))
+    stats["contextos_temporales"] = temporales
+    stats["contextos_atemporales"] = stats["total_contextos"] - temporales
     
     return stats
 
-def obtener_contextos_centrales(k: int = 5) -> List[Dict]:
-    """Obtiene los k contextos más centrales considerando pesos efectivos"""
-    if grafo_contextos.number_of_nodes() == 0:
-        return []
-    
-    # Crear grafo con pesos efectivos para calcular centralidad
-    grafo_ponderado = nx.Graph()
-    
-    for nodo in grafo_contextos.nodes():
-        grafo_ponderado.add_node(nodo)
-    
-    for origen, destino, datos in grafo_contextos.edges(data=True):
-        peso = datos.get("peso_efectivo", datos.get("peso_estructural", 1.0))
-        if not grafo_ponderado.has_edge(origen, destino):
-            grafo_ponderado.add_edge(origen, destino, weight=peso)
-    
-    # Calcular centralidad de cercanía ponderada
-    centralidad = nx.closeness_centrality(grafo_ponderado, distance='weight')
-    
-    nodos_centrales = sorted(centralidad.items(), key=lambda x: x[1], reverse=True)[:k]
-    
-    resultado = []
-    for nodo_id, centralidad_valor in nodos_centrales:
-        if nodo_id in metadatos_contextos:
-            info = metadatos_contextos[nodo_id].copy()
-            info["centralidad"] = round(centralidad_valor, 3)
-            info["id"] = nodo_id
-            resultado.append(info)
-    
-    return resultado
-
 def exportar_grafo_para_visualizacion() -> Dict:
-    """Exporta el grafo en formato para visualización con información temporal"""
+    """Exporta el grafo para visualización."""
     nodos = []
     edges = []
     
-    # Nodos con diferenciación temporal
     for nodo_id in grafo_contextos.nodes():
         if nodo_id in metadatos_contextos:
             metadatos = metadatos_contextos[nodo_id]
@@ -464,162 +185,95 @@ def exportar_grafo_para_visualizacion() -> Dict:
             nodos.append({
                 "id": nodo_id,
                 "label": metadatos.get("titulo", "Sin título"),
-                "title": f"{metadatos.get('titulo', '')}\n{metadatos.get('texto', '')[:100]}...\n{'🕒 Temporal' if es_temporal else '📋 Atemporal'}",
+                "title": f"{metadatos.get('titulo', '')}\n{metadatos.get('texto', '')[:100]}...",
                 "group": "temporal" if es_temporal else "atemporal",
-                "es_temporal": es_temporal,
-                "timestamp": metadatos.get("timestamp")
+                "es_temporal": es_temporal
             })
     
-    # Edges con información temporal completa
     for origen, destino, datos in grafo_contextos.edges(data=True):
-        peso_estructural = datos.get("peso_estructural", 1.0)
-        relevancia_temporal = datos.get("relevancia_temporal", 0.0)
-        peso_efectivo = datos.get("peso_efectivo", peso_estructural)
-        tipo = datos.get("tipo", "semantica")
+        peso_efectivo = datos.get("peso_efectivo", 1.0)
         
         edges.append({
             "from": origen,
             "to": destino,
             "weight": peso_efectivo,
-            "peso_estructural": peso_estructural,
-            "relevancia_temporal": relevancia_temporal,
-            "peso_efectivo": peso_efectivo,
-            "tipo": tipo,
-            "title": f"Estructural: {peso_estructural:.3f}\nTemporal: {relevancia_temporal:.3f}\nEfectivo: {peso_efectivo:.3f}\nTipo: {tipo}"
+            "title": f"Peso: {peso_efectivo:.3f}"
         })
     
     return {"nodes": nodos, "edges": edges}
 
-def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, factor_refuerzo_temporal: float = 1.0) -> Dict:
-    """
-    Construye un subgrafo en forma de ÁRBOL para una consulta con AJUSTE TEMPORAL INTELIGENTE.
-    - Raíz: la pregunta (NO se persiste).
-    - Ramas: nodos contextuales recuperados.
-    - Cada arista incluye: Ws (peso_estructural), Rt (relevancia_temporal), We (peso_efectivo).
-
-    NUEVO: El peso efectivo se ajusta según la intención temporal detectada:
-    - Intención fuerte: We = Ws * (1 + Rt * factor_refuerzo_temporal)
-    - Intención nula: We = Ws * (1 + Rt * 0.2) [reduce peso temporal]
-    """
+def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, factor_refuerzo: float = 1.0) -> Dict:
+    """Construye subgrafo en árbol para una consulta."""
     if not contextos_ids:
-        return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos para procesar"}}
+        return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
     
     raiz_id = "consulta"
     ref_dt = datetime.fromisoformat(referencia_temporal) if referencia_temporal else datetime.now()
-
-    # Palabras clave de la pregunta
-    try:
-        claves_pregunta = set(extraer_palabras_clave(pregunta))
-    except Exception as e:
-        print(f"Error extrayendo palabras clave: {e}")
-        claves_pregunta = set()
-
-    # Truncar pregunta para el label si es muy larga
+    claves_pregunta = set(extraer_palabras_clave(pregunta))
+    
+    # Nodo raíz
     pregunta_corta = pregunta[:50] + "..." if len(pregunta) > 50 else pregunta
-    
-    # NUEVO: Determinar tipo de nodo raíz según intención temporal
-    grupo_pregunta = "pregunta_temporal" if factor_refuerzo_temporal > 1.5 else "pregunta_estructural" if factor_refuerzo_temporal < 0.5 else "pregunta"
-    
     nodos = [{
         "id": raiz_id,
         "label": f"❓ {pregunta_corta}",
-        "title": f"Pregunta: {pregunta}\nFactor refuerzo temporal: {factor_refuerzo_temporal}x",
-        "group": grupo_pregunta,
-        "es_temporal": False,
-        "factor_refuerzo": factor_refuerzo_temporal  # NUEVO: metadato
+        "title": f"Pregunta: {pregunta}",
+        "group": "pregunta"
     }]
+    
     edges = []
-
-    contextos_procesados = 0
     
     for cid in contextos_ids:
         meta = metadatos_contextos.get(cid, {})
         if not meta:
-            print(f"Warning: Contexto {cid} no encontrado en metadatos")
             continue
-
-        # Nodo del contexto
+        
+        # Nodo contexto
         titulo = meta.get("titulo", f"Contexto {cid}")
         nodos.append({
             "id": cid,
             "label": titulo[:30] + "..." if len(titulo) > 30 else titulo,
             "title": f"{titulo}\n{meta.get('texto', '')[:100]}...",
             "group": "temporal" if meta.get("es_temporal") else "atemporal",
-            "es_temporal": bool(meta.get("es_temporal")),
-            "timestamp": meta.get("timestamp"),
+            "es_temporal": bool(meta.get("es_temporal"))
         })
-
-        # Ws: similitud por palabras clave (Jaccard)
+        
+        # Calcular pesos
         claves_ctx = set(meta.get("palabras_clave", []))
         ws = _calcular_similitud_semantica(claves_pregunta, claves_ctx)
-
-        # Rt: relevancia temporal del nodo respecto a la referencia
+        
         ts = meta.get("timestamp")
         rt = _calcular_relevancia_temporal(ts, ref_dt.isoformat()) if ts else 0.0
-
-        # NUEVO: We ajustado según intención temporal
-        we_base = _calcular_peso_efectivo(ws, rt)
         
-        # Aplicar factor de refuerzo temporal
-        if factor_refuerzo_temporal != 1.0:
-            # Recalcular We con el factor ajustado
-            rt_ajustado = rt * factor_refuerzo_temporal
-            we_ajustado = ws * (1 + rt_ajustado)
-            
-            # Límite máximo para evitar valores extremos
-            we_final = min(we_ajustado, ws * 3.0)
-        else:
-            we_final = we_base
-
-        # NUEVO: Determinar tipo de arista según ajuste
-        if factor_refuerzo_temporal > 1.5:
-            tipo_arista = "consulta_temporal_fuerte"
-        elif factor_refuerzo_temporal < 0.5:
-            tipo_arista = "consulta_estructural"  
-        else:
-            tipo_arista = "consulta_mixta"
-
+        we = ws * (1 + rt * factor_refuerzo)
+        
         edges.append({
             "from": raiz_id,
             "to": cid,
-            "tipo": tipo_arista,
             "peso_estructural": round(ws, 3),
             "relevancia_temporal": round(rt, 3),
-            "factor_refuerzo": round(factor_refuerzo_temporal, 3),  # NUEVO
-            "peso_efectivo": round(we_final, 3),
-            "peso_efectivo_original": round(we_base, 3),  # NUEVO: para comparación
-            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|F:{round(factor_refuerzo_temporal,2)}x|Ef:{round(we_final,2)}"
+            "peso_efectivo": round(we, 3),
+            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|Ef:{round(we,2)}"
         })
-        
-        contextos_procesados += 1
-
+    
     return {
         "nodes": nodos,
         "edges": edges,
         "meta": {
             "referencia_temporal": ref_dt.isoformat(),
-            "contextos_procesados": contextos_procesados,
-            "total_solicitados": len(contextos_ids),
-            "pregunta_original": pregunta,
-            "factor_refuerzo_temporal": factor_refuerzo_temporal,  # NUEVO
-            "tipo_consulta": grupo_pregunta  # NUEVO
+            "contextos_procesados": len(contextos_ids),
+            "pregunta_original": pregunta
         }
     }
 
-# NUEVA FUNCIÓN: Análisis completo de consulta
 def analizar_consulta_completa(pregunta: str) -> Dict:
-    """
-    Analiza una consulta de forma completa: intención + contextos relevantes
-    Devuelve toda la información necesaria para responder inteligentemente
-    """
-    # 1. Analizar intención temporal
+    """Análisis completo de consulta: intención + contextos relevantes."""
+    # Analizar intención temporal
     analisis_intencion = analizar_intencion_temporal(pregunta)
     
-    # 2. Determinar referencia temporal a usar
     referencia_temporal = analisis_intencion.get('timestamp_referencia')
     factor_refuerzo = analisis_intencion.get('factor_refuerzo_temporal', 1.0)
     
-    # 3. Obtener contextos relevantes semánticamente
+    # Obtener contextos relevantes
     from agent.semantica import buscar_similares
     try:
         ids_similares = buscar_similares(pregunta, k=5)
@@ -627,14 +281,9 @@ def analizar_consulta_completa(pregunta: str) -> Dict:
         print(f"Error en búsqueda semántica: {e}")
         ids_similares = []
     
-    # 4. Construir árbol con ajuste temporal
+    # Construir árbol
     if ids_similares:
-        arbol = construir_arbol_consulta(
-            pregunta, 
-            ids_similares, 
-            referencia_temporal, 
-            factor_refuerzo
-        )
+        arbol = construir_arbol_consulta(pregunta, ids_similares, referencia_temporal, factor_refuerzo)
     else:
         arbol = {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
     
@@ -645,7 +294,6 @@ def analizar_consulta_completa(pregunta: str) -> Dict:
         "estrategia_aplicada": {
             "intencion_temporal": analisis_intencion['intencion_temporal'],
             "factor_refuerzo": factor_refuerzo,
-            "referencia_temporal": referencia_temporal,
-            "explicacion": analisis_intencion['explicacion']
+            "referencia_temporal": referencia_temporal
         }
     }

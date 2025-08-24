@@ -763,5 +763,18 @@
     "timestamp": "2025-08-23T17:17:47.224285",
     "referencia_original": "mañana",
     "tipo_referencia": "relativa"
+  },
+  "23322ddc-5994-4ecc-bb31-9f986144ff1a": {
+    "titulo": "Presentacion tesis",
+    "texto": "Tengo la presentación 01/01/2026 sobre ingeniería de contextos y contextos temporales",
+    "palabras_clave": [
+      "contexto",
+      "presentación",
+      "ingeniería",
+      "temporal"
+    ],
+    "created_at": "2025-08-24T17:24:09.032577",
+    "es_temporal": true,
+    "timestamp": "2026-01-01T00:00:00"
   }
 }
