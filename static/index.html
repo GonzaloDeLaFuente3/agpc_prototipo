@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agente Experto en Gestión Probabilística de Contextos (AGPC) Temporal - Prototipo</title>
+    <title>AGPC Temporal - Prototipo Optimizado</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,10 +12,10 @@
     <!-- Header -->
     <header class="shadow-md p-4 mb-4 bg-gradient-to-r from-blue-200 to-purple-200">
         <h1 class="text-2xl font-bold text-center text-gray-800">
-            AGPC Temporal - Prototipo v2.1 🕒
+            AGPC Temporal - Prototipo Optimizado 🕒
         </h1>
         <p class="text-center text-sm text-gray-600 mt-1">
-            Gestión Probabilística de Contextos con Dimensión Temporal - Visualización Avanzada
+            Gestión Probabilística de Contextos con Dimensión Temporal
         </p>
     </header>
 
@@ -26,31 +26,22 @@
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
             <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contextos</h2>
             
-            <!-- Agregar Contexto con opción temporal -->
+            <!-- Agregar Contexto -->
             <div class="mb-6">
                 <button id="toggleAgregarContexto" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mb-3">
                     ➕ Agregar Nuevo Contexto
                 </button>
                 
                 <div id="formAgregarContexto" class="hidden space-y-3">
-                    <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full rounded text-sm" oninput="previewDeteccion()" />
-                    <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full rounded text-sm h-20 resize-none" oninput="previewDeteccion()"></textarea>
+                    <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full rounded text-sm" />
+                    <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full rounded text-sm h-20 resize-none"></textarea>
                     
-                    <!-- NUEVA: Panel de previsualización automática -->
-                    <div id="panelPreview" class="hidden bg-gray-50 border border-gray-300 rounded p-3">
-                        <div class="text-sm font-medium text-gray-700 mb-2">🔍 Detección Automática:</div>
-                        <div id="contenidoPreview" class="text-xs space-y-1">
-                            <!-- Contenido dinámico aquí -->
-                        </div>
-                    </div>
-                    
-                    <!-- MODIFICADO: Controles manuales (opcionales) -->
+                    <!-- Controles temporales opcionales -->
                     <details class="bg-blue-50 p-2 rounded border border-blue-200">
                         <summary class="text-sm font-medium text-blue-800 cursor-pointer">
                             ⚙️ Controles Manuales (Opcional)
                         </summary>
                         <div class="mt-3 space-y-3">
-                            <!-- Override manual -->
                             <div class="flex items-center space-x-2">
                                 <input type="radio" name="modoTemporal" value="auto" id="modoAuto" checked>
                                 <label for="modoAuto" class="text-sm text-blue-700">🤖 Detección automática</label>
@@ -64,23 +55,17 @@
                                 <label for="modoAtemporal" class="text-sm text-blue-700">📋 Forzar atemporal</label>
                             </div>
                             
-                            <!-- Campo de referencia manual (solo si es temporal) -->
                             <div id="referenciaManualContainer" class="hidden">
                                 <input id="referenciaManualInput" 
-                                    placeholder='Referencia manual: "mañana", "25/01/2025"...' 
+                                    placeholder='Referencia: "mañana", "25/01/2025"...' 
                                     class="border p-2 w-full rounded text-sm bg-blue-50 border-blue-300" />
-                                <button type="button" onclick="probarReferenciaManual()" 
-                                        class="mt-1 bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 transition-colors">
-                                    🧪 Probar
-                                </button>
-                                <div id="resultadoReferenciaManual" class="mt-1 text-xs"></div>
                             </div>
                         </div>
                     </details>
                     
                     <div class="flex gap-2">
-                        <button onclick="agregarContextoMejorado()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
-                            ✅ Guardar Contexto
+                        <button onclick="agregarContexto()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
+                            ✅ Guardar
                         </button>
                         <button id="cancelarAgregar" class="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
                             ❌ Cancelar
@@ -92,7 +77,7 @@
             <!-- Lista de Contextos -->
             <div>
                 <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-semibold text-gray-700">📋 Todos los Contextos</h3>
+                    <h3 class="font-semibold text-gray-700">📋 Contextos</h3>
                     <button onclick="mostrarContextos()" class="bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700 transition-colors">
                         🔄 Actualizar
                     </button>
@@ -113,19 +98,11 @@
                 
                 <div class="space-y-4">
                     <input id="pregunta" placeholder="Escribí tu pregunta..." class="border p-3 w-full rounded-lg text-base" />
-                    <!-- NUEVO: Panel de análisis de intención temporal -->
-                    <div id="panelIntencionTemporal" class="hidden bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-3">
-                        <div class="text-sm font-medium text-purple-800 mb-2">🧠 Análisis de Intención Temporal:</div>
-                        <div id="contenidoIntencionTemporal" class="text-xs space-y-2">
-                            <!-- Contenido dinámico aquí -->
-                        </div>
-                    </div>
                     
                     <button onclick="preguntar()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium">
                         🔍 Preguntar
                     </button>
                     
-                    <!-- Panel de información automática actualizado -->
                     <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                         <p class="text-sm text-blue-700">
                             🧠 <strong>IA Inteligente:</strong> El sistema detecta automáticamente si tu pregunta es temporal ("¿qué tengo mañana?") o estructural ("¿cómo funciona X?") y ajusta la estrategia de búsqueda.
@@ -135,7 +112,8 @@
                     <div id="respuesta" class="p-4 bg-gray-50 border rounded-lg whitespace-pre-wrap text-gray-700 min-h-32">
                         <p class="text-gray-500 italic">Las respuestas aparecerán aquí...</p>
                     </div>
-                    <!-- NUEVO: Panel de información de estrategia aplicada -->
+                    
+                    <!-- Panel de información de estrategia -->
                     <div id="panelEstrategia" class="hidden p-3 bg-yellow-50 border border-yellow-300 rounded-lg">
                         <div class="text-sm font-medium text-yellow-800 mb-2">⚙️ Estrategia Aplicada:</div>
                         <div id="contenidoEstrategia" class="text-xs text-yellow-700">
@@ -143,18 +121,16 @@
                         </div>
                     </div>
                     
-                    <!-- Botón para agregar respuesta como contexto -->
+                    <!-- Botones de acción -->
                     <div id="botonAgregarRespuesta" class="hidden">
                         <button onclick="agregarRespuestaComoContexto()" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors">
-                            ➕ Agregar esta respuesta como nuevo contexto
+                            ➕ Agregar respuesta como contexto
                         </button>
-                        <p class="text-sm text-gray-600 mt-1">💡 Útil para guardar respuestas valiosas y que el sistema las use en futuras consultas</p>
                     </div>
-                    <!-- Botón para ver árbol de consulta -->
+                    
                     <div id="botonVerArbol" class="hidden mt-2">
-                        <button onclick="mostrarArbolConsulta()" 
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                            🌳 Ver Árbol de la Consulta
+                        <button onclick="mostrarArbolConsulta()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            🌳 Ver Árbol de Consulta
                         </button>
                     </div>
                 </div>
@@ -178,46 +154,19 @@
         </div>
 
         <!-- COLUMNA DERECHA - Visualización y Estadísticas -->
-        <div class="w-1/4 space-y-4 ">
+        <div class="w-1/4 space-y-4">
             
-            <!-- Sección de Control Temporal -->
-            <div class="bg-yellow-100 rounded-lg shadow-md p-4 border-l-4 border-yellow-500">
-                <h2 class="text-lg font-semibold mb-4 text-yellow-800 border-b pb-2">🕒 Control Temporal</h2>
-                
-                <div class="space-y-3">
-                    <button onclick="actualizarPesosTemporal()" class="w-full bg-yellow-600 text-white px-4 py-3 rounded-lg hover:bg-yellow-700 transition-colors font-medium">
-                        ⚡ Actualizar Pesos Temporales
-                    </button>
-                    
-                    <div class="text-xs text-yellow-700 bg-yellow-50 p-2 rounded">
-                        <p><strong>🕒 Sistema Temporal:</strong> Recalcula las relaciones considerando el paso del tiempo. Los contextos más recientes tendrán mayor peso.</p>
-                    </div>
-                    
-                    <div id="resultadoActualizacion" class="hidden text-xs bg-green-50 p-2 rounded border border-green-200">
-                        <!-- Resultado de actualización aparecerá aquí -->
-                    </div>
-                </div>
-            </div>
-
             <!-- Visualización del Grafo -->
             <div class="bg-gray-300 rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización Avanzada</h2>
+                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización del Grafo</h2>
                 
                 <div class="space-y-3">
                     <button onclick="abrirModalGrafo()" class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
-                        📊 Ver Grafo con Pesos
+                        📊 Ver Grafo Completo
                     </button>
                     
-                    <!-- NUEVA: Opción de mostrar/ocultar labels en aristas -->
-                    <div class="flex items-center space-x-2 bg-purple-50 p-2 rounded border border-purple-200">
-                        <input type="checkbox" id="mostrarLabelsAristas" class="text-purple-600" checked>
-                        <label for="mostrarLabelsAristas" class="text-sm text-purple-800">
-                            🏷️ Mostrar pesos en aristas
-                        </label>
-                    </div>
-                    
                     <div class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
-                        <p><strong>🕸️ Visualización:</strong> Nodos azules = temporales, grises = atemporales. Las aristas muestran sus pesos directamente.</p>
+                        <p><strong>🕸️ Visualización:</strong> Nodos azules = temporales, grises = atemporales. Las aristas muestran relaciones semánticas y temporales.</p>
                     </div>
                 </div>
             </div>
@@ -233,17 +182,6 @@
                     
                     <div id="estadisticas" class="text-xs bg-gray-50 p-3 rounded">
                         <p class="text-gray-500 italic">Clic en "Actualizar" para ver estadísticas</p>
-                    </div>
-                    
-                    <!-- Contextos Centrales -->
-                    <div class="p-3 bg-blue-50 border border-blue-200 rounded">
-                        <h3 class="font-semibold text-blue-800 mb-2 text-sm">🎯 Contextos Centrales</h3>
-                        <button onclick="mostrarContextosCentrales()" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors">
-                            Ver Top 5
-                        </button>
-                        <div id="contextosCentrales" class="mt-2 text-xs">
-                            <p class="text-gray-500 italic">Clic para cargar...</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -281,63 +219,58 @@
                                     <div class="w-6 h-1 bg-gray-400 mr-2"></div>
                                     <span>📋 Relaciones semánticas</span>
                                 </div>
-                                <p class="text-gray-600 mt-1">Grosor = peso efectivo, Labels = E|T|Ef</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Contenedor del grafo con altura fija -->
-                <div id="grafo" class="w-full h-[50vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
+                <!-- Contenedor del grafo -->
+                <div id="grafo" class="w-full h-[60vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
                     <div class="flex items-center justify-center h-full text-gray-500">
                         <p>Cargando grafo...</p>
                     </div>
                 </div>
                 
-                <!-- Botones siempre visibles -->
-                <div class="mt-auto flex justify-center space-x-2 sticky bottom-0 bg-white py-2">
+                <!-- Botones -->
+                <div class="mt-auto flex justify-center space-x-2">
                     <button onclick="cargarGrafo()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
                         🔄 Actualizar Grafo
                     </button>
-                    <button onclick="actualizarPesosTemporal(); setTimeout(cargarGrafo, 1000);" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition-colors">
-                        ⚡ Recalcular & Actualizar
-                    </button>
-                    <button onclick="toggleLabelsAristas()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors">
-                        🏷️ Toggle Labels
+                    <button onclick="cerrarModalGrafo()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                        ❌ Cerrar
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal Árbol de Consulta -->
     <div id="modalArbol" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-4xl mx-auto my-4 flex flex-col">
             <div class="p-4 flex flex-col h-full max-h-[90vh]">
-            <h2 class="text-lg font-bold text-center text-blue-800 mb-2">
-                🌳 Árbol de Consulta
-            </h2>
-            <p class="text-sm text-gray-600 text-center mb-3">
-                Raíz = pregunta ❓ | Ramas = contextos recuperados 📋🕒
-            </p>
+                <h2 class="text-lg font-bold text-center text-blue-800 mb-2">
+                    🌳 Árbol de Consulta
+                </h2>
+                <p class="text-sm text-gray-600 text-center mb-3">
+                    Raíz = pregunta ❓ | Ramas = contextos recuperados 📋🕒
+                </p>
 
-            <!-- Contenedor del árbol -->
-            <div id="arbolConsulta" class="w-full h-[70vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
-                <div class="flex items-center justify-center h-full text-gray-500">
-                <p>Esperando datos...</p>
+                <!-- Contenedor del árbol -->
+                <div id="arbolConsulta" class="w-full h-[60vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
+                    <div class="flex items-center justify-center h-full text-gray-500">
+                        <p>Esperando datos...</p>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Botones -->
-            <div class="mt-auto flex justify-center space-x-2 sticky bottom-0 bg-white py-2">
-                <button onclick="cerrarModalArbol()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
-                ❌ Cerrar
-                </button>
-            </div>
+                <!-- Botones -->
+                <div class="mt-auto flex justify-center">
+                    <button onclick="cerrarModalArbol()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                        ❌ Cerrar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
-
 
     <!-- Scripts -->
     <script src="script.js"></script>
