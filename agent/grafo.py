@@ -1,4 +1,4 @@
-# agent/grafo.py
+# agent/grafo.py - Versión corregida y simplificada
 import networkx as nx
 import pickle
 import json
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set
 
 from agent.extractor import extraer_palabras_clave
-from agent.semantica import indexar_documento
+from agent.semantica import indexar_documento, coleccion
 from agent.temporal_parser import extraer_referencias_del_texto, parsear_referencia_temporal
 from agent.query_analyzer import analizar_intencion_temporal
 
@@ -54,14 +54,69 @@ def _obtener_factor_decaimiento(tipo_contexto: str) -> int:
     }
     return factores.get(tipo_contexto, 30)
 
-def _calcular_similitud_semantica(claves_a: Set[str], claves_b: Set[str]) -> float:
+def _calcular_similitud_jaccard(claves_a: Set[str], claves_b: Set[str]) -> float:
     """Calcula similitud Jaccard entre dos conjuntos."""
     if not claves_a or not claves_b:
         return 0.0
     
     interseccion = len(claves_a & claves_b)
     union = len(claves_a | claves_b)
-    return interseccion / union if union > 0 else 0.0
+    jaccard = interseccion / union if union > 0 else 0.0
+    return jaccard
+
+def _calcular_similitud_semantica_simple(texto_a: str, texto_b: str) -> float:
+    """Calcula similitud semántica usando ChromaDB query."""
+    try:
+        if not texto_a.strip() or not texto_b.strip():
+            return 0.0
+        
+        # Crear un documento temporal para comparar
+        temp_id = f"temp_{hash(texto_a)}"
+        
+        # Indexar temporalmente el primer texto
+        indexar_documento(temp_id, texto_a)
+        
+        # Buscar similitud con el segundo texto
+        resultado = coleccion.query(
+            query_texts=[texto_b],
+            n_results=10,  # Buscar más resultados para encontrar nuestro temp
+            include=['distances']
+        )
+        
+        # Buscar nuestro documento temporal en los resultados
+        if temp_id in resultado['ids'][0]:
+            index = resultado['ids'][0].index(temp_id)
+            distance = resultado['distances'][0][index]
+            # Convertir distancia a similitud (0=idéntico, 2=muy diferente)
+            similitud = max(0.0, 1.0 - distance / 2.0)
+        else:
+            similitud = 0.0
+        
+        # Limpiar documento temporal
+        try:
+            coleccion.delete(ids=[temp_id])
+        except:
+            pass
+            
+        return similitud
+        
+    except Exception as e:
+        print(f"Error en similitud semántica: {e}")
+        return 0.0
+
+def _calcular_similitud_estructural(claves_a: Set[str], claves_b: Set[str], texto_a: str, texto_b: str) -> float:
+    """
+    Calcula similitud estructural como el promedio de similitud Jaccard y semántica.
+    Similitud_estructural = (Similitud_jaccard + Similitud_semantica) / 2
+    """
+    # Calcular componentes
+    similitud_jaccard = _calcular_similitud_jaccard(claves_a, claves_b)
+    similitud_semantica = _calcular_similitud_semantica_simple(texto_a, texto_b)
+    
+    # Promedio de ambas similitudes
+    similitud_estructural = (similitud_jaccard + similitud_semantica) / 2
+    
+    return similitud_estructural
 
 def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str, tipo_a: str = "general", tipo_b: str = "general") -> float:
     """Calcula relevancia temporal con decaimiento dinámico por tipo."""
@@ -86,29 +141,34 @@ def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str, tipo_a: str = "gen
         return 0.0
 
 def _recalcular_relaciones():
-    """Recalcula todas las relaciones del grafo con tipos de contexto."""
+    """Recalcula todas las relaciones del grafo con similitud estructural corregida."""
     grafo_contextos.clear_edges()
     nodos = list(grafo_contextos.nodes())
+    
+    print(f"Recalculando relaciones para {len(nodos)} nodos...")
     
     for i, nodo_a in enumerate(nodos):
         metadatos_a = metadatos_contextos.get(nodo_a, {})
         claves_a = set(metadatos_a.get("palabras_clave", []))
         fecha_a = metadatos_a.get("timestamp")
         tipo_a = metadatos_a.get("tipo_contexto", "general")
+        texto_a = metadatos_a.get("texto", "")
         
         for nodo_b in nodos[i+1:]:
             metadatos_b = metadatos_contextos.get(nodo_b, {})
             claves_b = set(metadatos_b.get("palabras_clave", []))
             fecha_b = metadatos_b.get("timestamp")
             tipo_b = metadatos_b.get("tipo_contexto", "general")
+            texto_b = metadatos_b.get("texto", "")
             
-            similitud = _calcular_similitud_semantica(claves_a, claves_b)
+            # Calcular similitudes
+            similitud_estructural = _calcular_similitud_estructural(claves_a, claves_b, texto_a, texto_b)
             relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b, tipo_a, tipo_b)
-            peso_efectivo = similitud * (1 + relevancia_temporal)
+            peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
             
-            if similitud > 0.1:  # Umbral mínimo
+            if similitud_estructural > 0.1:  # Umbral más bajo para capturar más relaciones
                 datos_arista = {
-                    "peso_estructural": round(similitud, 3),
+                    "peso_estructural": round(similitud_estructural, 3),
                     "relevancia_temporal": round(relevancia_temporal, 3),
                     "peso_efectivo": round(peso_efectivo, 3),
                     "tipo": "semantica_temporal" if (fecha_a and fecha_b) else "semantica",
@@ -117,6 +177,8 @@ def _recalcular_relaciones():
                 
                 grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
                 grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
+    
+    print(f"Total aristas creadas: {grafo_contextos.number_of_edges()}")
 
 def _guardar_grafo():
     """Guarda el grafo en disco de forma thread-safe."""
@@ -168,7 +230,7 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
         "palabras_clave": palabras_clave,
         "created_at": datetime.now().isoformat(),
         "es_temporal": es_temporal_final,
-        "tipo_contexto": tipo_contexto  # NUEVO: Tipo de contexto
+        "tipo_contexto": tipo_contexto
     }
     
     # Procesamiento temporal
@@ -187,12 +249,12 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     
     metadatos_contextos[id_contexto] = metadatos
     
+    # Indexar para búsqueda semántica ANTES de recalcular relaciones
+    indexar_documento(id_contexto, texto)
+    
     # Recalcular y guardar
     _recalcular_relaciones()
     _guardar_grafo()
-    
-    # Indexar para búsqueda semántica
-    indexar_documento(id_contexto, texto)
     
     return id_contexto
 
@@ -279,7 +341,7 @@ def exportar_grafo_para_visualizacion() -> Dict:
 
 def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, 
                            factor_refuerzo: float = 1.0, momento_consulta: Optional[datetime] = None) -> Dict:
-    """Construye subgrafo considerando momento de consulta."""
+    """Construye subgrafo considerando momento de consulta y similitud estructural corregida."""
     if not contextos_ids:
         return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
     
@@ -343,9 +405,12 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             "tipo_contexto": tipo_contexto
         })
         
-        # Calcular pesos considerando momento de consulta
+        # Calcular pesos usando similitud estructural corregida
         claves_ctx = set(meta.get("palabras_clave", []))
-        ws = _calcular_similitud_semantica(claves_pregunta, claves_ctx)
+        texto_ctx = meta.get("texto", "")
+        
+        # Calcular similitud estructural directamente
+        ws = _calcular_similitud_estructural(claves_pregunta, claves_ctx, pregunta, texto_ctx)
         
         # Relevancia temporal desde momento de consulta al contexto
         ts = meta.get("timestamp")
