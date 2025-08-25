@@ -808,5 +808,39 @@
     "es_temporal": true,
     "tipo_contexto": "reunion",
     "timestamp": "2025-08-26T08:12:19.425912"
+  },
+  "805cbc11-9e1c-446a-9a68-92bf51567af0": {
+    "titulo": "Entrega del proyecto",
+    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
+    "palabras_clave": [
+      "gestión",
+      "sistema",
+      "stock",
+      "venta",
+      "viernes",
+      "proyecto",
+      "entrega"
+    ],
+    "created_at": "2025-08-25T17:17:26.814396",
+    "es_temporal": true,
+    "tipo_contexto": "proyecto",
+    "timestamp": "2025-08-29T00:00:00"
+  },
+  "1914e594-9e28-411b-95ab-7a12bcdfd817": {
+    "titulo": "Entrega del proyecto",
+    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
+    "palabras_clave": [
+      "gestión",
+      "sistema",
+      "stock",
+      "venta",
+      "viernes",
+      "proyecto",
+      "entrega"
+    ],
+    "created_at": "2025-08-25T17:17:30.664175",
+    "es_temporal": true,
+    "tipo_contexto": "proyecto",
+    "timestamp": "2025-08-29T00:00:00"
   }
 }
