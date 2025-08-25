@@ -286,7 +286,7 @@ def obtener_estadisticas() -> Dict:
     return stats
 
 def exportar_grafo_para_visualizacion() -> Dict:
-    """Exporta el grafo para visualización con información de aristas."""
+    """Exporta el grafo para visualización con información de aristas CORREGIDA."""
     nodos = []
     edges = []
     
@@ -299,7 +299,7 @@ def exportar_grafo_para_visualizacion() -> Dict:
             # Emoji por tipo de contexto
             iconos_tipo = {
                 "reunion": "👥",
-                "tarea": "📋",
+                "tarea": "📋", 
                 "evento": "🎯",
                 "proyecto": "🚀",
                 "conocimiento": "📚",
@@ -318,11 +318,35 @@ def exportar_grafo_para_visualizacion() -> Dict:
                 "tipo_contexto": tipo_contexto
             })
     
+    # FIX PRINCIPAL: Extraer datos correctamente de las aristas
     for origen, destino, datos in grafo_contextos.edges(data=True):
-        peso_estructural = datos.get("peso_estructural", 0)
-        relevancia_temporal = datos.get("relevancia_temporal", 0)
-        peso_efectivo = datos.get("peso_efectivo", 1.0)
-        tipos_contexto = datos.get("tipos_contexto", "")
+        # MÉTODO CORREGIDO: Verificar múltiples formas de acceso a los datos
+        peso_estructural = None
+        relevancia_temporal = None  
+        peso_efectivo = None
+        
+        # Intentar múltiples claves posibles
+        for key in ["peso_estructural", "similitud_estructural", "weight_estructural"]:
+            if key in datos and datos[key] is not None:
+                peso_estructural = float(datos[key])
+                break
+        
+        for key in ["relevancia_temporal", "temporal_relevance", "weight_temporal"]:
+            if key in datos and datos[key] is not None:
+                relevancia_temporal = float(datos[key])
+                break
+                
+        for key in ["peso_efectivo", "weight", "effective_weight"]:
+            if key in datos and datos[key] is not None:
+                peso_efectivo = float(datos[key])
+                break
+        
+        # Valores por defecto solo si no se encontró nada
+        peso_estructural = peso_estructural if peso_estructural is not None else 0.0
+        relevancia_temporal = relevancia_temporal if relevancia_temporal is not None else 0.0
+        peso_efectivo = peso_efectivo if peso_efectivo is not None else 0.0
+        
+        tipos_contexto = datos.get("tipos_contexto", "desconocido")
         
         # Etiqueta de arista más informativa
         label = f"E:{peso_estructural:.2f}|T:{relevancia_temporal:.2f}|W:{peso_efectivo:.2f}"
@@ -334,7 +358,11 @@ def exportar_grafo_para_visualizacion() -> Dict:
             "weight": peso_efectivo,
             "label": label,
             "title": title,
-            "font": {"size": 10, "align": "top"}
+            "font": {"size": 10, "align": "top"},
+            # Datos adicionales para debugging
+            "peso_estructural": peso_estructural,
+            "relevancia_temporal": relevancia_temporal,
+            "peso_efectivo": peso_efectivo
         })
     
     return {"nodes": nodos, "edges": edges}

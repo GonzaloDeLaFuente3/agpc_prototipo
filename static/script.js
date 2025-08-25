@@ -492,24 +492,20 @@ async function cargarGrafo() {
             const esTemporal = relevanciatemporal > 0.1;
             
             // Color y grosor basado en peso efectivo
-            let colorArista = '#90a4ae';  // Gris por defecto
+            let colorArista = '#90a4ae';
             let widthArista = Math.max(1, pesoEfectivo * 4);
             
             if (esTemporal) {
-                // Aristas temporales en verde con intensidad según relevancia
                 const intensidad = Math.min(255, 100 + (relevanciatemporal * 400));
-                colorArista = `rgb(76, ${intensidad}, 50)`;  // Verde variable
-                widthArista = Math.max(2, pesoEfectivo * 6);  // Más gruesas
+                colorArista = `rgb(76, ${intensidad}, 50)`;
+                widthArista = Math.max(2, pesoEfectivo * 6);
             } else if (pesoEstructural > 0.5) {
-                // Aristas semánticas fuertes en azul
                 colorArista = '#2196f3';
                 widthArista = Math.max(2, pesoEfectivo * 5);
             }
             
-            // Etiqueta más clara y compacta
             const labelCompacto = `${pesoEstructural.toFixed(2)}|${relevanciatemporal.toFixed(2)}|${pesoEfectivo.toFixed(2)}`;
             
-            // Tooltip detallado
             const tooltip = [
                 `Peso Estructural: ${pesoEstructural.toFixed(3)}`,
                 `Relevancia Temporal: ${relevanciatemporal.toFixed(3)}`,
@@ -527,7 +523,7 @@ async function cargarGrafo() {
                     hover: esTemporal ? '#66bb6a' : '#42a5f5'
                 },
                 width: widthArista,
-                label: pesoEfectivo > 0.3 ? labelCompacto : '', // Solo mostrar label si es significativo
+                label: pesoEfectivo > 0.3 ? labelCompacto : '',
                 title: tooltip,
                 font: {
                     size: 9,
@@ -546,13 +542,11 @@ async function cargarGrafo() {
                 smooth: {
                     type: 'continuous',
                     roundness: esTemporal ? 0.2 : 0.1
-                },
-                selectionWidth: function(width) { return width + 2; },
-                hoverWidth: function(width) { return width + 1; }
+                }
             };
         });
 
-        // Configuración mejorada del grafo
+        // CONFIGURACIÓN COMPLETAMENTE ESTÁTICA - CERO FÍSICAS
         const options = {
             nodes: { 
                 shape: 'box',
@@ -580,38 +574,26 @@ async function cargarGrafo() {
                 },
                 labelHighlightBold: false
             },
-            physics: {
-                enabled: true,
-                barnesHut: {
-                    gravitationalConstant: -3000,
-                    springLength: 120,
-                    springConstant: 0.05,
-                    damping: 0.1,
-                    avoidOverlap: 0.2
-                },
-                stabilization: { 
-                    iterations: 150,
-                    updateInterval: 25
-                }
-            },
+            // FÍSICAS COMPLETAMENTE DESHABILITADAS
+            physics: false,  // Forma más directa de deshabilitar
             interaction: {
                 hover: true,
                 hoverConnectedEdges: true,
                 selectConnectedEdges: true,
                 zoomView: true,
                 dragView: true,
-                dragNodes: true,
+                dragNodes: false,
                 tooltipDelay: 200,
                 hideEdgesOnDrag: false,
                 hideEdgesOnZoom: false
             },
             layout: {
-                improvedLayout: true,
-                clusterThreshold: 150
+                randomSeed: 1, 
+                improvedLayout: false
             }
         };
 
-        // Crear red con eventos mejorados
+        // Crear red
         networkInstance = new vis.Network(container, {
             nodes: new vis.DataSet(nodes),
             edges: new vis.DataSet(edges)
@@ -619,18 +601,14 @@ async function cargarGrafo() {
 
         // Eventos de interacción
         networkInstance.on("hoverNode", function (params) {
-            // Highlight de nodos conectados
             const nodeId = params.node;
             const connectedNodes = networkInstance.getConnectedNodes(nodeId);
             const connectedEdges = networkInstance.getConnectedEdges(nodeId);
-            
-            // Aquí podrías agregar lógica adicional de highlighting
         });
 
         networkInstance.on("selectNode", function (params) {
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
-                // Podrías mostrar información detallada del nodo seleccionado
                 console.log(`Nodo seleccionado: ${nodeId}`);
             }
         });
@@ -638,28 +616,18 @@ async function cargarGrafo() {
         networkInstance.on("selectEdge", function (params) {
             if (params.edges.length > 0) {
                 const edgeId = params.edges[0];
-                // Podrías mostrar información detallada de la arista seleccionada
                 console.log(`Arista seleccionada: ${edgeId}`);
             }
         });
 
-        // Deshabilitar física después de estabilización
-        networkInstance.once("stabilized", function() {
-            networkInstance.setOptions({ physics: false });
-            
-            // Mensaje de finalización
-            console.log(`Grafo cargado: ${nodes.length} nodos, ${edges.length} aristas`);
-        });
+        console.log(`Grafo cargado: ${nodes.length} nodos, ${edges.length} aristas (completamente estático)`);
 
-        // Ajustar vista inicial
+        // Ajustar vista inicial SIN animación para evitar cualquier movimiento
         setTimeout(() => {
-            networkInstance.fit({
-                animation: {
-                    duration: 1000,
-                    easingFunction: 'easeInOutQuad'
-                }
-            });
-        }, 500);
+            if (networkInstance) {
+                networkInstance.fit();  // Sin animación = sin movimiento
+            }
+        }, 100);
         
     } catch (error) {
         document.getElementById('grafo').innerHTML = 
