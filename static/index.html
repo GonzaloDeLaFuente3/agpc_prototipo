@@ -194,17 +194,33 @@
             <div class="p-4 flex flex-col h-full max-h-[90vh]">
                 <!-- Leyenda del grafo -->
                 <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
-                    <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
-                            <p class="font-semibold text-purple-800 mb-2">🎯 Nodos:</p>
+                            <p class="font-semibold text-purple-800 mb-2">🎯 Nodos por Tipo:</p>
                             <div class="space-y-1 text-xs">
                                 <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-blue-200 border border-blue-600 rounded mr-2"></div>
-                                    <span>🕒 Contextos temporales</span>
+                                    <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
+                                    <span>Reuniones (2d decay)</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-gray-200 border border-gray-600 rounded mr-2"></div>
-                                    <span>📋 Contextos atemporales</span>
+                                    <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">📋</div>
+                                    <span>Tareas (7d decay)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">🎯</div>
+                                    <span>Eventos (3d decay)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-pink-100 border border-pink-600 rounded mr-2 flex items-center justify-center text-xs">🚀</div>
+                                    <span>Proyectos (45d decay)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-purple-100 border border-purple-600 rounded mr-2 flex items-center justify-center text-xs">📚</div>
+                                    <span>Conocimiento (365d decay)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-gray-200 border border-gray-600 rounded mr-2 flex items-center justify-center text-xs">📄</div>
+                                    <span>General (30d decay)</span>
                                 </div>
                             </div>
                         </div>
@@ -212,12 +228,19 @@
                             <p class="font-semibold text-purple-800 mb-2">🔗 Aristas:</p>
                             <div class="space-y-1 text-xs">
                                 <div class="flex items-center">
-                                    <div class="w-6 h-1 bg-green-500 mr-2"></div>
-                                    <span>⚡ Relaciones temporales</span>
+                                    <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
+                                    <span>🕒 Relaciones temporales (verde)</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="w-6 h-1 bg-gray-400 mr-2"></div>
-                                    <span>📋 Relaciones semánticas</span>
+                                    <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
+                                    <span>📋 Relaciones semánticas (azul)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-1 bg-gray-400 mr-2 rounded"></div>
+                                    <span>⚪ Relaciones débiles (gris)</span>
+                                </div>
+                                <div class="text-xs text-gray-600 mt-2 p-2 bg-gray-100 rounded">
+                                    <strong>Formato arista:</strong> E=Estructural | T=Temporal | W=Peso efectivo<br>
                                 </div>
                             </div>
                         </div>

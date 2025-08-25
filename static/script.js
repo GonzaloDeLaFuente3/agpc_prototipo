@@ -297,17 +297,27 @@ function abrirModalArbol(subgrafo) {
     }
 
     try {
-        // Procesar nodos
+        // Procesar nodos con mejor styling
         const nodes = subgrafo.nodes.map(n => {
             let color, shape = "box";
             let fontConfig = { size: 12, color: "#374151", align: "center" };
             
-            if (n.group.includes("pregunta")) {
+            if (n.group && n.group.includes("pregunta")) {
                 color = { background: "#dbeafe", border: "#3b82f6" };
                 shape = "diamond";
-                fontConfig = { size: 14, color: "#1e40af", align: "top", vadjust: -60 };
+                fontConfig = { size: 14, color: "#1e40af", align: "center" };
             } else if (n.group === "temporal") {
-                color = { background: "#dbeafe", border: "#2563eb" };
+                // Color diferenciado por tipo de contexto
+                const tipoContexto = n.tipo_contexto || 'general';
+                const coloresTipos = {
+                    'reunion': { background: "#fff3e0", border: "#f57c00" },
+                    'tarea': { background: "#e8f5e8", border: "#388e3c" },
+                    'evento': { background: "#fce4ec", border: "#c2185b" },
+                    'proyecto': { background: "#f3e5f5", border: "#7b1fa2" },
+                    'conocimiento': { background: "#e1f5fe", border: "#0288d1" },
+                    'general': { background: "#dbeafe", border: "#2563eb" }
+                };
+                color = coloresTipos[tipoContexto] || coloresTipos['general'];
                 fontConfig = { size: 12, color: "#1e40af" };
             } else {
                 color = { background: "#f3f4f6", border: "#6b7280" };
@@ -320,23 +330,43 @@ function abrirModalArbol(subgrafo) {
                 color: color,
                 shape: shape,
                 font: fontConfig,
-                margin: { top: 10, right: 10, bottom: 10, left: 10 }
+                margin: { top: 10, right: 10, bottom: 10, left: 10 },
+                shadow: {
+                    enabled: true,
+                    size: 3,
+                    x: 1,
+                    y: 1,
+                    color: 'rgba(0,0,0,0.1)'
+                }
             };
         });
 
-        // Procesar aristas
+        // Procesar aristas con mejor información visual
         const edges = subgrafo.edges.map(e => {
             const pesoEfectivo = e.peso_efectivo || 0;
-            const width = Math.max(2, pesoEfectivo * 6);
+            const relevanciaTemp = e.relevancia_temporal || 0;
+            const width = Math.max(2, pesoEfectivo * 8);
+            
+            // Color según tipo de relación
+            const colorArista = relevanciaTemp > 0.1 ? "#4caf50" : "#2196f3";
             
             return {
                 from: e.from,
                 to: e.to,
-                arrows: { to: { enabled: true, scaleFactor: 1 } },
+                arrows: { to: { enabled: true, scaleFactor: 1.2 } },
                 label: e.label || "",
-                title: `Peso: ${e.peso_efectivo || 0}`,
-                font: { size: 10, align: "top" },
-                color: { color: "#059669" },
+                title: `Peso Estructural: ${e.peso_estructural || 0}\nRelevancia Temporal: ${relevanciaTemp}\nPeso Efectivo: ${pesoEfectivo}`,
+                font: { 
+                    size: 10, 
+                    align: "top",
+                    background: 'rgba(255,255,255,0.8)',
+                    strokeWidth: 1,
+                    strokeColor: 'rgba(255,255,255,0.9)'
+                },
+                color: { 
+                    color: colorArista,
+                    highlight: relevanciaTemp > 0.1 ? "#66bb6a" : "#42a5f5"
+                },
                 width: width,
                 smooth: { type: "cubicBezier", roundness: 0.4 }
             };
@@ -348,21 +378,37 @@ function abrirModalArbol(subgrafo) {
                     enabled: true,
                     direction: "UD",
                     sortMethod: "directed",
-                    nodeSpacing: 120,
-                    levelSeparation: 80
+                    nodeSpacing: 140,
+                    levelSeparation: 100,
+                    treeSpacing: 200
                 }
             },
             physics: { enabled: false },
             nodes: { borderWidth: 2 },
             edges: { smooth: { type: "cubicBezier", roundness: 0.4 } },
-            interaction: { hover: true, zoomView: true, dragView: true }
+            interaction: { 
+                hover: true, 
+                zoomView: true, 
+                dragView: true,
+                selectConnectedEdges: false
+            }
         };
 
-        // Crear visualización
-        new vis.Network(container, { 
+        // Crear visualización mejorada
+        const network = new vis.Network(container, { 
             nodes: new vis.DataSet(nodes), 
             edges: new vis.DataSet(edges) 
         }, options);
+
+        // Ajustar vista después de renderizado
+        setTimeout(() => {
+            network.fit({
+                animation: {
+                    duration: 800,
+                    easingFunction: 'easeInOutQuart'
+                }
+            });
+        }, 200);
 
     } catch (error) {
         container.innerHTML = `
@@ -403,77 +449,227 @@ async function cargarGrafo() {
 
         const container = document.getElementById('grafo');
         
-        // Procesar nodos con colores según temporalidad
+        // Procesar nodos con colores según temporalidad y tipo
         const nodes = datos.nodes.map(node => {
             const esTemporal = node.es_temporal;
+            const tipoContexto = node.tipo_contexto || 'general';
+            
+            // Colores diferenciados por tipo de contexto
+            const coloresPorTipo = {
+                'reunion': { background: esTemporal ? '#e3f2fd' : '#f5f5f5', border: esTemporal ? '#1976d2' : '#757575' },
+                'tarea': { background: esTemporal ? '#fff3e0' : '#f5f5f5', border: esTemporal ? '#f57c00' : '#757575' },
+                'evento': { background: esTemporal ? '#e8f5e8' : '#f5f5f5', border: esTemporal ? '#388e3c' : '#757575' },
+                'proyecto': { background: esTemporal ? '#fce4ec' : '#f5f5f5', border: esTemporal ? '#c2185b' : '#757575' },
+                'conocimiento': { background: esTemporal ? '#f3e5f5' : '#f5f5f5', border: esTemporal ? '#7b1fa2' : '#757575' },
+                'general': { background: esTemporal ? '#bbdefb' : '#f5f5f5', border: esTemporal ? '#1976d2' : '#757575' }
+            };
+            
+            const colores = coloresPorTipo[tipoContexto] || coloresPorTipo['general'];
+            
             return {
                 ...node,
-                color: {
-                    background: esTemporal ? '#bbdefb' : '#f5f5f5',
-                    border: esTemporal ? '#1976d2' : '#757575'
-                },
+                color: colores,
                 font: { 
                     color: esTemporal ? '#1565c0' : '#424242', 
                     size: 12 
                 },
-                borderWidth: 2
+                borderWidth: 2,
+                shadow: {
+                    enabled: true,
+                    size: 5,
+                    x: 2,
+                    y: 2,
+                    color: 'rgba(0,0,0,0.1)'
+                }
             };
         });
 
-        // Procesar aristas con pesos
+        // Procesar aristas con información visual mejorada
         const edges = datos.edges.map(edge => {
-            const esTemporal = edge.tipo === 'semantica_temporal';
-            const pesoEfectivo = edge.peso_efectivo || edge.peso_estructural || 0;
+            const pesoEstructural = edge.peso_estructural || 0;
+            const relevanciatemporal = edge.relevancia_temporal || 0;
+            const pesoEfectivo = edge.peso_efectivo || edge.weight || 0;
+            const esTemporal = relevanciatemporal > 0.1;
+            
+            // Color y grosor basado en peso efectivo
+            let colorArista = '#90a4ae';  // Gris por defecto
+            let widthArista = Math.max(1, pesoEfectivo * 4);
+            
+            if (esTemporal) {
+                // Aristas temporales en verde con intensidad según relevancia
+                const intensidad = Math.min(255, 100 + (relevanciatemporal * 400));
+                colorArista = `rgb(76, ${intensidad}, 50)`;  // Verde variable
+                widthArista = Math.max(2, pesoEfectivo * 6);  // Más gruesas
+            } else if (pesoEstructural > 0.5) {
+                // Aristas semánticas fuertes en azul
+                colorArista = '#2196f3';
+                widthArista = Math.max(2, pesoEfectivo * 5);
+            }
+            
+            // Etiqueta más clara y compacta
+            const labelCompacto = `${pesoEstructural.toFixed(2)}|${relevanciatemporal.toFixed(2)}|${pesoEfectivo.toFixed(2)}`;
+            
+            // Tooltip detallado
+            const tooltip = [
+                `Peso Estructural: ${pesoEstructural.toFixed(3)}`,
+                `Relevancia Temporal: ${relevanciatemporal.toFixed(3)}`,
+                `Peso Efectivo: ${pesoEfectivo.toFixed(3)}`,
+                edge.tipos_contexto ? `Tipos: ${edge.tipos_contexto}` : '',
+                esTemporal ? '🕒 Relación temporal' : '📋 Relación semántica'
+            ].filter(Boolean).join('\n');
             
             return {
-                ...edge,
-                color: { color: esTemporal ? '#4caf50' : '#90a4ae' },
-                width: Math.max(1, pesoEfectivo * 4),
-                title: `Peso: ${pesoEfectivo.toFixed(3)}`
+                from: edge.from,
+                to: edge.to,
+                color: { 
+                    color: colorArista,
+                    highlight: esTemporal ? '#4caf50' : '#2196f3',
+                    hover: esTemporal ? '#66bb6a' : '#42a5f5'
+                },
+                width: widthArista,
+                label: pesoEfectivo > 0.3 ? labelCompacto : '', // Solo mostrar label si es significativo
+                title: tooltip,
+                font: {
+                    size: 9,
+                    color: '#333333',
+                    background: 'rgba(255,255,255,0.8)',
+                    strokeWidth: 1,
+                    strokeColor: 'rgba(255,255,255,0.9)'
+                },
+                arrows: {
+                    to: {
+                        enabled: true,
+                        scaleFactor: Math.min(1.5, 0.5 + pesoEfectivo),
+                        type: 'arrow'
+                    }
+                },
+                smooth: {
+                    type: 'continuous',
+                    roundness: esTemporal ? 0.2 : 0.1
+                },
+                selectionWidth: function(width) { return width + 2; },
+                hoverWidth: function(width) { return width + 1; }
             };
         });
 
-        // Configuración del grafo
+        // Configuración mejorada del grafo
         const options = {
             nodes: { 
                 shape: 'box',
-                margin: { top: 5, right: 5, bottom: 5, left: 5 }
+                margin: { top: 8, right: 8, bottom: 8, left: 8 },
+                chosen: {
+                    node: function(values, id, selected, hovering) {
+                        if (hovering) {
+                            values.shadow = true;
+                            values.shadowSize = 15;
+                            values.shadowColor = 'rgba(0,0,0,0.3)';
+                        }
+                    }
+                }
             },
             edges: {
-                arrows: { to: { enabled: true, scaleFactor: 0.5 } },
-                smooth: { type: 'continuous' }
+                chosen: {
+                    edge: function(values, id, selected, hovering) {
+                        if (hovering) {
+                            values.width = values.width + 2;
+                            values.shadow = true;
+                            values.shadowSize = 8;
+                            values.shadowColor = 'rgba(0,0,0,0.2)';
+                        }
+                    }
+                },
+                labelHighlightBold: false
             },
             physics: {
                 enabled: true,
                 barnesHut: {
-                    gravitationalConstant: -2000,
-                    springLength: 100,
-                    springConstant: 0.04,
-                    damping: 0.09
+                    gravitationalConstant: -3000,
+                    springLength: 120,
+                    springConstant: 0.05,
+                    damping: 0.1,
+                    avoidOverlap: 0.2
                 },
-                stabilization: { iterations: 100 }
+                stabilization: { 
+                    iterations: 150,
+                    updateInterval: 25
+                }
             },
             interaction: {
                 hover: true,
+                hoverConnectedEdges: true,
+                selectConnectedEdges: true,
                 zoomView: true,
                 dragView: true,
-                dragNodes: true
+                dragNodes: true,
+                tooltipDelay: 200,
+                hideEdgesOnDrag: false,
+                hideEdgesOnZoom: false
+            },
+            layout: {
+                improvedLayout: true,
+                clusterThreshold: 150
             }
         };
 
+        // Crear red con eventos mejorados
         networkInstance = new vis.Network(container, {
             nodes: new vis.DataSet(nodes),
             edges: new vis.DataSet(edges)
         }, options);
 
+        // Eventos de interacción
+        networkInstance.on("hoverNode", function (params) {
+            // Highlight de nodos conectados
+            const nodeId = params.node;
+            const connectedNodes = networkInstance.getConnectedNodes(nodeId);
+            const connectedEdges = networkInstance.getConnectedEdges(nodeId);
+            
+            // Aquí podrías agregar lógica adicional de highlighting
+        });
+
+        networkInstance.on("selectNode", function (params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                // Podrías mostrar información detallada del nodo seleccionado
+                console.log(`Nodo seleccionado: ${nodeId}`);
+            }
+        });
+
+        networkInstance.on("selectEdge", function (params) {
+            if (params.edges.length > 0) {
+                const edgeId = params.edges[0];
+                // Podrías mostrar información detallada de la arista seleccionada
+                console.log(`Arista seleccionada: ${edgeId}`);
+            }
+        });
+
         // Deshabilitar física después de estabilización
         networkInstance.once("stabilized", function() {
             networkInstance.setOptions({ physics: false });
+            
+            // Mensaje de finalización
+            console.log(`Grafo cargado: ${nodes.length} nodos, ${edges.length} aristas`);
         });
+
+        // Ajustar vista inicial
+        setTimeout(() => {
+            networkInstance.fit({
+                animation: {
+                    duration: 1000,
+                    easingFunction: 'easeInOutQuad'
+                }
+            });
+        }, 500);
         
     } catch (error) {
         document.getElementById('grafo').innerHTML = 
-            `<div class="text-red-600 p-4">Error cargando grafo: ${error.message}</div>`;
+            `<div class="text-red-600 p-4 text-center">
+                <p class="font-semibold">❌ Error cargando grafo</p>
+                <p class="text-sm mt-1">${error.message}</p>
+                <button onclick="cargarGrafo()" class="mt-3 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                    🔄 Reintentar
+                </button>
+            </div>`;
     }
 }
 
