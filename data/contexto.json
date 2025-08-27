@@ -663,5 +663,184 @@
     "relaciones": [
       "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
     ]
+  },
+  "d75cf4fc-1c17-44b6-8c66-4dcf74464228": {
+    "titulo": "Reunión proyecto X",
+    "texto": "El proyecto x se trata de como se puede realizar un prototipo de ingeniería de contexto ",
+    "palabras_clave": [
+      "prototipo",
+      "contexto",
+      "proyecto",
+      "ingeniería"
+    ],
+    "created_at": "2025-08-20T17:02:18.849060",
+    "es_temporal": true,
+    "relaciones": [
+      "57e7d506-cea7-4052-8985-c87019133c3d",
+      "9d66f592-5459-4534-a369-29ad35c8177d",
+      "dd404152-5dff-4c56-b277-ede0202439d0"
+    ],
+    "timestamp": "2025-08-20T17:02:18.849060"
+  },
+  "57e7d506-cea7-4052-8985-c87019133c3d": {
+    "titulo": "Deadline proyecto Y",
+    "texto": "Deadline proyecto Y, esto se relaciona con el proyecto x que toma tema de ingeniería de contexto ",
+    "palabras_clave": [
+      "relacionar",
+      "contexto",
+      "tema",
+      "proyecto",
+      "ingeniería",
+      "deadline",
+      "tomar"
+    ],
+    "created_at": "2025-08-20T17:03:25.107048",
+    "es_temporal": true,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "9d66f592-5459-4534-a369-29ad35c8177d"
+    ],
+    "timestamp": "2025-08-20T17:03:25.107048"
+  },
+  "9d66f592-5459-4534-a369-29ad35c8177d": {
+    "titulo": "Reunión Tesis ",
+    "texto": "Mañana tengo reunión con mi director de Tesis, sobre ingeniería de contexto y contextos temporales ",
+    "palabras_clave": [
+      "ingeniería",
+      "mañana",
+      "tesis",
+      "reunión",
+      "contexto",
+      "director",
+      "temporal"
+    ],
+    "created_at": "2025-08-21T11:21:20.673207",
+    "es_temporal": false,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "57e7d506-cea7-4052-8985-c87019133c3d",
+      "dd404152-5dff-4c56-b277-ede0202439d0",
+      "d4411ee7-a545-4c8b-b822-daaf9b1a7875"
+    ]
+  },
+  "dd404152-5dff-4c56-b277-ede0202439d0": {
+    "titulo": "Planificación de Experimentos",
+    "texto": "Mañana debo validar el modelo de parsing de referencias temporales dentro del prototipo de tesis en Ingeniería en Informática.",
+    "palabras_clave": [
+      "deber",
+      "temporal",
+      "validar",
+      "modelo",
+      "parsing",
+      "referencia",
+      "tesis",
+      "ingeniería",
+      "informática",
+      "prototipo",
+      "mañana"
+    ],
+    "created_at": "2025-08-22T16:48:29.122805",
+    "es_temporal": false,
+    "relaciones": [
+      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
+      "9d66f592-5459-4534-a369-29ad35c8177d"
+    ]
+  },
+  "d4411ee7-a545-4c8b-b822-daaf9b1a7875": {
+    "titulo": "Reunión con cliente",
+    "texto": "Revisar propuesta mañana",
+    "palabras_clave": [
+      "mañana",
+      "propuestar",
+      "revisar"
+    ],
+    "created_at": "2025-08-22T17:17:47.224285",
+    "es_temporal": true,
+    "relaciones": [
+      "9d66f592-5459-4534-a369-29ad35c8177d"
+    ],
+    "deteccion_automatica": true,
+    "timestamp": "2025-08-23T17:17:47.224285",
+    "referencia_original": "mañana",
+    "tipo_referencia": "relativa"
+  },
+  "23322ddc-5994-4ecc-bb31-9f986144ff1a": {
+    "titulo": "Presentacion tesis",
+    "texto": "Tengo la presentación 01/01/2026 sobre ingeniería de contextos y contextos temporales",
+    "palabras_clave": [
+      "contexto",
+      "presentación",
+      "ingeniería",
+      "temporal"
+    ],
+    "created_at": "2025-08-24T17:24:09.032577",
+    "es_temporal": true,
+    "timestamp": "2026-01-01T00:00:00"
+  },
+  "17e42884-c3c0-4005-9997-3cdabaa85918": {
+    "titulo": "Reunión con cliente",
+    "texto": "Reunión con cliente mañana para el sistema de gestión de deportes",
+    "palabras_clave": [
+      "cliente",
+      "mañana",
+      "gestión",
+      "deporte",
+      "reunión",
+      "sistema"
+    ],
+    "created_at": "2025-08-25T07:59:37.524213",
+    "es_temporal": true,
+    "tipo_contexto": "reunion",
+    "timestamp": "2025-08-26T07:59:37.522078"
+  },
+  "a6d0444f-6b0b-4f7a-a1cd-ae753814fe3f": {
+    "titulo": "Reunión Equipo Desarrollo",
+    "texto": "Reunión con equipo mañana a las 15:00, para proyecto de gestión de deportes",
+    "palabras_clave": [
+      "reunión",
+      "equipo",
+      "proyecto",
+      "deporte",
+      "mañana",
+      "gestión"
+    ],
+    "created_at": "2025-08-25T08:12:19.429146",
+    "es_temporal": true,
+    "tipo_contexto": "reunion",
+    "timestamp": "2025-08-26T08:12:19.425912"
+  },
+  "805cbc11-9e1c-446a-9a68-92bf51567af0": {
+    "titulo": "Entrega del proyecto",
+    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
+    "palabras_clave": [
+      "gestión",
+      "sistema",
+      "stock",
+      "venta",
+      "viernes",
+      "proyecto",
+      "entrega"
+    ],
+    "created_at": "2025-08-25T17:17:26.814396",
+    "es_temporal": true,
+    "tipo_contexto": "proyecto",
+    "timestamp": "2025-08-29T00:00:00"
+  },
+  "1914e594-9e28-411b-95ab-7a12bcdfd817": {
+    "titulo": "Entrega del proyecto",
+    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
+    "palabras_clave": [
+      "gestión",
+      "sistema",
+      "stock",
+      "venta",
+      "viernes",
+      "proyecto",
+      "entrega"
+    ],
+    "created_at": "2025-08-25T17:17:30.664175",
+    "es_temporal": true,
+    "tipo_contexto": "proyecto",
+    "timestamp": "2025-08-29T00:00:00"
   }
 }

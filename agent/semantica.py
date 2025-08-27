@@ -1,28 +1,31 @@
-import chromadb #Base de datos vectorial especializada en búsquedas semánticas
+# agent/semantica.py - Optimizado y actualizado
+import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
-#Es el motor de búsqueda semántica inteligente que encuentra documentos relacionados por significado, no solo por palabras exactas.
 
-# Cliente persistente nuevo
-client = chromadb.PersistentClient(path="./chroma_db") # Base de datos persistente en disco, para no recalcular todo cada vez
-
-# Función de embeddings
-embedding_function = SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2") #Modelo de IA que convierte texto en "vectores" (números que representan el significado)
-
-# Crear colección
+# Cliente y colección únicos
+client = chromadb.PersistentClient(path="./chroma_db")
+embedding_function = SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
 coleccion = client.get_or_create_collection(name="contextos", embedding_function=embedding_function)
 
-def indexar_documento(id, texto):
-    # Toma el texto → lo convierte en vector numérico → lo guarda
-    # El vector "captura" el significado del texto
+def indexar_documento(id: str, texto: str):
+    """Indexa un documento para búsqueda semántica."""
     try:
-        coleccion.add(documents=[texto], ids=[id])
-    except chromadb.errors.IDAlreadyExistsError:
-        pass  # Ya está indexado, manejo de duplicados
+        # Verificar si el documento ya existe
+        existing = coleccion.get(ids=[id])
+        if existing['ids']:
+            # Si existe, actualizar
+            coleccion.update(documents=[texto], ids=[id])
+        else:
+            # Si no existe, agregar
+            coleccion.add(documents=[texto], ids=[id])
+    except Exception as e:
+        print(f"Error indexando documento {id}: {e}")
 
-def buscar_similares(texto_consulta, k=3):
-    # Convierte tu pregunta en vector
-    # Encuentra los 3 documentos con vectores más "similares"
-    # Similitud = proximidad en el espacio vectorial
-    resultado = coleccion.query(query_texts=[texto_consulta], n_results=k)
-    ids = resultado["ids"][0]
-    return ids
+def buscar_similares(texto_consulta: str, k: int = 3):
+    """Busca documentos semánticamente similares."""
+    try:
+        resultado = coleccion.query(query_texts=[texto_consulta], n_results=k)
+        return resultado["ids"][0]
+    except Exception as e:
+        print(f"Error en búsqueda semántica: {e}")
+        return []
