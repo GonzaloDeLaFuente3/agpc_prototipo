@@ -1,4 +1,4 @@
-# agent/grafo.py - Versión corregida y simplificada
+# agent/grafo.py - Versión limpia y optimizada
 import networkx as nx
 import pickle
 import json
@@ -140,6 +140,30 @@ def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str, tipo_a: str = "gen
     except (ValueError, TypeError):
         return 0.0
 
+def _calcular_similitud_textual_exacta(texto_a: str, texto_b: str) -> float:
+    """Calcula similitud textual exacta entre dos textos."""
+    if not texto_a or not texto_b:
+        return 0.0
+    
+    # Normalizar textos (remover espacios extra, convertir a minúsculas)
+    texto_a_norm = " ".join(texto_a.lower().split())
+    texto_b_norm = " ".join(texto_b.lower().split())
+    
+    if texto_a_norm == texto_b_norm:
+        return 1.0
+    
+    # Similitud por caracteres comunes
+    caracteres_a = set(texto_a_norm)
+    caracteres_b = set(texto_b_norm)
+    
+    if not caracteres_a or not caracteres_b:
+        return 0.0
+    
+    intersection = len(caracteres_a & caracteres_b)
+    union = len(caracteres_a | caracteres_b)
+    
+    return intersection / union if union > 0 else 0.0
+
 def _recalcular_relaciones():
     """Recalcula todas las relaciones del grafo con similitud estructural corregida."""
     grafo_contextos.clear_edges()
@@ -208,11 +232,27 @@ def cargar_desde_disco():
         metadatos_contextos = {}
 
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
-    """Agrega un nuevo contexto con detección temporal automática y tipificación."""
+    """Agrega un nuevo contexto con prevención de duplicados."""
+    
+    # PREVENCIÓN DE DUPLICADOS - Verificación antes de agregar
+    titulo_norm = titulo.strip().lower()
+    texto_norm = " ".join(texto.strip().lower().split())
+    
+    for ctx_id, meta in metadatos_contextos.items():
+        titulo_existente = meta.get("titulo", "").strip().lower()
+        texto_existente = " ".join(meta.get("texto", "").strip().lower().split())
+        
+        # Verificar duplicado exacto o muy similar
+        if (titulo_norm == titulo_existente and texto_norm == texto_existente) or \
+           (len(texto_norm) > 50 and _calcular_similitud_textual_exacta(texto_norm, texto_existente) > 0.98):
+            print(f"⚠️ Contexto duplicado detectado - no agregando. Retornando ID existente: {ctx_id}")
+            return ctx_id  # Retornar ID del existente
+    
+    # Continuar con el proceso normal si no es duplicado
     id_contexto = str(uuid.uuid4())
     palabras_clave = extraer_palabras_clave(texto)
     
-    # Detectar tipo de contexto ANTES de agregarlo al grafo
+    # Detectar tipo de contexto
     tipo_contexto = _detectar_tipo_contexto(titulo, texto)
     
     grafo_contextos.add_node(id_contexto, titulo=titulo)
@@ -249,13 +289,14 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     
     metadatos_contextos[id_contexto] = metadatos
     
-    # Indexar para búsqueda semántica ANTES de recalcular relaciones
+    # Indexar para búsqueda semántica
     indexar_documento(id_contexto, texto)
     
     # Recalcular y guardar
     _recalcular_relaciones()
     _guardar_grafo()
     
+    print(f"✅ Nuevo contexto agregado: {titulo} (ID: {id_contexto})")
     return id_contexto
 
 def obtener_todos() -> Dict:
@@ -286,7 +327,7 @@ def obtener_estadisticas() -> Dict:
     return stats
 
 def exportar_grafo_para_visualizacion() -> Dict:
-    """Exporta el grafo para visualización con información de aristas CORREGIDA."""
+    """Exporta el grafo para visualización con información de aristas."""
     nodos = []
     edges = []
     
@@ -318,9 +359,8 @@ def exportar_grafo_para_visualizacion() -> Dict:
                 "tipo_contexto": tipo_contexto
             })
     
-    # FIX PRINCIPAL: Extraer datos correctamente de las aristas
+    # Extraer datos de aristas
     for origen, destino, datos in grafo_contextos.edges(data=True):
-        # MÉTODO CORREGIDO: Verificar múltiples formas de acceso a los datos
         peso_estructural = None
         relevancia_temporal = None  
         peso_efectivo = None
@@ -341,14 +381,14 @@ def exportar_grafo_para_visualizacion() -> Dict:
                 peso_efectivo = float(datos[key])
                 break
         
-        # Valores por defecto solo si no se encontró nada
+        # Valores por defecto
         peso_estructural = peso_estructural if peso_estructural is not None else 0.0
         relevancia_temporal = relevancia_temporal if relevancia_temporal is not None else 0.0
         peso_efectivo = peso_efectivo if peso_efectivo is not None else 0.0
         
         tipos_contexto = datos.get("tipos_contexto", "desconocido")
         
-        # Etiqueta de arista más informativa
+        # Etiqueta de arista
         label = f"E:{peso_estructural:.2f}|T:{relevancia_temporal:.2f}|W:{peso_efectivo:.2f}"
         title = f"Peso Estructural: {peso_estructural:.3f}\nRelevancia Temporal: {relevancia_temporal:.3f}\nPeso Efectivo: {peso_efectivo:.3f}\nTipos: {tipos_contexto}"
         
@@ -359,7 +399,6 @@ def exportar_grafo_para_visualizacion() -> Dict:
             "label": label,
             "title": title,
             "font": {"size": 10, "align": "top"},
-            # Datos adicionales para debugging
             "peso_estructural": peso_estructural,
             "relevancia_temporal": relevancia_temporal,
             "peso_efectivo": peso_efectivo
@@ -369,7 +408,7 @@ def exportar_grafo_para_visualizacion() -> Dict:
 
 def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, 
                            factor_refuerzo: float = 1.0, momento_consulta: Optional[datetime] = None) -> Dict:
-    """Construye subgrafo considerando momento de consulta y similitud estructural corregida."""
+    """Construye subgrafo considerando momento de consulta y similitud estructural."""
     if not contextos_ids:
         return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
     
@@ -433,11 +472,10 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             "tipo_contexto": tipo_contexto
         })
         
-        # Calcular pesos usando similitud estructural corregida
+        # Calcular pesos usando similitud estructural
         claves_ctx = set(meta.get("palabras_clave", []))
         texto_ctx = meta.get("texto", "")
         
-        # Calcular similitud estructural directamente
         ws = _calcular_similitud_estructural(claves_pregunta, claves_ctx, pregunta, texto_ctx)
         
         # Relevancia temporal desde momento de consulta al contexto
@@ -486,7 +524,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
     # Obtener contextos relevantes
     from agent.semantica import buscar_similares
     try:
-        ids_candidatos = buscar_similares(pregunta, k=10)  # Más candidatos para filtrar
+        ids_candidatos = buscar_similares(pregunta, k=10)
     except Exception as e:
         print(f"Error en búsqueda semántica: {e}")
         ids_candidatos = []
@@ -506,10 +544,9 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         ]
         
         if ids_en_ventana:
-            ids_similares = ids_en_ventana[:5]  # Top 5 en ventana
+            ids_similares = ids_en_ventana[:5]
             contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_en_ventana)
         else:
-            # Si no hay contextos en ventana, usar los mejores semánticamente
             ids_similares = ids_candidatos[:5]
     else:
         ids_similares = ids_candidatos[:5]
@@ -540,7 +577,7 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
     timestamp = meta.get("timestamp")
     
     if not timestamp:
-        return False  # Sin timestamp, fuera de ventana
+        return False
     
     try:
         fecha_contexto = datetime.fromisoformat(timestamp)
