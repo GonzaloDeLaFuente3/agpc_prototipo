@@ -1,434 +1,4 @@
 {
-  "c2": {
-    "titulo": "Contextos con grafos y modelos de lenguaje",
-    "texto": "Utiliza grafos y modelos de lenguaje.",
-    "relaciones": [
-      "c3",
-      "c6",
-      "c7",
-      "c9",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
-    ],
-    "palabras_clave": [
-      "grafo",
-      "utiliza",
-      "lenguaje",
-      "modelo"
-    ]
-  },
-  "c1": {
-    "titulo": "Contextos difusos en AGPC",
-    "texto": "El sistema AGPC gestiona contextos difusos.",
-    "relaciones": [
-      "c3",
-      "c5",
-      "c8",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "difuso",
-      "agpc",
-      "sistema",
-      "gestionar",
-      "contexto"
-    ]
-  },
-  "c3": {
-    "titulo": "Grafos en AGPC ",
-    "texto": "El modelo AGPC utiliza grafos para representar contextos.",
-    "relaciones": [
-      "c2",
-      "c1",
-      "c5",
-      "c6",
-      "c7",
-      "c8",
-      "c9",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "representar",
-      "grafo",
-      "modelo",
-      "agpc",
-      "utilizar",
-      "contexto"
-    ]
-  },
-  "c4": {
-    "titulo": "Ventajas y limitaciones de GPT-4 ",
-    "texto": "GPT-4, por su parte, ofrece una comprensión y generación de texto de altísima calidad, destacando en tareas multilingües, generación creativa y razonamiento lógico. Su principal ventaja es su capacidad generalista y versatilidad. No obstante, al ser una solución cerrada, presenta limitaciones en la personalización directa, dependencia de API externa, mayores costos y menor transparencia en su arquitectura interna.",
-    "relaciones": [
-      "c5",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "capacidad",
-      "ofrecer",
-      "cerrado",
-      "directo",
-      "altísimo",
-      "multilingü",
-      "solución",
-      "lógico",
-      "presentar",
-      "dependencia",
-      "texto",
-      "arquitectura",
-      "mayor",
-      "limitación",
-      "destacar",
-      "transparencia",
-      "tarea",
-      "personalización",
-      "menor",
-      "costo",
-      "externo",
-      "interno",
-      "ventaja",
-      "razonamiento",
-      "calidad",
-      "principal",
-      "generación",
-      "versatilidad",
-      "obstante",
-      "comprensión",
-      "generalista",
-      "creativo"
-    ]
-  },
-  "c5": {
-    "titulo": "Inteligencia contextual",
-    "texto": "La inteligencia contextual es la capacidad de comprender e interpretar un contexto específico, incluyendo los aspectos sociales, culturales y situacionales, para tomar decisiones más acertadas y relevantes.",
-    "relaciones": [
-      "c1",
-      "c3",
-      "c4",
-      "c7",
-      "c8",
-      "c10",
-      "c12",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "situacional",
-      "inteligencia",
-      "aspecto",
-      "acertado",
-      "incluir",
-      "contextual",
-      "social",
-      "específico",
-      "relevante",
-      "contexto",
-      "tomar",
-      "comprender",
-      "cultural",
-      "interpretar",
-      "capacidad",
-      "decisión"
-    ]
-  },
-  "c6": {
-    "titulo": "ChatGPT",
-    "texto": "ChatGPT es un modelo de lenguaje desarrollado por OpenAI, diseñado para mantener conversaciones naturales con los usuarios. ",
-    "relaciones": [
-      "c2",
-      "c3",
-      "c7",
-      "c9",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
-    ],
-    "palabras_clave": [
-      "chatgpt",
-      "modelo",
-      "openai",
-      "conversación",
-      "desarrollado",
-      "usuario",
-      "mantener",
-      "diseñado",
-      "lenguaje",
-      "natural"
-    ]
-  },
-  "c7": {
-    "titulo": "GPT-5 por OpenAI",
-    "texto": "OpenAI lanza GPT-5, su modelo más avanzado de inteligencia artificial",
-    "relaciones": [
-      "c2",
-      "c3",
-      "c5",
-      "c6",
-      "c9",
-      "c10",
-      "c12",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "artificial",
-      "inteligencia",
-      "lanza",
-      "modelo",
-      "avanzado",
-      "openai"
-    ]
-  },
-  "c8": {
-    "titulo": "Análisis de patrones difusos en AGPC",
-    "texto": "El sistema AGPC analiza patrones en contextos difusos.",
-    "relaciones": [
-      "c1",
-      "c3",
-      "c5",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "sistema",
-      "patrón",
-      "agpc",
-      "contexto",
-      "analizar",
-      "difuso"
-    ]
-  },
-  "c9": {
-    "titulo": "Inferencia mediante grafos y modelos de lenguaje",
-    "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
-    "relaciones": [
-      "c2",
-      "c3",
-      "c6",
-      "c7",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
-    ],
-    "palabras_clave": [
-      "lenguaje",
-      "modelo",
-      "inferir",
-      "significado",
-      "grafo",
-      "utiliza"
-    ]
-  },
-  "c10": {
-    "titulo": "La inteligencia artificial",
-    "texto": "La inteligencia artificial es una rama de la informática.",
-    "relaciones": [
-      "c5",
-      "c7",
-      "c11",
-      "c12",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "informática",
-      "rama",
-      "inteligencia",
-      "artificial"
-    ]
-  },
-  "c11": {
-    "titulo": "La informática y el procesamiento de datos",
-    "texto": "La informática estudia el procesamiento de datos.",
-    "relaciones": [
-      "c10",
-      "c12",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "dato",
-      "procesamiento",
-      "informática",
-      "estudiar"
-    ]
-  },
-  "c12": {
-    "titulo": "Procesamiento de datos en la ia",
-    "texto": "El procesamiento de datos es clave en la inteligencia artificial.",
-    "relaciones": [
-      "c5",
-      "c7",
-      "c10",
-      "c11",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "inteligencia",
-      "procesamiento",
-      "artificial",
-      "dato",
-      "clave"
-    ]
-  },
-  "55f31229-71d2-4c84-9dcb-b9bd0482c879": {
-    "titulo": "Claude AI",
-    "texto": "Un chatbot diseñado para la seguridad\nEl código ético de Claude, su velocidad y su capacidad para procesar grandes volúmenes de información le permiten aprovechar la IA de forma eficiente para análisis complejos y la generación de contenido.",
-    "relaciones": [
-      "c4",
-      "c5",
-      "c6",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "capacidad",
-      "generación",
-      "aprovechar",
-      "forma",
-      "ético",
-      "información",
-      "diseñado",
-      "eficiente",
-      "volumen",
-      "procesar",
-      "permitir",
-      "complejo",
-      "análisis",
-      "chatbot",
-      "código",
-      "seguridad",
-      "velocidad",
-      "claude",
-      "contenido"
-    ]
-  },
-  "f589c7b1-0876-4913-acda-0424aac7e076": {
-    "titulo": "Gemini IA",
-    "texto": "La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.",
-    "relaciones": [
-      "c2",
-      "c3",
-      "c4",
-      "c6",
-      "c7",
-      "c9",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "modelo",
-      "acceso",
-      "intercambiar",
-      "obtener",
-      "encontrar",
-      "gemini",
-      "rápidamente",
-      "drive",
-      "aprender",
-      "idea",
-      "contenido",
-      "gmail",
-      "ayuda",
-      "móviles",
-      "escribir",
-      "google",
-      "resumir",
-      "dispositivo",
-      "directo",
-      "familia",
-      "información",
-      "poder"
-    ]
-  },
-  "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614": {
-    "titulo": "Claude 3.5 Sonnet v2",
-    "texto": "es un modelo de última generación para tareas de ingeniería de software del mundo real y capacidades de agentes. Claude 3.5 Sonnet v2 ofrece estos avances al mismo precio y velocidad que Claude 3.5 Sonnet.",
-    "relaciones": [
-      "c2",
-      "c3",
-      "c4",
-      "c5",
-      "c6",
-      "c7",
-      "c9",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "d9c1bd52-532e-4faa-8560-c1507bad1d0b"
-    ],
-    "palabras_clave": [
-      "software",
-      "claude",
-      "sonnet",
-      "real",
-      "capacidad",
-      "velocidad",
-      "ingeniería",
-      "precio",
-      "generación",
-      "mundo",
-      "modelo",
-      "agente",
-      "avance",
-      "tarea",
-      "ofrecer"
-    ]
-  },
-  "d9c1bd52-532e-4faa-8560-c1507bad1d0b": {
-    "titulo": "ia va a dominar el mundo",
-    "texto": "Los fragmentos de texto proporcionados describen qué es la inteligencia artificial (IA) y algunos de sus componentes, pero no ofrecen información sobre si dominará el mundo.  La IA, como se define en los fragmentos, es una rama de la informática que se centra en el procesamiento de datos.  Si bien el procesamiento de datos es clave para la IA y la IA puede gestionar contextos complejos (como indica el fragmento sobre inteligencia contextual),  no hay nada en estos fragmentos que sugiera o refute la posibilidad de que la IA domine el mundo.  La pregunta es especulativa y no puede ser respondida basándose en la información proporcionada.",
-    "relaciones": [
-      "c1",
-      "c3",
-      "c4",
-      "c5",
-      "c7",
-      "c8",
-      "c10",
-      "c11",
-      "c12",
-      "55f31229-71d2-4c84-9dcb-b9bd0482c879",
-      "f589c7b1-0876-4913-acda-0424aac7e076",
-      "90b81fd9-33ee-4a5e-a81d-5f4a79c1d614"
-    ],
-    "palabras_clave": [
-      "inteligencia",
-      "indicar",
-      "procesamiento",
-      "texto",
-      "gestionar",
-      "clave",
-      "complejo",
-      "pregunta",
-      "centrar",
-      "mundo",
-      "sugerir",
-      "contextual",
-      "ofrecer",
-      "dominar",
-      "información",
-      "responder",
-      "artificial",
-      "informática",
-      "contexto",
-      "especulativo",
-      "fragmento",
-      "describir",
-      "componente",
-      "rama",
-      "refute",
-      "basar él",
-      "dato",
-      "definir",
-      "posibilidad",
-      "proporcionado"
-    ]
-  },
   "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6": {
     "titulo": "Claude 3.5 Sonnet v2",
     "texto": "es un modelo de última generación para tareas de ingeniería de software del mundo real y capacidades de agentes. Claude 3.5 Sonnet v2 ofrece estos avances al mismo precio y velocidad que Claude 3.5 Sonnet.",
@@ -809,23 +379,6 @@
     "tipo_contexto": "reunion",
     "timestamp": "2025-08-26T08:12:19.425912"
   },
-  "805cbc11-9e1c-446a-9a68-92bf51567af0": {
-    "titulo": "Entrega del proyecto",
-    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
-    "palabras_clave": [
-      "gestión",
-      "sistema",
-      "stock",
-      "venta",
-      "viernes",
-      "proyecto",
-      "entrega"
-    ],
-    "created_at": "2025-08-25T17:17:26.814396",
-    "es_temporal": true,
-    "tipo_contexto": "proyecto",
-    "timestamp": "2025-08-29T00:00:00"
-  },
   "1914e594-9e28-411b-95ab-7a12bcdfd817": {
     "titulo": "Entrega del proyecto",
     "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
@@ -842,5 +395,60 @@
     "es_temporal": true,
     "tipo_contexto": "proyecto",
     "timestamp": "2025-08-29T00:00:00"
+  },
+  "3f9b6b41-0276-4ec7-ac28-fbeae655928d": {
+    "titulo": "Presentar propuesta trabajo final",
+    "texto": "El dia martes 02/09/2025 debo presentar la propuesta de trabajo final sobre Este trabajo propone el diseño y desarrollo de un Agente de Gestión Probabilística de Contextos (AGPC), cuyo núcleo es un Grafo Contextual Probabilístico (GCP). El Agente de Gestión Probabilística de Contextos (AGPC) combina Procesamiento de Lenguaje Natural (PLN), embeddings semánticos, bases vectoriales y grafos probabilísticos para recuperar y organizar información de manera flexible.\nEl sistema se orienta a múltiples dominios y busca resolver limitaciones clave de los LLMs: la restricción de ventana de contexto y la ausencia de memoria dinámica.",
+    "palabras_clave": [
+      "base",
+      "ausencia",
+      "proponer",
+      "procesamiento",
+      "deber",
+      "desarrollo",
+      "agente",
+      "embedding",
+      "presentar",
+      "recuperar",
+      "sistema",
+      "contextos",
+      "grafo",
+      "organizar",
+      "información",
+      "diseño",
+      "clave",
+      "dinámico",
+      "restricción",
+      "lenguaje",
+      "limitación",
+      "combinar",
+      "natural",
+      "ventana",
+      "vectorial",
+      "contexto",
+      "flexible",
+      "trabajo",
+      "resolver",
+      "dominio",
+      "buscar",
+      "contextual",
+      "propuesta",
+      "probabilística",
+      "núcleo",
+      "gestión",
+      "semántico",
+      "agpc",
+      "martes",
+      "orientar",
+      "memoria",
+      "cuyo",
+      "múltiple",
+      "llms",
+      "probabilístico"
+    ],
+    "created_at": "2025-08-28T20:22:00.928512",
+    "es_temporal": true,
+    "tipo_contexto": "proyecto",
+    "timestamp": "2025-09-02T00:00:00"
   }
 }

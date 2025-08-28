@@ -1,4 +1,4 @@
-# main.py - Optimizado
+# main.py
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -27,7 +27,7 @@ class EntradaContexto(BaseModel):
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
-    """Agrega un nuevo contexto al grafo."""
+    """Agrega un nuevo contexto al grafo con prevención de duplicados."""
     nuevo_id = grafo.agregar_contexto(
         entrada.titulo, 
         entrada.texto, 
