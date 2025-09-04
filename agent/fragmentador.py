@@ -8,7 +8,6 @@ from agent.extractor import extraer_palabras_clave
 def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 150) -> List[str]:
     """
     Fragmenta una conversación en bloques semánticamente coherentes.
-    
     Criterios de fragmentación:
     1. Cambios de hablante (si se detectan patrones como "Juan:", "- María:")
     2. Párrafos largos (más de max_palabras)
@@ -131,7 +130,6 @@ def _dividir_por_parrafos_y_tamaño(texto: str, max_palabras: int) -> List[str]:
 def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
     """
     Toma una conversación completa y la fragmenta automáticamente.
-    
     Args:
         conversacion: {
             'titulo': str,
@@ -140,7 +138,6 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
             'participantes': list,
             'metadata': dict
         }
-    
     Returns:
         Lista de fragmentos con metadatos
     """
@@ -209,55 +206,3 @@ def _detectar_tipo_fragmento(texto: str, metadata_conversacion: Dict) -> str:
             return tipo
     
     return tipo_base
-
-# Función de utilidad para testing
-def test_fragmentacion():
-    """Función de testing para validar la fragmentación."""
-    texto_test = """
-    Juan: Hola equipo, vamos a revisar el estado del proyecto.
-    
-    María: Perfecto Juan. He completado la implementación del módulo de usuario. 
-    Todo funciona correctamente y ya está listo para testing.
-    
-    Pedro: Excelente María. Por mi parte, he encontrado algunos problemas con la 
-    base de datos. Específicamente, las consultas están tomando demasiado tiempo.
-    
-    Juan: ¿Qué propones Pedro para solucionarlo?
-    
-    Pedro: Creo que necesitamos optimizar los índices y revisar algunas queries.
-    También podríamos implementar cache para las consultas más frecuentes.
-    
-    ---
-    
-    DECISIONES TOMADAS:
-    1. María continuará con el testing del módulo de usuario
-    2. Pedro se enfocará en la optimización de la base de datos
-    3. Próxima reunión: viernes a las 15:00
-    """
-    
-    conversacion_test = {
-        'titulo': 'Reunión de Proyecto - Revisión Semanal',
-        'contenido': texto_test,
-        'fecha': '2025-01-25T10:00:00',
-        'participantes': ['Juan', 'María', 'Pedro'],
-        'metadata': {'tipo': 'reunion', 'proyecto': 'Sistema Web', 'duracion': '30min'}
-    }
-    
-    fragmentos = fragmentar_conversacion(conversacion_test)
-    
-    print(f"🔍 Testing de Fragmentación:")
-    print(f"Conversación: {conversacion_test['titulo']}")
-    print(f"Total fragmentos generados: {len(fragmentos)}\n")
-    
-    for i, frag in enumerate(fragmentos, 1):
-        print(f"--- Fragmento {i} ---")
-        print(f"ID: {frag['id']}")
-        print(f"Tipo: {frag['metadata']['tipo_contexto']}")
-        print(f"Palabras clave: {frag['metadata']['palabras_clave'][:5]}")
-        print(f"Texto: {frag['metadata']['texto'][:100]}...")
-        print()
-    
-    return fragmentos
-
-if __name__ == "__main__":
-    test_fragmentacion()

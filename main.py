@@ -5,11 +5,12 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 import os
-
 from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
 from agent.query_analyzer import analizar_intencion_temporal
 from datetime import datetime
+from agent.dataset_loader import DatasetLoader
+from fastapi import UploadFile, File
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -174,7 +175,7 @@ def analizar_query(pregunta: str):
     """Analiza la intención temporal de una pregunta."""
     return analizar_intencion_temporal(pregunta)
 
-# === NUEVOS ENDPOINTS PARA CONVERSACIONES ===
+# ENDPOINTS PARA CONVERSACIONES
 
 class EntradaConversacion(BaseModel):
     titulo: str
@@ -211,9 +212,7 @@ def obtener_fragmentos_conversacion(conversacion_id: str):
     """Obtiene fragmentos de una conversación específica."""
     return grafo.obtener_fragmentos_de_conversacion(conversacion_id)
 
-# === ENDPOINTS PARA CARGA MASIVA DE DATASETS ===
-from agent.dataset_loader import DatasetLoader
-
+# ENDPOINTS PARA CARGA MASIVA DE DATASETS
 class DatasetUpload(BaseModel):
     dataset: dict
     sobrescribir: bool = False
@@ -255,8 +254,6 @@ def validar_dataset(dataset: dict):
         "dominio": dataset.get('dominio', 'No especificado')
     }
 
-from fastapi import UploadFile, File
-
 @app.post("/dataset/upload/")
 async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
     """Sube y procesa un archivo JSON de dataset."""
@@ -281,7 +278,7 @@ async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool =
     except Exception as e:
         return {"status": "error", "mensaje": str(e)}
     
-# === ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL ===
+#ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL
 @app.get("/grafo/macro/conversaciones/")
 def exportar_grafo_macro():
     """Vista macro: conversaciones como nodos, relaciones agregadas."""

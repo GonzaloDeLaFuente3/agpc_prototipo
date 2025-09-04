@@ -10,7 +10,6 @@ class VisualizadorDobleNivel:
     - Vista Macro: Conversaciones como nodos, relaciones agregadas
     - Vista Micro: Fragmentos individuales con conexiones precisas
     """
-    
     def __init__(self, grafo_contextos, metadatos_contextos, conversaciones_metadata, fragmentos_metadata):
         self.grafo_contextos = grafo_contextos
         self.metadatos_contextos = metadatos_contextos

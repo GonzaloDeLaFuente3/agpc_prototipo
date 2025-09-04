@@ -10,20 +10,6 @@ let estadisticasDobleNivel = null;
 
 // Event listeners principales
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle formulario agregar contexto
-    // document.getElementById('toggleAgregarContexto').addEventListener('click', function() {
-    //     const form = document.getElementById('formAgregarContexto');
-    //     form.classList.toggle('hidden');
-    //     if (!form.classList.contains('hidden')) {
-    //         document.getElementById('titulo').focus();
-    //     }
-    // });
-
-    // Cancelar agregar contexto
-    // document.getElementById('cancelarAgregar').addEventListener('click', function() {
-    //     limpiarFormulario();
-    // });
-
     // Enter en campos de input
     document.getElementById('pregunta').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') preguntar();
@@ -148,49 +134,6 @@ async function preguntar() {
         panelEstrategia.classList.add('hidden');
     }
 }
-
-// Agregar contexto optimizado
-// async function agregarContexto() {
-//     const titulo = document.getElementById('titulo').value.trim();
-//     const texto = document.getElementById('texto').value.trim();
-    
-//     if (!titulo || !texto) {
-//         alert("Por favor completá título y texto.");
-//         return;
-//     }
-    
-//     // Determinar modo temporal
-//     const modoTemporal = document.querySelector('input[name="modoTemporal"]:checked').value;
-//     const referenciaManual = document.getElementById('referenciaManualInput').value.trim();
-    
-//     // Preparar payload
-//     const payload = { titulo, texto };
-    
-//     if (modoTemporal === 'auto') {
-//         payload.es_temporal = null; // Auto-detección
-//     } else if (modoTemporal === 'temporal') {
-//         payload.es_temporal = true;
-//         if (referenciaManual) {
-//             payload.referencia_temporal = referenciaManual;
-//         }
-//     } else { // atemporal
-//         payload.es_temporal = false;
-//     }
-    
-//     try {
-//         const res = await axios.post('/contexto/', payload);
-//         const data = res.data;
-        
-//         const tipoContexto = data.es_temporal ? "TEMPORAL 🕒" : "ATEMPORAL 📋";
-//         alert(`✅ Contexto ${tipoContexto} agregado!\nID: ${data.id}`);
-        
-//         limpiarFormulario();
-//         mostrarContextos();
-        
-//     } catch (error) {
-//         alert(`❌ Error: ${error.message}`);
-//     }
-// }
 
 // Agregar respuesta como contexto
 async function agregarRespuestaComoContexto() {
@@ -582,7 +525,6 @@ async function cargarGrafo() {
             };
         });
 
-        // CONFIGURACIÓN COMPLETAMENTE ESTÁTICA - CERO FÍSICAS
         const options = {
             nodes: { 
                 shape: 'box',
@@ -610,8 +552,7 @@ async function cargarGrafo() {
                 },
                 labelHighlightBold: false
             },
-            // FÍSICAS COMPLETAMENTE DESHABILITADAS
-            physics: false,  // Forma más directa de deshabilitar
+            physics: false, 
             interaction: {
                 hover: true,
                 hoverConnectedEdges: true,
@@ -709,16 +650,6 @@ async function cargarEstadisticas() {
             `<p class="text-red-600 text-xs">Error: ${error.message}</p>`;
     }
 }
-
-// Función helper para limpiar formulario
-// function limpiarFormulario() {
-//     document.getElementById('titulo').value = '';
-//     document.getElementById('texto').value = '';
-//     document.getElementById('referenciaManualInput').value = '';
-//     document.getElementById('referenciaManualContainer').classList.add('hidden');
-//     document.querySelector('#modoAuto').checked = true;
-//     document.getElementById('formAgregarContexto').classList.add('hidden');
-// }
 
 // Event listener para cerrar modales con Escape
 document.addEventListener('keydown', function(e) {
@@ -832,7 +763,7 @@ function limpiarFormularioConversacion() {
     document.getElementById('formAgregarConversacion').classList.add('hidden');
 }
 
-// === FUNCIONALIDAD DE DATASETS ===
+// FUNCIONALIDAD DE DATASETS 
 // Subir archivo de dataset
 async function subirDataset() {
     const fileInput = document.getElementById('fileDataset');
