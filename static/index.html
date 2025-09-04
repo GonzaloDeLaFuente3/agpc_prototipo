@@ -22,69 +22,66 @@
     <!-- Main Content - 3 Columnas -->
     <div class="flex gap-4 px-4 pb-4 min-h-screen">
         
-        <!-- COLUMNA IZQUIERDA - Contextos -->
+        <!-- COLUMNA IZQUIERDA - Contextos y Conversaciones -->
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
-            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contextos</h2>
+            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contenido</h2>
+            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">💬 Conversaciones</h2>
             
-            <!-- Agregar Contexto -->
-            <div class="mb-6">
-                <button id="toggleAgregarContexto" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mb-3">
-                    ➕ Agregar Nuevo Contexto
-                </button>
-                
-                <div id="formAgregarContexto" class="hidden space-y-3">
-                    <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full rounded text-sm" />
-                    <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full rounded text-sm h-20 resize-none"></textarea>
+            <!-- Panel de Conversaciones (nuevo) -->
+            <div id="panelConversaciones" >
+                <!-- Agregar Conversación -->
+                <div class="mb-6">
+                    <button id="toggleAgregarConversacion" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors mb-3">
+                        ➕ Agregar Nueva Conversación
+                    </button>
                     
-                    <!-- Controles temporales opcionales -->
-                    <details class="bg-blue-50 p-2 rounded border border-blue-200">
-                        <summary class="text-sm font-medium text-blue-800 cursor-pointer">
-                            ⚙️ Controles Manuales (Opcional)
-                        </summary>
-                        <div class="mt-3 space-y-3">
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="auto" id="modoAuto" checked>
-                                <label for="modoAuto" class="text-sm text-blue-700">🤖 Detección automática</label>
+                    <div id="formAgregarConversacion" class="hidden space-y-3">
+                        <input id="tituloConversacion" placeholder="Título de la conversación" class="border p-2 w-full rounded text-sm" />
+                        <textarea id="contenidoConversacion" placeholder="Contenido completo de la conversación..." class="border p-2 w-full rounded text-sm h-32 resize-none"></textarea>
+                        
+                        <!-- Metadatos opcionales -->
+                        <details class="bg-green-50 p-2 rounded border border-green-200">
+                            <summary class="text-sm font-medium text-green-800 cursor-pointer">
+                                📋 Metadatos (Opcional)
+                            </summary>
+                            <div class="mt-3 space-y-2">
+                                <input id="participantesConversacion" placeholder="Participantes (separados por coma)" 
+                                    class="border p-2 w-full rounded text-xs bg-green-50 border-green-300" />
+                                <input id="fechaConversacion" type="datetime-local" 
+                                    class="border p-2 w-full rounded text-xs bg-green-50 border-green-300" />
+                                <select id="tipoConversacion" class="border p-2 w-full rounded text-xs bg-green-50 border-green-300">
+                                    <option value="reunion">👥 Reunión</option>
+                                    <option value="entrevista">🎤 Entrevista</option>
+                                    <option value="brainstorm">💡 Brainstorm</option>
+                                    <option value="planning">📋 Planning</option>
+                                    <option value="general">📄 General</option>
+                                </select>
                             </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="temporal" id="modoTemporal">
-                                <label for="modoTemporal" class="text-sm text-blue-700">🕒 Forzar temporal</label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="atemporal" id="modoAtemporal">
-                                <label for="modoAtemporal" class="text-sm text-blue-700">📋 Forzar atemporal</label>
-                            </div>
-                            
-                            <div id="referenciaManualContainer" class="hidden">
-                                <input id="referenciaManualInput" 
-                                    placeholder='Referencia: "mañana", "25/01/2025"...' 
-                                    class="border p-2 w-full rounded text-sm bg-blue-50 border-blue-300" />
-                            </div>
+                        </details>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="agregarConversacion()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
+                                ✅ Fragmentar y Guardar
+                            </button>
+                            <button id="cancelarAgregarConversacion" class="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
+                                ❌ Cancelar
+                            </button>
                         </div>
-                    </details>
-                    
-                    <div class="flex gap-2">
-                        <button onclick="agregarContexto()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
-                            ✅ Guardar
-                        </button>
-                        <button id="cancelarAgregar" class="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
-                            ❌ Cancelar
-                        </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Lista de Contextos -->
-            <div>
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-semibold text-gray-700">📋 Contextos</h3>
-                    <button onclick="mostrarContextos()" class="bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700 transition-colors">
-                        🔄 Actualizar
-                    </button>
-                </div>
-                
-                <div id="todosContextos" class="text-xs bg-gray-50 p-3 rounded max-h-96 overflow-y-auto border">
-                    <p class="text-gray-500 italic">Clic en "Actualizar" para cargar contextos</p>
+                <!-- Lista de Conversaciones -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-gray-700">💬 Conversaciones</h3>
+                        <button onclick="mostrarConversaciones()" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700 transition-colors">
+                            🔄 Actualizar
+                        </button>
+                    </div>
+                    
+                    <div id="todasConversaciones" class="text-xs bg-gray-50 p-3 rounded max-h-96 overflow-y-auto border">
+                        <p class="text-gray-500 italic">Clic en "Actualizar" para cargar conversaciones</p>
+                    </div>
                 </div>
             </div>
         </div>
