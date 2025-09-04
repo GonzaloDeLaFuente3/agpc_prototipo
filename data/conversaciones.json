@@ -1,0 +1,68 @@
+{
+  "e73e28fa-ae2e-4bb4-8186-230bf77c5acf": {
+    "conversacion_id": "e73e28fa-ae2e-4bb4-8186-230bf77c5acf",
+    "titulo": "Reunión Migración Cloud - Seguimiento Semanal",
+    "contenido_original": "\n    Pedro: Hola equipo, necesitamos revisar el progreso del proyecto de migración.\n    \n    Ana: Perfecto Pedro. Hemos completado la fase de análisis. Tenemos identificados todos los componentes que necesitan migrar.\n    \n    Por otro lado, encontramos un problema con la base de datos legacy. Algunas tablas tienen dependencias no documentadas.\n    \n    María: Sobre el tema de la base de datos, propongo hacer una migración gradual. Empezar con las tablas menos críticas.\n    \n    Pedro: Buena idea María. ¿Qué cronograma propones?\n    \n    María: Sugiero 3 semanas para las tablas secundarias y 2 semanas para las críticas. Total 5 semanas.\n    \n    Ana: Perfecto. También necesitamos coordinar con el equipo de seguridad para la auditoría previa.\n    \n    Cambiando de tema, ¿alguien contactó al proveedor cloud?\n    \n    Pedro: Yo me hago cargo. Los contactaré mañana y confirmaré las especificaciones técnicas.\n    ",
+    "timestamp": "2025-09-03T19:50:47.806287",
+    "metadatos": {
+      "tipo": "reunion_seguimiento",
+      "participantes": [
+        "Pedro",
+        "Ana",
+        "María"
+      ],
+      "proyecto": "Migración Cloud"
+    },
+    "fragmentos_generados": 2,
+    "metodos_fragmentacion": {
+      "cambios_interlocutor_detectados": 7,
+      "marcadores_tematicos_detectados": 6,
+      "parrafos_procesados": 9,
+      "fragmentos_semanticos": 2,
+      "fragmentos_finales": 2
+    }
+  },
+  "e9520c4b-253e-40ea-a731-4d9afd5ab1f5": {
+    "conversacion_id": "e9520c4b-253e-40ea-a731-4d9afd5ab1f5",
+    "titulo": "Seguimiento Migración Cloud - Avances",
+    "contenido_original": "\n    Ana: Equipo, quiero hacer seguimiento a los acuerdos de la reunión pasada sobre migración cloud.\n    \n    María: Perfecto Ana. He avanzado con el cronograma de migración de base de datos. Las tablas secundarias están identificadas y listas.\n    \n    Pedro: Excelente María. Por mi parte, ya contacté al proveedor cloud. Confirmaron disponibilidad de recursos para las fechas que necesitamos.\n    \n    Ana: Muy bien. ¿Y el tema de la auditoría de seguridad?\n    \n    Pedro: Hablé con el equipo de seguridad. Van a hacer la auditoría la próxima semana. Necesitan acceso de lectura a las bases actuales.\n    \n    María: Sin problema, les puedo dar acceso temporal. \n    \n    Ana: Perfecto. Entonces tenemos todo encaminado según lo planeado.\n    ",
+    "timestamp": "2025-09-06T19:50:49.577641",
+    "metadatos": {
+      "tipo": "reunion_seguimiento",
+      "participantes": [
+        "Ana",
+        "María",
+        "Pedro"
+      ],
+      "proyecto": "Migración Cloud",
+      "relacionado_con": "e73e28fa-ae2e-4bb4-8186-230bf77c5acf"
+    },
+    "fragmentos_generados": 1,
+    "metodos_fragmentacion": {
+      "cambios_interlocutor_detectados": 7,
+      "marcadores_tematicos_detectados": 2,
+      "parrafos_procesados": 7,
+      "fragmentos_semanticos": 1,
+      "fragmentos_finales": 1
+    }
+  },
+  "dfd2fd62-7d10-47cc-a053-c833b5913094": {
+    "titulo": "ingeniería de contexto",
+    "fecha": "2025-09-04T12:06:57.879022",
+    "participantes": [
+      "Ana",
+      "Luis"
+    ],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "6dafe3f6-2367-4ef9-af0d-3dfe0cd30545",
+      "a9ee1abb-70ae-45ff-99be-f324f58ea379",
+      "29b3098c-8d5e-4d36-b3ad-3ea64de3b81e",
+      "c06b0286-b9cf-494b-b576-3c606c0ea181"
+    ],
+    "created_at": "2025-09-04T12:06:57.879022"
+  }
+}

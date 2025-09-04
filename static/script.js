@@ -7,18 +7,18 @@ let ultimoSubgrafo = null;
 // Event listeners principales
 document.addEventListener('DOMContentLoaded', function() {
     // Toggle formulario agregar contexto
-    document.getElementById('toggleAgregarContexto').addEventListener('click', function() {
-        const form = document.getElementById('formAgregarContexto');
-        form.classList.toggle('hidden');
-        if (!form.classList.contains('hidden')) {
-            document.getElementById('titulo').focus();
-        }
-    });
+    // document.getElementById('toggleAgregarContexto').addEventListener('click', function() {
+    //     const form = document.getElementById('formAgregarContexto');
+    //     form.classList.toggle('hidden');
+    //     if (!form.classList.contains('hidden')) {
+    //         document.getElementById('titulo').focus();
+    //     }
+    // });
 
     // Cancelar agregar contexto
-    document.getElementById('cancelarAgregar').addEventListener('click', function() {
-        limpiarFormulario();
-    });
+    // document.getElementById('cancelarAgregar').addEventListener('click', function() {
+    //     limpiarFormulario();
+    // });
 
     // Enter en campos de input
     document.getElementById('pregunta').addEventListener('keypress', function(e) {
@@ -41,6 +41,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Toggle formulario agregar conversación
+    document.getElementById('toggleAgregarConversacion').addEventListener('click', function() {
+        const form = document.getElementById('formAgregarConversacion');
+        form.classList.toggle('hidden');
+        if (!form.classList.contains('hidden')) {
+            document.getElementById('tituloConversacion').focus();
+        }
+    });
+
+    // Cancelar agregar conversación
+    document.getElementById('cancelarAgregarConversacion').addEventListener('click', function() {
+        limpiarFormularioConversacion();
+    });
+
+    // Cargar conversaciones inicialmente
+    mostrarConversaciones();
 });
 
 // Función principal para preguntar
@@ -114,47 +131,47 @@ async function preguntar() {
 }
 
 // Agregar contexto optimizado
-async function agregarContexto() {
-    const titulo = document.getElementById('titulo').value.trim();
-    const texto = document.getElementById('texto').value.trim();
+// async function agregarContexto() {
+//     const titulo = document.getElementById('titulo').value.trim();
+//     const texto = document.getElementById('texto').value.trim();
     
-    if (!titulo || !texto) {
-        alert("Por favor completá título y texto.");
-        return;
-    }
+//     if (!titulo || !texto) {
+//         alert("Por favor completá título y texto.");
+//         return;
+//     }
     
-    // Determinar modo temporal
-    const modoTemporal = document.querySelector('input[name="modoTemporal"]:checked').value;
-    const referenciaManual = document.getElementById('referenciaManualInput').value.trim();
+//     // Determinar modo temporal
+//     const modoTemporal = document.querySelector('input[name="modoTemporal"]:checked').value;
+//     const referenciaManual = document.getElementById('referenciaManualInput').value.trim();
     
-    // Preparar payload
-    const payload = { titulo, texto };
+//     // Preparar payload
+//     const payload = { titulo, texto };
     
-    if (modoTemporal === 'auto') {
-        payload.es_temporal = null; // Auto-detección
-    } else if (modoTemporal === 'temporal') {
-        payload.es_temporal = true;
-        if (referenciaManual) {
-            payload.referencia_temporal = referenciaManual;
-        }
-    } else { // atemporal
-        payload.es_temporal = false;
-    }
+//     if (modoTemporal === 'auto') {
+//         payload.es_temporal = null; // Auto-detección
+//     } else if (modoTemporal === 'temporal') {
+//         payload.es_temporal = true;
+//         if (referenciaManual) {
+//             payload.referencia_temporal = referenciaManual;
+//         }
+//     } else { // atemporal
+//         payload.es_temporal = false;
+//     }
     
-    try {
-        const res = await axios.post('/contexto/', payload);
-        const data = res.data;
+//     try {
+//         const res = await axios.post('/contexto/', payload);
+//         const data = res.data;
         
-        const tipoContexto = data.es_temporal ? "TEMPORAL 🕒" : "ATEMPORAL 📋";
-        alert(`✅ Contexto ${tipoContexto} agregado!\nID: ${data.id}`);
+//         const tipoContexto = data.es_temporal ? "TEMPORAL 🕒" : "ATEMPORAL 📋";
+//         alert(`✅ Contexto ${tipoContexto} agregado!\nID: ${data.id}`);
         
-        limpiarFormulario();
-        mostrarContextos();
+//         limpiarFormulario();
+//         mostrarContextos();
         
-    } catch (error) {
-        alert(`❌ Error: ${error.message}`);
-    }
-}
+//     } catch (error) {
+//         alert(`❌ Error: ${error.message}`);
+//     }
+// }
 
 // Agregar respuesta como contexto
 async function agregarRespuestaComoContexto() {
@@ -675,14 +692,14 @@ async function cargarEstadisticas() {
 }
 
 // Función helper para limpiar formulario
-function limpiarFormulario() {
-    document.getElementById('titulo').value = '';
-    document.getElementById('texto').value = '';
-    document.getElementById('referenciaManualInput').value = '';
-    document.getElementById('referenciaManualContainer').classList.add('hidden');
-    document.querySelector('#modoAuto').checked = true;
-    document.getElementById('formAgregarContexto').classList.add('hidden');
-}
+// function limpiarFormulario() {
+//     document.getElementById('titulo').value = '';
+//     document.getElementById('texto').value = '';
+//     document.getElementById('referenciaManualInput').value = '';
+//     document.getElementById('referenciaManualContainer').classList.add('hidden');
+//     document.querySelector('#modoAuto').checked = true;
+//     document.getElementById('formAgregarContexto').classList.add('hidden');
+// }
 
 // Event listener para cerrar modales con Escape
 document.addEventListener('keydown', function(e) {
@@ -691,3 +708,107 @@ document.addEventListener('keydown', function(e) {
         cerrarModalArbol();
     }
 });
+
+// Agregar conversación
+async function agregarConversacion() {
+    const titulo = document.getElementById('tituloConversacion').value.trim();
+    const contenido = document.getElementById('contenidoConversacion').value.trim();
+    
+    if (!titulo || !contenido) {
+        alert("Por favor completá título y contenido de la conversación.");
+        return;
+    }
+    
+    // Obtener metadatos opcionales
+    const participantesText = document.getElementById('participantesConversacion').value.trim();
+    const participantes = participantesText ? participantesText.split(',').map(p => p.trim()).filter(p => p) : [];
+    const fecha = document.getElementById('fechaConversacion').value;
+    const tipo = document.getElementById('tipoConversacion').value;
+    
+    const payload = {
+        titulo,
+        contenido,
+        participantes,
+        metadata: { tipo }
+    };
+    
+    if (fecha) {
+        payload.fecha = new Date(fecha).toISOString();
+    }
+    
+    try {
+        const res = await axios.post('/conversacion/', payload);
+        const data = res.data;
+        
+        if (data.status === 'conversacion_agregada') {
+            alert(`✅ Conversación fragmentada exitosamente!\n\n📊 Fragmentos creados: ${data.total_fragmentos}\n🆔 ID Conversación: ${data.conversacion_id.substring(0, 8)}...`);
+            
+            limpiarFormularioConversacion();
+            mostrarConversaciones();
+            
+            // También actualizar contextos ya que los fragmentos aparecen allí
+            mostrarContextos();
+        } else {
+            throw new Error(data.mensaje || 'Error desconocido');
+        }
+        
+    } catch (error) {
+        alert(`❌ Error: ${error.response?.data?.mensaje || error.message}`);
+    }
+}
+
+// Mostrar conversaciones
+async function mostrarConversaciones() {
+    try {
+        const res = await axios.get('/conversaciones/');
+        const conversaciones = res.data;
+
+        const numConversaciones = Object.keys(conversaciones).length;
+        
+        if (numConversaciones === 0) {
+            document.getElementById("todasConversaciones").innerText = "No hay conversaciones almacenadas aún.";
+            return;
+        }
+        
+        let salida = `📊 Total: ${numConversaciones} conversaciones\n\n`;
+        
+        for (const [id, datos] of Object.entries(conversaciones)) {
+            const fecha = datos.fecha ? new Date(datos.fecha) : new Date();
+            // Verificar si participantes existe antes de usar .join()
+            const participantesStr = datos.participantes && datos.participantes.length > 0 
+                ? datos.participantes.join(', ') 
+                : 'N/A';
+            
+            const tipoIcon = {
+                'reunion': '👥',
+                'entrevista': '🎤', 
+                'brainstorm': '💡',
+                'planning': '📋',
+                'general': '📄'
+            }[datos.metadata?.tipo] || '📄';
+            
+            salida += `${tipoIcon} ${datos.titulo || 'Sin título'}\n`;
+            salida += `📊 ${datos.total_fragmentos || 0} fragmentos\n`;
+            salida += `👥 ${participantesStr}\n`;
+            salida += `⏰ ${fecha.toLocaleString()}\n`;
+            salida += `🔑 ID: ${id.substring(0, 8)}...\n\n`;
+        }
+
+        document.getElementById("todasConversaciones").innerText = salida;
+        
+    } catch (error) {
+        console.error("Error al mostrar conversaciones:", error);
+        document.getElementById("todasConversaciones").innerText = 
+            `Error al cargar conversaciones: ${error.message}`;
+    }
+}
+
+// Limpiar formulario de conversación
+function limpiarFormularioConversacion() {
+    document.getElementById('tituloConversacion').value = '';
+    document.getElementById('contenidoConversacion').value = '';
+    document.getElementById('participantesConversacion').value = '';
+    document.getElementById('fechaConversacion').value = '';
+    document.getElementById('tipoConversacion').value = 'general';
+    document.getElementById('formAgregarConversacion').classList.add('hidden');
+}

@@ -1,454 +1,97 @@
 {
-  "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6": {
-    "titulo": "Claude 3.5 Sonnet v2",
-    "texto": "es un modelo de última generación para tareas de ingeniería de software del mundo real y capacidades de agentes. Claude 3.5 Sonnet v2 ofrece estos avances al mismo precio y velocidad que Claude 3.5 Sonnet.",
+  "6dafe3f6-2367-4ef9-af0d-3dfe0cd30545": {
+    "titulo": "ingeniería de contexto - Fragmento 1",
+    "texto": "Ana (estudiante): Oye, ¿me explicas qué es eso de ingeniería de contexto? Lo escuché en clase pero no lo entendí bien.\nLuis (compañero): Claro, básicamente es una forma de diseñar sistemas que entienden y usan el contexto en el que se encuentran para dar mejores respuestas o tomar mejores decisiones.",
     "palabras_clave": [
-      "sonnet",
-      "generación",
-      "software",
-      "ofrecer",
-      "avance",
-      "tarea",
-      "claude",
-      "precio",
-      "velocidad",
-      "real",
-      "mundo",
-      "capacidad",
-      "agente",
-      "ingeniería",
-      "modelo"
-    ],
-    "created_at": "2025-08-12T15:24:05.660178",
-    "relaciones": [
-      "ab837fd9-05af-46ec-949a-e334f42dbf88",
-      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f"
-    ]
-  },
-  "a4365ed1-4f0b-4b04-a45b-512eee998233": {
-    "titulo": "Gemini IA",
-    "texto": "La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.La app de Gemini para dispositivos móviles te da acceso directo a la mejor familia de modelos de IA de Google en tu dispositivo. Podrás hacer lo siguiente: Obtener ayuda para escribir, intercambiar ideas, aprender y mucho más. Resumir contenido y encontrar información rápidamente en Gmail o Google Drive.",
-    "palabras_clave": [
-      "gmail",
-      "gemini",
+      "básicamente",
+      "compañero",
+      "contexto",
+      "clase",
+      "entender",
       "encontrar",
-      "idea",
-      "resumir",
-      "dispositivo",
-      "aprender",
-      "móviles",
-      "escribir",
-      "contenido",
-      "google",
-      "obtener",
-      "rápidamente",
-      "intercambiar",
-      "drive",
-      "ayuda",
-      "familia",
-      "directo",
-      "acceso",
-      "modelo",
-      "información",
-      "poder"
-    ],
-    "created_at": "2025-08-12T15:24:52.804826",
-    "relaciones": []
-  },
-  "ab837fd9-05af-46ec-949a-e334f42dbf88": {
-    "titulo": "Claude AI",
-    "texto": "Un chatbot diseñado para la seguridad\\nEl código ético de Claude, su velocidad y su capacidad para procesar grandes volúmenes de información le permiten aprovechar la IA de forma eficiente para análisis complejos y la generación de contenido.",
-    "palabras_clave": [
-      "generación",
-      "información",
-      "procesar",
-      "ético",
-      "análisis",
-      "complejo",
-      "diseñado",
-      "permitir",
-      "forma",
-      "claude",
-      "volumen",
-      "eficiente",
-      "contenido",
-      "velocidad",
-      "chatbot",
-      "capacidad",
-      "aprovechar",
-      "código"
-    ],
-    "created_at": "2025-08-12T15:25:09.607828",
-    "relaciones": [
-      "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6"
-    ]
-  },
-  "71a9aa3b-0419-4e87-b83d-a36a2dceb3b7": {
-    "titulo": "La informática y el procesamiento de datos",
-    "texto": "La informática estudia el procesamiento de datos.",
-    "palabras_clave": [
-      "procesamiento",
-      "informática",
-      "estudiar",
-      "dato"
-    ],
-    "created_at": "2025-08-12T15:42:14.261710",
-    "relaciones": [
-      "334964a8-b5ee-4394-8be7-3fb691c8d833"
-    ]
-  },
-  "334964a8-b5ee-4394-8be7-3fb691c8d833": {
-    "titulo": "La inteligencia artificial",
-    "texto": "La inteligencia artificial es una rama de la informática.",
-    "palabras_clave": [
-      "informática",
-      "inteligencia",
-      "rama",
-      "artificial"
-    ],
-    "created_at": "2025-08-12T15:42:29.950847",
-    "relaciones": [
-      "71a9aa3b-0419-4e87-b83d-a36a2dceb3b7"
-    ]
-  },
-  "5c0e8c71-1d4b-4756-bfd7-585008025da7": {
-    "titulo": "Inferencia mediante grafos y modelos de lenguaje",
-    "texto": "Utiliza grafos y modelos de lenguaje para inferir significado.",
-    "palabras_clave": [
-      "lenguaje",
-      "inferir",
-      "grafo",
-      "significado",
-      "utiliza",
-      "modelo"
-    ],
-    "created_at": "2025-08-12T15:42:45.262962",
-    "relaciones": [
-      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3",
-      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f",
-      "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
-    ]
-  },
-  "bf0a46b2-270e-4af5-8564-4a00313930a3": {
-    "titulo": "GPT-5",
-    "texto": " GPT-5 es más inteligente en todos los ámbitos y ofrece respuestas más útiles en matemáticas, ciencias, finanzas, derecho y mucho más.",
-    "palabras_clave": [
-      "ámbito",
+      "luis",
+      "mejor",
+      "tomar",
+      "decisión",
+      "sistema",
+      "escucher",
+      "estudiante",
+      "ingeniería",
+      "explicar",
+      "diseñar",
       "respuesta",
-      "ofrecer",
-      "inteligente",
-      "útil",
-      "matemática",
-      "finanza",
-      "ciencia",
-      "derecho"
+      "forma"
     ],
-    "created_at": "2025-08-12T15:46:09.872077",
-    "relaciones": []
+    "created_at": "2025-09-04T12:06:57.811386",
+    "es_temporal": true,
+    "timestamp": "2025-09-04T12:06:57.522161",
+    "tipo_contexto": "pregunta",
+    "es_fragmento": true,
+    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
+    "posicion_fragmento": 1
   },
-  "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3": {
-    "titulo": "GPT-4",
-    "texto": "es un modelo de lenguaje grande desarrollado por OpenAI, y es la cuarta generación de la serie de modelos GPT",
+  "a9ee1abb-70ae-45ff-99be-f324f58ea379": {
+    "titulo": "ingeniería de contexto - Fragmento 2",
+    "texto": "Luis: Al conjunto de condiciones o información que rodean a un usuario o a un sistema: puede ser el lugar, el momento, el historial de interacciones, hasta el estado emocional.",
     "palabras_clave": [
-      "serie",
-      "generación",
-      "openai",
-      "lenguaje",
-      "cuarto",
-      "desarrollado",
-      "modelo"
-    ],
-    "created_at": "2025-08-12T15:48:16.382038",
-    "relaciones": [
-      "5c0e8c71-1d4b-4756-bfd7-585008025da7",
-      "c0660a5a-aa66-415d-bd2b-d708d1a6e15f",
-      "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
-    ]
-  },
-  "c0660a5a-aa66-415d-bd2b-d708d1a6e15f": {
-    "titulo": "¿Qué es GPT-5?",
-    "texto": "es el modelo de gran lenguaje de última generación de OpenAI, lanzado oficialmente el 7 de agosto de 2025. Se basa en la arquitectura GPT e integra los avances de los modelos de razonamiento como o1 y o3. Antes del lanzamiento de GPT, OpenAI introdujo GPT.",
-    "palabras_clave": [
-      "generación",
-      "openai",
-      "lenguaje",
-      "integrar",
-      "lanzamiento",
-      "oficialmente",
-      "agosto",
-      "basar",
-      "avance",
-      "introducir",
-      "lanzado",
-      "arquitectura",
-      "razonamiento",
-      "modelo"
-    ],
-    "created_at": "2025-08-12T15:49:13.962608",
-    "relaciones": [
-      "dc05d1bc-9ebe-4fe1-9b7e-ca4b8d95aaa6",
-      "5c0e8c71-1d4b-4756-bfd7-585008025da7",
-      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3"
-    ]
-  },
-  "198fc67d-0234-48f4-9ae9-5dd7aa68c015": {
-    "titulo": "La ingeniería de contexto",
-    "texto": "es una disciplina que se enfoca en proporcionar a los modelos de lenguaje la información y el entorno adecuado para que puedan realizar tareas de manera efectiva y precisa",
-    "palabras_clave": [
-      "disciplina",
-      "proporcionar",
-      "modelo",
-      "adecuado",
-      "preciso",
-      "entorno",
-      "poder",
-      "efectivo",
-      "información",
-      "enfocar",
-      "lenguaje",
-      "tarea"
-    ],
-    "created_at": "2025-08-12T16:15:35.315297",
-    "relaciones": [
-      "5c0e8c71-1d4b-4756-bfd7-585008025da7",
-      "c187bedd-ab6e-49ef-a0bd-22e3785a7ba3",
-      "d3dc9806-946d-4046-aa00-d0c31b4cb676"
-    ]
-  },
-  "d3dc9806-946d-4046-aa00-d0c31b4cb676": {
-    "titulo": "ventana de contexto",
-    "texto": "se refiere a la cantidad de texto que el modelo puede considerar o \"recordar\" en un momento dado al procesar información.",
-    "palabras_clave": [
-      "procesar",
-      "cantidad",
-      "información",
-      "considerar",
+      "interacción",
+      "usuario",
+      "lugar",
+      "luis",
+      "rodear",
       "momento",
-      "modelo",
-      "recordar",
-      "texto",
-      "referir"
-    ],
-    "created_at": "2025-08-16T18:17:11.945082",
-    "relaciones": [
-      "198fc67d-0234-48f4-9ae9-5dd7aa68c015"
-    ]
-  },
-  "d75cf4fc-1c17-44b6-8c66-4dcf74464228": {
-    "titulo": "Reunión proyecto X",
-    "texto": "El proyecto x se trata de como se puede realizar un prototipo de ingeniería de contexto ",
-    "palabras_clave": [
-      "prototipo",
-      "contexto",
-      "proyecto",
-      "ingeniería"
-    ],
-    "created_at": "2025-08-20T17:02:18.849060",
-    "es_temporal": true,
-    "relaciones": [
-      "57e7d506-cea7-4052-8985-c87019133c3d",
-      "9d66f592-5459-4534-a369-29ad35c8177d",
-      "dd404152-5dff-4c56-b277-ede0202439d0"
-    ],
-    "timestamp": "2025-08-20T17:02:18.849060"
-  },
-  "57e7d506-cea7-4052-8985-c87019133c3d": {
-    "titulo": "Deadline proyecto Y",
-    "texto": "Deadline proyecto Y, esto se relaciona con el proyecto x que toma tema de ingeniería de contexto ",
-    "palabras_clave": [
-      "relacionar",
-      "contexto",
-      "tema",
-      "proyecto",
-      "ingeniería",
-      "deadline",
-      "tomar"
-    ],
-    "created_at": "2025-08-20T17:03:25.107048",
-    "es_temporal": true,
-    "relaciones": [
-      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
-      "9d66f592-5459-4534-a369-29ad35c8177d"
-    ],
-    "timestamp": "2025-08-20T17:03:25.107048"
-  },
-  "9d66f592-5459-4534-a369-29ad35c8177d": {
-    "titulo": "Reunión Tesis ",
-    "texto": "Mañana tengo reunión con mi director de Tesis, sobre ingeniería de contexto y contextos temporales ",
-    "palabras_clave": [
-      "ingeniería",
-      "mañana",
-      "tesis",
-      "reunión",
-      "contexto",
-      "director",
-      "temporal"
-    ],
-    "created_at": "2025-08-21T11:21:20.673207",
-    "es_temporal": false,
-    "relaciones": [
-      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
-      "57e7d506-cea7-4052-8985-c87019133c3d",
-      "dd404152-5dff-4c56-b277-ede0202439d0",
-      "d4411ee7-a545-4c8b-b822-daaf9b1a7875"
-    ]
-  },
-  "dd404152-5dff-4c56-b277-ede0202439d0": {
-    "titulo": "Planificación de Experimentos",
-    "texto": "Mañana debo validar el modelo de parsing de referencias temporales dentro del prototipo de tesis en Ingeniería en Informática.",
-    "palabras_clave": [
-      "deber",
-      "temporal",
-      "validar",
-      "modelo",
-      "parsing",
-      "referencia",
-      "tesis",
-      "ingeniería",
-      "informática",
-      "prototipo",
-      "mañana"
-    ],
-    "created_at": "2025-08-22T16:48:29.122805",
-    "es_temporal": false,
-    "relaciones": [
-      "d75cf4fc-1c17-44b6-8c66-4dcf74464228",
-      "9d66f592-5459-4534-a369-29ad35c8177d"
-    ]
-  },
-  "d4411ee7-a545-4c8b-b822-daaf9b1a7875": {
-    "titulo": "Reunión con cliente",
-    "texto": "Revisar propuesta mañana",
-    "palabras_clave": [
-      "mañana",
-      "propuestar",
-      "revisar"
-    ],
-    "created_at": "2025-08-22T17:17:47.224285",
-    "es_temporal": true,
-    "relaciones": [
-      "9d66f592-5459-4534-a369-29ad35c8177d"
-    ],
-    "deteccion_automatica": true,
-    "timestamp": "2025-08-23T17:17:47.224285",
-    "referencia_original": "mañana",
-    "tipo_referencia": "relativa"
-  },
-  "23322ddc-5994-4ecc-bb31-9f986144ff1a": {
-    "titulo": "Presentacion tesis",
-    "texto": "Tengo la presentación 01/01/2026 sobre ingeniería de contextos y contextos temporales",
-    "palabras_clave": [
-      "contexto",
-      "presentación",
-      "ingeniería",
-      "temporal"
-    ],
-    "created_at": "2025-08-24T17:24:09.032577",
-    "es_temporal": true,
-    "timestamp": "2026-01-01T00:00:00"
-  },
-  "17e42884-c3c0-4005-9997-3cdabaa85918": {
-    "titulo": "Reunión con cliente",
-    "texto": "Reunión con cliente mañana para el sistema de gestión de deportes",
-    "palabras_clave": [
-      "cliente",
-      "mañana",
-      "gestión",
-      "deporte",
-      "reunión",
-      "sistema"
-    ],
-    "created_at": "2025-08-25T07:59:37.524213",
-    "es_temporal": true,
-    "tipo_contexto": "reunion",
-    "timestamp": "2025-08-26T07:59:37.522078"
-  },
-  "a6d0444f-6b0b-4f7a-a1cd-ae753814fe3f": {
-    "titulo": "Reunión Equipo Desarrollo",
-    "texto": "Reunión con equipo mañana a las 15:00, para proyecto de gestión de deportes",
-    "palabras_clave": [
-      "reunión",
-      "equipo",
-      "proyecto",
-      "deporte",
-      "mañana",
-      "gestión"
-    ],
-    "created_at": "2025-08-25T08:12:19.429146",
-    "es_temporal": true,
-    "tipo_contexto": "reunion",
-    "timestamp": "2025-08-26T08:12:19.425912"
-  },
-  "1914e594-9e28-411b-95ab-7a12bcdfd817": {
-    "titulo": "Entrega del proyecto",
-    "texto": "Entrega del proyecto el viernes 29/08/2025, el proyecto se trata sobre un sistema de gestión de ventas y stock",
-    "palabras_clave": [
-      "gestión",
+      "condición",
       "sistema",
-      "stock",
-      "venta",
-      "viernes",
-      "proyecto",
-      "entrega"
+      "historial",
+      "conjunto",
+      "emocional",
+      "información"
     ],
-    "created_at": "2025-08-25T17:17:30.664175",
+    "created_at": "2025-09-04T12:06:57.834702",
     "es_temporal": true,
-    "tipo_contexto": "proyecto",
-    "timestamp": "2025-08-29T00:00:00"
+    "timestamp": "2025-09-04T12:06:57.522161",
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
+    "posicion_fragmento": 2
   },
-  "3f9b6b41-0276-4ec7-ac28-fbeae655928d": {
-    "titulo": "Presentar propuesta trabajo final",
-    "texto": "El dia martes 02/09/2025 debo presentar la propuesta de trabajo final sobre Este trabajo propone el diseño y desarrollo de un Agente de Gestión Probabilística de Contextos (AGPC), cuyo núcleo es un Grafo Contextual Probabilístico (GCP). El Agente de Gestión Probabilística de Contextos (AGPC) combina Procesamiento de Lenguaje Natural (PLN), embeddings semánticos, bases vectoriales y grafos probabilísticos para recuperar y organizar información de manera flexible.\nEl sistema se orienta a múltiples dominios y busca resolver limitaciones clave de los LLMs: la restricción de ventana de contexto y la ausencia de memoria dinámica.",
+  "29b3098c-8d5e-4d36-b3ad-3ea64de3b81e": {
+    "titulo": "ingeniería de contexto - Fragmento 3",
+    "texto": "Ana: Ah, o sea que en vez de responder siempre igual, el sistema se adapta a lo que está pasando alrededor.",
     "palabras_clave": [
-      "base",
-      "ausencia",
-      "proponer",
-      "procesamiento",
-      "deber",
-      "desarrollo",
-      "agente",
-      "embedding",
-      "presentar",
-      "recuperar",
+      "responder",
+      "pasar",
       "sistema",
-      "contextos",
-      "grafo",
-      "organizar",
-      "información",
-      "diseño",
-      "clave",
-      "dinámico",
-      "restricción",
-      "lenguaje",
-      "limitación",
-      "combinar",
-      "natural",
-      "ventana",
-      "vectorial",
-      "contexto",
-      "flexible",
-      "trabajo",
-      "resolver",
-      "dominio",
-      "buscar",
-      "contextual",
-      "propuesta",
-      "probabilística",
-      "núcleo",
-      "gestión",
-      "semántico",
-      "agpc",
-      "martes",
-      "orientar",
-      "memoria",
-      "cuyo",
-      "múltiple",
-      "llms",
-      "probabilístico"
+      "adaptar"
     ],
-    "created_at": "2025-08-28T20:22:00.928512",
+    "created_at": "2025-09-04T12:06:57.848537",
     "es_temporal": true,
-    "tipo_contexto": "proyecto",
-    "timestamp": "2025-09-02T00:00:00"
+    "timestamp": "2025-09-04T12:06:57.522161",
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
+    "posicion_fragmento": 3
+  },
+  "c06b0286-b9cf-494b-b576-3c606c0ea181": {
+    "titulo": "ingeniería de contexto - Fragmento 4",
+    "texto": "Luis: Exacto. Por eso se llama “ingeniería de contexto”: porque no solo se procesa la información principal, sino también todo lo que la rodea.",
+    "palabras_clave": [
+      "contexto",
+      "luis",
+      "rodear",
+      "llamar",
+      "principal",
+      "exacto",
+      "procesar",
+      "ingeniería",
+      "información"
+    ],
+    "created_at": "2025-09-04T12:06:57.879022",
+    "es_temporal": true,
+    "timestamp": "2025-09-04T12:06:57.522161",
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
+    "posicion_fragmento": 4
   }
 }

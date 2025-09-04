@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 import os
 
 from agent import grafo, responder
@@ -172,6 +172,43 @@ def exportar_para_visualizacion():
 def analizar_query(pregunta: str):
     """Analiza la intención temporal de una pregunta."""
     return analizar_intencion_temporal(pregunta)
+
+# === NUEVOS ENDPOINTS PARA CONVERSACIONES ===
+
+class EntradaConversacion(BaseModel):
+    titulo: str
+    contenido: str
+    fecha: Optional[str] = None
+    participantes: Optional[List[str]] = None
+    metadata: Optional[dict] = None
+
+@app.post("/conversacion/")
+def agregar_conversacion_endpoint(entrada: EntradaConversacion):
+    """Agrega una conversación completa y la fragmenta automáticamente."""
+    try:
+        resultado = grafo.agregar_conversacion(
+            titulo=entrada.titulo,
+            contenido=entrada.contenido,
+            fecha=entrada.fecha,
+            participantes=entrada.participantes,
+            metadata=entrada.metadata
+        )
+        return {
+            "status": "conversacion_agregada",
+            **resultado
+        }
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+
+@app.get("/conversaciones/")
+def obtener_conversaciones():
+    """Obtiene todas las conversaciones."""
+    return grafo.obtener_conversaciones()
+
+@app.get("/conversacion/{conversacion_id}/fragmentos")
+def obtener_fragmentos_conversacion(conversacion_id: str):
+    """Obtiene fragmentos de una conversación específica."""
+    return grafo.obtener_fragmentos_de_conversacion(conversacion_id)
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
