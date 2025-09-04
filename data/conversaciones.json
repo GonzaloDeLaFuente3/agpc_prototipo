@@ -64,5 +64,87 @@
       "c06b0286-b9cf-494b-b576-3c606c0ea181"
     ],
     "created_at": "2025-09-04T12:06:57.879022"
+  },
+  "af81e544-3a17-4779-bae8-e4a1b0355136": {
+    "titulo": "Diseño de Arquitectura para un Sistema Web",
+    "fecha": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "b099dabc-67e1-4c56-ae4f-2d39644f8145",
+      "ce66472c-2735-4149-9bd1-6986b8588a12",
+      "f2fcf17c-f797-4815-806d-71e94e11bce3",
+      "aa0d8f09-7c7e-4b6c-8687-c235471f8888"
+    ],
+    "created_at": "2025-09-04T16:07:54.387874"
+  },
+  "6050b125-64ed-4a95-a5b8-4bd1bf29db14": {
+    "titulo": "Discusión sobre Base de Datos",
+    "fecha": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "85469dfb-b8a8-4cdd-94a1-76c0a193900e",
+      "3ae6955d-e834-49bc-bd67-1a2c334624f7",
+      "3d4e0454-5195-42f4-b0e7-a67b07efd0a9",
+      "e7f94882-94f9-470b-ba70-1a7f3f705d70"
+    ],
+    "created_at": "2025-09-04T16:08:01.129102"
+  },
+  "958a8624-3d38-4f71-9620-86b7f57200a0": {
+    "titulo": "Optimización de Algoritmo de Búsqueda",
+    "fecha": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "55224caf-f975-42b8-aa44-748f2a94eeaf",
+      "475bd3cc-afb6-4d98-88ae-94bd5e442638",
+      "c41967f2-d7f8-43c0-b3dd-cd968b14e15a",
+      "a3e83a0f-6fc7-4598-a33a-d56f50d00e4c",
+      "ab9ddd95-10f0-41df-9e38-5ce4324bb468"
+    ],
+    "created_at": "2025-09-04T16:08:15.257803"
   }
 }

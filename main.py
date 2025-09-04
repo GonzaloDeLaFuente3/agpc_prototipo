@@ -1,4 +1,5 @@
 # main.py
+import json
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -209,6 +210,76 @@ def obtener_conversaciones():
 def obtener_fragmentos_conversacion(conversacion_id: str):
     """Obtiene fragmentos de una conversación específica."""
     return grafo.obtener_fragmentos_de_conversacion(conversacion_id)
+
+# === ENDPOINTS PARA CARGA MASIVA DE DATASETS ===
+from agent.dataset_loader import DatasetLoader
+
+class DatasetUpload(BaseModel):
+    dataset: dict
+    sobrescribir: bool = False
+
+@app.post("/dataset/procesar/")
+def procesar_dataset(entrada: DatasetUpload):
+    """Procesa un dataset JSON completo."""
+    try:
+        loader = DatasetLoader()
+        estadisticas = loader.procesar_dataset(entrada.dataset, entrada.sobrescribir)
+        
+        return {
+            "status": "dataset_procesado",
+            "estadisticas": estadisticas
+        }
+    except Exception as e:
+        return {
+            "status": "error", 
+            "mensaje": str(e)
+        }
+
+@app.get("/dataset/ejemplo/{dominio}")
+def generar_dataset_ejemplo(dominio: str):
+    """Genera un dataset de ejemplo para testing."""
+    loader = DatasetLoader()
+    dataset = loader.generar_dataset_ejemplo(dominio)
+    return dataset
+
+@app.post("/dataset/validar/")
+def validar_dataset(dataset: dict):
+    """Valida el formato de un dataset sin procesarlo."""
+    loader = DatasetLoader()
+    es_valido, errores = loader.validar_formato(dataset)
+    
+    return {
+        "valido": es_valido,
+        "errores": errores,
+        "total_conversaciones": len(dataset.get('conversaciones', [])),
+        "dominio": dataset.get('dominio', 'No especificado')
+    }
+
+from fastapi import UploadFile, File
+
+@app.post("/dataset/upload/")
+async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
+    """Sube y procesa un archivo JSON de dataset."""
+    if not file.filename.endswith('.json'):
+        return {"status": "error", "mensaje": "Solo se permiten archivos .json"}
+    
+    try:
+        contenido = await file.read()
+        dataset = json.loads(contenido.decode('utf-8'))
+        
+        loader = DatasetLoader()
+        estadisticas = loader.procesar_dataset(dataset, sobrescribir)
+        
+        return {
+            "status": "archivo_procesado",
+            "archivo": file.filename,
+            "estadisticas": estadisticas
+        }
+        
+    except json.JSONDecodeError:
+        return {"status": "error", "mensaje": "Archivo JSON inválido"}
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
