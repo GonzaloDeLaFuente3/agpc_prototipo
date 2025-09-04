@@ -1,71 +1,5 @@
 {
-  "e73e28fa-ae2e-4bb4-8186-230bf77c5acf": {
-    "conversacion_id": "e73e28fa-ae2e-4bb4-8186-230bf77c5acf",
-    "titulo": "Reunión Migración Cloud - Seguimiento Semanal",
-    "contenido_original": "\n    Pedro: Hola equipo, necesitamos revisar el progreso del proyecto de migración.\n    \n    Ana: Perfecto Pedro. Hemos completado la fase de análisis. Tenemos identificados todos los componentes que necesitan migrar.\n    \n    Por otro lado, encontramos un problema con la base de datos legacy. Algunas tablas tienen dependencias no documentadas.\n    \n    María: Sobre el tema de la base de datos, propongo hacer una migración gradual. Empezar con las tablas menos críticas.\n    \n    Pedro: Buena idea María. ¿Qué cronograma propones?\n    \n    María: Sugiero 3 semanas para las tablas secundarias y 2 semanas para las críticas. Total 5 semanas.\n    \n    Ana: Perfecto. También necesitamos coordinar con el equipo de seguridad para la auditoría previa.\n    \n    Cambiando de tema, ¿alguien contactó al proveedor cloud?\n    \n    Pedro: Yo me hago cargo. Los contactaré mañana y confirmaré las especificaciones técnicas.\n    ",
-    "timestamp": "2025-09-03T19:50:47.806287",
-    "metadatos": {
-      "tipo": "reunion_seguimiento",
-      "participantes": [
-        "Pedro",
-        "Ana",
-        "María"
-      ],
-      "proyecto": "Migración Cloud"
-    },
-    "fragmentos_generados": 2,
-    "metodos_fragmentacion": {
-      "cambios_interlocutor_detectados": 7,
-      "marcadores_tematicos_detectados": 6,
-      "parrafos_procesados": 9,
-      "fragmentos_semanticos": 2,
-      "fragmentos_finales": 2
-    }
-  },
-  "e9520c4b-253e-40ea-a731-4d9afd5ab1f5": {
-    "conversacion_id": "e9520c4b-253e-40ea-a731-4d9afd5ab1f5",
-    "titulo": "Seguimiento Migración Cloud - Avances",
-    "contenido_original": "\n    Ana: Equipo, quiero hacer seguimiento a los acuerdos de la reunión pasada sobre migración cloud.\n    \n    María: Perfecto Ana. He avanzado con el cronograma de migración de base de datos. Las tablas secundarias están identificadas y listas.\n    \n    Pedro: Excelente María. Por mi parte, ya contacté al proveedor cloud. Confirmaron disponibilidad de recursos para las fechas que necesitamos.\n    \n    Ana: Muy bien. ¿Y el tema de la auditoría de seguridad?\n    \n    Pedro: Hablé con el equipo de seguridad. Van a hacer la auditoría la próxima semana. Necesitan acceso de lectura a las bases actuales.\n    \n    María: Sin problema, les puedo dar acceso temporal. \n    \n    Ana: Perfecto. Entonces tenemos todo encaminado según lo planeado.\n    ",
-    "timestamp": "2025-09-06T19:50:49.577641",
-    "metadatos": {
-      "tipo": "reunion_seguimiento",
-      "participantes": [
-        "Ana",
-        "María",
-        "Pedro"
-      ],
-      "proyecto": "Migración Cloud",
-      "relacionado_con": "e73e28fa-ae2e-4bb4-8186-230bf77c5acf"
-    },
-    "fragmentos_generados": 1,
-    "metodos_fragmentacion": {
-      "cambios_interlocutor_detectados": 7,
-      "marcadores_tematicos_detectados": 2,
-      "parrafos_procesados": 7,
-      "fragmentos_semanticos": 1,
-      "fragmentos_finales": 1
-    }
-  },
-  "dfd2fd62-7d10-47cc-a053-c833b5913094": {
-    "titulo": "ingeniería de contexto",
-    "fecha": "2025-09-04T12:06:57.879022",
-    "participantes": [
-      "Ana",
-      "Luis"
-    ],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "6dafe3f6-2367-4ef9-af0d-3dfe0cd30545",
-      "a9ee1abb-70ae-45ff-99be-f324f58ea379",
-      "29b3098c-8d5e-4d36-b3ad-3ea64de3b81e",
-      "c06b0286-b9cf-494b-b576-3c606c0ea181"
-    ],
-    "created_at": "2025-09-04T12:06:57.879022"
-  },
-  "af81e544-3a17-4779-bae8-e4a1b0355136": {
+  "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6": {
     "titulo": "Diseño de Arquitectura para un Sistema Web",
     "fecha": "2025-01-25T10:00:00",
     "participantes": [
@@ -85,14 +19,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "b099dabc-67e1-4c56-ae4f-2d39644f8145",
-      "ce66472c-2735-4149-9bd1-6986b8588a12",
-      "f2fcf17c-f797-4815-806d-71e94e11bce3",
-      "aa0d8f09-7c7e-4b6c-8687-c235471f8888"
+      "4aab3c6c-f941-41b6-bafb-53f07d97c510",
+      "317f54e6-1bad-48c9-a4fe-273c8044b2e6",
+      "d80f9327-0193-4792-9a48-c84fb54e76f4",
+      "4a0a9995-21bf-422f-88a9-06c2179fc727"
     ],
-    "created_at": "2025-09-04T16:07:54.387874"
+    "created_at": "2025-09-04T17:56:35.585027"
   },
-  "6050b125-64ed-4a95-a5b8-4bd1bf29db14": {
+  "4d7e39f3-488d-484c-a2f1-9628195721b4": {
     "titulo": "Discusión sobre Base de Datos",
     "fecha": "2025-02-10T15:30:00",
     "participantes": [
@@ -112,14 +46,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "85469dfb-b8a8-4cdd-94a1-76c0a193900e",
-      "3ae6955d-e834-49bc-bd67-1a2c334624f7",
-      "3d4e0454-5195-42f4-b0e7-a67b07efd0a9",
-      "e7f94882-94f9-470b-ba70-1a7f3f705d70"
+      "71e38037-8fc1-4d38-b651-6beba71d88ea",
+      "82661493-5bf2-4e4e-8d74-211f26348813",
+      "60ed9ddb-9a68-4352-9ea8-860dba273214",
+      "fce76978-7ec5-4d97-82a9-9ee314004247"
     ],
-    "created_at": "2025-09-04T16:08:01.129102"
+    "created_at": "2025-09-04T17:56:36.882099"
   },
-  "958a8624-3d38-4f71-9620-86b7f57200a0": {
+  "0fb1e9dc-e85f-4935-982e-3e2ea05517a9": {
     "titulo": "Optimización de Algoritmo de Búsqueda",
     "fecha": "2025-03-05T09:45:00",
     "participantes": [
@@ -139,12 +73,12 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "55224caf-f975-42b8-aa44-748f2a94eeaf",
-      "475bd3cc-afb6-4d98-88ae-94bd5e442638",
-      "c41967f2-d7f8-43c0-b3dd-cd968b14e15a",
-      "a3e83a0f-6fc7-4598-a33a-d56f50d00e4c",
-      "ab9ddd95-10f0-41df-9e38-5ce4324bb468"
+      "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8",
+      "9817e0a1-bdfe-4ea3-9a13-162d1a87b597",
+      "fcd93166-640c-4301-aa3a-a031583a88ad",
+      "13b7d75c-30e1-4410-bb97-58042914759d",
+      "5cefb13e-c0d6-4010-b87e-d976e981ecc4"
     ],
-    "created_at": "2025-09-04T16:08:15.257803"
+    "created_at": "2025-09-04T17:56:40.519072"
   }
 }

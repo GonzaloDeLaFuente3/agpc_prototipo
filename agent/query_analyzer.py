@@ -6,7 +6,6 @@ import re
 
 class IntentionTemporalDetector:
     """Detecta la intención temporal en consultas del usuario con contexto de momento."""
-    
     PATRONES_TEMPORALES = [
         r'\b(qué|que) .*(tengo|hay|pasa) (hoy|mañana|ayer)\b',
         r'\b(cuándo|cuando) .*(es|será|fue)\b',

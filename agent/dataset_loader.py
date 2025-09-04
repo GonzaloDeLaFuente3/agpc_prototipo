@@ -112,15 +112,15 @@ class DatasetLoader:
             self.estadisticas['tiempo_fin'] = datetime.now()
             return self.estadisticas
         
-        print(f"🚀 Iniciando carga masiva del dominio: {dataset['dominio']}")
-        print(f"📊 Conversaciones a procesar: {len(dataset['conversaciones'])}")
+        print(f"Iniciando carga masiva del dominio: {dataset['dominio']}")
+        print(f"Conversaciones a procesar: {len(dataset['conversaciones'])}")
         
         # Procesar cada conversación
         from agent.grafo import agregar_conversacion
         
         for i, conversacion_data in enumerate(dataset['conversaciones'], 1):
             try:
-                print(f"  📝 Procesando {i}/{len(dataset['conversaciones'])}: {conversacion_data['titulo'][:50]}...")
+                print(f"Procesando {i}/{len(dataset['conversaciones'])}: {conversacion_data['titulo'][:50]}...")
                 
                 # Preparar metadatos enriquecidos
                 metadata = conversacion_data.get('metadata', {}).copy()
@@ -159,18 +159,18 @@ class DatasetLoader:
         self.estadisticas['tiempo_fin'] = datetime.now()
         duracion = (self.estadisticas['tiempo_fin'] - self.estadisticas['tiempo_inicio']).total_seconds()
         
-        print(f"\n🎉 Carga masiva completada:")
-        print(f"  ✅ Conversaciones procesadas: {self.estadisticas['conversaciones_procesadas']}")
-        print(f"  🔗 Fragmentos generados: {self.estadisticas['fragmentos_generados']}")
-        print(f"  ❌ Errores: {len(self.estadisticas['errores'])}")
-        print(f"  ⏱️ Tiempo total: {duracion:.2f} segundos")
+        print(f"\nCarga masiva completada:")
+        print(f"Conversaciones procesadas: {self.estadisticas['conversaciones_procesadas']}")
+        print(f"Fragmentos generados: {self.estadisticas['fragmentos_generados']}")
+        print(f"Errores: {len(self.estadisticas['errores'])}")
+        print(f"Tiempo total: {duracion:.2f} segundos")
         
         if self.estadisticas['errores']:
-            print(f"  ⚠️ Errores encontrados:")
+            print(f"Errores encontrados:")
             for error in self.estadisticas['errores'][:3]:  # Mostrar primeros 3
-                print(f"    - {error}")
+                print(f"- {error}")
             if len(self.estadisticas['errores']) > 3:
-                print(f"    ... y {len(self.estadisticas['errores'])-3} errores más")
+                print(f"... y {len(self.estadisticas['errores'])-3} errores más")
         
         return self.estadisticas
     

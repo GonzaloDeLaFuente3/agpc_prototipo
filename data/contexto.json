@@ -1,274 +1,179 @@
 {
-  "6dafe3f6-2367-4ef9-af0d-3dfe0cd30545": {
-    "titulo": "ingeniería de contexto - Fragmento 1",
-    "texto": "Ana (estudiante): Oye, ¿me explicas qué es eso de ingeniería de contexto? Lo escuché en clase pero no lo entendí bien.\nLuis (compañero): Claro, básicamente es una forma de diseñar sistemas que entienden y usan el contexto en el que se encuentran para dar mejores respuestas o tomar mejores decisiones.",
-    "palabras_clave": [
-      "básicamente",
-      "compañero",
-      "contexto",
-      "clase",
-      "entender",
-      "encontrar",
-      "luis",
-      "mejor",
-      "tomar",
-      "decisión",
-      "sistema",
-      "escucher",
-      "estudiante",
-      "ingeniería",
-      "explicar",
-      "diseñar",
-      "respuesta",
-      "forma"
-    ],
-    "created_at": "2025-09-04T12:06:57.811386",
-    "es_temporal": true,
-    "timestamp": "2025-09-04T12:06:57.522161",
-    "tipo_contexto": "pregunta",
-    "es_fragmento": true,
-    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
-    "posicion_fragmento": 1
-  },
-  "a9ee1abb-70ae-45ff-99be-f324f58ea379": {
-    "titulo": "ingeniería de contexto - Fragmento 2",
-    "texto": "Luis: Al conjunto de condiciones o información que rodean a un usuario o a un sistema: puede ser el lugar, el momento, el historial de interacciones, hasta el estado emocional.",
-    "palabras_clave": [
-      "interacción",
-      "usuario",
-      "lugar",
-      "luis",
-      "rodear",
-      "momento",
-      "condición",
-      "sistema",
-      "historial",
-      "conjunto",
-      "emocional",
-      "información"
-    ],
-    "created_at": "2025-09-04T12:06:57.834702",
-    "es_temporal": true,
-    "timestamp": "2025-09-04T12:06:57.522161",
-    "tipo_contexto": "general",
-    "es_fragmento": true,
-    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
-    "posicion_fragmento": 2
-  },
-  "29b3098c-8d5e-4d36-b3ad-3ea64de3b81e": {
-    "titulo": "ingeniería de contexto - Fragmento 3",
-    "texto": "Ana: Ah, o sea que en vez de responder siempre igual, el sistema se adapta a lo que está pasando alrededor.",
-    "palabras_clave": [
-      "responder",
-      "pasar",
-      "sistema",
-      "adaptar"
-    ],
-    "created_at": "2025-09-04T12:06:57.848537",
-    "es_temporal": true,
-    "timestamp": "2025-09-04T12:06:57.522161",
-    "tipo_contexto": "general",
-    "es_fragmento": true,
-    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
-    "posicion_fragmento": 3
-  },
-  "c06b0286-b9cf-494b-b576-3c606c0ea181": {
-    "titulo": "ingeniería de contexto - Fragmento 4",
-    "texto": "Luis: Exacto. Por eso se llama “ingeniería de contexto”: porque no solo se procesa la información principal, sino también todo lo que la rodea.",
-    "palabras_clave": [
-      "contexto",
-      "luis",
-      "rodear",
-      "llamar",
-      "principal",
-      "exacto",
-      "procesar",
-      "ingeniería",
-      "información"
-    ],
-    "created_at": "2025-09-04T12:06:57.879022",
-    "es_temporal": true,
-    "timestamp": "2025-09-04T12:06:57.522161",
-    "tipo_contexto": "general",
-    "es_fragmento": true,
-    "conversacion_id": "dfd2fd62-7d10-47cc-a053-c833b5913094",
-    "posicion_fragmento": 4
-  },
-  "b099dabc-67e1-4c56-ae4f-2d39644f8145": {
+  "4aab3c6c-f941-41b6-bafb-53f07d97c510": {
     "titulo": "Diseño de Arquitectura para un Sistema Web - Fragmento 1",
     "texto": "Juan: Hola María, ¿has revisado la propuesta de arquitectura para el sistema web?",
     "palabras_clave": [
-      "revisar",
       "sistema",
+      "revisar",
+      "maría",
+      "hola",
       "propuesta",
       "juan",
-      "maría",
-      "arquitectura",
-      "hola"
+      "arquitectura"
     ],
-    "created_at": "2025-09-04T16:07:54.253318",
+    "created_at": "2025-09-04T17:56:35.550191",
     "es_temporal": true,
     "timestamp": "2025-01-25T10:00:00",
     "tipo_contexto": "pregunta",
     "es_fragmento": true,
-    "conversacion_id": "af81e544-3a17-4779-bae8-e4a1b0355136",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
     "posicion_fragmento": 1
   },
-  "ce66472c-2735-4149-9bd1-6986b8588a12": {
+  "317f54e6-1bad-48c9-a4fe-273c8044b2e6": {
     "titulo": "Diseño de Arquitectura para un Sistema Web - Fragmento 2",
     "texto": "María: Estoy de acuerdo, pero debemos definir bien cómo comunicaremos los servicios. ¿REST o gRPC?",
     "palabras_clave": [
-      "rest",
-      "comunicarer",
+      "servicio",
       "definir",
-      "deber",
       "grpc",
       "maría",
-      "servicio"
+      "comunicarer",
+      "deber",
+      "rest"
     ],
-    "created_at": "2025-09-04T16:07:54.312443",
+    "created_at": "2025-09-04T17:56:35.562996",
     "es_temporal": true,
     "timestamp": "2025-01-25T10:00:00",
     "tipo_contexto": "pregunta",
     "es_fragmento": true,
-    "conversacion_id": "af81e544-3a17-4779-bae8-e4a1b0355136",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
     "posicion_fragmento": 2
   },
-  "f2fcf17c-f797-4815-806d-71e94e11bce3": {
+  "d80f9327-0193-4792-9a48-c84fb54e76f4": {
     "titulo": "Diseño de Arquitectura para un Sistema Web - Fragmento 3",
     "texto": "Juan: Yo preferiría gRPC por eficiencia, pero hay que evaluar compatibilidad con el front-end.",
     "palabras_clave": [
+      "grpc",
       "preferir",
       "eficiencia",
-      "grpc",
-      "juan",
       "evaluar",
+      "juan",
       "compatibilidad"
     ],
-    "created_at": "2025-09-04T16:07:54.348367",
+    "created_at": "2025-09-04T17:56:35.573544",
     "es_temporal": true,
     "timestamp": "2025-01-25T10:00:00",
     "tipo_contexto": "reunion",
     "es_fragmento": true,
-    "conversacion_id": "af81e544-3a17-4779-bae8-e4a1b0355136",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
     "posicion_fragmento": 3
   },
-  "aa0d8f09-7c7e-4b6c-8687-c235471f8888": {
+  "4a0a9995-21bf-422f-88a9-06c2179fc727": {
     "titulo": "Diseño de Arquitectura para un Sistema Web - Fragmento 4",
     "texto": "María: Perfecto, armemos un documento con ventajas y desventajas y lo presentamos mañana.",
     "palabras_clave": [
-      "mañana",
       "perfecto",
-      "desventaja",
       "maría",
       "armemos",
+      "mañana",
       "documento",
-      "presentar",
-      "ventaja"
+      "desventaja",
+      "ventaja",
+      "presentar"
     ],
-    "created_at": "2025-09-04T16:07:54.387874",
+    "created_at": "2025-09-04T17:56:35.585027",
     "es_temporal": true,
     "timestamp": "2025-01-25T10:00:00",
     "tipo_contexto": "reunion",
     "es_fragmento": true,
-    "conversacion_id": "af81e544-3a17-4779-bae8-e4a1b0355136",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
     "posicion_fragmento": 4
   },
-  "85469dfb-b8a8-4cdd-94a1-76c0a193900e": {
+  "71e38037-8fc1-4d38-b651-6beba71d88ea": {
     "titulo": "Discusión sobre Base de Datos - Fragmento 1",
     "texto": "Pedro: Estoy evaluando si usamos PostgreSQL o MongoDB para el proyecto.",
     "palabras_clave": [
-      "pedro",
-      "mongodb",
       "postgresql",
+      "proyecto",
+      "mongodb",
       "evaluar",
-      "proyecto"
+      "pedro"
     ],
-    "created_at": "2025-09-04T16:08:01.042522",
+    "created_at": "2025-09-04T17:56:36.856939",
     "es_temporal": true,
     "timestamp": "2025-02-10T15:30:00",
     "tipo_contexto": "planificación",
     "es_fragmento": true,
-    "conversacion_id": "6050b125-64ed-4a95-a5b8-4bd1bf29db14",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
     "posicion_fragmento": 1
   },
-  "3ae6955d-e834-49bc-bd67-1a2c334624f7": {
+  "82661493-5bf2-4e4e-8d74-211f26348813": {
     "titulo": "Discusión sobre Base de Datos - Fragmento 2",
     "texto": "Laura: Depende del tipo de datos. ¿Son más relacionales o documentos?",
     "palabras_clave": [
-      "laura",
-      "tipo",
       "depender",
-      "relacional",
+      "dato",
+      "tipo",
+      "laura",
       "documento",
-      "dato"
+      "relacional"
     ],
-    "created_at": "2025-09-04T16:08:01.079349",
+    "created_at": "2025-09-04T17:56:36.870582",
     "es_temporal": true,
     "timestamp": "2025-02-10T15:30:00",
     "tipo_contexto": "pregunta",
     "es_fragmento": true,
-    "conversacion_id": "6050b125-64ed-4a95-a5b8-4bd1bf29db14",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
     "posicion_fragmento": 2
   },
-  "3d4e0454-5195-42f4-b0e7-a67b07efd0a9": {
+  "60ed9ddb-9a68-4352-9ea8-860dba273214": {
     "titulo": "Discusión sobre Base de Datos - Fragmento 3",
     "texto": "Laura: Entonces PostgreSQL sería la mejor opción. Además, tiene buen soporte para integridad referencial.",
     "palabras_clave": [
-      "laura",
-      "referencial",
-      "opción",
-      "postgresql",
       "integridad",
-      "soporte"
+      "soporte",
+      "postgresql",
+      "laura",
+      "opción",
+      "referencial"
     ],
-    "created_at": "2025-09-04T16:08:01.103904",
+    "created_at": "2025-09-04T17:56:36.878455",
     "es_temporal": true,
     "timestamp": "2025-02-10T15:30:00",
     "tipo_contexto": "planificación",
     "es_fragmento": true,
-    "conversacion_id": "6050b125-64ed-4a95-a5b8-4bd1bf29db14",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
     "posicion_fragmento": 3
   },
-  "e7f94882-94f9-470b-ba70-1a7f3f705d70": {
+  "fce76978-7ec5-4d97-82a9-9ee314004247": {
     "titulo": "Discusión sobre Base de Datos - Fragmento 4",
     "texto": "Laura: Podemos usar particionamiento y réplicas para eso. Hagamos pruebas de carga.",
     "palabras_clave": [
-      "laura",
-      "prueba",
-      "particionamiento",
       "hacer",
+      "carga",
+      "prueba",
+      "laura",
       "réplica",
-      "carga"
+      "particionamiento"
     ],
-    "created_at": "2025-09-04T16:08:01.129102",
+    "created_at": "2025-09-04T17:56:36.882099",
     "es_temporal": true,
     "timestamp": "2025-02-10T15:30:00",
     "tipo_contexto": "planificación",
     "es_fragmento": true,
-    "conversacion_id": "6050b125-64ed-4a95-a5b8-4bd1bf29db14",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
     "posicion_fragmento": 4
   },
-  "55224caf-f975-42b8-aa44-748f2a94eeaf": {
+  "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8": {
     "titulo": "Optimización de Algoritmo de Búsqueda - Fragmento 1",
     "texto": "Andrés: El algoritmo actual de búsqueda tarda demasiado con datasets grandes.",
     "palabras_clave": [
       "dataset",
-      "algoritmo",
       "actual",
+      "búsqueda",
       "andrés",
       "tardar",
-      "búsqueda"
+      "algoritmo"
     ],
-    "created_at": "2025-09-04T16:08:15.175244",
+    "created_at": "2025-09-04T17:56:40.471217",
     "es_temporal": true,
     "timestamp": "2025-03-05T09:45:00",
     "tipo_contexto": "brainstorming",
     "es_fragmento": true,
-    "conversacion_id": "958a8624-3d38-4f71-9620-86b7f57200a0",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 1
   },
-  "475bd3cc-afb6-4d98-88ae-94bd5e442638": {
+  "9817e0a1-bdfe-4ea3-9a13-162d1a87b597": {
     "titulo": "Optimización de Algoritmo de Búsqueda - Fragmento 2",
     "texto": "Andrés: Es O(n²), porque comparamos cada elemento con todos los demás.",
     "palabras_clave": [
@@ -276,73 +181,73 @@
       "andrés",
       "elemento"
     ],
-    "created_at": "2025-09-04T16:08:15.199114",
+    "created_at": "2025-09-04T17:56:40.484289",
     "es_temporal": true,
     "timestamp": "2025-03-05T09:45:00",
     "tipo_contexto": "brainstorming",
     "es_fragmento": true,
-    "conversacion_id": "958a8624-3d38-4f71-9620-86b7f57200a0",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 2
   },
-  "c41967f2-d7f8-43c0-b3dd-cd968b14e15a": {
+  "fcd93166-640c-4301-aa3a-a031583a88ad": {
     "titulo": "Optimización de Algoritmo de Búsqueda - Fragmento 3",
     "texto": "Carla: Uf, necesitamos reducir eso. ¿Probaste usar una estructura como un árbol balanceado o un hash map?",
     "palabras_clave": [
+      "necesitar",
+      "reducir",
+      "estructura",
+      "carla",
+      "balanceado",
       "probaste",
       "hash",
-      "estructura",
-      "árbol",
-      "reducir",
-      "necesitar",
-      "balanceado",
-      "carla"
+      "árbol"
     ],
-    "created_at": "2025-09-04T16:08:15.219096",
+    "created_at": "2025-09-04T17:56:40.495117",
     "es_temporal": true,
     "timestamp": "2025-03-05T09:45:00",
     "tipo_contexto": "pregunta",
     "es_fragmento": true,
-    "conversacion_id": "958a8624-3d38-4f71-9620-86b7f57200a0",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 3
   },
-  "a3e83a0f-6fc7-4598-a33a-d56f50d00e4c": {
+  "13b7d75c-30e1-4410-bb97-58042914759d": {
     "titulo": "Optimización de Algoritmo de Búsqueda - Fragmento 4",
     "texto": "Andrés: Estaba pensando en un índice invertido, similar al que usan los motores de búsqueda.",
     "palabras_clave": [
-      "motor",
+      "similar",
       "pensar",
       "invertido",
       "búsqueda",
-      "índice",
       "andrés",
-      "similar"
+      "motor",
+      "índice"
     ],
-    "created_at": "2025-09-04T16:08:15.241481",
+    "created_at": "2025-09-04T17:56:40.507489",
     "es_temporal": true,
     "timestamp": "2025-03-05T09:45:00",
     "tipo_contexto": "brainstorming",
     "es_fragmento": true,
-    "conversacion_id": "958a8624-3d38-4f71-9620-86b7f57200a0",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 4
   },
-  "ab9ddd95-10f0-41df-9e38-5ce4324bb468": {
+  "5cefb13e-c0d6-4010-b87e-d976e981ecc4": {
     "titulo": "Optimización de Algoritmo de Búsqueda - Fragmento 5",
     "texto": "Carla: Me gusta la idea. Hagamos un prototipo y medimos la mejora.",
     "palabras_clave": [
-      "prototipo",
-      "medimos",
-      "idea",
       "hacer",
       "mejora",
-      "gustar",
-      "carla"
+      "idea",
+      "carla",
+      "medimos",
+      "prototipo",
+      "gustar"
     ],
-    "created_at": "2025-09-04T16:08:15.257803",
+    "created_at": "2025-09-04T17:56:40.519072",
     "es_temporal": true,
     "timestamp": "2025-03-05T09:45:00",
     "tipo_contexto": "brainstorming",
     "es_fragmento": true,
-    "conversacion_id": "958a8624-3d38-4f71-9620-86b7f57200a0",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 5
   }
 }

@@ -8,13 +8,11 @@ import threading
 import math
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set
-
 from agent.extractor import extraer_palabras_clave
 from agent.semantica import indexar_documento, coleccion
 from agent.temporal_parser import extraer_referencias_del_texto, parsear_referencia_temporal
 from agent.query_analyzer import analizar_intencion_temporal
-
-# === NUEVAS FUNCIONES PARA CONVERSACIONES Y FRAGMENTOS ===
+from agent.visualizador_doble import VisualizadorDobleNivel
 
 # Nuevas estructuras de datos
 conversaciones_metadata = {}
@@ -24,7 +22,6 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
                         participantes: List[str] = None, metadata: Dict = None) -> Dict:
     """
     Agrega una conversación completa y la fragmenta automáticamente.
-    
     Returns:
         {
             'conversacion_id': str,
@@ -100,8 +97,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     
     # También guardar nuevas estructuras
     _guardar_conversaciones()
-    
-    print(f"✅ Conversación '{titulo}' agregada: {len(fragmentos)} fragmentos creados")
+    print(f"Conversación '{titulo}' agregada: {len(fragmentos)} fragmentos creados")
     
     return {
         'conversacion_id': conversacion_id,
@@ -125,8 +121,6 @@ def _guardar_conversaciones():
 def cargar_conversaciones_desde_disco():
     """Carga metadatos de conversaciones desde disco."""
     global conversaciones_metadata, fragmentos_metadata
-    import os
-    import json
     
     if os.path.exists("data/conversaciones.json"):
         with open("data/conversaciones.json", 'r', encoding='utf-8') as f:
@@ -311,7 +305,6 @@ def _recalcular_relaciones():
     """Recalcula todas las relaciones del grafo con similitud estructural corregida."""
     grafo_contextos.clear_edges()
     nodos = list(grafo_contextos.nodes())
-    
     print(f"Recalculando relaciones para {len(nodos)} nodos...")
     
     for i, nodo_a in enumerate(nodos):
@@ -344,7 +337,6 @@ def _recalcular_relaciones():
                 
                 grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
                 grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
-    
     print(f"Total aristas creadas: {grafo_contextos.number_of_edges()}")
 
 def _guardar_grafo():
@@ -374,12 +366,11 @@ def cargar_desde_disco():
     else:
         metadatos_contextos = {}
     
-    # NUEVO: Cargar también conversaciones y fragmentos
+    # Cargar también conversaciones y fragmentos
     cargar_conversaciones_desde_disco()
 
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
     """Agrega un nuevo contexto con prevención de duplicados."""
-    
     # PREVENCIÓN DE DUPLICADOS - Verificación antes de agregar
     titulo_norm = titulo.strip().lower()
     texto_norm = " ".join(texto.strip().lower().split())
@@ -441,8 +432,7 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     # Recalcular y guardar
     _recalcular_relaciones()
     _guardar_grafo()
-    
-    print(f"✅ Nuevo contexto agregado: {titulo} (ID: {id_contexto})")
+    print(f"Nuevo contexto agregado: {titulo} (ID: {id_contexto})")
     return id_contexto
 
 def obtener_todos() -> Dict:
@@ -734,11 +724,9 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
     except (ValueError, TypeError):
         return False
     
-# === FUNCIONES DE VISUALIZACIÓN DOBLE NIVEL ===
+# FUNCIONES DE VISUALIZACIÓN DOBLE NIVEL
 def exportar_grafo_macro_conversaciones() -> Dict:
     """Exporta vista macro: conversaciones como nodos."""
-    from agent.visualizador_doble import VisualizadorDobleNivel
-    
     visualizador = VisualizadorDobleNivel(
         grafo_contextos, 
         metadatos_contextos, 
@@ -750,8 +738,6 @@ def exportar_grafo_macro_conversaciones() -> Dict:
 
 def exportar_grafo_micro_fragmentos(filtro_conversacion: str = None) -> Dict:
     """Exporta vista micro: fragmentos individuales."""
-    from agent.visualizador_doble import VisualizadorDobleNivel
-    
     visualizador = VisualizadorDobleNivel(
         grafo_contextos, 
         metadatos_contextos, 
@@ -763,8 +749,6 @@ def exportar_grafo_micro_fragmentos(filtro_conversacion: str = None) -> Dict:
 
 def obtener_estadisticas_doble_nivel() -> Dict:
     """Estadísticas comparativas de ambos niveles de visualización."""
-    from agent.visualizador_doble import VisualizadorDobleNivel
-    
     visualizador = VisualizadorDobleNivel(
         grafo_contextos, 
         metadatos_contextos, 
