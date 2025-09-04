@@ -812,3 +812,231 @@ function limpiarFormularioConversacion() {
     document.getElementById('tipoConversacion').value = 'general';
     document.getElementById('formAgregarConversacion').classList.add('hidden');
 }
+
+// === FUNCIONALIDAD DE DATASETS ===
+// Subir archivo de dataset
+async function subirDataset() {
+    const fileInput = document.getElementById('fileDataset');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert("Por favor selecciona un archivo JSON.");
+        return;
+    }
+    
+    if (!file.name.endsWith('.json')) {
+        alert("Solo se permiten archivos .json");
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('sobrescribir', 'false');
+    
+    const resultadosDiv = document.getElementById('resultadosDataset');
+    resultadosDiv.innerHTML = "📤 Subiendo y procesando archivo...";
+    
+    try {
+        const response = await axios.post('/dataset/upload/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            timeout: 60000 // 60 segundos para archivos grandes
+        });
+        
+        const data = response.data;
+        
+        if (data.status === 'archivo_procesado') {
+            const stats = data.estadisticas;
+            const duracion = stats.tiempo_fin && stats.tiempo_inicio ? 
+                ((new Date(stats.tiempo_fin) - new Date(stats.tiempo_inicio)) / 1000).toFixed(2) : 'N/A';
+            
+            resultadosDiv.innerHTML = `
+                <div class="space-y-2 text-sm">
+                    <div class="font-medium text-green-700">✅ Dataset procesado exitosamente</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>📁 Archivo: ${data.archivo}</div>
+                        <div>🏷️ Dominio: ${stats.dominio}</div>
+                        <div>💬 Conversaciones: ${stats.conversaciones_procesadas}</div>
+                        <div>🔗 Fragmentos: ${stats.fragmentos_generados}</div>
+                        <div>⏱️ Tiempo: ${duracion}s</div>
+                        <div>❌ Errores: ${stats.errores?.length || 0}</div>
+                    </div>
+                    ${stats.errores && stats.errores.length > 0 ? 
+                        `<div class="text-red-600 text-xs mt-2">
+                            <details>
+                                <summary>Ver errores (${stats.errores.length})</summary>
+                                <div class="mt-1 max-h-32 overflow-y-auto">
+                                    ${stats.errores.slice(0, 5).map(err => `<div>• ${err}</div>`).join('')}
+                                    ${stats.errores.length > 5 ? `<div>... y ${stats.errores.length - 5} más</div>` : ''}
+                                </div>
+                            </details>
+                        </div>` : ''
+                    }
+                </div>
+            `;
+            
+            // Actualizar listas
+            mostrarConversaciones();
+            mostrarContextos();
+            
+        } else {
+            resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${data.mensaje}</div>`;
+        }
+        
+    } catch (error) {
+        resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.response?.data?.mensaje || error.message}</div>`;
+    } finally {
+        // Limpiar input
+        fileInput.value = '';
+    }
+}
+
+// Procesar JSON pegado
+async function procesarJSON() {
+    const jsonText = document.getElementById('jsonDataset').value.trim();
+    
+    if (!jsonText) {
+        alert("Por favor pega el JSON del dataset.");
+        return;
+    }
+    
+    let dataset;
+    try {
+        dataset = JSON.parse(jsonText);
+    } catch (e) {
+        alert("JSON inválido: " + e.message);
+        return;
+    }
+    
+    const resultadosDiv = document.getElementById('resultadosDataset');
+    resultadosDiv.innerHTML = "⚙️ Procesando dataset...";
+    
+    try {
+        const response = await axios.post('/dataset/procesar/', {
+            dataset: dataset,
+            sobrescribir: false
+        }, {
+            timeout: 60000
+        });
+        
+        const data = response.data;
+        
+        if (data.status === 'dataset_procesado') {
+            const stats = data.estadisticas;
+            const duracion = stats.tiempo_fin && stats.tiempo_inicio ? 
+                ((new Date(stats.tiempo_fin) - new Date(stats.tiempo_inicio)) / 1000).toFixed(2) : 'N/A';
+            
+            resultadosDiv.innerHTML = `
+                <div class="space-y-2 text-sm">
+                    <div class="font-medium text-green-700">✅ Dataset procesado exitosamente</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>🏷️ Dominio: ${stats.dominio}</div>
+                        <div>💬 Conversaciones: ${stats.conversaciones_procesadas}</div>
+                        <div>🔗 Fragmentos: ${stats.fragmentos_generados}</div>
+                        <div>⏱️ Tiempo: ${duracion}s</div>
+                        <div>❌ Errores: ${stats.errores?.length || 0}</div>
+                    </div>
+                    ${stats.errores && stats.errores.length > 0 ? 
+                        `<div class="text-red-600 text-xs mt-2">
+                            <details>
+                                <summary>Ver errores</summary>
+                                <div class="mt-1 max-h-32 overflow-y-auto">
+                                    ${stats.errores.slice(0, 3).map(err => `<div>• ${err}</div>`).join('')}
+                                </div>
+                            </details>
+                        </div>` : ''
+                    }
+                </div>
+            `;
+            
+            // Actualizar listas
+            mostrarConversaciones();
+            mostrarContextos();
+            
+        } else {
+            resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${data.mensaje}</div>`;
+        }
+        
+    } catch (error) {
+        resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.response?.data?.mensaje || error.message}</div>`;
+    }
+}
+
+// Validar JSON sin procesarlo
+async function validarJSON() {
+    const jsonText = document.getElementById('jsonDataset').value.trim();
+    
+    if (!jsonText) {
+        alert("Por favor pega el JSON del dataset.");
+        return;
+    }
+    
+    let dataset;
+    try {
+        dataset = JSON.parse(jsonText);
+    } catch (e) {
+        alert("JSON inválido: " + e.message);
+        return;
+    }
+    
+    const resultadosDiv = document.getElementById('resultadosDataset');
+    resultadosDiv.innerHTML = "🔍 Validando formato...";
+    
+    try {
+        const response = await axios.post('/dataset/validar/', dataset);
+        const data = response.data;
+        
+        if (data.valido) {
+            resultadosDiv.innerHTML = `
+                <div class="space-y-2 text-sm">
+                    <div class="font-medium text-green-700">✅ Dataset válido</div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>🏷️ Dominio: ${data.dominio}</div>
+                        <div>💬 Conversaciones: ${data.total_conversaciones}</div>
+                    </div>
+                    <div class="text-green-600 text-xs">
+                        ✨ El dataset está listo para ser procesado
+                    </div>
+                </div>
+            `;
+        } else {
+            resultadosDiv.innerHTML = `
+                <div class="space-y-2 text-sm">
+                    <div class="font-medium text-red-700">❌ Dataset inválido</div>
+                    <div class="text-red-600 text-xs">
+                        <div class="font-medium mb-1">Errores encontrados:</div>
+                        ${data.errores.map(err => `<div>• ${err}</div>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+    } catch (error) {
+        resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.message}</div>`;
+    }
+}
+
+// Generar dataset de ejemplo
+async function generarEjemplo() {
+    const dominio = prompt("¿Nombre del dominio para el ejemplo?", "ejemplo_reuniones");
+    if (!dominio) return;
+    
+    try {
+        const response = await axios.get(`/dataset/ejemplo/${encodeURIComponent(dominio)}`);
+        const dataset = response.data;
+        
+        document.getElementById('jsonDataset').value = JSON.stringify(dataset, null, 2);
+        
+        document.getElementById('resultadosDataset').innerHTML = `
+            <div class="text-green-600 text-sm">
+                ✨ Dataset de ejemplo generado para dominio "${dominio}"<br>
+                📊 ${dataset.conversaciones.length} conversaciones de ejemplo<br>
+                💡 Puedes editarlo y luego procesarlo
+            </div>
+        `;
+        
+    } catch (error) {
+        alert("Error generando ejemplo: " + error.message);
+    }
+}
