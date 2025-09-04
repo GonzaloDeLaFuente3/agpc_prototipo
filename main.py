@@ -280,6 +280,27 @@ async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool =
         return {"status": "error", "mensaje": "Archivo JSON inválido"}
     except Exception as e:
         return {"status": "error", "mensaje": str(e)}
+    
+# === ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL ===
+@app.get("/grafo/macro/conversaciones/")
+def exportar_grafo_macro():
+    """Vista macro: conversaciones como nodos, relaciones agregadas."""
+    return grafo.exportar_grafo_macro_conversaciones()
+
+@app.get("/grafo/micro/fragmentos/")
+def exportar_grafo_micro_completo():
+    """Vista micro: todos los fragmentos individuales."""
+    return grafo.exportar_grafo_micro_fragmentos()
+
+@app.get("/grafo/micro/conversacion/{conversacion_id}")
+def exportar_grafo_micro_conversacion(conversacion_id: str):
+    """Vista micro filtrada: solo fragmentos de una conversación específica."""
+    return grafo.exportar_grafo_micro_fragmentos(conversacion_id)
+
+@app.get("/estadisticas/doble-nivel/")
+def obtener_estadisticas_doble_nivel():
+    """Estadísticas comparativas entre vista macro y micro."""
+    return grafo.obtener_estadisticas_doble_nivel()
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
