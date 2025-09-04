@@ -733,3 +733,43 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
         return fecha_inicio <= fecha_contexto <= fecha_fin
     except (ValueError, TypeError):
         return False
+    
+# === FUNCIONES DE VISUALIZACIÓN DOBLE NIVEL ===
+def exportar_grafo_macro_conversaciones() -> Dict:
+    """Exporta vista macro: conversaciones como nodos."""
+    from agent.visualizador_doble import VisualizadorDobleNivel
+    
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.generar_vista_macro_conversaciones()
+
+def exportar_grafo_micro_fragmentos(filtro_conversacion: str = None) -> Dict:
+    """Exporta vista micro: fragmentos individuales."""
+    from agent.visualizador_doble import VisualizadorDobleNivel
+    
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.generar_vista_micro_fragmentos(filtro_conversacion)
+
+def obtener_estadisticas_doble_nivel() -> Dict:
+    """Estadísticas comparativas de ambos niveles de visualización."""
+    from agent.visualizador_doble import VisualizadorDobleNivel
+    
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.obtener_estadisticas_doble_nivel()

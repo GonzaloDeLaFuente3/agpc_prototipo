@@ -3,6 +3,10 @@ let ultimaRespuesta = "";
 let ultimaPregunta = "";
 let networkInstance = null;
 let ultimoSubgrafo = null;
+// Variables para el sistema doble nivel
+let vistaActual = 'macro';
+let conversacionesList = {};
+let estadisticasDobleNivel = null;
 
 // Event listeners principales
 document.addEventListener('DOMContentLoaded', function() {
@@ -58,6 +62,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cargar conversaciones inicialmente
     mostrarConversaciones();
+
+    // NUEVO: Radios de vista
+    const radiosVista = document.querySelectorAll('input[name="tipoVista"]');
+    radiosVista.forEach(radio => {
+        radio.addEventListener('change', function() {
+            actualizarVistaSeleccionada(this.value);
+        });
+    });
+    
+    // Selector de conversación para vista micro filtrada
+    document.getElementById('conversacionFiltro').addEventListener('change', function() {
+        if (this.value && vistaActual === 'micro-filtrada') {
+            cargarGrafoDobleNivel();
+        }
+    });
 });
 
 // Función principal para preguntar
@@ -362,7 +381,7 @@ function abrirModalArbol(subgrafo) {
         const edges = subgrafo.edges.map(e => {
             const pesoEfectivo = e.peso_efectivo || 0;
             const relevanciaTemp = e.relevancia_temporal || 0;
-            const width = Math.max(2, pesoEfectivo * 8);
+            const width = Math.max(1, pesoEfectivo * 2);
             
             // Color según tipo de relación
             const colorArista = relevanciaTemp > 0.1 ? "#4caf50" : "#2196f3";
@@ -510,15 +529,15 @@ async function cargarGrafo() {
             
             // Color y grosor basado en peso efectivo
             let colorArista = '#90a4ae';
-            let widthArista = Math.max(1, pesoEfectivo * 4);
+            let widthArista = Math.max(0.5, pesoEfectivo * 1.5);
             
             if (esTemporal) {
                 const intensidad = Math.min(255, 100 + (relevanciatemporal * 400));
                 colorArista = `rgb(76, ${intensidad}, 50)`;
-                widthArista = Math.max(2, pesoEfectivo * 6);
+                widthArista = Math.max(1, pesoEfectivo * 2);
             } else if (pesoEstructural > 0.5) {
                 colorArista = '#2196f3';
-                widthArista = Math.max(2, pesoEfectivo * 5);
+                widthArista = Math.max(1, pesoEfectivo * 1.5);
             }
             
             const labelCompacto = `${pesoEstructural.toFixed(2)}|${relevanciatemporal.toFixed(2)}|${pesoEfectivo.toFixed(2)}`;
@@ -599,7 +618,7 @@ async function cargarGrafo() {
                 selectConnectedEdges: true,
                 zoomView: true,
                 dragView: true,
-                dragNodes: false,
+                dragNodes: True,//para poder mover los nodos
                 tooltipDelay: 200,
                 hideEdgesOnDrag: false,
                 hideEdgesOnZoom: false
@@ -1038,5 +1057,468 @@ async function generarEjemplo() {
         
     } catch (error) {
         alert("Error generando ejemplo: " + error.message);
+    }
+}
+
+// Actualizar información según vista seleccionada
+function actualizarVistaSeleccionada(vista) {
+    vistaActual = vista;
+    
+    const selectorConv = document.getElementById('selectorConversacion');
+    const infoNivel = document.getElementById('infoNivelActual');
+    
+    // Mostrar/ocultar selector de conversación
+    if (vista === 'micro-filtrada') {
+        selectorConv.classList.remove('hidden');
+        cargarListaConversacionesParaFiltro();
+    } else {
+        selectorConv.classList.add('hidden');
+    }
+    
+    // Actualizar información del nivel
+    const infoTextos = {
+        'macro': '<p><strong>🌐 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>',
+        'micro': '<p><strong>🔬 Nivel Micro:</strong> Cada nodo = fragmento individual. Muestra todas las conexiones semánticas y temporales con máxima granularidad.</p>',
+        'micro-filtrada': '<p><strong>🎯 Micro Filtrada:</strong> Solo fragmentos de una conversación específica. Útil para analizar la estructura interna de una conversación.</p>'
+    };
+    
+    infoNivel.innerHTML = infoTextos[vista] || infoTextos['macro'];
+}
+
+// Cargar lista de conversaciones para el filtro
+async function cargarListaConversacionesParaFiltro() {
+    if (Object.keys(conversacionesList).length === 0) {
+        try {
+            const res = await axios.get('/conversaciones/');
+            conversacionesList = res.data;
+        } catch (error) {
+            console.error('Error cargando conversaciones:', error);
+            return;
+        }
+    }
+    
+    const selector = document.getElementById('conversacionFiltro');
+    selector.innerHTML = '<option value="">Seleccionar conversación...</option>';
+    
+    for (const [id, datos] of Object.entries(conversacionesList)) {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = `${datos.titulo} (${datos.total_fragmentos} frags)`;
+        selector.appendChild(option);
+    }
+}
+
+// Abrir modal con vista doble nivel
+function abrirModalGrafoDobleNivel() {
+    document.getElementById('modalGrafo').classList.remove('hidden');
+    setTimeout(() => cargarGrafoDobleNivel(), 100);
+}
+
+// Cargar grafo según la vista actual
+async function cargarGrafoDobleNivel() {
+    const container = document.getElementById('grafo');
+    container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>Cargando grafo...</p></div>';
+    
+    try {
+        let endpoint = '';
+        let datos = null;
+        
+        // Determinar endpoint según vista
+        switch(vistaActual) {
+            case 'macro':
+                endpoint = '/grafo/macro/conversaciones/';
+                break;
+            case 'micro':
+                endpoint = '/grafo/micro/fragmentos/';
+                break;
+            case 'micro-filtrada':
+                const conversacionId = document.getElementById('conversacionFiltro').value;
+                if (!conversacionId) {
+                    container.innerHTML = '<div class="flex items-center justify-center h-full text-orange-500"><p>⚠️ Selecciona una conversación para filtrar</p></div>';
+                    return;
+                }
+                endpoint = `/grafo/micro/conversacion/${conversacionId}`;
+                break;
+            default:
+                endpoint = '/grafo/macro/conversaciones/';
+        }
+        
+        const res = await axios.get(endpoint);
+        datos = res.data;
+        
+        if (!datos.nodes || datos.nodes.length === 0) {
+            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>No hay datos para visualizar en esta vista.</p></div>';
+            return;
+        }
+        
+        // Actualizar header del modal
+        actualizarHeaderGrafo(datos);
+        
+        // Actualizar leyenda
+        actualizarLeyendaGrafo();
+        
+        // Renderizar grafo
+        renderizarGrafoDobleNivel(datos, container);
+        
+    } catch (error) {
+        container.innerHTML = `
+            <div class="text-red-600 p-4 text-center">
+                <p class="font-semibold">❌ Error cargando vista ${vistaActual}</p>
+                <p class="text-sm mt-1">${error.message}</p>
+                <button onclick="cargarGrafoDobleNivel()" class="mt-3 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
+                    🔄 Reintentar
+                </button>
+            </div>`;
+    }
+}
+
+// Actualizar header del modal según la vista
+function actualizarHeaderGrafo(datos) {
+    const meta = datos.meta || {};
+    
+    const titulos = {
+        'macro': '🌐 Vista Macro - Conversaciones',
+        'micro': '🔬 Vista Micro - Fragmentos Completa', 
+        'micro-filtrada': '🎯 Vista Micro - Fragmentos Filtrada'
+    };
+    
+    const descripciones = {
+        'macro': 'Cada nodo representa una conversación completa',
+        'micro': 'Cada nodo representa un fragmento individual',
+        'micro-filtrada': `Fragmentos de: ${meta.conversacion_titulo || 'Conversación seleccionada'}`
+    };
+    
+    document.getElementById('tituloVistaGrafo').textContent = titulos[vistaActual] || titulos['macro'];
+    document.getElementById('descripcionVistaGrafo').textContent = descripciones[vistaActual] || descripciones['macro'];
+    
+    // Actualizar métricas
+    document.getElementById('totalNodos').textContent = datos.nodes?.length || 0;
+    document.getElementById('totalAristas').textContent = datos.edges?.length || 0;
+}
+
+// Actualizar leyenda según la vista
+function actualizarLeyendaGrafo() {
+    const leyendaMacro = document.getElementById('leyendaMacro');
+    const leyendaMicro = document.getElementById('leyendaMicro');
+    
+    if (vistaActual === 'macro') {
+        leyendaMacro.classList.remove('hidden');
+        leyendaMicro.classList.add('hidden');
+        
+        leyendaMacro.innerHTML = `
+            <div>
+                <p class="font-semibold text-blue-800 mb-2">💬 Nodos por Tipo de Conversación:</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
+                        <span>Reuniones</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">🎤</div>
+                        <span>Entrevistas</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-purple-100 border border-purple-600 rounded mr-2 flex items-center justify-center text-xs">💡</div>
+                        <span>Brainstorms</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">📋</div>
+                        <span>Planning</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-blue-800 mb-2">🔗 Aristas entre Conversaciones:</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex items-center">
+                        <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
+                        <span>Relaciones temporales</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
+                        <span>Relaciones semánticas</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mt-2 p-2 bg-gray-100 rounded">
+                        <strong>Formato:</strong> P=Peso promedio | C=Conexiones de fragmentos
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        leyendaMacro.classList.add('hidden');
+        leyendaMicro.classList.remove('hidden');
+        
+        leyendaMicro.innerHTML = `
+            <div>
+                <p class="font-semibold text-purple-800 mb-2">🧩 Fragmentos por Tipo:</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
+                        <span>Reunión</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">⚖️</div>
+                        <span>Decisión</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">⚡</div>
+                        <span>Acción</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-red-100 border border-red-600 rounded mr-2 flex items-center justify-center text-xs">❓</div>
+                        <span>Pregunta</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="font-semibold text-purple-800 mb-2">🔗 Conexiones entre Fragmentos:</p>
+                <div class="space-y-1 text-xs">
+                    <div class="flex items-center">
+                        <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
+                        <span>🕒 Con relevancia temporal</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
+                        <span>📋 Solo semánticas</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mt-2 p-2 bg-gray-100 rounded">
+                        <strong>Formato:</strong> E=Estructural | T=Temporal | W=Peso efectivo
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Renderizar grafo con configuraciones específicas por vista
+function renderizarGrafoDobleNivel(datos, container) {
+    try {
+        // Procesar nodos según la vista
+        const nodes = datos.nodes.map(node => {
+            let config = {
+                ...node,
+                borderWidth: 2,
+                shadow: {
+                    enabled: true,
+                    size: 5,
+                    x: 2,
+                    y: 2,
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            };
+            
+            if (vistaActual === 'macro') {
+                // Configuración para vista macro (conversaciones)
+                const tipoConv = node.tipo_conversacion || 'general';
+                const coloresMacro = {
+                    'reunion': { background: '#e8f5e8', border: '#4caf50' },
+                    'entrevista': { background: '#e3f2fd', border: '#2196f3' },
+                    'brainstorm': { background: '#f3e5f5', border: '#9c27b0' },
+                    'planning': { background: '#fff3e0', border: '#ff9800' },
+                    'general': { background: '#f5f5f5', border: '#757575' }
+                };
+                
+                config.color = coloresMacro[tipoConv] || coloresMacro['general'];
+                config.size = Math.max(20, Math.min(50, (node.total_fragmentos || 1) * 4));
+                config.font = { size: 12, color: '#1565c0' };
+                
+            } else {
+                // Configuración para vista micro (fragmentos) - usar la existente
+                const esTemporal = node.group === 'temporal';
+                config.color = esTemporal ? 
+                    { background: '#e3f2fd', border: '#1976d2' } : 
+                    { background: '#f5f5f5', border: '#757575' };
+                config.font = { size: 10, color: esTemporal ? '#1565c0' : '#424242' };
+            }
+            
+            return config;
+        });
+        
+        // Procesar aristas
+        const edges = datos.edges.map(edge => {
+            let config = { ...edge };
+            
+            if (vistaActual === 'macro') {
+                // Aristas para conversaciones - más gruesas y destacadas
+                config.width = Math.max(1, (edge.peso_total || 1) * 1.5);
+                config.color = edge.es_temporal ? '#4caf50' : '#2196f3';
+                config.font = {
+                    size: 11,
+                    background: 'rgba(255,255,255,0.9)',
+                    strokeWidth: 1,
+                    strokeColor: 'rgba(255,255,255,0.9)'
+                };
+            } else {
+                // Aristas para fragmentos - configuración existente
+                const relevanciaTemp = edge.relevancia_temporal || 0;
+                config.width = Math.max(1, (edge.peso_efectivo || 0) * 2);
+                config.color = relevanciaTemp > 0.1 ? '#4caf50' : '#2196f3';
+                config.font = { size: 9 };
+            }
+            
+            config.arrows = { to: { enabled: true, scaleFactor: 1.2 } };
+            config.smooth = { type: 'continuous', roundness: 0.3 };
+            
+            return config;
+        });
+        
+        // Configuración de layout según vista
+        const layoutConfig = vistaActual === 'macro' ? 
+            {
+                // Layout para conversaciones - más espacio
+                improvedLayout: true,
+                randomSeed: 1,
+                avoidOverlap: 0.5
+            } : 
+            {
+                // Layout para fragmentos - más compacto
+                improvedLayout: false,
+                randomSeed: 1
+            };
+        
+        const options = {
+            nodes: { 
+                shape: 'box',
+                margin: { top: 8, right: 8, bottom: 8, left: 8 }
+            },
+            edges: {
+                labelHighlightBold: false,
+                selectionWidth: 3
+            },
+            physics: false,
+            interaction: {
+                hover: true,
+                hoverConnectedEdges: true,
+                selectConnectedEdges: true,
+                zoomView: true,
+                dragView: true,
+                dragNodes: true, // Solo permitir arrastrar en todas las vistas
+                tooltipDelay: 200
+            },
+            layout: layoutConfig
+        };
+
+        // Crear red
+        networkInstance = new vis.Network(container, {
+            nodes: new vis.DataSet(nodes),
+            edges: new vis.DataSet(edges)
+        }, options);
+
+        // Eventos específicos por vista
+        if (vistaActual === 'macro') {
+            // En vista macro, doble clic cambia a vista micro filtrada
+            networkInstance.on("doubleClick", function (params) {
+                if (params.nodes.length > 0) {
+                    const conversacionId = params.nodes[0];
+                    
+                    // Cambiar a vista micro filtrada
+                    document.getElementById('vistaMicroFiltrada').checked = true;
+                    document.getElementById('conversacionFiltro').value = conversacionId;
+                    actualizarVistaSeleccionada('micro-filtrada');
+                    
+                    // Recargar grafo con nueva vista
+                    setTimeout(() => cargarGrafoDobleNivel(), 100);
+                }
+            });
+        }
+
+        console.log(`Grafo ${vistaActual} cargado: ${nodes.length} nodos, ${edges.length} aristas`);
+
+        // Ajustar vista inicial
+        setTimeout(() => {
+            if (networkInstance) {
+                networkInstance.fit();
+            }
+        }, 100);
+        
+    } catch (error) {
+        container.innerHTML = `
+            <div class="text-red-600 p-4 text-center">
+                <p class="font-semibold">❌ Error renderizando grafo</p>
+                <p class="text-sm mt-1">${error.message}</p>
+            </div>`;
+    }
+}
+
+// Cambiar vista rápidamente
+function cambiarVistaGrafo() {
+    const vistas = ['macro', 'micro', 'micro-filtrada'];
+    const indiceActual = vistas.indexOf(vistaActual);
+    const siguienteIndice = (indiceActual + 1) % vistas.length;
+    const siguienteVista = vistas[siguienteIndice];
+    
+    // Actualizar radio button
+    document.getElementById(`vista${siguienteVista.charAt(0).toUpperCase() + siguienteVista.slice(1).replace('-', '')}`).checked = true;
+    actualizarVistaSeleccionada(siguienteVista);
+    
+    // Recargar grafo
+    cargarGrafoDobleNivel();
+}
+
+// Cargar estadísticas de doble nivel
+async function cargarEstadisticasDobleNivel() {
+    try {
+        const res = await axios.get('/estadisticas/doble-nivel/');
+        estadisticasDobleNivel = res.data;
+        
+        const macro = estadisticasDobleNivel.nivel_macro;
+        const micro = estadisticasDobleNivel.nivel_micro;
+        const relaciones = estadisticasDobleNivel.relaciones;
+        const metricas = estadisticasDobleNivel.metricas;
+        
+        document.getElementById('estadisticas').innerHTML = `
+            <div class="space-y-3 text-xs">
+                <!-- Nivel Macro -->
+                <div class="border-b pb-2">
+                    <div class="font-medium text-purple-700 mb-1">🌐 Nivel Macro (Conversaciones)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>Total: <span class="font-bold text-purple-600">${macro.total_conversaciones}</span></div>
+                        <div>Complejas: <span class="font-bold">${macro.conversaciones_complejas}</span></div>
+                    </div>
+                    <div class="mt-1 text-xs text-gray-600">
+                        Tipos: ${Object.entries(macro.tipos_conversaciones).map(([tipo, count]) => `${tipo}(${count})`).join(', ')}
+                    </div>
+                </div>
+                
+                <!-- Nivel Micro -->
+                <div class="border-b pb-2">
+                    <div class="font-medium text-blue-700 mb-1">🔬 Nivel Micro (Fragmentos)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>Total: <span class="font-bold text-blue-600">${micro.total_fragmentos}</span></div>
+                        <div>Temporales: <span class="font-bold text-green-600">${micro.fragmentos_temporales}</span></div>
+                    </div>
+                    <div class="mt-1 text-xs text-gray-600">
+                        Top tipos: ${Object.entries(micro.tipos_fragmentos)
+                            .sort(([,a], [,b]) => b - a)
+                            .slice(0, 3)
+                            .map(([tipo, count]) => `${tipo}(${count})`)
+                            .join(', ')}
+                    </div>
+                </div>
+                
+                <!-- Relaciones -->
+                <div class="border-b pb-2">
+                    <div class="font-medium text-orange-700 mb-1">🔗 Relaciones</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>Internas: <span class="font-bold text-orange-600">${relaciones.intra_conversacion}</span></div>
+                        <div>Entre conv: <span class="font-bold text-red-600">${relaciones.inter_conversacion}</span></div>
+                    </div>
+                </div>
+                
+                <!-- Métricas Calculadas -->
+                <div>
+                    <div class="font-medium text-green-700 mb-1">📊 Métricas</div>
+                    <div class="space-y-1">
+                        <div>Frags/Conv: <span class="font-bold">${metricas.promedio_fragmentos_por_conversacion}</span></div>
+                        <div>% Rel. Internas: <span class="font-bold">${metricas.ratio_relaciones_internas}%</span></div>
+                        <div>% Temporal Micro: <span class="font-bold">${metricas.ratio_temporal_micro}%</span></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+    } catch (error) {
+        document.getElementById('estadisticas').innerHTML = 
+            `<p class="text-red-600 text-xs">Error cargando stats doble nivel: ${error.message}</p>`;
     }
 }
