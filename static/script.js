@@ -586,17 +586,14 @@ async function cargarGrafo() {
         networkInstance.on("selectNode", function (params) {
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
-                console.log(`Nodo seleccionado: ${nodeId}`);
             }
         });
 
         networkInstance.on("selectEdge", function (params) {
             if (params.edges.length > 0) {
                 const edgeId = params.edges[0];
-                console.log(`Arista seleccionada: ${edgeId}`);
             }
         });
-
         console.log(`Grafo cargado: ${nodes.length} nodos, ${edges.length} aristas (completamente estático)`);
 
         // Ajustar vista inicial SIN animación para evitar cualquier movimiento
@@ -1352,7 +1349,6 @@ function renderizarGrafoDobleNivel(datos, container) {
                 }
             });
         }
-
         console.log(`Grafo ${vistaActual} cargado: ${nodes.length} nodos, ${edges.length} aristas`);
 
         // Ajustar vista inicial

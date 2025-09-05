@@ -13,6 +13,7 @@ from agent.semantica import indexar_documento, coleccion
 from agent.temporal_parser import extraer_referencias_del_texto, parsear_referencia_temporal
 from agent.query_analyzer import analizar_intencion_temporal
 from agent.visualizador_doble import VisualizadorDobleNivel
+from agent.fragmentador import fragmentar_conversacion
 
 # Nuevas estructuras de datos
 conversaciones_metadata = {}
@@ -29,8 +30,6 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             'total_fragmentos': int
         }
     """
-    from agent.fragmentador import fragmentar_conversacion
-    
     # Preparar datos de conversación
     conversacion_data = {
         'titulo': titulo,
@@ -382,7 +381,7 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
         # Verificar duplicado exacto o muy similar
         if (titulo_norm == titulo_existente and texto_norm == texto_existente) or \
            (len(texto_norm) > 50 and _calcular_similitud_textual_exacta(texto_norm, texto_existente) > 0.98):
-            print(f"⚠️ Contexto duplicado detectado - no agregando. Retornando ID existente: {ctx_id}")
+            print(f"Contexto duplicado detectado - no agregando. Retornando ID existente: {ctx_id}")
             return ctx_id  # Retornar ID del existente
     
     # Continuar con el proceso normal si no es duplicado
@@ -432,7 +431,6 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     # Recalcular y guardar
     _recalcular_relaciones()
     _guardar_grafo()
-    print(f"Nuevo contexto agregado: {titulo} (ID: {id_contexto})")
     return id_contexto
 
 def obtener_todos() -> Dict:
