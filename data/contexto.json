@@ -249,5 +249,29 @@
     "es_fragmento": true,
     "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
     "posicion_fragmento": 5
+  },
+  "28725bec-cecd-493e-8191-2f11859cb650": {
+    "titulo": "Que es postgreSQL?",
+    "texto": "Basado en los fragmentos proporcionados, PostgreSQL es una base de datos que se está considerando para un proyecto  (Discusión sobre Base de Datos - Fragmento 1).  Laura la considera la mejor opción debido a su buen soporte para integridad referencial (Discusión sobre Base de Datos - Fragmento 3).",
+    "palabras_clave": [
+      "opción",
+      "integridad",
+      "base",
+      "laura",
+      "postgresql",
+      "dato",
+      "proyecto",
+      "datos",
+      "soporte",
+      "proporcionado",
+      "discusión",
+      "referencial",
+      "fragmento",
+      "considerar",
+      "basado"
+    ],
+    "created_at": "2025-09-05T10:14:17.782261",
+    "es_temporal": false,
+    "tipo_contexto": "proyecto"
   }
 }
