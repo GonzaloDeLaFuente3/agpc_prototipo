@@ -25,7 +25,6 @@
         <!-- COLUMNA IZQUIERDA - Contextos y Conversaciones -->
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
             <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contenido</h2>
-            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">💬 Conversaciones</h2>
             
             <!-- Panel de Conversaciones (nuevo) -->
             <div id="panelConversaciones" >
@@ -162,9 +161,6 @@
                                 <button onclick="subirDataset()" class="bg-orange-600 text-white px-4 py-2 rounded text-sm hover:bg-orange-700 transition-colors">
                                     📤 Subir y Procesar
                                 </button>
-                                <button onclick="generarEjemplo()" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors">
-                                    🧪 Generar Ejemplo
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -176,9 +172,6 @@
                             <textarea id="jsonDataset" placeholder='Pegá aquí tu JSON dataset...' 
                                     class="border p-2 w-full rounded text-xs h-32 font-mono resize-none"></textarea>
                             <div class="flex gap-2">
-                                <button onclick="procesarJSON()" class="bg-orange-600 text-white px-3 py-2 rounded text-sm hover:bg-orange-700 transition-colors">
-                                    ⚙️ Procesar JSON
-                                </button>
                                 <button onclick="validarJSON()" class="bg-yellow-600 text-white px-3 py-2 rounded text-sm hover:bg-yellow-700 transition-colors">
                                     ✅ Solo Validar
                                 </button>

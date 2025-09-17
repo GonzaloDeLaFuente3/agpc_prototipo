@@ -217,30 +217,6 @@ class DatasetUpload(BaseModel):
     dataset: dict
     sobrescribir: bool = False
 
-@app.post("/dataset/procesar/")
-def procesar_dataset(entrada: DatasetUpload):
-    """Procesa un dataset JSON completo."""
-    try:
-        loader = DatasetLoader()
-        estadisticas = loader.procesar_dataset(entrada.dataset, entrada.sobrescribir)
-        
-        return {
-            "status": "dataset_procesado",
-            "estadisticas": estadisticas
-        }
-    except Exception as e:
-        return {
-            "status": "error", 
-            "mensaje": str(e)
-        }
-
-@app.get("/dataset/ejemplo/{dominio}")
-def generar_dataset_ejemplo(dominio: str):
-    """Genera un dataset de ejemplo para testing."""
-    loader = DatasetLoader()
-    dataset = loader.generar_dataset_ejemplo(dominio)
-    return dataset
-
 @app.post("/dataset/validar/")
 def validar_dataset(dataset: dict):
     """Valida el formato de un dataset sin procesarlo."""

@@ -457,5 +457,122 @@
     "created_at": "2025-09-04T17:56:40.519072",
     "es_temporal": true,
     "tipo_contexto": "brainstorming"
+  },
+  "fc630fe9-4301-4af5-b513-6faf760e2ddd": {
+    "fragmento_id": "fc630fe9-4301-4af5-b513-6faf760e2ddd",
+    "conversacion_id": "2d2f34c7-d420-4839-8378-a93c5d6b8e28",
+    "conversacion_titulo": "Contrato de Compraventa",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "El contrato de compraventa fue firmado en marzo de 2023 entre la empresa A y la empresa B. Incluye cláusulas sobre la entrega de bienes y plazos de pago.",
+    "palabras_clave": [
+      "cláusula",
+      "compraventa",
+      "firmar",
+      "entrega",
+      "marzo",
+      "plazo",
+      "pago",
+      "bien",
+      "empresa",
+      "contrato",
+      "incluir"
+    ],
+    "timestamp": "2023-03-15T09:00:00",
+    "participantes": [
+      "Abogado A",
+      "Cliente B"
+    ],
+    "metadata_conversacion": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:57:34.854586",
+    "es_temporal": true,
+    "tipo_contexto": "documento"
+  },
+  "e80de4c6-570a-4bfc-8cce-99332ffb8a85": {
+    "fragmento_id": "e80de4c6-570a-4bfc-8cce-99332ffb8a85",
+    "conversacion_id": "962366c9-a42c-42e9-afd0-03bfad2a9f27",
+    "conversacion_titulo": "Factura Emitida",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "La empresa B emitió una factura en mayo de 2024 correspondiente al contrato de compraventa firmado previamente.",
+    "palabras_clave": [
+      "correspondiente",
+      "compraventa",
+      "factura",
+      "firmado",
+      "previamente",
+      "empresa",
+      "contrato",
+      "emitir",
+      "mayo"
+    ],
+    "timestamp": "2024-05-10T11:30:00",
+    "participantes": [
+      "Contador B",
+      "Cliente A"
+    ],
+    "metadata_conversacion": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:57:47.646296",
+    "es_temporal": true,
+    "tipo_contexto": "documento"
+  },
+  "b046434b-61d4-4533-906c-69b68bb6c5a0": {
+    "fragmento_id": "b046434b-61d4-4533-906c-69b68bb6c5a0",
+    "conversacion_id": "34e4d820-6825-4163-9c24-02c2c775ea89",
+    "conversacion_titulo": "Litigio Judicial",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "En junio de 2024 se inició un litigio judicial por incumplimiento de pago relacionado con la compraventa entre la empresa A y la empresa B.",
+    "palabras_clave": [
+      "compraventa",
+      "relacionado",
+      "iniciar",
+      "pago",
+      "judicial",
+      "junio",
+      "empresa",
+      "litigio",
+      "incumplimiento"
+    ],
+    "timestamp": "2024-06-20T14:00:00",
+    "participantes": [
+      "Juez",
+      "Abogado A",
+      "Abogado B"
+    ],
+    "metadata_conversacion": {
+      "tipo": "litigio",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:58:04.820232",
+    "es_temporal": true,
+    "tipo_contexto": "litigio"
   }
 }
