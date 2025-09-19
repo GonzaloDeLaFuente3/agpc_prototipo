@@ -147,6 +147,86 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Propagación de Activación -->
+            <div class="bg-green-200 rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-green-800 border-b pb-2">🔄 Propagación de Activación</h2>
+                
+                <div class="space-y-4">
+                    <!-- Estado actual -->
+                    <div class="p-3 bg-green-50 border border-green-200 rounded">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-medium text-green-800">Estado del Sistema</h3>
+                            <button onclick="obtenerEstadoPropagacion()" 
+                                    class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700 transition-colors">
+                                🔄 Actualizar
+                            </button>
+                        </div>
+                        <div id="estadoPropagacion" class="text-xs bg-white p-2 rounded">
+                            <p class="text-gray-500 italic">Cargando estado...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Control principal -->
+                    <div class="p-3 bg-green-50 border border-green-200 rounded">
+                        <h3 class="font-medium text-green-800 mb-2">Control Principal</h3>
+                        <div class="space-y-2">
+                            <button id="togglePropagacion" onclick="alternarPropagacion()" 
+                                    class="w-full bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
+                                🔄 Desactivar Propagación
+                            </button>
+                            <div class="text-xs text-center">
+                                Estado: <span id="estadoPropagacionToggle" class="font-bold text-green-600">ACTIVA</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Configuración de parámetros -->
+                    <div class="p-3 bg-green-50 border border-green-200 rounded">
+                        <h3 class="font-medium text-green-800 mb-2">⚙️ Parámetros</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <label class="text-xs">Pasos máx:</label>
+                                <input type="range" id="maxPasosPropagacion" min="1" max="5" value="2" 
+                                    class="flex-1 h-2 bg-green-200 rounded-lg appearance-none cursor-pointer"
+                                    onchange="parametrosPropagacion.max_pasos = this.value; document.getElementById('valorMaxPasos').textContent = this.value">
+                                <span id="valorMaxPasos" class="text-xs font-bold">2</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <label class="text-xs">Decaimiento:</label>
+                                <input type="range" id="factorDecaimiento" min="0.1" max="1.0" step="0.1" value="0.8" 
+                                    class="flex-1 h-2 bg-green-200 rounded-lg appearance-none cursor-pointer"
+                                    onchange="document.getElementById('valorDecaimiento').textContent = this.value">
+                                <span id="valorDecaimiento" class="text-xs font-bold">0.8</span>
+                            </div>
+                            
+                            <button onclick="aplicarConfiguracionPropagacion()" 
+                                    class="w-full bg-yellow-600 text-white px-2 py-1 rounded text-xs hover:bg-yellow-700 transition-colors">
+                                💾 Aplicar Configuración
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Información -->
+                    <details class="bg-green-50 p-3 rounded border border-green-200">
+                        <summary class="text-sm font-medium text-green-800 cursor-pointer">
+                            ❓ ¿Qué es la Propagación de Activación?
+                        </summary>
+                        <div class="mt-2 text-xs text-green-700 space-y-2">
+                            <p><strong>🔄 Propagación:</strong> Encuentra contextos relacionados indirectamente a través de múltiples saltos en el grafo.</p>
+                            <p><strong>💡 Ventaja:</strong> Descubre relaciones que no son obvias en búsqueda directa.</p>
+                            <p><strong>⚙️ Parámetros:</strong></p>
+                            <ul class="ml-4 list-disc space-y-1">
+                                <li><strong>Pasos máximos:</strong> Cuántos saltos explorar (1-5)</li>
+                                <li><strong>Factor decaimiento:</strong> Qué tanto se reduce la activación por salto (0.1-1.0)</li>
+                            </ul>
+                            <p><strong>🎯 Funciona:</strong> Cada pregunta inicia una nueva propagación desde los contextos más relevantes encontrados.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
             <!-- Carga Masiva de Datasets -->
             <div class="bg-orange-200 rounded-lg shadow-md p-6">
                 <h2 class="text-xl font-semibold mb-4 text-orange-800 border-b pb-2">📦 Carga Masiva de Datasets</h2>

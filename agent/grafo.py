@@ -14,6 +14,10 @@ from agent.temporal_parser import extraer_referencias_del_texto, parsear_referen
 from agent.query_analyzer import analizar_intencion_temporal
 from agent.visualizador_doble import VisualizadorDobleNivel
 from agent.fragmentador import fragmentar_conversacion
+from agent.propagacion import crear_propagador, propagar_desde_consulta_integrado
+
+# Variable global para el propagador
+propagador_global = None
 
 # Nuevas estructuras de datos
 conversaciones_metadata = {}
@@ -349,6 +353,9 @@ def _guardar_grafo():
         with open(ARCHIVO_METADATOS, 'w', encoding='utf-8') as f:
             json.dump(metadatos_contextos, f, ensure_ascii=False, indent=2)
 
+        #Actualizar propagador después de guardar
+        actualizar_propagador()
+
 def cargar_desde_disco():
     """Carga el grafo desde disco."""
     global grafo_contextos, metadatos_contextos
@@ -367,6 +374,9 @@ def cargar_desde_disco():
     
     # Cargar también conversaciones y fragmentos
     cargar_conversaciones_desde_disco()
+
+    #Inicializar propagador después de cargar
+    actualizar_propagador()
 
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
     """Agrega un nuevo contexto con prevención de duplicados."""
@@ -755,3 +765,197 @@ def obtener_estadisticas_doble_nivel() -> Dict:
     )
     
     return visualizador.obtener_estadisticas_doble_nivel()
+
+def obtener_propagador():
+    """Obtiene o crea la instancia global del propagador."""
+    global propagador_global
+    if propagador_global is None:
+        propagador_global = crear_propagador(grafo_contextos, metadatos_contextos)
+    return propagador_global
+
+def actualizar_propagador():
+    """Actualiza el propagador cuando cambia el grafo."""
+    global propagador_global
+    propagador_global = crear_propagador(grafo_contextos, metadatos_contextos)
+
+def configurar_parametros_propagacion(factor_decaimiento: float = None, umbral_activacion: float = None):
+    """Configura parámetros del algoritmo de propagación."""
+    try:
+        propagador = obtener_propagador()
+        if propagador:
+            propagador.configurar_parametros(factor_decaimiento, umbral_activacion)
+            return {
+                "status": "parametros_actualizados",
+                "factor_decaimiento": propagador.factor_decaimiento,
+                "umbral_activacion": propagador.umbral_activacion
+            }
+        else:
+            return {"error": "Propagador no disponible"}
+    except Exception as e:
+        return {"error": f"Error configurando: {str(e)}"}
+    
+def obtener_estado_propagacion():
+    """Obtiene el estado actual del sistema de propagación."""
+    try:
+        propagador = obtener_propagador()
+        total_nodos = len(grafo_contextos.nodes())
+        total_aristas = len(grafo_contextos.edges())
+        
+        return {
+            "propagacion_habilitada": propagador is not None,
+            "factor_decaimiento": propagador.factor_decaimiento if propagador else None,
+            "umbral_activacion": propagador.umbral_activacion if propagador else None,
+            "total_nodos": total_nodos,
+            "total_aristas": total_aristas,
+            "grafo_disponible": total_nodos > 0
+        }
+    except Exception as e:
+        return {"error": f"Error: {str(e)}"}
+
+def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[datetime] = None, 
+                                    usar_propagacion: bool = True, max_pasos: int = 2) -> Dict:
+    """
+    Análisis completo de consulta INCLUYENDO propagación dinámica desde contextos relevantes.
+    
+    Args:
+        pregunta: Consulta del usuario
+        momento_consulta: Momento de la consulta
+        usar_propagacion: Si usar propagación además de búsqueda directa
+        max_pasos: Pasos de propagación
+        
+    Returns:
+        Dict con análisis completo incluyendo contextos propagados
+    """
+    if momento_consulta is None:
+        momento_consulta = datetime.now()
+    
+    # Análisis básico (método existente)
+    analisis_basico = analizar_consulta_completa(pregunta, momento_consulta)
+    
+    if not usar_propagacion:
+        return analisis_basico
+    
+    try:
+        # PROPAGACIÓN DINÁMICA - Crear propagador fresco para esta consulta
+        propagador = crear_propagador(grafo_contextos, metadatos_contextos)
+        
+        # Obtener contextos iniciales (semillas para propagación)
+        contextos_directos = analisis_basico.get('contextos_recuperados', [])
+        
+        if not contextos_directos:
+            # Si no hay contextos directos, no hay propagación
+            analisis_basico['propagacion'] = {
+                'contextos_directos': [],
+                'contextos_indirectos': [],
+                'solo_por_propagacion': [],
+                'total_nodos_alcanzados': 0,
+                'mensaje': 'Sin contextos base para propagación'
+            }
+            return analisis_basico
+        
+        # PROPAGACIÓN DESDE MÚLTIPLES SEMILLAS
+        from agent.extractor import extraer_palabras_clave
+        palabras_clave = extraer_palabras_clave(pregunta)
+        
+        # Propagar desde cada contexto directo encontrado
+        todos_contextos_propagados = {}
+        caminos_propagacion = {}
+        
+        for contexto_inicial in contextos_directos:
+            if contexto_inicial not in metadatos_contextos:
+                continue
+                
+            # Calcular activación inicial basada en relevancia para esta pregunta
+            meta_inicial = metadatos_contextos[contexto_inicial]
+            palabras_contexto = set(meta_inicial.get('palabras_clave', []))
+            palabras_pregunta = set(palabras_clave)
+            
+            # Similitud como activación inicial
+            interseccion = len(palabras_pregunta & palabras_contexto)
+            union = len(palabras_pregunta | palabras_contexto)
+            activacion_inicial = interseccion / union if union > 0 else 0.3
+            activacion_inicial = max(0.3, min(1.0, activacion_inicial))
+            
+            # Propagar desde este contexto
+            contextos_alcanzados = propagador.propagar_desde_nodo(
+                contexto_inicial, activacion_inicial, max_pasos
+            )
+            
+            # Acumular resultados (tomar máxima activación)
+            for nodo_id, activacion in contextos_alcanzados.items():
+                if nodo_id in todos_contextos_propagados:
+                    if activacion > todos_contextos_propagados[nodo_id]['activacion']:
+                        todos_contextos_propagados[nodo_id] = {
+                            'activacion': activacion,
+                            'fuente_principal': contexto_inicial
+                        }
+                else:
+                    todos_contextos_propagados[nodo_id] = {
+                        'activacion': activacion,
+                        'fuente_principal': contexto_inicial
+                    }
+        
+        # Nodos encontrados solo por propagación
+        contextos_directos_set = set(contextos_directos)
+        contextos_indirectos_set = set(todos_contextos_propagados.keys())
+        solo_por_propagacion = contextos_indirectos_set - contextos_directos_set
+        
+        # Combinar todos los contextos (directos + propagados)
+        todos_contextos = list(contextos_directos_set | contextos_indirectos_set)
+        
+        # Construir árbol enriquecido con información de propagación
+        if todos_contextos:
+            referencia_temporal = analisis_basico['analisis_intencion'].get('timestamp_referencia')
+            factor_refuerzo = analisis_basico['analisis_intencion'].get('factor_refuerzo_temporal', 1.0)
+            
+            arbol_enriquecido = construir_arbol_consulta(
+                pregunta, todos_contextos, referencia_temporal, factor_refuerzo, momento_consulta
+            )
+            
+            # Marcar nodos por origen en el árbol
+            for nodo in arbol_enriquecido['nodes']:
+                if nodo['id'] in solo_por_propagacion:
+                    nodo['encontrado_por'] = 'propagacion'
+                    nodo['activacion'] = todos_contextos_propagados[nodo['id']]['activacion']
+                    nodo['fuente_propagacion'] = todos_contextos_propagados[nodo['id']]['fuente_principal']
+                    # Marcar visualmente con un ícono diferente
+                    if nodo.get('label'):
+                        nodo['label'] = f"🔄 {nodo['label']}"
+                elif nodo['id'] in contextos_directos_set:
+                    nodo['encontrado_por'] = 'busqueda_directa'
+        else:
+            arbol_enriquecido = analisis_basico['arbol_consulta']
+        
+        # Información detallada de propagación
+        info_propagacion = {
+            'contextos_directos': list(contextos_directos_set),
+            'contextos_indirectos': list(contextos_indirectos_set),
+            'solo_por_propagacion': list(solo_por_propagacion),
+            'total_nodos_alcanzados': len(todos_contextos_propagados),
+            'pasos_propagacion': max_pasos,
+            'activaciones': {nodo: info['activacion'] for nodo, info in todos_contextos_propagados.items()},
+            'fuentes_propagacion': {nodo: info['fuente_principal'] for nodo, info in todos_contextos_propagados.items()}
+        }
+        
+        # Respuesta enriquecida
+        analisis_enriquecido = analisis_basico.copy()
+        analisis_enriquecido.update({
+            'contextos_recuperados': todos_contextos,
+            'arbol_consulta': arbol_enriquecido,
+            'propagacion': info_propagacion,
+            'estrategia_aplicada': {
+                **analisis_basico.get('estrategia_aplicada', {}),
+                'propagacion_activada': True,
+                'nodos_adicionales_propagacion': len(solo_por_propagacion),
+                'contextos_semilla': len(contextos_directos),
+                'propagacion_exitosa': len(solo_por_propagacion) > 0
+            }
+        })
+        
+        return analisis_enriquecido
+        
+    except Exception as e:
+        print(f"Error en propagación dinámica: {e}")
+        # Fallback al análisis básico
+        analisis_basico['propagacion'] = {'error': str(e)}
+        return analisis_basico
