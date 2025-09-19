@@ -1,0 +1,578 @@
+{
+  "4aab3c6c-f941-41b6-bafb-53f07d97c510": {
+    "fragmento_id": "4aab3c6c-f941-41b6-bafb-53f07d97c510",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
+    "conversacion_titulo": "Diseño de Arquitectura para un Sistema Web",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Juan: Hola María, ¿has revisado la propuesta de arquitectura para el sistema web?",
+    "palabras_clave": [
+      "sistema",
+      "revisar",
+      "maría",
+      "hola",
+      "propuesta",
+      "juan",
+      "arquitectura"
+    ],
+    "timestamp": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata_conversacion": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:35.550191",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta"
+  },
+  "317f54e6-1bad-48c9-a4fe-273c8044b2e6": {
+    "fragmento_id": "317f54e6-1bad-48c9-a4fe-273c8044b2e6",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
+    "conversacion_titulo": "Diseño de Arquitectura para un Sistema Web",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 4,
+    "texto": "María: Estoy de acuerdo, pero debemos definir bien cómo comunicaremos los servicios. ¿REST o gRPC?",
+    "palabras_clave": [
+      "servicio",
+      "definir",
+      "grpc",
+      "maría",
+      "comunicarer",
+      "deber",
+      "rest"
+    ],
+    "timestamp": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata_conversacion": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:35.562996",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta"
+  },
+  "d80f9327-0193-4792-9a48-c84fb54e76f4": {
+    "fragmento_id": "d80f9327-0193-4792-9a48-c84fb54e76f4",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
+    "conversacion_titulo": "Diseño de Arquitectura para un Sistema Web",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Juan: Yo preferiría gRPC por eficiencia, pero hay que evaluar compatibilidad con el front-end.",
+    "palabras_clave": [
+      "grpc",
+      "preferir",
+      "eficiencia",
+      "evaluar",
+      "juan",
+      "compatibilidad"
+    ],
+    "timestamp": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata_conversacion": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:35.573544",
+    "es_temporal": true,
+    "tipo_contexto": "reunion"
+  },
+  "4a0a9995-21bf-422f-88a9-06c2179fc727": {
+    "fragmento_id": "4a0a9995-21bf-422f-88a9-06c2179fc727",
+    "conversacion_id": "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6",
+    "conversacion_titulo": "Diseño de Arquitectura para un Sistema Web",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 4,
+    "texto": "María: Perfecto, armemos un documento con ventajas y desventajas y lo presentamos mañana.",
+    "palabras_clave": [
+      "perfecto",
+      "maría",
+      "armemos",
+      "mañana",
+      "documento",
+      "desventaja",
+      "ventaja",
+      "presentar"
+    ],
+    "timestamp": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata_conversacion": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:35.585027",
+    "es_temporal": true,
+    "tipo_contexto": "reunion"
+  },
+  "71e38037-8fc1-4d38-b651-6beba71d88ea": {
+    "fragmento_id": "71e38037-8fc1-4d38-b651-6beba71d88ea",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
+    "conversacion_titulo": "Discusión sobre Base de Datos",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Pedro: Estoy evaluando si usamos PostgreSQL o MongoDB para el proyecto.",
+    "palabras_clave": [
+      "postgresql",
+      "proyecto",
+      "mongodb",
+      "evaluar",
+      "pedro"
+    ],
+    "timestamp": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:36.856939",
+    "es_temporal": true,
+    "tipo_contexto": "planificación"
+  },
+  "82661493-5bf2-4e4e-8d74-211f26348813": {
+    "fragmento_id": "82661493-5bf2-4e4e-8d74-211f26348813",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
+    "conversacion_titulo": "Discusión sobre Base de Datos",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Laura: Depende del tipo de datos. ¿Son más relacionales o documentos?",
+    "palabras_clave": [
+      "depender",
+      "dato",
+      "tipo",
+      "laura",
+      "documento",
+      "relacional"
+    ],
+    "timestamp": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:36.870582",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta"
+  },
+  "60ed9ddb-9a68-4352-9ea8-860dba273214": {
+    "fragmento_id": "60ed9ddb-9a68-4352-9ea8-860dba273214",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
+    "conversacion_titulo": "Discusión sobre Base de Datos",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Laura: Entonces PostgreSQL sería la mejor opción. Además, tiene buen soporte para integridad referencial.",
+    "palabras_clave": [
+      "integridad",
+      "soporte",
+      "postgresql",
+      "laura",
+      "opción",
+      "referencial"
+    ],
+    "timestamp": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:36.878455",
+    "es_temporal": true,
+    "tipo_contexto": "planificación"
+  },
+  "fce76978-7ec5-4d97-82a9-9ee314004247": {
+    "fragmento_id": "fce76978-7ec5-4d97-82a9-9ee314004247",
+    "conversacion_id": "4d7e39f3-488d-484c-a2f1-9628195721b4",
+    "conversacion_titulo": "Discusión sobre Base de Datos",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Laura: Podemos usar particionamiento y réplicas para eso. Hagamos pruebas de carga.",
+    "palabras_clave": [
+      "hacer",
+      "carga",
+      "prueba",
+      "laura",
+      "réplica",
+      "particionamiento"
+    ],
+    "timestamp": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:36.882099",
+    "es_temporal": true,
+    "tipo_contexto": "planificación"
+  },
+  "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8": {
+    "fragmento_id": "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
+    "conversacion_titulo": "Optimización de Algoritmo de Búsqueda",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: El algoritmo actual de búsqueda tarda demasiado con datasets grandes.",
+    "palabras_clave": [
+      "dataset",
+      "actual",
+      "búsqueda",
+      "andrés",
+      "tardar",
+      "algoritmo"
+    ],
+    "timestamp": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata_conversacion": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:40.471217",
+    "es_temporal": true,
+    "tipo_contexto": "brainstorming"
+  },
+  "9817e0a1-bdfe-4ea3-9a13-162d1a87b597": {
+    "fragmento_id": "9817e0a1-bdfe-4ea3-9a13-162d1a87b597",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
+    "conversacion_titulo": "Optimización de Algoritmo de Búsqueda",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: Es O(n²), porque comparamos cada elemento con todos los demás.",
+    "palabras_clave": [
+      "comparar",
+      "andrés",
+      "elemento"
+    ],
+    "timestamp": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata_conversacion": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:40.484289",
+    "es_temporal": true,
+    "tipo_contexto": "brainstorming"
+  },
+  "fcd93166-640c-4301-aa3a-a031583a88ad": {
+    "fragmento_id": "fcd93166-640c-4301-aa3a-a031583a88ad",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
+    "conversacion_titulo": "Optimización de Algoritmo de Búsqueda",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Carla: Uf, necesitamos reducir eso. ¿Probaste usar una estructura como un árbol balanceado o un hash map?",
+    "palabras_clave": [
+      "necesitar",
+      "reducir",
+      "estructura",
+      "carla",
+      "balanceado",
+      "probaste",
+      "hash",
+      "árbol"
+    ],
+    "timestamp": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata_conversacion": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:40.495117",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta"
+  },
+  "13b7d75c-30e1-4410-bb97-58042914759d": {
+    "fragmento_id": "13b7d75c-30e1-4410-bb97-58042914759d",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
+    "conversacion_titulo": "Optimización de Algoritmo de Búsqueda",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: Estaba pensando en un índice invertido, similar al que usan los motores de búsqueda.",
+    "palabras_clave": [
+      "similar",
+      "pensar",
+      "invertido",
+      "búsqueda",
+      "andrés",
+      "motor",
+      "índice"
+    ],
+    "timestamp": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata_conversacion": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:40.507489",
+    "es_temporal": true,
+    "tipo_contexto": "brainstorming"
+  },
+  "5cefb13e-c0d6-4010-b87e-d976e981ecc4": {
+    "fragmento_id": "5cefb13e-c0d6-4010-b87e-d976e981ecc4",
+    "conversacion_id": "0fb1e9dc-e85f-4935-982e-3e2ea05517a9",
+    "conversacion_titulo": "Optimización de Algoritmo de Búsqueda",
+    "posicion_en_conversacion": 5,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Carla: Me gusta la idea. Hagamos un prototipo y medimos la mejora.",
+    "palabras_clave": [
+      "hacer",
+      "mejora",
+      "idea",
+      "carla",
+      "medimos",
+      "prototipo",
+      "gustar"
+    ],
+    "timestamp": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata_conversacion": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-04T17:56:40.519072",
+    "es_temporal": true,
+    "tipo_contexto": "brainstorming"
+  },
+  "fc630fe9-4301-4af5-b513-6faf760e2ddd": {
+    "fragmento_id": "fc630fe9-4301-4af5-b513-6faf760e2ddd",
+    "conversacion_id": "2d2f34c7-d420-4839-8378-a93c5d6b8e28",
+    "conversacion_titulo": "Contrato de Compraventa",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "El contrato de compraventa fue firmado en marzo de 2023 entre la empresa A y la empresa B. Incluye cláusulas sobre la entrega de bienes y plazos de pago.",
+    "palabras_clave": [
+      "cláusula",
+      "compraventa",
+      "firmar",
+      "entrega",
+      "marzo",
+      "plazo",
+      "pago",
+      "bien",
+      "empresa",
+      "contrato",
+      "incluir"
+    ],
+    "timestamp": "2023-03-15T09:00:00",
+    "participantes": [
+      "Abogado A",
+      "Cliente B"
+    ],
+    "metadata_conversacion": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:57:34.854586",
+    "es_temporal": true,
+    "tipo_contexto": "documento"
+  },
+  "e80de4c6-570a-4bfc-8cce-99332ffb8a85": {
+    "fragmento_id": "e80de4c6-570a-4bfc-8cce-99332ffb8a85",
+    "conversacion_id": "962366c9-a42c-42e9-afd0-03bfad2a9f27",
+    "conversacion_titulo": "Factura Emitida",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "La empresa B emitió una factura en mayo de 2024 correspondiente al contrato de compraventa firmado previamente.",
+    "palabras_clave": [
+      "correspondiente",
+      "compraventa",
+      "factura",
+      "firmado",
+      "previamente",
+      "empresa",
+      "contrato",
+      "emitir",
+      "mayo"
+    ],
+    "timestamp": "2024-05-10T11:30:00",
+    "participantes": [
+      "Contador B",
+      "Cliente A"
+    ],
+    "metadata_conversacion": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:57:47.646296",
+    "es_temporal": true,
+    "tipo_contexto": "documento"
+  },
+  "b046434b-61d4-4533-906c-69b68bb6c5a0": {
+    "fragmento_id": "b046434b-61d4-4533-906c-69b68bb6c5a0",
+    "conversacion_id": "34e4d820-6825-4163-9c24-02c2c775ea89",
+    "conversacion_titulo": "Litigio Judicial",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "En junio de 2024 se inició un litigio judicial por incumplimiento de pago relacionado con la compraventa entre la empresa A y la empresa B.",
+    "palabras_clave": [
+      "compraventa",
+      "relacionado",
+      "iniciar",
+      "pago",
+      "judicial",
+      "junio",
+      "empresa",
+      "litigio",
+      "incumplimiento"
+    ],
+    "timestamp": "2024-06-20T14:00:00",
+    "participantes": [
+      "Juez",
+      "Abogado A",
+      "Abogado B"
+    ],
+    "metadata_conversacion": {
+      "tipo": "litigio",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "created_at": "2025-09-17T15:58:04.820232",
+    "es_temporal": true,
+    "tipo_contexto": "litigio"
+  }
+}

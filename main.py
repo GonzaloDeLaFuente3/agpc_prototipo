@@ -1,14 +1,16 @@
 # main.py
+import json
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional
 import os
-
 from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
 from agent.query_analyzer import analizar_intencion_temporal
 from datetime import datetime
+from agent.dataset_loader import DatasetLoader
+from fastapi import UploadFile, File
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -172,6 +174,106 @@ def exportar_para_visualizacion():
 def analizar_query(pregunta: str):
     """Analiza la intención temporal de una pregunta."""
     return analizar_intencion_temporal(pregunta)
+
+# ENDPOINTS PARA CONVERSACIONES
+
+class EntradaConversacion(BaseModel):
+    titulo: str
+    contenido: str
+    fecha: Optional[str] = None
+    participantes: Optional[List[str]] = None
+    metadata: Optional[dict] = None
+
+@app.post("/conversacion/")
+def agregar_conversacion_endpoint(entrada: EntradaConversacion):
+    """Agrega una conversación completa y la fragmenta automáticamente."""
+    try:
+        resultado = grafo.agregar_conversacion(
+            titulo=entrada.titulo,
+            contenido=entrada.contenido,
+            fecha=entrada.fecha,
+            participantes=entrada.participantes,
+            metadata=entrada.metadata
+        )
+        return {
+            "status": "conversacion_agregada",
+            **resultado
+        }
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+
+@app.get("/conversaciones/")
+def obtener_conversaciones():
+    """Obtiene todas las conversaciones."""
+    return grafo.obtener_conversaciones()
+
+@app.get("/conversacion/{conversacion_id}/fragmentos")
+def obtener_fragmentos_conversacion(conversacion_id: str):
+    """Obtiene fragmentos de una conversación específica."""
+    return grafo.obtener_fragmentos_de_conversacion(conversacion_id)
+
+# ENDPOINTS PARA CARGA MASIVA DE DATASETS
+class DatasetUpload(BaseModel):
+    dataset: dict
+    sobrescribir: bool = False
+
+@app.post("/dataset/validar/")
+def validar_dataset(dataset: dict):
+    """Valida el formato de un dataset sin procesarlo."""
+    loader = DatasetLoader()
+    es_valido, errores = loader.validar_formato(dataset)
+    
+    return {
+        "valido": es_valido,
+        "errores": errores,
+        "total_conversaciones": len(dataset.get('conversaciones', [])),
+        "dominio": dataset.get('dominio', 'No especificado')
+    }
+
+@app.post("/dataset/upload/")
+async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
+    """Sube y procesa un archivo JSON de dataset."""
+    if not file.filename.endswith('.json'):
+        return {"status": "error", "mensaje": "Solo se permiten archivos .json"}
+    
+    try:
+        contenido = await file.read()
+        dataset = json.loads(contenido.decode('utf-8'))
+        
+        loader = DatasetLoader()
+        estadisticas = loader.procesar_dataset(dataset, sobrescribir)
+        
+        return {
+            "status": "archivo_procesado",
+            "archivo": file.filename,
+            "estadisticas": estadisticas
+        }
+        
+    except json.JSONDecodeError:
+        return {"status": "error", "mensaje": "Archivo JSON inválido"}
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+    
+#ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL
+@app.get("/grafo/macro/conversaciones/")
+def exportar_grafo_macro():
+    """Vista macro: conversaciones como nodos, relaciones agregadas."""
+    return grafo.exportar_grafo_macro_conversaciones()
+
+@app.get("/grafo/micro/fragmentos/")
+def exportar_grafo_micro_completo():
+    """Vista micro: todos los fragmentos individuales."""
+    return grafo.exportar_grafo_micro_fragmentos()
+
+@app.get("/grafo/micro/conversacion/{conversacion_id}")
+def exportar_grafo_micro_conversacion(conversacion_id: str):
+    """Vista micro filtrada: solo fragmentos de una conversación específica."""
+    return grafo.exportar_grafo_micro_fragmentos(conversacion_id)
+
+@app.get("/estadisticas/doble-nivel/")
+def obtener_estadisticas_doble_nivel():
+    """Estadísticas comparativas entre vista macro y micro."""
+    return grafo.obtener_estadisticas_doble_nivel()
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
