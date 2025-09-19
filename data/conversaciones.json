@@ -1,0 +1,157 @@
+{
+  "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6": {
+    "titulo": "Diseño de Arquitectura para un Sistema Web",
+    "fecha": "2025-01-25T10:00:00",
+    "participantes": [
+      "Juan",
+      "María"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "proyecto": "Sistema Web de Gestión",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "4aab3c6c-f941-41b6-bafb-53f07d97c510",
+      "317f54e6-1bad-48c9-a4fe-273c8044b2e6",
+      "d80f9327-0193-4792-9a48-c84fb54e76f4",
+      "4a0a9995-21bf-422f-88a9-06c2179fc727"
+    ],
+    "created_at": "2025-09-04T17:56:35.585027"
+  },
+  "4d7e39f3-488d-484c-a2f1-9628195721b4": {
+    "titulo": "Discusión sobre Base de Datos",
+    "fecha": "2025-02-10T15:30:00",
+    "participantes": [
+      "Pedro",
+      "Laura"
+    ],
+    "metadata": {
+      "tipo": "planificación",
+      "proyecto": "Plataforma de Pagos",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "71e38037-8fc1-4d38-b651-6beba71d88ea",
+      "82661493-5bf2-4e4e-8d74-211f26348813",
+      "60ed9ddb-9a68-4352-9ea8-860dba273214",
+      "fce76978-7ec5-4d97-82a9-9ee314004247"
+    ],
+    "created_at": "2025-09-04T17:56:36.882099"
+  },
+  "0fb1e9dc-e85f-4935-982e-3e2ea05517a9": {
+    "titulo": "Optimización de Algoritmo de Búsqueda",
+    "fecha": "2025-03-05T09:45:00",
+    "participantes": [
+      "Andrés",
+      "Carla"
+    ],
+    "metadata": {
+      "tipo": "brainstorming",
+      "proyecto": "Motor de Búsqueda Interno",
+      "dominio": "Ingeniería en Informática",
+      "dataset_metadata": {
+        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
+        "autor": "Uriel De La Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8",
+      "9817e0a1-bdfe-4ea3-9a13-162d1a87b597",
+      "fcd93166-640c-4301-aa3a-a031583a88ad",
+      "13b7d75c-30e1-4410-bb97-58042914759d",
+      "5cefb13e-c0d6-4010-b87e-d976e981ecc4"
+    ],
+    "created_at": "2025-09-04T17:56:40.519072"
+  },
+  "2d2f34c7-d420-4839-8378-a93c5d6b8e28": {
+    "titulo": "Contrato de Compraventa",
+    "fecha": "2023-03-15T09:00:00",
+    "participantes": [
+      "Abogado A",
+      "Cliente B"
+    ],
+    "metadata": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 1,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "fc630fe9-4301-4af5-b513-6faf760e2ddd"
+    ],
+    "created_at": "2025-09-17T15:57:34.854586"
+  },
+  "962366c9-a42c-42e9-afd0-03bfad2a9f27": {
+    "titulo": "Factura Emitida",
+    "fecha": "2024-05-10T11:30:00",
+    "participantes": [
+      "Contador B",
+      "Cliente A"
+    ],
+    "metadata": {
+      "tipo": "documento",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 2,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "e80de4c6-570a-4bfc-8cce-99332ffb8a85"
+    ],
+    "created_at": "2025-09-17T15:57:47.646296"
+  },
+  "34e4d820-6825-4163-9c24-02c2c775ea89": {
+    "titulo": "Litigio Judicial",
+    "fecha": "2024-06-20T14:00:00",
+    "participantes": [
+      "Juez",
+      "Abogado A",
+      "Abogado B"
+    ],
+    "metadata": {
+      "tipo": "litigio",
+      "proyecto": "Caso Compraventa",
+      "dominio": "Legal",
+      "dataset_metadata": {
+        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
+        "autor": "Gonzalo De la Fuente"
+      },
+      "posicion_en_dataset": 3,
+      "cargado_masivamente": true
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "b046434b-61d4-4533-906c-69b68bb6c5a0"
+    ],
+    "created_at": "2025-09-17T15:58:04.820232"
+  }
+}

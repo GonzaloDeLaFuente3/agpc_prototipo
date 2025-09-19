@@ -22,69 +22,65 @@
     <!-- Main Content - 3 Columnas -->
     <div class="flex gap-4 px-4 pb-4 min-h-screen">
         
-        <!-- COLUMNA IZQUIERDA - Contextos -->
+        <!-- COLUMNA IZQUIERDA - Contextos y Conversaciones -->
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
-            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contextos</h2>
+            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contenido</h2>
             
-            <!-- Agregar Contexto -->
-            <div class="mb-6">
-                <button id="toggleAgregarContexto" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mb-3">
-                    ➕ Agregar Nuevo Contexto
-                </button>
-                
-                <div id="formAgregarContexto" class="hidden space-y-3">
-                    <input id="titulo" placeholder="Título del contexto" class="border p-2 w-full rounded text-sm" />
-                    <textarea id="texto" placeholder="Texto del contexto" class="border p-2 w-full rounded text-sm h-20 resize-none"></textarea>
+            <!-- Panel de Conversaciones (nuevo) -->
+            <div id="panelConversaciones" >
+                <!-- Agregar Conversación -->
+                <div class="mb-6">
+                    <button id="toggleAgregarConversacion" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors mb-3">
+                        ➕ Agregar Nueva Conversación
+                    </button>
                     
-                    <!-- Controles temporales opcionales -->
-                    <details class="bg-blue-50 p-2 rounded border border-blue-200">
-                        <summary class="text-sm font-medium text-blue-800 cursor-pointer">
-                            ⚙️ Controles Manuales (Opcional)
-                        </summary>
-                        <div class="mt-3 space-y-3">
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="auto" id="modoAuto" checked>
-                                <label for="modoAuto" class="text-sm text-blue-700">🤖 Detección automática</label>
+                    <div id="formAgregarConversacion" class="hidden space-y-3">
+                        <input id="tituloConversacion" placeholder="Título de la conversación" class="border p-2 w-full rounded text-sm" />
+                        <textarea id="contenidoConversacion" placeholder="Contenido completo de la conversación..." class="border p-2 w-full rounded text-sm h-32 resize-none"></textarea>
+                        
+                        <!-- Metadatos opcionales -->
+                        <details class="bg-green-50 p-2 rounded border border-green-200">
+                            <summary class="text-sm font-medium text-green-800 cursor-pointer">
+                                📋 Metadatos (Opcional)
+                            </summary>
+                            <div class="mt-3 space-y-2">
+                                <input id="participantesConversacion" placeholder="Participantes (separados por coma)" 
+                                    class="border p-2 w-full rounded text-xs bg-green-50 border-green-300" />
+                                <input id="fechaConversacion" type="datetime-local" 
+                                    class="border p-2 w-full rounded text-xs bg-green-50 border-green-300" />
+                                <select id="tipoConversacion" class="border p-2 w-full rounded text-xs bg-green-50 border-green-300">
+                                    <option value="reunion">👥 Reunión</option>
+                                    <option value="entrevista">🎤 Entrevista</option>
+                                    <option value="brainstorm">💡 Brainstorm</option>
+                                    <option value="planning">📋 Planning</option>
+                                    <option value="general">📄 General</option>
+                                </select>
                             </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="temporal" id="modoTemporal">
-                                <label for="modoTemporal" class="text-sm text-blue-700">🕒 Forzar temporal</label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="modoTemporal" value="atemporal" id="modoAtemporal">
-                                <label for="modoAtemporal" class="text-sm text-blue-700">📋 Forzar atemporal</label>
-                            </div>
-                            
-                            <div id="referenciaManualContainer" class="hidden">
-                                <input id="referenciaManualInput" 
-                                    placeholder='Referencia: "mañana", "25/01/2025"...' 
-                                    class="border p-2 w-full rounded text-sm bg-blue-50 border-blue-300" />
-                            </div>
+                        </details>
+                        
+                        <div class="flex gap-2">
+                            <button onclick="agregarConversacion()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
+                                ✅ Fragmentar y Guardar
+                            </button>
+                            <button id="cancelarAgregarConversacion" class="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
+                                ❌ Cancelar
+                            </button>
                         </div>
-                    </details>
-                    
-                    <div class="flex gap-2">
-                        <button onclick="agregarContexto()" class="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 transition-colors">
-                            ✅ Guardar
-                        </button>
-                        <button id="cancelarAgregar" class="flex-1 bg-gray-500 text-white px-3 py-2 rounded text-sm hover:bg-gray-600 transition-colors">
-                            ❌ Cancelar
-                        </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Lista de Contextos -->
-            <div>
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-semibold text-gray-700">📋 Contextos</h3>
-                    <button onclick="mostrarContextos()" class="bg-indigo-600 text-white px-2 py-1 rounded text-xs hover:bg-indigo-700 transition-colors">
-                        🔄 Actualizar
-                    </button>
-                </div>
-                
-                <div id="todosContextos" class="text-xs bg-gray-50 p-3 rounded max-h-96 overflow-y-auto border">
-                    <p class="text-gray-500 italic">Clic en "Actualizar" para cargar contextos</p>
+                <!-- Lista de Conversaciones -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-gray-700">💬 Conversaciones</h3>
+                        <button onclick="mostrarConversaciones()" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700 transition-colors">
+                            🔄 Actualizar
+                        </button>
+                    </div>
+                    
+                    <div id="todasConversaciones" class="text-xs bg-gray-50 p-3 rounded max-h-96 overflow-y-auto border">
+                        <p class="text-gray-500 italic">Clic en "Actualizar" para cargar conversaciones</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,99 +147,166 @@
                     </div>
                 </div>
             </div>
+            <!-- Carga Masiva de Datasets -->
+            <div class="bg-orange-200 rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-orange-800 border-b pb-2">📦 Carga Masiva de Datasets</h2>
+                
+                <div class="space-y-4">
+                    <!-- Subir archivo JSON -->
+                    <div class="p-3 bg-orange-50 border border-orange-200 rounded">
+                        <h3 class="font-medium text-orange-800 mb-2">📁 Subir Archivo Dataset</h3>
+                        <div class="space-y-2">
+                            <input type="file" id="fileDataset" accept=".json" class="border p-2 w-full rounded text-sm" />
+                            <div class="flex gap-2">
+                                <button onclick="subirDataset()" class="bg-orange-600 text-white px-4 py-2 rounded text-sm hover:bg-orange-700 transition-colors">
+                                    📤 Subir y Procesar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Área de texto para JSON -->
+                    <div class="p-3 bg-orange-50 border border-orange-200 rounded">
+                        <h3 class="font-medium text-orange-800 mb-2">✍️ Pegar JSON Dataset</h3>
+                        <div class="space-y-2">
+                            <textarea id="jsonDataset" placeholder='Pegá aquí tu JSON dataset...' 
+                                    class="border p-2 w-full rounded text-xs h-32 font-mono resize-none"></textarea>
+                            <div class="flex gap-2">
+                                <button onclick="validarJSON()" class="bg-yellow-600 text-white px-3 py-2 rounded text-sm hover:bg-yellow-700 transition-colors">
+                                    ✅ Solo Validar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resultados -->
+                    <div id="resultadosDataset" class="p-3 bg-gray-50 border rounded min-h-20">
+                        <p class="text-gray-500 italic text-sm">Los resultados de procesamiento aparecerán aquí...</p>
+                    </div>
+                    
+                    <!-- Info sobre formato -->
+                    <details class="bg-orange-50 p-3 rounded border border-orange-200">
+                        <summary class="text-sm font-medium text-orange-800 cursor-pointer">
+                            📋 Formato JSON Esperado
+                        </summary>
+                        <pre class="text-xs text-gray-700 mt-2 bg-white p-2 rounded overflow-x-auto"><code>{
+            "dominio": "nombre_del_dominio",
+            "metadata": {
+                "descripcion": "Descripción del dataset",
+                "autor": "Tu nombre"
+            },
+            "conversaciones": [
+                {
+                "titulo": "Nombre conversación",
+                "contenido": "Texto completo...",
+                "fecha": "2025-01-25T10:00:00",
+                "participantes": ["Juan", "María"],
+                "metadata": {
+                    "tipo": "reunion",
+                    "proyecto": "Mi Proyecto"
+                }
+                }
+            ]
+            }</code></pre>
+                    </details>
+                </div>
+            </div>
         </div>
 
         <!-- COLUMNA DERECHA - Visualización y Estadísticas -->
         <div class="w-1/4 space-y-4">
-            
-            <!-- Visualización del Grafo -->
+            <!-- Visualización del Grafo con Doble Nivel -->
             <div class="bg-gray-300 rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización del Grafo</h2>
+                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización Doble Nivel</h2>
                 
                 <div class="space-y-3">
-                    <button onclick="abrirModalGrafo()" class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
-                        📊 Ver Grafo Completo
+                    <!-- Selector de Vista -->
+                    <div class="bg-purple-50 p-3 rounded border border-purple-200">
+                        <h3 class="font-medium text-purple-800 mb-2">👁️ Nivel de Vista</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <input type="radio" name="tipoVista" value="macro" id="vistaMacro" checked>
+                                <label for="vistaMacro" class="text-sm">🌐 Macro (Conversaciones)</label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="radio" name="tipoVista" value="micro" id="vistaMicro">
+                                <label for="vistaMicro" class="text-sm">🔬 Micro (Fragmentos)</label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="radio" name="tipoVista" value="micro-filtrada" id="vistaMicroFiltrada">
+                                <label for="vistaMicroFiltrada" class="text-sm">🎯 Micro Filtrada</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Selector de conversación para vista micro filtrada -->
+                        <div id="selectorConversacion" class="mt-2 hidden">
+                            <select id="conversacionFiltro" class="w-full p-1 text-xs border rounded bg-white">
+                                <option value="">Seleccionar conversación...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones de visualización -->
+                    <button onclick="abrirModalGrafoDobleNivel()" class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
+                        📊 Ver Grafo (Doble Nivel)
                     </button>
                     
-                    <div class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
-                        <p><strong>🕸️ Visualización:</strong> Nodos azules = temporales, grises = atemporales. Las aristas muestran relaciones semánticas y temporales.</p>
+                    <!-- Información del nivel actual -->
+                    <div id="infoNivelActual" class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
+                        <p><strong>🌐 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Estadísticas -->
+            <!-- Estadísticas Mejoradas -->
             <div class="bg-gray-300 rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">📊 Estadísticas</h2>
+                <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">📊 Estadísticas Avanzadas</h2>
                 
                 <div class="space-y-3">
                     <button onclick="cargarEstadisticas()" class="w-full bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors text-sm">
-                        🔄 Actualizar Estadísticas
+                        🔄 Stats Básicas
                     </button>
                     
-                    <div id="estadisticas" class="text-xs bg-gray-50 p-3 rounded">
-                        <p class="text-gray-500 italic">Clic en "Actualizar" para ver estadísticas</p>
+                    <button onclick="cargarEstadisticasDobleNivel()" class="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors text-sm">
+                        📈 Stats Doble Nivel
+                    </button>
+                    
+                    <div id="estadisticas" class="text-xs bg-gray-50 p-3 rounded max-h-64 overflow-y-auto">
+                        <p class="text-gray-500 italic">Clic en "Stats Básicas" para ver estadísticas</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal para el Grafo -->
+    <!-- Modal para el Grafo Doble Nivel -->
     <div id="modalGrafo" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto p-4 z-50">
         <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-6xl mx-auto my-4 flex flex-col">
             <div class="p-4 flex flex-col h-full max-h-[90vh]">
-                <!-- Leyenda del grafo -->
-                <div class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                
+                <!-- Header con información del nivel actual -->
+                <div id="headerGrafo" class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
+                    <div class="flex justify-between items-center">
                         <div>
-                            <p class="font-semibold text-purple-800 mb-2">🎯 Nodos por Tipo:</p>
-                            <div class="space-y-1 text-xs">
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
-                                    <span>Reuniones (2d decay)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">📋</div>
-                                    <span>Tareas (7d decay)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">🎯</div>
-                                    <span>Eventos (3d decay)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-pink-100 border border-pink-600 rounded mr-2 flex items-center justify-center text-xs">🚀</div>
-                                    <span>Proyectos (45d decay)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-purple-100 border border-purple-600 rounded mr-2 flex items-center justify-center text-xs">📚</div>
-                                    <span>Conocimiento (365d decay)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-4 h-4 bg-gray-200 border border-gray-600 rounded mr-2 flex items-center justify-center text-xs">📄</div>
-                                    <span>General (30d decay)</span>
-                                </div>
+                            <h2 class="text-lg font-bold text-purple-800" id="tituloVistaGrafo">🌐 Vista Macro - Conversaciones</h2>
+                            <p class="text-sm text-purple-600" id="descripcionVistaGrafo">Cada nodo representa una conversación completa</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-purple-700" id="metricasVistaGrafo">
+                                <div>Nodos: <span id="totalNodos">-</span></div>
+                                <div>Aristas: <span id="totalAristas">-</span></div>
                             </div>
                         </div>
-                        <div>
-                            <p class="font-semibold text-purple-800 mb-2">🔗 Aristas:</p>
-                            <div class="space-y-1 text-xs">
-                                <div class="flex items-center">
-                                    <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
-                                    <span>🕒 Relaciones temporales (verde)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
-                                    <span>📋 Relaciones semánticas (azul)</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-8 h-1 bg-gray-400 mr-2 rounded"></div>
-                                    <span>⚪ Relaciones débiles (gris)</span>
-                                </div>
-                                <div class="text-xs text-gray-600 mt-2 p-2 bg-gray-100 rounded">
-                                    <strong>Formato arista:</strong> E=Estructural | T=Temporal | W=Peso efectivo<br>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leyenda dinámica según el tipo de vista -->
+                <div id="leyendaGrafo" class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded">
+                    <div id="leyendaMacro" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                    <div id="leyendaMicro" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <!-- Se llena dinámicamente -->
                     </div>
                 </div>
                 
@@ -254,11 +317,16 @@
                     </div>
                 </div>
                 
-                <!-- Botones -->
-                <div class="mt-auto flex justify-center space-x-2">
-                    <button onclick="cargarGrafo()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
-                        🔄 Actualizar Grafo
-                    </button>
+                <!-- Botones con opciones avanzadas -->
+                <div class="mt-auto flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="cargarGrafoDobleNivel()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
+                            🔄 Actualizar
+                        </button>
+                        <button onclick="cambiarVistaGrafo()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+                            🔄 Cambiar Vista
+                        </button>
+                    </div>
                     <button onclick="cerrarModalGrafo()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
                         ❌ Cerrar
                     </button>

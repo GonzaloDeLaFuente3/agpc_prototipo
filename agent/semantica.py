@@ -1,4 +1,4 @@
-# agent/semantica.py - Optimizado y actualizado
+# agent/semantica.py
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 

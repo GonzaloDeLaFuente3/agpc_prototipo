@@ -8,11 +8,147 @@ import threading
 import math
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set
-
 from agent.extractor import extraer_palabras_clave
 from agent.semantica import indexar_documento, coleccion
 from agent.temporal_parser import extraer_referencias_del_texto, parsear_referencia_temporal
 from agent.query_analyzer import analizar_intencion_temporal
+from agent.visualizador_doble import VisualizadorDobleNivel
+from agent.fragmentador import fragmentar_conversacion
+
+# Nuevas estructuras de datos
+conversaciones_metadata = {}
+fragmentos_metadata = {}
+
+def agregar_conversacion(titulo: str, contenido: str, fecha: str = None, 
+                        participantes: List[str] = None, metadata: Dict = None) -> Dict:
+    """
+    Agrega una conversación completa y la fragmenta automáticamente.
+    Returns:
+        {
+            'conversacion_id': str,
+            'fragmentos_creados': List[str],
+            'total_fragmentos': int
+        }
+    """
+    # Preparar datos de conversación
+    conversacion_data = {
+        'titulo': titulo,
+        'contenido': contenido,
+        'fecha': fecha or datetime.now().isoformat(),
+        'participantes': participantes or [],
+        'metadata': metadata or {}
+    }
+    
+    # Fragmentar conversación
+    fragmentos = fragmentar_conversacion(conversacion_data)
+    
+    if not fragmentos:
+        raise ValueError("No se pudieron generar fragmentos de esta conversación")
+    
+    conversacion_id = fragmentos[0]['metadata']['conversacion_id']
+    fragmentos_ids = []
+    
+    # Agregar conversación a metadatos
+    conversaciones_metadata[conversacion_id] = {
+        'titulo': titulo,
+        'fecha': fecha or datetime.now().isoformat(),
+        'participantes': participantes or [],
+        'metadata': metadata or {},
+        'total_fragmentos': len(fragmentos),
+        'fragmentos_ids': [f['id'] for f in fragmentos],
+        'created_at': datetime.now().isoformat()
+    }
+    
+    # Procesar cada fragmento como si fuera un contexto individual
+    for fragmento in fragmentos:
+        frag_id = fragmento['id']
+        frag_meta = fragmento['metadata']
+        
+        # Agregar fragmento al grafo como nodo
+        titulo_fragmento = f"{titulo} - Fragmento {frag_meta['posicion_en_conversacion']}"
+        grafo_contextos.add_node(frag_id, titulo=titulo_fragmento)
+        
+        # Guardar metadatos del fragmento
+        fragmentos_metadata[frag_id] = frag_meta
+        
+        # También mantener compatibilidad con metadatos_contextos
+        metadatos_contextos[frag_id] = {
+            "titulo": titulo_fragmento,
+            "texto": frag_meta['texto'],
+            "palabras_clave": frag_meta['palabras_clave'],
+            "created_at": frag_meta['created_at'],
+            "es_temporal": frag_meta['es_temporal'],
+            "timestamp": frag_meta.get('timestamp'),
+            "tipo_contexto": frag_meta['tipo_contexto'],
+            # Metadatos específicos de fragmento
+            "es_fragmento": True,
+            "conversacion_id": conversacion_id,
+            "posicion_fragmento": frag_meta['posicion_en_conversacion']
+        }
+        
+        # Indexar para búsqueda semántica
+        indexar_documento(frag_id, frag_meta['texto'])
+        fragmentos_ids.append(frag_id)
+    
+    # Recalcular relaciones con los nuevos fragmentos
+    _recalcular_relaciones()
+    _guardar_grafo()
+    
+    # También guardar nuevas estructuras
+    _guardar_conversaciones()
+    print(f"Conversación '{titulo}' agregada: {len(fragmentos)} fragmentos creados")
+    
+    return {
+        'conversacion_id': conversacion_id,
+        'fragmentos_creados': fragmentos_ids,
+        'total_fragmentos': len(fragmentos)
+    }
+
+def _guardar_conversaciones():
+    """Guarda metadatos de conversaciones y fragmentos."""
+    import os
+    import json
+    
+    os.makedirs("data", exist_ok=True)
+    
+    with open("data/conversaciones.json", 'w', encoding='utf-8') as f:
+        json.dump(conversaciones_metadata, f, ensure_ascii=False, indent=2)
+    
+    with open("data/fragmentos.json", 'w', encoding='utf-8') as f:
+        json.dump(fragmentos_metadata, f, ensure_ascii=False, indent=2)
+
+def cargar_conversaciones_desde_disco():
+    """Carga metadatos de conversaciones desde disco."""
+    global conversaciones_metadata, fragmentos_metadata
+    
+    if os.path.exists("data/conversaciones.json"):
+        with open("data/conversaciones.json", 'r', encoding='utf-8') as f:
+            conversaciones_metadata = json.load(f)
+    
+    if os.path.exists("data/fragmentos.json"):
+        with open("data/fragmentos.json", 'r', encoding='utf-8') as f:
+            fragmentos_metadata = json.load(f)
+
+def obtener_conversaciones() -> Dict:
+    """Obtiene todas las conversaciones."""
+    return conversaciones_metadata
+
+def obtener_fragmentos_de_conversacion(conversacion_id: str) -> List[Dict]:
+    """Obtiene todos los fragmentos de una conversación específica."""
+    if conversacion_id not in conversaciones_metadata:
+        return []
+    
+    fragmentos_ids = conversaciones_metadata[conversacion_id]['fragmentos_ids']
+    
+    fragmentos = []
+    for frag_id in fragmentos_ids:
+        if frag_id in fragmentos_metadata:
+            fragmentos.append({
+                'id': frag_id,
+                'metadata': fragmentos_metadata[frag_id]
+            })
+    
+    return fragmentos
 
 # Archivos de persistencia
 ARCHIVO_GRAFO = "data/grafo_contextos.pickle"
@@ -168,7 +304,6 @@ def _recalcular_relaciones():
     """Recalcula todas las relaciones del grafo con similitud estructural corregida."""
     grafo_contextos.clear_edges()
     nodos = list(grafo_contextos.nodes())
-    
     print(f"Recalculando relaciones para {len(nodos)} nodos...")
     
     for i, nodo_a in enumerate(nodos):
@@ -201,7 +336,6 @@ def _recalcular_relaciones():
                 
                 grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
                 grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
-    
     print(f"Total aristas creadas: {grafo_contextos.number_of_edges()}")
 
 def _guardar_grafo():
@@ -230,10 +364,12 @@ def cargar_desde_disco():
             metadatos_contextos = json.load(f)
     else:
         metadatos_contextos = {}
+    
+    # Cargar también conversaciones y fragmentos
+    cargar_conversaciones_desde_disco()
 
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
     """Agrega un nuevo contexto con prevención de duplicados."""
-    
     # PREVENCIÓN DE DUPLICADOS - Verificación antes de agregar
     titulo_norm = titulo.strip().lower()
     texto_norm = " ".join(texto.strip().lower().split())
@@ -245,7 +381,7 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
         # Verificar duplicado exacto o muy similar
         if (titulo_norm == titulo_existente and texto_norm == texto_existente) or \
            (len(texto_norm) > 50 and _calcular_similitud_textual_exacta(texto_norm, texto_existente) > 0.98):
-            print(f"⚠️ Contexto duplicado detectado - no agregando. Retornando ID existente: {ctx_id}")
+            print(f"Contexto duplicado detectado - no agregando. Retornando ID existente: {ctx_id}")
             return ctx_id  # Retornar ID del existente
     
     # Continuar con el proceso normal si no es duplicado
@@ -295,8 +431,6 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     # Recalcular y guardar
     _recalcular_relaciones()
     _guardar_grafo()
-    
-    print(f"✅ Nuevo contexto agregado: {titulo} (ID: {id_contexto})")
     return id_contexto
 
 def obtener_todos() -> Dict:
@@ -587,3 +721,37 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
         return fecha_inicio <= fecha_contexto <= fecha_fin
     except (ValueError, TypeError):
         return False
+    
+# FUNCIONES DE VISUALIZACIÓN DOBLE NIVEL
+def exportar_grafo_macro_conversaciones() -> Dict:
+    """Exporta vista macro: conversaciones como nodos."""
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.generar_vista_macro_conversaciones()
+
+def exportar_grafo_micro_fragmentos(filtro_conversacion: str = None) -> Dict:
+    """Exporta vista micro: fragmentos individuales."""
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.generar_vista_micro_fragmentos(filtro_conversacion)
+
+def obtener_estadisticas_doble_nivel() -> Dict:
+    """Estadísticas comparativas de ambos niveles de visualización."""
+    visualizador = VisualizadorDobleNivel(
+        grafo_contextos, 
+        metadatos_contextos, 
+        conversaciones_metadata, 
+        fragmentos_metadata
+    )
+    
+    return visualizador.obtener_estadisticas_doble_nivel()
