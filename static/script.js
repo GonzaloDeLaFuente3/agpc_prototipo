@@ -7,12 +7,19 @@ let ultimoSubgrafo = null;
 let vistaActual = 'macro';
 let conversacionesList = {};
 let estadisticasDobleNivel = null;
+// Variables globales para propagación
+let propagacionHabilitada = true;
+let parametrosPropagacion = {
+    factor_decaimiento: 0.8,
+    umbral_activacion: 0.1,
+    max_pasos: 2
+};
 
 // Event listeners principales
 document.addEventListener('DOMContentLoaded', function() {
     // Enter en campos de input
     document.getElementById('pregunta').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') preguntar();
+        if (e.key === 'Enter') preguntarConPropagacion();
     });
 
     document.getElementById('textoBusqueda').addEventListener('keypress', function(e) {
@@ -63,10 +70,20 @@ document.addEventListener('DOMContentLoaded', function() {
             cargarGrafoDobleNivel();
         }
     });
+
+    //Cargar estado inicial después de un breve delay
+    setTimeout(() => {
+        obtenerEstadoPropagacion();
+    }, 1000);
 });
 
-// Función principal para preguntar
 async function preguntar() {
+    // Usar directamente preguntarConPropagacion() que ahora es la implementación completa
+    return preguntarConPropagacion();
+}
+
+// Función mejorada de preguntar con propagación
+async function preguntarConPropagacion() {
     const pregunta = document.getElementById('pregunta').value.trim();
     if (!pregunta) {
         alert("Por favor escribí una pregunta.");
@@ -79,22 +96,26 @@ async function preguntar() {
     const panelEstrategia = document.getElementById('panelEstrategia');
     const contenidoEstrategia = document.getElementById('contenidoEstrategia');
     
-    respuestaDiv.innerHTML = "🧠 Analizando intención temporal y buscando contextos relevantes...";
+    respuestaDiv.innerHTML = "🧠 Analizando con propagación de activación...";
     botonDiv.style.display = 'none';
     botonArbolDiv.style.display = 'none';
     panelEstrategia.classList.add('hidden');
 
     try {
-        const res = await axios.get(`/preguntar/?pregunta=${encodeURIComponent(pregunta)}`);
+        const usarPropagacion = propagacionHabilitada;
+        const maxPasos = parametrosPropagacion.max_pasos;
+        
+        const res = await axios.get(`/preguntar-con-propagacion/?pregunta=${encodeURIComponent(pregunta)}&usar_propagacion=${usarPropagacion}&max_pasos=${maxPasos}`);
         
         respuestaDiv.innerText = res.data.respuesta;
         ultimaRespuesta = res.data.respuesta;
         ultimaPregunta = pregunta;
         
-        // Mostrar información de estrategia aplicada
+        // Mostrar información de estrategia aplicada incluyendo propagación
         if (res.data.analisis_intencion && res.data.estrategia_aplicada) {
             const analisis = res.data.analisis_intencion;
             const estrategia = res.data.estrategia_aplicada;
+            const propagacion = res.data.propagacion || {};
             
             let estrategiaHtml = `
                 <div class="grid grid-cols-2 gap-3 text-xs">
@@ -106,8 +127,31 @@ async function preguntar() {
                         <div class="font-medium">⚙️ Factor:</div>
                         <div>${(estrategia.factor_refuerzo || 1.0)}x</div>
                     </div>
+                    <div>
+                        <div class="font-medium">🔄 Propagación:</div>
+                        <div>${usarPropagacion ? 'ACTIVA' : 'DESACTIVADA'}</div>
+                    </div>
+                    <div>
+                        <div class="font-medium">➕ Nuevos contextos:</div>
+                        <div>${estrategia.nodos_adicionales_propagacion || 0}</div>
+                    </div>
                 </div>
             `;
+            
+            // Información adicional de propagación si está disponible
+            if (propagacion.total_nodos_alcanzados > 0) {
+                estrategiaHtml += `
+                    <div class="mt-2 pt-2 border-t border-yellow-300 text-xs">
+                        <div class="font-medium text-green-700 mb-1">🔄 Detalles de Propagación:</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>Directos: <span class="font-bold">${propagacion.contextos_directos?.length || 0}</span></div>
+                            <div>Indirectos: <span class="font-bold">${propagacion.contextos_indirectos?.length || 0}</span></div>
+                            <div>Solo propagación: <span class="font-bold">${propagacion.solo_por_propagacion?.length || 0}</span></div>
+                            <div>Pasos: <span class="font-bold">${propagacion.pasos_propagacion || maxPasos}</span></div>
+                        </div>
+                    </div>
+                `;
+            }
             
             contenidoEstrategia.innerHTML = estrategiaHtml;
             panelEstrategia.classList.remove('hidden');
@@ -134,6 +178,170 @@ async function preguntar() {
         panelEstrategia.classList.add('hidden');
     }
 }
+
+// Función para configurar parámetros de propagación
+async function configurarPropagacion(factorDecaimiento = null, umbralActivacion = null) {
+    try {
+        const res = await axios.post('/configurar-propagacion/', {}, {
+            params: {
+                factor_decaimiento: factorDecaimiento,
+                umbral_activacion: umbralActivacion
+            }
+        });
+        
+        if (res.data.error) {
+            alert(`❌ Error: ${res.data.error}`);
+            return;
+        }
+        
+        // Actualizar parámetros locales
+        parametrosPropagacion.factor_decaimiento = res.data.factor_decaimiento;
+        parametrosPropagacion.umbral_activacion = res.data.umbral_activacion;
+        
+        alert(`✅ Parámetros actualizados:\nFactor decaimiento: ${res.data.factor_decaimiento}\nUmbral activación: ${res.data.umbral_activacion}`);
+        
+        // Actualizar estado
+        obtenerEstadoPropagacion();
+        
+    } catch (error) {
+        alert(`❌ Error: ${error.message}`);
+    }
+}
+
+// Función para aplicar configuración desde la interfaz
+async function aplicarConfiguracionPropagacion() {
+    const factorDecaimiento = parseFloat(document.getElementById('factorDecaimiento').value);
+    const umbralActivacion = parametrosPropagacion.umbral_activacion; // Mantener el actual o usar un valor por defecto
+    
+    try {
+        await configurarPropagacion(factorDecaimiento, umbralActivacion);
+    } catch (error) {
+        alert(`Error aplicando configuración: ${error.message}`);
+    }
+}
+
+// Función simplificada para obtener estado
+async function obtenerEstadoPropagacion() {
+    try {
+        const res = await axios.get('/estado-propagacion/');
+        
+        if (res.data.error) {
+            document.getElementById('estadoPropagacion').innerHTML = 
+                `<p class="text-red-600 text-xs">❌ ${res.data.error}</p>`;
+            return res.data;
+        }
+        
+        const estado = res.data;
+        
+        const estadoHtml = `
+            <div class="space-y-2 text-xs">
+                <div class="flex justify-between">
+                    <span>🔄 Propagación:</span>
+                    <span class="font-bold ${estado.propagacion_habilitada ? 'text-green-600' : 'text-red-600'}">
+                        ${estado.propagacion_habilitada ? 'HABILITADA' : 'DESHABILITADA'}
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span>🔉 Factor decaimiento:</span>
+                    <span class="font-bold">${estado.factor_decaimiento || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>🎯 Umbral activación:</span>
+                    <span class="font-bold">${estado.umbral_activacion || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>📊 Nodos totales:</span>
+                    <span class="font-bold text-blue-600">${estado.total_nodos}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>🔗 Aristas totales:</span>
+                    <span class="font-bold text-blue-600">${estado.total_aristas}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>✅ Sistema listo:</span>
+                    <span class="font-bold ${estado.grafo_disponible ? 'text-green-600' : 'text-red-600'}">
+                        ${estado.grafo_disponible ? 'SÍ' : 'NO'}
+                    </span>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('estadoPropagacion').innerHTML = estadoHtml;
+        return estado;
+        
+    } catch (error) {
+        document.getElementById('estadoPropagacion').innerHTML = 
+            `<p class="text-red-600 text-xs">❌ Error: ${error.message}</p>`;
+        return null;
+    }
+}
+
+// Función auxiliar para mostrar resultados en modal
+function mostrarResultadosEnModal(titulo, contenido) {
+    // Crear modal dinámico para mostrar resultados
+    const modalExistente = document.getElementById('modalResultadosPropagacion');
+    if (modalExistente) {
+        modalExistente.remove();
+    }
+    
+    const modal = document.createElement('div');
+    modal.id = 'modalResultadosPropagacion';
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50';
+    
+    modal.innerHTML = `
+        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b">
+                <h2 class="text-lg font-bold text-gray-800">${titulo}</h2>
+            </div>
+            <div class="p-4 flex-1 overflow-y-auto">
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap">${contenido}</pre>
+            </div>
+            <div class="p-4 border-t flex justify-center">
+                <button onclick="cerrarModalResultados()" 
+                        class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// Función para cerrar modal de resultados
+function cerrarModalResultados() {
+    const modal = document.getElementById('modalResultadosPropagacion');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Función para alternar propagación
+function alternarPropagacion() {
+    propagacionHabilitada = !propagacionHabilitada;
+    
+    const boton = document.getElementById('togglePropagacion');
+    const estado = document.getElementById('estadoPropagacionToggle');
+    
+    if (boton && estado) {
+        if (propagacionHabilitada) {
+            boton.classList.remove('bg-red-600', 'hover:bg-red-700');
+            boton.classList.add('bg-green-600', 'hover:bg-green-700');
+            boton.textContent = '🔄 Desactivar Propagación';
+            estado.textContent = 'ACTIVA';
+            estado.classList.remove('text-red-600');
+            estado.classList.add('text-green-600');
+        } else {
+            boton.classList.remove('bg-green-600', 'hover:bg-green-700');
+            boton.classList.add('bg-red-600', 'hover:bg-red-700');
+            boton.textContent = '🔄 Activar Propagación';
+            estado.textContent = 'INACTIVA';
+            estado.classList.remove('text-green-600');
+            estado.classList.add('text-red-600');
+        }
+    }
+}
+
 
 // Agregar respuesta como contexto
 async function agregarRespuestaComoContexto() {
@@ -1354,3 +1562,20 @@ async function cargarEstadisticasDobleNivel() {
             `<p class="text-red-600 text-xs">Error cargando stats doble nivel: ${error.message}</p>`;
     }
 }
+
+
+
+
+
+
+
+// Cerrar modal con Escape también para propagación
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        cerrarModalGrafo();
+        cerrarModalArbol();
+        cerrarModalResultados();
+        ocultarFormularioContextosRelacionados();
+        ocultarFormularioCaminos();
+    }
+});
