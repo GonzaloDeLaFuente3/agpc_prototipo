@@ -329,7 +329,7 @@ def _recalcular_relaciones():
             relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b, tipo_a, tipo_b)
             peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
             
-            if similitud_estructural > 0.1:  # Umbral más bajo para capturar más relaciones
+            if similitud_estructural > 0.5:  # Umbral más bajo para capturar más relaciones
                 datos_arista = {
                     "peso_estructural": round(similitud_estructural, 3),
                     "relevancia_temporal": round(relevancia_temporal, 3),
@@ -813,18 +813,15 @@ def obtener_estado_propagacion():
         return {"error": f"Error: {str(e)}"}
 
 def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[datetime] = None, 
-                                    usar_propagacion: bool = True, max_pasos: int = 2) -> Dict:
+                                    usar_propagacion: bool = True, max_pasos: int = 2,
+                                    factor_decaimiento: float = None, 
+                                    umbral_activacion: float = None) -> Dict:
     """
     Análisis completo de consulta INCLUYENDO propagación dinámica desde contextos relevantes.
-    
-    Args:
         pregunta: Consulta del usuario
         momento_consulta: Momento de la consulta
         usar_propagacion: Si usar propagación además de búsqueda directa
         max_pasos: Pasos de propagación
-        
-    Returns:
-        Dict con análisis completo incluyendo contextos propagados
     """
     if momento_consulta is None:
         momento_consulta = datetime.now()
@@ -836,8 +833,18 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
         return analisis_basico
     
     try:
-        # PROPAGACIÓN DINÁMICA - Crear propagador fresco para esta consulta
-        propagador = crear_propagador(grafo_contextos, metadatos_contextos)
+        # USAR PROPAGADOR GLOBAL CON CONFIGURACIÓN APLICADA
+        propagador = obtener_propagador()
+
+        # APLICAR PARÁMETROS CON DEBUGGING
+        if factor_decaimiento is not None or umbral_activacion is not None:
+            print(f"🔧 CONFIGURANDO: factor={factor_decaimiento}, umbral={umbral_activacion}")
+            propagador.configurar_parametros(factor_decaimiento, umbral_activacion)
+            print(f"🔧 CONFIGURADO: factor={propagador.factor_decaimiento}, umbral={propagador.umbral_activacion}")
+
+        # APLICAR PARÁMETROS SI SE PROPORCIONAN (sobrescribir configuración actual)
+        if factor_decaimiento is not None or umbral_activacion is not None:
+            propagador.configurar_parametros(factor_decaimiento, umbral_activacion)
         
         # Obtener contextos iniciales (semillas para propagación)
         contextos_directos = analisis_basico.get('contextos_recuperados', [])
@@ -875,11 +882,12 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
             union = len(palabras_pregunta | palabras_contexto)
             activacion_inicial = interseccion / union if union > 0 else 0.3
             activacion_inicial = max(0.3, min(1.0, activacion_inicial))
-            
+            print(f"🌱 PROPAGANDO desde {contexto_inicial[:8]}... con activación {activacion_inicial:.3f}")
             # Propagar desde este contexto
             contextos_alcanzados = propagador.propagar_desde_nodo(
                 contexto_inicial, activacion_inicial, max_pasos
             )
+            print(f"📡 ALCANZADOS {len(contextos_alcanzados)} nodos desde {contexto_inicial[:8]}")
             
             # Acumular resultados (tomar máxima activación)
             for nodo_id, activacion in contextos_alcanzados.items():

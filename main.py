@@ -153,7 +153,8 @@ def preguntar(pregunta: str):
     }
 
 @app.get("/preguntar-con-propagacion/")
-def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2):
+def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2,
+                             factor_decaimiento: float = None, umbral_activacion: float = None):
     """Responde a una pregunta usando propagación de activación."""
     pregunta = pregunta.strip()
     momento_consulta = datetime.now()
@@ -171,7 +172,8 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
     try:
         # Análisis con propagación
         analisis_completo = grafo.analizar_consulta_con_propagacion(
-            pregunta, momento_consulta, usar_propagacion, max_pasos
+            pregunta, momento_consulta, usar_propagacion, max_pasos,
+            factor_decaimiento, umbral_activacion  
         )
         
         analisis_intencion = analisis_completo["analisis_intencion"]
