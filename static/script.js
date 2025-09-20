@@ -952,7 +952,6 @@ function limpiarFormularioConversacion() {
     document.getElementById('formAgregarConversacion').classList.add('hidden');
 }
 
-// FUNCIONALIDAD DE DATASETS 
 // Subir archivo de dataset
 async function subirDataset() {
     const fileInput = document.getElementById('fileDataset');
@@ -1215,7 +1214,6 @@ function actualizarHeaderGrafo(datos) {
     
     document.getElementById('tituloVistaGrafo').textContent = titulos[vistaActual] || titulos['macro'];
     document.getElementById('descripcionVistaGrafo').textContent = descripciones[vistaActual] || descripciones['macro'];
-    
     // Actualizar métricas
     document.getElementById('totalNodos').textContent = datos.nodes?.length || 0;
     document.getElementById('totalAristas').textContent = datos.edges?.length || 0;
