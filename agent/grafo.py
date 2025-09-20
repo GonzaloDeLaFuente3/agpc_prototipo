@@ -7,6 +7,7 @@ import uuid
 import threading
 import math
 from datetime import datetime, timedelta
+import time
 from typing import Dict, List, Optional, Set
 from agent.extractor import extraer_palabras_clave
 from agent.semantica import indexar_documento, coleccion
@@ -23,16 +24,81 @@ propagador_global = None
 conversaciones_metadata = {}
 fragmentos_metadata = {}
 
+# Umbral mínimo para crear relaciones
+UMBRAL_SIMILITUD = 0.5
+
+def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
+    """
+    Actualiza solo las relaciones del nodo nuevo con los nodos existentes.
+    Esto evita el recálculo completo O(n²) y solo hace O(n) operaciones.
+    Returns:
+        Diccionario con estadísticas de la actualización
+    """
+    inicio_tiempo = time.time()
+    
+    # Obtener todos los nodos excepto el nuevo
+    nodos_existentes = [n for n in grafo_contextos.nodes() if n != nodo_nuevo]
+    
+    # Metadatos del nodo nuevo
+    metadatos_nuevo = metadatos_contextos.get(nodo_nuevo, {})
+    claves_nuevo = set(metadatos_nuevo.get("palabras_clave", []))
+    fecha_nuevo = metadatos_nuevo.get("timestamp")
+    tipo_nuevo = metadatos_nuevo.get("tipo_contexto", "general")
+    texto_nuevo = metadatos_nuevo.get("texto", "")
+    
+    conexiones_creadas = 0
+    
+    # Calcular relaciones solo con nodos existentes
+    for nodo_existente in nodos_existentes:
+        metadatos_existente = metadatos_contextos.get(nodo_existente, {})
+        claves_existente = set(metadatos_existente.get("palabras_clave", []))
+        fecha_existente = metadatos_existente.get("timestamp")
+        tipo_existente = metadatos_existente.get("tipo_contexto", "general")
+        texto_existente = metadatos_existente.get("texto", "")
+        
+        # Calcular similitudes usando las funciones existentes
+        similitud_estructural = _calcular_similitud_estructural(
+            claves_nuevo, claves_existente, texto_nuevo, texto_existente
+        )
+        relevancia_temporal = _calcular_relevancia_temporal(
+            fecha_nuevo, fecha_existente, tipo_nuevo, tipo_existente
+        )
+        peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
+        
+        # Solo crear arista si supera el umbral
+        if similitud_estructural > UMBRAL_SIMILITUD:
+            datos_arista = {
+                "peso_estructural": round(similitud_estructural, 3),
+                "relevancia_temporal": round(relevancia_temporal, 3),
+                "peso_efectivo": round(peso_efectivo, 3),
+                "tipo": "semantica_temporal" if (fecha_nuevo and fecha_existente) else "semantica",
+                "tipos_contexto": f"{tipo_nuevo}-{tipo_existente}"
+            }
+            
+            # Crear aristas bidireccionales
+            grafo_contextos.add_edge(nodo_nuevo, nodo_existente, **datos_arista)
+            grafo_contextos.add_edge(nodo_existente, nodo_nuevo, **datos_arista)
+            conexiones_creadas += 1
+    
+    tiempo_transcurrido = time.time() - inicio_tiempo
+    
+    # Estadísticas de la actualización
+    estadisticas = {
+        "tipo_actualizacion": "incremental",
+        "nodo_procesado": nodo_nuevo,
+        "nodos_comparados": len(nodos_existentes),
+        "conexiones_creadas": conexiones_creadas,
+        "tiempo_ms": round(tiempo_transcurrido * 1000, 2),
+        "total_nodos_grafo": len(grafo_contextos.nodes()),
+        "total_relaciones_grafo": len(grafo_contextos.edges())
+    }
+    
+    return estadisticas
+
 def agregar_conversacion(titulo: str, contenido: str, fecha: str = None, 
                         participantes: List[str] = None, metadata: Dict = None) -> Dict:
     """
-    Agrega una conversación completa y la fragmenta automáticamente.
-    Returns:
-        {
-            'conversacion_id': str,
-            'fragmentos_creados': List[str],
-            'total_fragmentos': int
-        }
+    Agrega una conversación completa con actualización incremental por fragmento.
     """
     # Preparar datos de conversación
     conversacion_data = {
@@ -51,6 +117,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     
     conversacion_id = fragmentos[0]['metadata']['conversacion_id']
     fragmentos_ids = []
+    estadisticas_actualizacion = []
     
     # Agregar conversación a metadatos
     conversaciones_metadata[conversacion_id] = {
@@ -63,8 +130,10 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         'created_at': datetime.now().isoformat()
     }
     
-    # Procesar cada fragmento como si fuera un contexto individual
-    for fragmento in fragmentos:
+    print(f"📝 Procesando conversación '{titulo}' con {len(fragmentos)} fragmentos...")
+    
+    # Procesar cada fragmento con actualización incremental
+    for i, fragmento in enumerate(fragmentos):
         frag_id = fragmento['id']
         frag_meta = fragmento['metadata']
         
@@ -84,7 +153,6 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             "es_temporal": frag_meta['es_temporal'],
             "timestamp": frag_meta.get('timestamp'),
             "tipo_contexto": frag_meta['tipo_contexto'],
-            # Metadatos específicos de fragmento
             "es_fragmento": True,
             "conversacion_id": conversacion_id,
             "posicion_fragmento": frag_meta['posicion_en_conversacion']
@@ -92,20 +160,39 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         
         # Indexar para búsqueda semántica
         indexar_documento(frag_id, frag_meta['texto'])
+        
+        # ACTUALIZACIÓN INCREMENTAL para este fragmento
+        stats_frag = _actualizar_relaciones_incremental(frag_id)
+        estadisticas_actualizacion.append(stats_frag)
+        
         fragmentos_ids.append(frag_id)
+        
+        # Mostrar progreso cada 3 fragmentos
+        if (i + 1) % 3 == 0:
+            print(f"  ✅ Fragmento {i+1}/{len(fragmentos)}: {stats_frag['conexiones_creadas']} conexiones creadas")
     
-    # Recalcular relaciones con los nuevos fragmentos
-    _recalcular_relaciones()
     _guardar_grafo()
-    
-    # También guardar nuevas estructuras
     _guardar_conversaciones()
-    print(f"Conversación '{titulo}' agregada: {len(fragmentos)} fragmentos creados")
+    
+    # Estadísticas finales
+    total_conexiones = sum(s['conexiones_creadas'] for s in estadisticas_actualizacion)
+    tiempo_total = sum(s['tiempo_ms'] for s in estadisticas_actualizacion)
+    
+    print(f"🎉 Conversación procesada exitosamente:")
+    print(f"   📊 Total conexiones creadas: {total_conexiones}")
+    print(f"   ⚡ Tiempo total: {tiempo_total:.1f}ms")
+    print(f"   🔗 Total relaciones en grafo: {len(grafo_contextos.edges())}")
     
     return {
         'conversacion_id': conversacion_id,
         'fragmentos_creados': fragmentos_ids,
-        'total_fragmentos': len(fragmentos)
+        'total_fragmentos': len(fragmentos),
+        'estadisticas_actualizacion': {
+            'total_conexiones_creadas': total_conexiones,
+            'tiempo_total_ms': tiempo_total,
+            'fragmentos_procesados': len(fragmentos),
+            'total_relaciones_grafo': len(grafo_contextos.edges())
+        }
     }
 
 def _guardar_conversaciones():
@@ -329,7 +416,7 @@ def _recalcular_relaciones():
             relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b, tipo_a, tipo_b)
             peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
             
-            if similitud_estructural > 0.5:  # Umbral más bajo para capturar más relaciones
+            if similitud_estructural > UMBRAL_SIMILITUD:
                 datos_arista = {
                     "peso_estructural": round(similitud_estructural, 3),
                     "relevancia_temporal": round(relevancia_temporal, 3),
@@ -379,7 +466,7 @@ def cargar_desde_disco():
     actualizar_propagador()
 
 def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referencia_temporal: str = None) -> str:
-    """Agrega un nuevo contexto con prevención de duplicados."""
+    """Agrega un nuevo contexto con prevención de duplicados y actualización incremental."""
     # PREVENCIÓN DE DUPLICADOS - Verificación antes de agregar
     titulo_norm = titulo.strip().lower()
     texto_norm = " ".join(texto.strip().lower().split())
@@ -438,9 +525,17 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     # Indexar para búsqueda semántica
     indexar_documento(id_contexto, texto)
     
-    # Recalcular y guardar
-    _recalcular_relaciones()
+    # ACTUALIZACIÓN INCREMENTAL en lugar de recálculo completo
+    stats_actualizacion = _actualizar_relaciones_incremental(id_contexto)
+    
     _guardar_grafo()
+    
+    # Mostrar estadísticas de la actualización
+    print(f"✅ Contexto agregado: {titulo[:50]}...")
+    print(f"   🔗 Conexiones creadas: {stats_actualizacion['conexiones_creadas']}")
+    print(f"   ⚡ Tiempo: {stats_actualizacion['tiempo_ms']}ms")
+    print(f"   📊 Total relaciones: {stats_actualizacion['total_relaciones_grafo']}")
+    
     return id_contexto
 
 def obtener_todos() -> Dict:

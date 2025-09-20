@@ -825,35 +825,19 @@ async function cargarGrafo() {
 
 // Cargar estadísticas
 async function cargarEstadisticas() {
-    try {
-        const res = await axios.get('/estadisticas/');
-        const stats = res.data;
-        
-        document.getElementById('estadisticas').innerHTML = `
-            <div class="space-y-2">
-                <div class="flex justify-between">
-                    <span>📊 Contextos:</span>
-                    <span class="font-bold text-green-600">${stats.total_contextos}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>🕒 Temporales:</span>
-                    <span class="font-bold text-blue-600">${stats.contextos_temporales || 0}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>📋 Atemporales:</span>
-                    <span class="font-bold text-gray-600">${stats.contextos_atemporales || 0}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>🔗 Relaciones:</span>
-                    <span class="font-bold text-blue-600">${stats.total_relaciones}</span>
-                </div>
-            </div>
-        `;
-        
-    } catch (error) {
-        document.getElementById('estadisticas').innerHTML = 
-            `<p class="text-red-600 text-xs">Error: ${error.message}</p>`;
-    }
+    const estadisticasBtn = event.target;
+    const originalText = estadisticasBtn.textContent;
+    
+    // Mostrar que está cargando
+    estadisticasBtn.textContent = '⏳ Cargando...';
+    estadisticasBtn.disabled = true;
+    
+    // Cargar estadísticas de actualización incremental
+    await cargarEstadisticasActualizacion();
+    
+    // Restaurar botón
+    estadisticasBtn.textContent = originalText;
+    estadisticasBtn.disabled = false;
 }
 
 // Event listener para cerrar modales con Escape
@@ -1563,11 +1547,63 @@ async function cargarEstadisticasDobleNivel() {
     }
 }
 
-
-
-
-
-
+// Mostrar estadísticas de actualización incremental
+async function cargarEstadisticasActualizacion() {
+    try {
+        const res = await axios.get('/estadisticas-actualizacion/');
+        
+        if (res.data.status === 'success') {
+            const stats = res.data.estadisticas;
+            
+            const estadisticasHtml = `
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>📊 Total Nodos:</span>
+                        <span class="font-bold text-blue-600">${stats.total_nodos}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>🔗 Total Relaciones:</span>
+                        <span class="font-bold text-green-600">${stats.total_relaciones}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>⚡ Actualización:</span>
+                        <span class="font-bold text-purple-600">INCREMENTAL</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>🎯 Umbral:</span>
+                        <span class="font-bold">${stats.umbral_similitud}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>🕒 Temporales:</span>
+                        <span class="font-bold text-blue-600">${stats.contextos_temporales || 0}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>📋 Atemporales:</span>
+                        <span class="font-bold text-gray-600">${stats.contextos_atemporales || 0}</span>
+                    </div>
+                </div>
+                <div class="mt-3 p-2 bg-green-50 border border-green-200 rounded text-xs">
+                    <div class="font-medium text-green-800">✅ Beneficios Actualización Incremental:</div>
+                    <div class="text-green-700 mt-1">
+                        • Solo calcula relaciones del nodo nuevo (O(n) vs O(n²))<br>
+                        • Muestra estadísticas de conexiones creadas<br>
+                        • Mantiene rendimiento constante al escalar
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('estadisticas').innerHTML = estadisticasHtml;
+            
+        } else {
+            document.getElementById('estadisticas').innerHTML = 
+                `<p class="text-red-600 text-xs">❌ ${res.data.error}</p>`;
+        }
+        
+    } catch (error) {
+        document.getElementById('estadisticas').innerHTML = 
+            `<p class="text-red-600 text-xs">❌ Error: ${error.message}</p>`;
+    }
+}
 
 // Cerrar modal con Escape también para propagación
 document.addEventListener('keydown', function(e) {
