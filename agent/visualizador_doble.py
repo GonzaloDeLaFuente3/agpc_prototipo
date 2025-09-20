@@ -120,7 +120,7 @@ Dominio: {conv_data.get('metadata', {}).get('dominio', 'N/A')}"""
                 rel_data['max_peso_individual'] = max(rel_data['max_peso_individual'], peso_efectivo)
                 
                 # Clasificar tipo de relación
-                if relevancia_temporal > 0.1:
+                if relevancia_temporal > 0.3:
                     rel_data['tipos_relacion'].add('temporal')
                 else:
                     rel_data['tipos_relacion'].add('semantica')
@@ -136,7 +136,7 @@ Dominio: {conv_data.get('metadata', {}).get('dominio', 'N/A')}"""
         
         # 3. Crear aristas entre conversaciones
         for (conv_a, conv_b), datos_relacion in relaciones_conversaciones.items():
-            if datos_relacion['peso_total'] > 0.1:  # Umbral mínimo para mostrar relación
+            if datos_relacion['peso_total'] > 0.3:  # Umbral mínimo para mostrar relación
                 # Peso promedio de conexiones
                 peso_promedio = datos_relacion['peso_total'] / datos_relacion['conexiones_fragmentos']
                 peso_normalizado = min(1.0, datos_relacion['peso_total'] / 3.0)  # Normalizar para visualización
@@ -296,7 +296,7 @@ Texto: {texto[:100]}..."""
                 peso_efectivo = datos.get('peso_efectivo', 0)
                 
                 # Color y grosor
-                es_temporal = relevancia_temporal > 0.1
+                es_temporal = relevancia_temporal > 0.3
                 color_arista = "#4caf50" if es_temporal else "#2196f3"
                 width = max(2, peso_efectivo * 6)
                 

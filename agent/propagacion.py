@@ -217,10 +217,12 @@ class PropagadorActivacion:
     def _obtener_vecinos_validos(self, nodo: str, incluir_temporales: bool = True) -> List[Tuple[str, float]]:
         """Obtiene vecinos válidos con sus pesos de conexión."""
         vecinos = []
+        total_candidatos = 0
         
         for vecino in self.grafo.neighbors(nodo):
             if nodo == vecino:  # Evitar auto-loops
                 continue
+            total_candidatos += 1
             
             # Obtener datos de la arista
             datos_arista = self.grafo[nodo][vecino]
@@ -234,17 +236,22 @@ class PropagadorActivacion:
             # Solo incluir conexiones con peso mínimo
             if peso_efectivo >= self.umbral_activacion:
                 vecinos.append((vecino, peso_efectivo))
-        
+        print(f"🔍 Nodo {nodo[:8]}: {total_candidatos} candidatos -> {len(vecinos)} válidos (umbral={self.umbral_activacion})")
         return vecinos
     
     def _calcular_activacion_propagada(self, activacion_origen: float, 
                                      peso_conexion: float, paso: int) -> float:
         """Calcula la activación que se propaga a través de una conexión."""
         # Decaimiento por distancia
-        factor_distancia = self.factor_decaimiento ** paso
+        factor_distancia = self.factor_decaimiento ** (paso + 1)  #Exponencial más fuerte para que decaiga mas 
         
         # Activación propagada = activación_origen * peso_conexion * decaimiento
         activacion_propagada = activacion_origen * peso_conexion * factor_distancia
+
+        # Umbral dinámico que crece con los pasos
+        umbral_dinamico = self.umbral_activacion * (1.5 ** paso)  # Crece exponencialmente
+        if activacion_propagada < umbral_dinamico:
+            return 0.0
         
         return max(0.0, min(1.0, activacion_propagada))
     

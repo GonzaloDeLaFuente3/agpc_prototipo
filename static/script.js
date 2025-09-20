@@ -11,8 +11,8 @@ let estadisticasDobleNivel = null;
 let propagacionHabilitada = true;
 let parametrosPropagacion = {
     factor_decaimiento: 0.8,
-    umbral_activacion: 0.1,
-    max_pasos: 2
+    umbral_activacion: 0.01,
+    max_pasos: 3
 };
 
 // Event listeners principales
@@ -77,11 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 
-async function preguntar() {
-    // Usar directamente preguntarConPropagacion() que ahora es la implementación completa
-    return preguntarConPropagacion();
-}
-
 // Función mejorada de preguntar con propagación
 async function preguntarConPropagacion() {
     const pregunta = document.getElementById('pregunta').value.trim();
@@ -104,9 +99,14 @@ async function preguntarConPropagacion() {
     try {
         const usarPropagacion = propagacionHabilitada;
         const maxPasos = parametrosPropagacion.max_pasos;
+
+        // ENVIAR PARÁMETROS ACTUALES EN CADA CONSULTA
+        const factorDecaimiento = parametrosPropagacion.factor_decaimiento;
+        const umbralActivacion = parametrosPropagacion.umbral_activacion;
         
-        const res = await axios.get(`/preguntar-con-propagacion/?pregunta=${encodeURIComponent(pregunta)}&usar_propagacion=${usarPropagacion}&max_pasos=${maxPasos}`);
-        
+        const url = `/preguntar-con-propagacion/?pregunta=${encodeURIComponent(pregunta)}&usar_propagacion=${usarPropagacion}&max_pasos=${maxPasos}&factor_decaimiento=${factorDecaimiento}&umbral_activacion=${umbralActivacion}`;
+        const res = await axios.get(url);    
+
         respuestaDiv.innerText = res.data.respuesta;
         ultimaRespuesta = res.data.respuesta;
         ultimaPregunta = pregunta;
@@ -535,7 +535,7 @@ function abrirModalArbol(subgrafo) {
             const width = Math.max(1, pesoEfectivo * 2);
             
             // Color según tipo de relación
-            const colorArista = relevanciaTemp > 0.1 ? "#4caf50" : "#2196f3";
+            const colorArista = relevanciaTemp > 0.3 ? "#4caf50" : "#2196f3";
             
             return {
                 from: e.from,
@@ -552,7 +552,7 @@ function abrirModalArbol(subgrafo) {
                 },
                 color: { 
                     color: colorArista,
-                    highlight: relevanciaTemp > 0.1 ? "#66bb6a" : "#42a5f5"
+                    highlight: relevanciaTemp > 0.3 ? "#66bb6a" : "#42a5f5"
                 },
                 width: width,
                 smooth: { type: "cubicBezier", roundness: 0.4 }
@@ -676,7 +676,7 @@ async function cargarGrafo() {
             const pesoEstructural = edge.peso_estructural || 0;
             const relevanciatemporal = edge.relevancia_temporal || 0;
             const pesoEfectivo = edge.peso_efectivo || edge.weight || 0;
-            const esTemporal = relevanciatemporal > 0.1;
+            const esTemporal = relevanciatemporal > 0.3;
             
             // Color y grosor basado en peso efectivo
             let colorArista = '#90a4ae';
@@ -728,7 +728,7 @@ async function cargarGrafo() {
                 },
                 smooth: {
                     type: 'continuous',
-                    roundness: esTemporal ? 0.2 : 0.1
+                    roundness: esTemporal ? 0.2 : 0.3
                 }
             };
         });
@@ -1393,7 +1393,7 @@ function renderizarGrafoDobleNivel(datos, container) {
                 // Aristas para fragmentos - configuración existente
                 const relevanciaTemp = edge.relevancia_temporal || 0;
                 config.width = Math.max(1, (edge.peso_efectivo || 0) * 2);
-                config.color = relevanciaTemp > 0.1 ? '#4caf50' : '#2196f3';
+                config.color = relevanciaTemp > 0.3 ? '#4caf50' : '#2196f3';
                 config.font = { size: 9 };
             }
             
