@@ -341,5 +341,55 @@
     "es_fragmento": true,
     "conversacion_id": "34e4d820-6825-4163-9c24-02c2c775ea89",
     "posicion_fragmento": 1
+  },
+  "6fefac50-e501-439f-abcb-d92a10c79d8c": {
+    "titulo": "Que es la ia",
+    "texto": "La información proporcionada no contiene ninguna referencia a la inteligencia artificial (IA).  Por lo tanto, no puedo responder a la pregunta \"¿Qué es la IA?\" usando solo los fragmentos de texto dados.",
+    "palabras_clave": [
+      "responder",
+      "contener",
+      "fragmento",
+      "información",
+      "pregunta",
+      "inteligencia",
+      "referencia",
+      "dado",
+      "proporcionado",
+      "texto",
+      "usar",
+      "artificial"
+    ],
+    "created_at": "2025-09-20T11:46:43.128551",
+    "es_temporal": false,
+    "tipo_contexto": "general"
+  },
+  "11a4332a-f6e5-4115-aa13-8d8bb243ecaa": {
+    "titulo": "DB",
+    "texto": "Basado en los fragmentos proporcionados, se está considerando el uso de PostgreSQL o MongoDB para un proyecto (Discusión sobre Base de Datos - Fragmento 1).  PostgreSQL se considera la mejor opción debido a su buen soporte para integridad referencial (Discusión sobre Base de Datos - Fragmento 3).  La elección entre PostgreSQL y MongoDB depende del tipo de datos, si son más relacionales o documentales (Discusión sobre Base de Datos - Fragmento 2).",
+    "palabras_clave": [
+      "datos",
+      "dato",
+      "mongodb",
+      "proporcionado",
+      "relacional",
+      "fragmento",
+      "elección",
+      "basado",
+      "integridad",
+      "tipo",
+      "considerar",
+      "base",
+      "depender",
+      "documental",
+      "referencial",
+      "postgresql",
+      "soporte",
+      "proyecto",
+      "discusión",
+      "opción"
+    ],
+    "created_at": "2025-09-20T11:49:23.608030",
+    "es_temporal": false,
+    "tipo_contexto": "proyecto"
   }
 }

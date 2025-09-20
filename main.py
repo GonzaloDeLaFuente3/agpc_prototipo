@@ -416,6 +416,33 @@ def obtener_estadisticas_doble_nivel():
     """Estadísticas comparativas entre vista macro y micro."""
     return grafo.obtener_estadisticas_doble_nivel()
 
+@app.get("/estadisticas-actualizacion/")
+def obtener_estadisticas_actualizacion():
+    """Obtiene estadísticas básicas del sistema de actualización incremental."""
+    try:
+        stats = grafo.obtener_estadisticas()
+        
+        return {
+            "status": "success",
+            "estadisticas": {
+                "total_nodos": stats["total_contextos"],
+                "total_relaciones": stats["total_relaciones"],
+                "contextos_temporales": stats.get("contextos_temporales", 0),
+                "contextos_atemporales": stats.get("contextos_atemporales", 0),
+                "tipos_contexto": stats.get("tipos_contexto", {}),
+                "actualizacion_incremental": "habilitada",
+                "umbral_similitud": 0.1,
+                "mensaje": f"Sistema funcionando con {stats['total_contextos']} nodos y {stats['total_relaciones']} relaciones"
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {
+            "status": "error", 
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
