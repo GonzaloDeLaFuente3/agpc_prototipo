@@ -806,10 +806,43 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         print(f"🔍 Aplicando filtro temporal. Ventana: {ventana_inicio} a {ventana_fin}")
         
         # Filtrar contextos por ventana temporal
-        ids_en_ventana = [
-            ctx_id for ctx_id in ids_candidatos 
-            if _contexto_en_ventana_temporal(ctx_id, ventana_inicio, ventana_fin)
-        ]
+        ids_en_ventana = []
+        
+        for ctx_id in ids_candidatos:
+            meta = metadatos_contextos.get(ctx_id, {})
+            timestamp = meta.get("timestamp")
+            
+            if timestamp:
+                try:
+                    # USAR EL PARSER MEJORADO
+                    from agent.utils import parse_iso_datetime_safe
+                    
+                    fecha_contexto = parse_iso_datetime_safe(timestamp)
+                    fecha_inicio = parse_iso_datetime_safe(ventana_inicio)  
+                    fecha_fin = parse_iso_datetime_safe(ventana_fin)
+
+                    # VERIFICACIÓN ADICIONAL: Asegurar que todas las fechas son naive
+                    if fecha_contexto and fecha_contexto.tzinfo is not None:
+                        fecha_contexto = fecha_contexto.replace(tzinfo=None)
+                    if fecha_inicio and fecha_inicio.tzinfo is not None:
+                        fecha_inicio = fecha_inicio.replace(tzinfo=None)
+                    if fecha_fin and fecha_fin.tzinfo is not None:
+                        fecha_fin = fecha_fin.replace(tzinfo=None)
+                    
+                    if not fecha_contexto or not fecha_inicio or not fecha_fin:
+                        continue
+                    
+                    # Verificar si está en ventana
+                    if fecha_inicio <= fecha_contexto <= fecha_fin:
+                        ids_en_ventana.append(ctx_id)
+                        contexto_titulo = meta.get("titulo", "Sin título")[:30]
+                        print(f"✓ {ctx_id[:8]} '{contexto_titulo}' INCLUIDO en ventana")
+                        
+                except Exception as e:
+                    print(f"Error procesando timestamp para contexto {ctx_id[:8]}: {e}")
+                    continue
+            else:
+                print(f"⚠️ Contexto {ctx_id[:8]} sin timestamp - EXCLUIDO")
         
         if ids_en_ventana:
             ids_similares = ids_en_ventana[:k_busqueda]
@@ -818,30 +851,20 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         else:
             print(f"⚠️ Ningún contexto en ventana temporal. Aplicando fallback...")
             
-            # FALLBACK MEJORADO: Buscar por proximidad temporal y contenido
+            # FALLBACK SIMPLIFICADO: Solo proximidad temporal
             contextos_con_fechas = []
-            contextos_por_contenido = []
             
             for ctx_id in ids_candidatos:
                 meta = metadatos_contextos.get(ctx_id, {})
                 timestamp = meta.get('timestamp')
-                titulo = meta.get('titulo', '').lower()
-                texto = meta.get('texto', '').lower()
                 
-                # CRITERIO 1: Proximidad temporal
                 if timestamp:
                     from agent.utils import parse_iso_datetime_safe
                     fecha_ctx = parse_iso_datetime_safe(timestamp)
                     if fecha_ctx:
                         diferencia = abs((momento_consulta - fecha_ctx).days)
                         contextos_con_fechas.append((ctx_id, diferencia, fecha_ctx))
-                
-                # CRITERIO 2: Contenido relevante a "ayer"
-                if any(palabra in titulo + ' ' + texto for palabra in ['ayer', 'reunion', 'importante', 'proyecto']):
-                    contextos_por_contenido.append(ctx_id)
-                    print(f"📝 Contexto relevante por contenido: {meta.get('titulo', 'Sin título')[:50]}")
             
-            # Combinar criterios
             if contextos_con_fechas:
                 # Ordenar por proximidad temporal
                 contextos_con_fechas.sort(key=lambda x: x[1])
@@ -853,31 +876,15 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                     titulo = meta.get('titulo', 'Sin título')
                     print(f"  - {titulo[:40]}: {fecha_ctx.strftime('%d/%m/%Y')} (±{dias_diff} días)")
                 
-                # Priorizar contextos por contenido relevante si están cerca temporalmente
-                contextos_prioritarios = []
-                for ctx_id in contextos_por_contenido:
-                    # Buscar este contexto en la lista temporal
-                    for ctx_temp_id, dias_diff, fecha_ctx in contextos_con_fechas:
-                        if ctx_temp_id == ctx_id and dias_diff <= 7:  # Dentro de una semana
-                            contextos_prioritarios.append(ctx_id)
-                            break
-                
-                if contextos_prioritarios:
-                    print(f"🎯 Usando {len(contextos_prioritarios)} contextos prioritarios (relevancia + proximidad temporal)")
-                    ids_similares = contextos_prioritarios[:k_busqueda]
-                    # Completar con los más cercanos temporalmente
-                    ids_restantes = [ctx_id for ctx_id, _, _ in contextos_con_fechas if ctx_id not in ids_similares][:k_busqueda - len(ids_similares)]
-                    ids_similares.extend(ids_restantes)
-                else:
-                    print(f"🔄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
-                    ids_similares = [ctx_id for ctx_id, _, _ in contextos_con_fechas[:k_busqueda]]
+                print(f"📄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
+                ids_similares = [ctx_id for ctx_id, _, _ in contextos_con_fechas[:k_busqueda]]
                 
                 contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_similares)
             else:
                 # Último recurso: búsqueda semántica pura
                 ids_similares = ids_candidatos[:k_busqueda]
                 contextos_filtrados_temporalmente = 0
-                print(f"🔄 Usando búsqueda semántica pura como último recurso")
+                print(f"📄 Usando búsqueda semántica pura como último recurso")
     else:
         ids_similares = ids_candidatos[:k_busqueda]
         contextos_filtrados_temporalmente = 0
@@ -903,7 +910,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
     }
 
 def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana_fin: str) -> bool:
-    """Verifica si un contexto está dentro de la ventana temporal especificada."""
+    """Verifica contexto en ventana temporal con logging mínimo."""
     meta = metadatos_contextos.get(contexto_id, {})
     timestamp = meta.get("timestamp")
     
@@ -950,12 +957,14 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
         # Logging para debugging con más info
         contexto_titulo = meta.get("titulo", "Sin título")[:30]
         
-        if fecha_inicio <= fecha_contexto <= fecha_fin:
-            print(f"✅ Contexto {contexto_id[:8]} '{contexto_titulo}' INCLUIDO: {fecha_contexto.strftime('%d/%m %H:%M')} en ventana [{fecha_inicio.strftime('%d/%m %H:%M')} - {fecha_fin.strftime('%d/%m %H:%M')}]")
-            return True
-        else:
-            print(f"❌ Contexto {contexto_id[:8]} '{contexto_titulo}' EXCLUIDO: {fecha_contexto.strftime('%d/%m %H:%M')} fuera de [{fecha_inicio.strftime('%d/%m %H:%M')} - {fecha_fin.strftime('%d/%m %H:%M')}]")
-            return False
+        resultado = fecha_inicio <= fecha_contexto <= fecha_fin
+    
+        # LOGGING MÍNIMO - solo cuenta total
+        if resultado:
+            contexto_titulo = meta.get("titulo", "Sin título")[:20]
+            print(f"✓ {contexto_id[:8]} '{contexto_titulo}' en ventana")
+        
+        return resultado
             
     except Exception as e:
         print(f"⚠️ Error procesando timestamp para contexto {contexto_id[:8]}: {timestamp} - {e}")

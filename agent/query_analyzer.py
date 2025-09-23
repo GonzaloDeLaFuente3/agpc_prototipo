@@ -8,34 +8,21 @@ from agent.utils import parse_iso_datetime_safe
 class IntentionTemporalDetector:
     """Detecta la intención temporal en consultas del usuario con contexto de momento."""
     PATRONES_TEMPORALES = [
-        # PATRONES MEJORADOS - usando versiones sin tildes para después de normalización
-        r'\bque\s+.*\s+(hoy|manana|ayer)\b',
-        r'\b(que|como)\s+.*\s+(tengo|hay|pasa|hicimos|haremos|paso)\s+.*(hoy|manana|ayer)\b',
-        r'\b(que|como)\s+.*(tengo|hay|pasa|hicimos|haremos|paso)\s+(hoy|manana|ayer)\b',
-        r'\b(cuando)\s+.*(es|sera|fue)\b',
-        r'\b(proximo|proxima)\s+.*(semana|mes|dia)\b',
-        r'\bpara\s+(manana|hoy)\b',
-        r'\b(semana|mes)\s+(pasada|pasado|anterior)\b',
-        r'\b(este|esta)\s+(semana|mes)\b',
-        r'\b(el|la)\s+(lunes|martes|miercoles|jueves|viernes|sabado|domingo)\b',
-        r'\bel\s+\d{1,2}\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b',
-        r'\bdel\s+\d{1,2}\s+al\s+\d{1,2}\s+de\s+[a-z]+\b',
-        r'\ben\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b',
-        r'\bhace\s+\d+\s+(dia|dias|semana|semanas|mes|meses)\b',
-        r'\ben\s+los\s+ultimos\s+\d+\s+(dia|dias|semana|semanas)\b',
-        r'\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}\b',
-        r'\b\d{1,2}[\/\-]\d{1,2}\b',  # DD/MM sin año
-        r'\bayer\b',  # Simplemente "ayer" en cualquier parte
-        r'\bhoy\b',   # Simplemente "hoy" en cualquier parte  
-        r'\bmanana\b', # Simplemente "manana" SIN TILDE (post-normalización)
-        r'\b(hicimos|hice|paso|ocurrio|sucedio)\s+ayer\b',
-        r'\bayer\s+(hicimos|hice|paso|ocurrio|sucedio)\b',
-        r'\b(que|como)\s+.*\s+ayer\b',
-        r'\bayer\s+.*\s+(que|como)\b',
-        # NUEVOS PATRONES MÁS ESPECÍFICOS
-        r'\bque\s+(paso|pasa|hicimos|haremos)\s+ayer\b',
-        r'\bque\s+(tengo|hay)\s+(hoy|manana)\b',
-        r'\b(hicimos|paso|sucedio)\s+ayer\b'
+        # Patrones básicos más flexibles
+        r'\b(ayer|hoy|manana)\b',
+        r'\b(que|como|cuando)\s+.*\s+(ayer|hoy|manana)\b',
+        r'\b(ayer|hoy|manana)\s+.*\s+(que|como|paso|hicimos|tengo|hay)\b',
+        # Patrones con variaciones de escritura
+        r'\bq\s+.*\s+(ayer|hoy|manana)\b',
+        r'\b(ayer|hoy|manana)\s+.*\bq\b',
+        # Patrones más específicos
+        r'\b(hicimos|paso|sucedio|ocurrio)\s+ayer\b',
+        r'\bayer\s+(hicimos|paso|sucedio|ocurrio)\b',
+        r'\b(tengo|hay|pasa)\s+(hoy|manana)\b',
+        r'\b(hoy|manana)\s+(tengo|hay|pasa)\b',
+        # Patrones de planificación
+        r'\bpara\s+(hoy|manana|ayer)\b',
+        r'\b(programado|planeado|agendado)\s+(hoy|manana|ayer)\b'
     ]
     
     PALABRAS_TEMPORALES = [
@@ -54,35 +41,31 @@ class IntentionTemporalDetector:
     ]
 
     def _normalizar_pregunta(self, pregunta: str) -> str:
-        """Normaliza la pregunta para mejorar la detección de patrones."""
-        # 1. Convertir a minúsculas
-        normalizada = pregunta.lower().strip()
+        """Normaliza pregunta para manejar cualquier variación del usuario."""
+        # 1. Limpiar signos de puntuación completamente
+        normalizada = re.sub(r'[¿?¡!.,;:()"\'-]', ' ', pregunta.lower().strip())
         
-        # 2. Remover signos de interrogación y exclamación
-        normalizada = re.sub(r'[¿?¡!.,;:]', '', normalizada)
-        
-        # 3. Normalizar espacios múltiples
+        # 2. Normalizar espacios múltiples 
         normalizada = re.sub(r'\s+', ' ', normalizada)
         
-        # 4. Normalizar acentos y caracteres especiales comunes
+        # 3. Normalizar acentos y caracteres especiales
         reemplazos = {
             'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
-            'ñ': 'n', 'ü': 'u'
+            'ñ': 'n', 'ü': 'u', 'ç': 'c'
         }
-        
         for original, reemplazo in reemplazos.items():
             normalizada = normalizada.replace(original, reemplazo)
         
-        # 5. CORREGIDO: Usar palabras SIN TILDES (después de la normalización del paso 4)
-        palabras_clave_temporales = ['ayer', 'hoy', 'manana', 'que', 'cuando', 'donde']  # manana sin tilde
-        for palabra in palabras_clave_temporales:
-            # Asegurar que la palabra esté rodeada de espacios
-            normalizada = re.sub(rf'\b{palabra}\b', f' {palabra} ', normalizada)
+        # 4. Manejar variaciones comunes
+        variaciones = {
+            'q ': 'que ', 'xq': 'porque', 'pq': 'porque',
+            'tmb': 'tambien', 'tb': 'tambien',
+            'manyana': 'manana', 'mañana': 'manana'
+        }
+        for variacion, correccion in variaciones.items():
+            normalizada = normalizada.replace(variacion, correccion)
         
-        # 6. Limpiar espacios extra después de las transformaciones
-        normalizada = re.sub(r'\s+', ' ', normalizada).strip()
-        
-        return normalizada
+        return normalizada.strip()
     
     def _resolver_referencias_contextuales(self, pregunta: str, momento_consulta: datetime) -> Optional[str]:
         """Resuelve referencias temporales relativas al momento de la consulta."""
@@ -144,7 +127,7 @@ class IntentionTemporalDetector:
         return None
     
     def _calcular_ventana_temporal(self, intencion: str, referencia_temporal: Optional[str], 
-                            pregunta_original: str) -> Tuple[Optional[str], Optional[str]]:
+                        pregunta_original: str) -> Tuple[Optional[str], Optional[str]]:
         """MEJORADO: Calcula ventana temporal según intención y tipo de consulta."""
         if not referencia_temporal:
             return None, None
@@ -166,31 +149,16 @@ class IntentionTemporalDetector:
         
         # VENTANAS ESPECÍFICAS POR TIPO DE CONSULTA
         if "ayer" in pregunta_lower:
-            # Para "ayer", crear ventana del día anterior completo
+            # SOLO el día anterior - SIN expandir a "hoy"
             fecha_ayer = fecha_ref - timedelta(days=1)
             inicio_dia = fecha_ayer.replace(hour=0, minute=0, second=0, microsecond=0)
             fin_dia = fecha_ayer.replace(hour=23, minute=59, second=59, microsecond=999999)
-            
-            print(f"Ventana para 'ayer': {inicio_dia.strftime('%d/%m %H:%M')} a {fin_dia.strftime('%d/%m %H:%M')}")
-            
-            # IMPORTANTE: También buscar en el día actual por si hay contextos mal fechados
-            fecha_hoy = fecha_ref
-            inicio_hoy = fecha_hoy.replace(hour=0, minute=0, second=0, microsecond=0)
-            fin_hoy = fecha_hoy.replace(hour=23, minute=59, second=59, microsecond=999999)
-            
-            # Expandir ventana para incluir también "hoy" (por si hay contextos con fechas imprecisas)
-            inicio_expandido = inicio_dia
-            fin_expandido = fin_hoy
-            
-            print(f"Ventana expandida (ayer + hoy): {inicio_expandido.strftime('%d/%m %H:%M')} a {fin_expandido.strftime('%d/%m %H:%M')}")
-            
-            return inicio_expandido.isoformat(), fin_expandido.isoformat()
-        
+            return inicio_dia.isoformat(), fin_dia.isoformat()
+    
         elif "hoy" in pregunta_lower:
-            # Para "hoy", crear ventana del día actual completo
+            # SOLO el día actual
             inicio_dia = fecha_ref.replace(hour=0, minute=0, second=0, microsecond=0)
             fin_dia = fecha_ref.replace(hour=23, minute=59, second=59, microsecond=999999)
-            print(f"Ventana para 'hoy': {inicio_dia.strftime('%d/%m %H:%M')} a {fin_dia.strftime('%d/%m %H:%M')}")
             return inicio_dia.isoformat(), fin_dia.isoformat()
         
         elif any(palabra in pregunta_lower for palabra in ["mañana", "manana"]):  # Ambas versiones
