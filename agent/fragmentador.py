@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 from typing import List, Dict, Tuple
 from agent.extractor import extraer_palabras_clave
+from agent.temporal_parser import detectar_timestamps_fragmento
 
 def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 150) -> List[str]:
     """
@@ -130,16 +131,6 @@ def _dividir_por_parrafos_y_tamaño(texto: str, max_palabras: int) -> List[str]:
 def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
     """
     Toma una conversación completa y la fragmenta automáticamente.
-    Args:
-        conversacion: {
-            'titulo': str,
-            'contenido': str, 
-            'fecha': str (ISO),
-            'participantes': list,
-            'metadata': dict
-        }
-    Returns:
-        Lista de fragmentos con metadatos
     """
     contenido = conversacion.get('contenido', '').strip()
     if not contenido:
@@ -150,18 +141,23 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
     
     fragmentos_con_metadata = []
     conversacion_id = str(uuid.uuid4())
+    timestamp_base_conversacion = conversacion.get('fecha')
     
     for i, texto_fragmento in enumerate(textos_fragmentos):
         fragmento_id = str(uuid.uuid4())
         
-        # Detectar si el fragmento tiene información temporal individual
-        referencias_temporales = []
+        # NUEVO: Detectar timestamp específico del fragmento
+        timestamp_fragmento = detectar_timestamps_fragmento(
+            texto_fragmento, 
+            timestamp_base_conversacion
+        )
+        
+        # Determinar si es temporal basado en timestamp específico
+        es_temporal = bool(timestamp_fragmento)
+        
         palabras_clave = extraer_palabras_clave(texto_fragmento)
         
-        # Heredar timestamp de la conversación o detectar individual
-        timestamp_fragmento = conversacion.get('fecha')
-        
-        # Crear metadatos del fragmento
+        # Crear metadatos del fragmento MEJORADOS
         metadata_fragmento = {
             "fragmento_id": fragmento_id,
             "conversacion_id": conversacion_id,
@@ -171,11 +167,13 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
             "texto": texto_fragmento,
             "palabras_clave": palabras_clave,
             "timestamp": timestamp_fragmento,
+            "timestamp_original_conversacion": timestamp_base_conversacion,  # NUEVO: preservar original
             "participantes": conversacion.get('participantes', []),
             "metadata_conversacion": conversacion.get('metadata', {}),
             "created_at": datetime.now().isoformat(),
-            "es_temporal": bool(timestamp_fragmento),
-            "tipo_contexto": _detectar_tipo_fragmento(texto_fragmento, conversacion.get('metadata', {}))
+            "es_temporal": es_temporal,
+            "tipo_contexto": _detectar_tipo_fragmento(texto_fragmento, conversacion.get('metadata', {})),
+            "tiene_timestamp_especifico": timestamp_fragmento != timestamp_base_conversacion  # NUEVO: flag
         }
         
         fragmentos_con_metadata.append({
@@ -192,17 +190,41 @@ def _detectar_tipo_fragmento(texto: str, metadata_conversacion: Dict) -> str:
     # Si la conversación ya tiene tipo, heredarlo como base
     tipo_base = metadata_conversacion.get('tipo', 'general')
     
-    # Patrones específicos de fragmentos
+    # PATRONES ESPECÍFICOS AMPLIADOS
     patrones_especificos = {
-        "decision": ["decidimos", "acordamos", "resolveremos", "la decisión", "se decidió"],
-        "accion": ["hacer", "implementar", "ejecutar", "realizar", "completar"],
-        "pregunta": ["¿", "como", "cómo", "qué", "cuándo", "dónde", "por qué"],
-        "conclusion": ["en resumen", "para concluir", "finalmente", "en conclusión"],
-        "problema": ["problema", "issue", "bug", "error", "falla", "no funciona"]
+        "decision": ["decidimos", "acordamos", "resolveremos", "la decisión", "se decidió", 
+                    "optamos", "elegimos", "determinamos"],
+        "accion": ["hacer", "implementar", "ejecutar", "realizar", "completar", 
+                "desarrollar", "crear", "construir", "establecer"],
+        "pregunta": ["¿", "como", "cómo", "qué", "cuándo", "dónde", "por qué", 
+                    "cuál", "quién", "cuánto"],
+        "conclusion": ["en resumen", "para concluir", "finalmente", "en conclusión",
+                    "resumiendo", "concluyendo"],
+        "problema": ["problema", "issue", "bug", "error", "falla", "no funciona",
+                    "dificultad", "obstáculo", "inconveniente"],
+        "tarea": ["tarea", "pendiente", "debe", "tengo que", "hay que",
+                "asignar", "responsable", "deadline"],
+        "evento": ["reunión", "meeting", "cita", "evento", "conferencia",
+                "presentación", "demo"],
+        "temporalidad_fuerte": ["mañana", "ayer", "hoy", "próximo", "pasado",
+                            "lunes", "martes", "miércoles", "jueves", "viernes"]
     }
     
+    # Contar coincidencias por categoría
+    coincidencias = {}
     for tipo, palabras in patrones_especificos.items():
-        if any(palabra in texto_lower for palabra in palabras):
-            return tipo
+        count = sum(1 for palabra in palabras if palabra in texto_lower)
+        if count > 0:
+            coincidencias[tipo] = count
+    
+    # Si hay coincidencias, usar la más fuerte
+    if coincidencias:
+        tipo_detectado = max(coincidencias.items(), key=lambda x: x[1])[0]
+        
+        # Casos especiales
+        if tipo_detectado == "temporalidad_fuerte":
+            return "temporal_especifico"
+        else:
+            return tipo_detectado
     
     return tipo_base
