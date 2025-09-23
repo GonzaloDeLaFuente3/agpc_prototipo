@@ -16,6 +16,7 @@ from agent.query_analyzer import analizar_intencion_temporal
 from agent.visualizador_doble import VisualizadorDobleNivel
 from agent.fragmentador import fragmentar_conversacion
 from agent.propagacion import crear_propagador, propagar_desde_consulta_integrado
+from agent.utils import parse_iso_datetime_safe
 
 # Variable global para el propagador
 propagador_global = None
@@ -34,6 +35,8 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     Returns:
         Diccionario con estadísticas de la actualización
     """
+    parametros = usar_parametros_configurables()
+    umbral_actual = parametros.get('umbral_similitud', UMBRAL_SIMILITUD)
     inicio_tiempo = time.time()
     
     # Obtener todos los nodos excepto el nuevo
@@ -66,7 +69,7 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
         peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
         
         # Solo crear arista si supera el umbral
-        if similitud_estructural > UMBRAL_SIMILITUD:
+        if similitud_estructural > umbral_actual:
             datos_arista = {
                 "peso_estructural": round(similitud_estructural, 3),
                 "relevancia_temporal": round(relevancia_temporal, 3),
@@ -249,6 +252,21 @@ ARCHIVO_METADATOS = "data/contexto.json"
 grafo_contextos = nx.DiGraph()
 metadatos_contextos = {}
 _lock = threading.Lock()
+
+def usar_parametros_configurables():
+    """Función para usar parámetros desde main.py si están disponibles."""
+    try:
+        # Intentar importar parámetros desde main
+        import main
+        return main.parametros_sistema
+    except (ImportError, AttributeError) as e:
+        print(f"⚠️  No se pudieron cargar parámetros configurables: {e}")
+        # Usar valores por defecto si no están disponibles
+        return {
+            'umbral_similitud': 0.5,
+            'k_resultados': 5,
+            'factor_refuerzo_temporal': 1.5
+        }
 
 def _detectar_tipo_contexto(titulo: str, texto: str) -> str:
     """Detecta el tipo de contexto para ajustar decaimiento temporal."""
@@ -648,6 +666,8 @@ def exportar_grafo_para_visualizacion() -> Dict:
 def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, 
                            factor_refuerzo: float = 1.0, momento_consulta: Optional[datetime] = None) -> Dict:
     """Construye subgrafo considerando momento de consulta y similitud estructural."""
+    print(f"🔧 CONSTRUYENDO ÁRBOL con factor_refuerzo: {factor_refuerzo}")
+
     if not contextos_ids:
         return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
     
@@ -727,6 +747,8 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
         ) if ts else 0.0
         
         we = ws * (1 + rt * factor_refuerzo)
+
+        print(f"📊 Contexto {cid[:8]}: ws={ws:.3f}, rt={rt:.3f}, factor={factor_refuerzo}, we={we:.3f}")
         
         edges.append({
             "from": raiz_id,
@@ -757,13 +779,18 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
     analisis_intencion = analizar_intencion_temporal(pregunta, momento_consulta)
     
     referencia_temporal = analisis_intencion.get('timestamp_referencia')
-    factor_refuerzo = analisis_intencion.get('factor_refuerzo_temporal', 1.0)
+    parametros = usar_parametros_configurables()
+    factor_refuerzo = parametros.get('factor_refuerzo_temporal', 1.5)
     ventana_temporal = analisis_intencion.get('ventana_temporal')
     
-    # Obtener contextos relevantes
+    # Obtener contextos relevantes usando parámetros configurables
+    parametros = usar_parametros_configurables()
+    k_busqueda = parametros.get('k_resultados', 5)
+    
     from agent.semantica import buscar_similares
     try:
-        ids_candidatos = buscar_similares(pregunta, k=10)
+        # BUSCAR MÁS CONTEXTOS INICIALMENTE para mayor diversidad
+        ids_candidatos = buscar_similares(pregunta, k=k_busqueda * 3)  # 3x más candidatos
     except Exception as e:
         print(f"Error en búsqueda semántica: {e}")
         ids_candidatos = []
@@ -776,6 +803,8 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         ventana_inicio = ventana_temporal['inicio']
         ventana_fin = ventana_temporal['fin']
         
+        print(f"🔍 Aplicando filtro temporal. Ventana: {ventana_inicio} a {ventana_fin}")
+        
         # Filtrar contextos por ventana temporal
         ids_en_ventana = [
             ctx_id for ctx_id in ids_candidatos 
@@ -783,12 +812,75 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         ]
         
         if ids_en_ventana:
-            ids_similares = ids_en_ventana[:5]
+            ids_similares = ids_en_ventana[:k_busqueda]
             contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_en_ventana)
+            print(f"✅ {len(ids_en_ventana)} contextos encontrados en ventana temporal")
         else:
-            ids_similares = ids_candidatos[:5]
+            print(f"⚠️ Ningún contexto en ventana temporal. Aplicando fallback...")
+            
+            # FALLBACK MEJORADO: Buscar por proximidad temporal y contenido
+            contextos_con_fechas = []
+            contextos_por_contenido = []
+            
+            for ctx_id in ids_candidatos:
+                meta = metadatos_contextos.get(ctx_id, {})
+                timestamp = meta.get('timestamp')
+                titulo = meta.get('titulo', '').lower()
+                texto = meta.get('texto', '').lower()
+                
+                # CRITERIO 1: Proximidad temporal
+                if timestamp:
+                    from agent.utils import parse_iso_datetime_safe
+                    fecha_ctx = parse_iso_datetime_safe(timestamp)
+                    if fecha_ctx:
+                        diferencia = abs((momento_consulta - fecha_ctx).days)
+                        contextos_con_fechas.append((ctx_id, diferencia, fecha_ctx))
+                
+                # CRITERIO 2: Contenido relevante a "ayer"
+                if any(palabra in titulo + ' ' + texto for palabra in ['ayer', 'reunion', 'importante', 'proyecto']):
+                    contextos_por_contenido.append(ctx_id)
+                    print(f"📝 Contexto relevante por contenido: {meta.get('titulo', 'Sin título')[:50]}")
+            
+            # Combinar criterios
+            if contextos_con_fechas:
+                # Ordenar por proximidad temporal
+                contextos_con_fechas.sort(key=lambda x: x[1])
+                
+                # Mostrar contextos más cercanos temporalmente
+                print(f"📅 Contextos por proximidad temporal:")
+                for ctx_id, dias_diff, fecha_ctx in contextos_con_fechas[:10]:
+                    meta = metadatos_contextos.get(ctx_id, {})
+                    titulo = meta.get('titulo', 'Sin título')
+                    print(f"  - {titulo[:40]}: {fecha_ctx.strftime('%d/%m/%Y')} (±{dias_diff} días)")
+                
+                # Priorizar contextos por contenido relevante si están cerca temporalmente
+                contextos_prioritarios = []
+                for ctx_id in contextos_por_contenido:
+                    # Buscar este contexto en la lista temporal
+                    for ctx_temp_id, dias_diff, fecha_ctx in contextos_con_fechas:
+                        if ctx_temp_id == ctx_id and dias_diff <= 7:  # Dentro de una semana
+                            contextos_prioritarios.append(ctx_id)
+                            break
+                
+                if contextos_prioritarios:
+                    print(f"🎯 Usando {len(contextos_prioritarios)} contextos prioritarios (relevancia + proximidad temporal)")
+                    ids_similares = contextos_prioritarios[:k_busqueda]
+                    # Completar con los más cercanos temporalmente
+                    ids_restantes = [ctx_id for ctx_id, _, _ in contextos_con_fechas if ctx_id not in ids_similares][:k_busqueda - len(ids_similares)]
+                    ids_similares.extend(ids_restantes)
+                else:
+                    print(f"🔄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
+                    ids_similares = [ctx_id for ctx_id, _, _ in contextos_con_fechas[:k_busqueda]]
+                
+                contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_similares)
+            else:
+                # Último recurso: búsqueda semántica pura
+                ids_similares = ids_candidatos[:k_busqueda]
+                contextos_filtrados_temporalmente = 0
+                print(f"🔄 Usando búsqueda semántica pura como último recurso")
     else:
-        ids_similares = ids_candidatos[:5]
+        ids_similares = ids_candidatos[:k_busqueda]
+        contextos_filtrados_temporalmente = 0
     
     # Construir árbol
     if ids_similares:
@@ -816,15 +908,57 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
     timestamp = meta.get("timestamp")
     
     if not timestamp:
-        return False
+        # Si no tiene timestamp pero tiene referencias temporales en el texto,
+        # intentar extraerlas
+        texto = meta.get("texto", "")
+        titulo = meta.get("titulo", "")
+        texto_completo = f"{titulo} {texto}"
+        
+        from agent.temporal_parser import extraer_referencias_del_texto
+        referencias = extraer_referencias_del_texto(texto_completo)
+        
+        if referencias:
+            # Usar la primera referencia encontrada
+            timestamp = referencias[0][1]
+        else:
+            print(f"⚠️ Contexto {contexto_id[:8]} sin timestamp - EXCLUIDO")
+            return False
     
     try:
-        fecha_contexto = datetime.fromisoformat(timestamp)
-        fecha_inicio = datetime.fromisoformat(ventana_inicio)
-        fecha_fin = datetime.fromisoformat(ventana_fin)
+        # USAR EL PARSER SEGURO MEJORADO
+        from agent.utils import parse_iso_datetime_safe
         
-        return fecha_inicio <= fecha_contexto <= fecha_fin
-    except (ValueError, TypeError):
+        fecha_contexto = parse_iso_datetime_safe(timestamp)
+        fecha_inicio = parse_iso_datetime_safe(ventana_inicio)  
+        fecha_fin = parse_iso_datetime_safe(ventana_fin)
+
+        # VERIFICACIÓN ADICIONAL: Asegurar que todas las fechas son naive
+        if fecha_contexto and fecha_contexto.tzinfo is not None:
+            fecha_contexto = fecha_contexto.replace(tzinfo=None)
+        if fecha_inicio and fecha_inicio.tzinfo is not None:
+            fecha_inicio = fecha_inicio.replace(tzinfo=None)
+        if fecha_fin and fecha_fin.tzinfo is not None:
+            fecha_fin = fecha_fin.replace(tzinfo=None)
+        
+        if not fecha_contexto or not fecha_inicio or not fecha_fin:
+            print(f"⚠️ Error parseando fechas para contexto {contexto_id[:8]}")
+            print(f"   - Contexto: {timestamp} -> {fecha_contexto}")
+            print(f"   - Ventana: {ventana_inicio} -> {fecha_inicio}")
+            print(f"   - Ventana: {ventana_fin} -> {fecha_fin}")
+            return False
+        
+        # Logging para debugging con más info
+        contexto_titulo = meta.get("titulo", "Sin título")[:30]
+        
+        if fecha_inicio <= fecha_contexto <= fecha_fin:
+            print(f"✅ Contexto {contexto_id[:8]} '{contexto_titulo}' INCLUIDO: {fecha_contexto.strftime('%d/%m %H:%M')} en ventana [{fecha_inicio.strftime('%d/%m %H:%M')} - {fecha_fin.strftime('%d/%m %H:%M')}]")
+            return True
+        else:
+            print(f"❌ Contexto {contexto_id[:8]} '{contexto_titulo}' EXCLUIDO: {fecha_contexto.strftime('%d/%m %H:%M')} fuera de [{fecha_inicio.strftime('%d/%m %H:%M')} - {fecha_fin.strftime('%d/%m %H:%M')}]")
+            return False
+            
+    except Exception as e:
+        print(f"⚠️ Error procesando timestamp para contexto {contexto_id[:8]}: {timestamp} - {e}")
         return False
     
 # FUNCIONES DE VISUALIZACIÓN DOBLE NIVEL
@@ -908,9 +1042,11 @@ def obtener_estado_propagacion():
         return {"error": f"Error: {str(e)}"}
 
 def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[datetime] = None, 
-                                    usar_propagacion: bool = True, max_pasos: int = 2,
-                                    factor_decaimiento: float = None, 
-                                    umbral_activacion: float = None) -> Dict:
+                                               usar_propagacion: bool = True, max_pasos: int = 2,
+                                               factor_decaimiento: float = None, 
+                                               umbral_activacion: float = None,
+                                               k_inicial: int = None,
+                                               factor_refuerzo_temporal_custom: float = None) -> Dict:
     """
     Análisis completo de consulta INCLUYENDO propagación dinámica desde contextos relevantes.
         pregunta: Consulta del usuario
@@ -918,6 +1054,15 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
         usar_propagacion: Si usar propagación además de búsqueda directa
         max_pasos: Pasos de propagación
     """
+    # Obtener parámetros configurables si no se especifican
+    parametros = usar_parametros_configurables()
+    
+    if k_inicial is None:
+        k_inicial = parametros.get('k_resultados', 5)
+    
+    if factor_refuerzo_temporal_custom is None:
+        factor_refuerzo_temporal_custom = parametros.get('factor_refuerzo_temporal', 1.5)
+
     if momento_consulta is None:
         momento_consulta = datetime.now()
     

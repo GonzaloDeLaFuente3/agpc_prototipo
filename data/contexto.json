@@ -391,5 +391,180 @@
     "created_at": "2025-09-20T11:49:23.608030",
     "es_temporal": false,
     "tipo_contexto": "proyecto"
+  },
+  "8c779cb0-06d6-4aed-baeb-94c11e2effe1": {
+    "titulo": "Reunión proyecto Alpha - Lunes - Fragmento 1",
+    "texto": "Reunión de planificación del proyecto Alpha. Definimos objetivos para la próxima semana. Asignamos tareas de desarrollo y testing.",
+    "palabras_clave": [
+      "testing",
+      "planificación",
+      "alpha",
+      "próximo",
+      "asignar",
+      "definimos",
+      "desarrollo",
+      "proyecto",
+      "reunión",
+      "semana",
+      "objetivo",
+      "tarea"
+    ],
+    "created_at": "2025-09-20T17:19:53.410032",
+    "es_temporal": true,
+    "timestamp": "2025-09-18T20:19:00.000Z",
+    "tipo_contexto": "reunion",
+    "es_fragmento": true,
+    "conversacion_id": "533d4a73-dce0-4c1b-a7b2-b9e79bcf02e6",
+    "posicion_fragmento": 1
+  },
+  "8c358330-ca0e-487e-a94f-2f7cf2af7034": {
+    "titulo": "Reunión proyecto Alpha - Miércoles - Fragmento 1",
+    "texto": "Seguimiento del proyecto Alpha. Revisamos el progreso de las tareas asignadas. Identificamos algunos problemas técnicos.",
+    "palabras_clave": [
+      "alpha",
+      "problema",
+      "asignado",
+      "revisir",
+      "técnico",
+      "progreso",
+      "proyecto",
+      "identificamos",
+      "tarea",
+      "seguimiento"
+    ],
+    "created_at": "2025-09-20T17:20:38.332093",
+    "es_temporal": true,
+    "timestamp": "2025-09-20T20:20:00.000Z",
+    "tipo_contexto": "problema",
+    "es_fragmento": true,
+    "conversacion_id": "cc9cdc82-a742-42ae-b1eb-a9b2915c9a1d",
+    "posicion_fragmento": 1
+  },
+  "0a06a740-708f-4429-bab7-65c37bd185bf": {
+    "titulo": "Documentación técnica Alpha - Fragmento 1",
+    "texto": "Manual técnico del proyecto Alpha. Especificaciones de arquitectura y patrones de diseño utilizados en el desarrollo.",
+    "palabras_clave": [
+      "arquitectura",
+      "alpha",
+      "diseño",
+      "patrón",
+      "técnico",
+      "especificaciones",
+      "utilizado",
+      "desarrollo",
+      "proyecto",
+      "manual"
+    ],
+    "created_at": "2025-09-20T17:22:01.016437",
+    "es_temporal": true,
+    "timestamp": "2025-09-20T17:22:00.954593",
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "0dd2f2dc-1ae2-47c5-8fc8-bb5473705b05",
+    "posicion_fragmento": 1
+  },
+  "bbf6e671-f9e9-4c10-9330-4024aae73486": {
+    "titulo": "Avance Trabajo Final - Fragmento 1",
+    "texto": "Hoy se realizo avance en trabajo final sobre AGPC : Gestión Probabilística de Contextos con Dimensión Temporal",
+    "palabras_clave": [
+      "contextos",
+      "avance",
+      "realacer",
+      "dimensión",
+      "gestión",
+      "temporal",
+      "trabajo",
+      "probabilística",
+      "agpc"
+    ],
+    "created_at": "2025-09-22T15:54:24.951928",
+    "es_temporal": true,
+    "timestamp": "2025-09-22T18:54:00",
+    "tipo_contexto": "temporal_especifico",
+    "es_fragmento": true,
+    "conversacion_id": "209c0065-906f-449b-90fa-86fcaa21649e",
+    "posicion_fragmento": 1
+  },
+  "7ad582c5-acce-4615-a76b-7a6d3d238269": {
+    "titulo": "Reunion Recursos Humano - Fragmento 1",
+    "texto": "Se realizó reunión virtual para nueva bacante como ingeniero en informática en NoaVirtual",
+    "palabras_clave": [
+      "reunión",
+      "informática",
+      "bacante",
+      "ingeniero",
+      "noavirtual",
+      "virtual"
+    ],
+    "created_at": "2025-09-22T15:55:29.342820",
+    "es_temporal": true,
+    "timestamp": "2025-09-21T18:55:00.000Z",
+    "tipo_contexto": "pregunta",
+    "es_fragmento": true,
+    "conversacion_id": "c22ff31b-af73-45b4-9f0f-d3ef6764a043",
+    "posicion_fragmento": 1
+  },
+  "8f4be3bb-cc94-467d-8687-aa109292f088": {
+    "titulo": "Marketing - Fragmento 1",
+    "texto": "mañana se debe armar 3 videos de marketing para NoaVirtual, para el Sistema de gestion de deportes",
+    "palabras_clave": [
+      "mañana",
+      "gestion",
+      "marketing",
+      "video",
+      "armar",
+      "sistema",
+      "deporte",
+      "noavirtual"
+    ],
+    "created_at": "2025-09-22T15:56:14.682110",
+    "es_temporal": true,
+    "timestamp": "2025-09-24T18:56:00",
+    "tipo_contexto": "tarea",
+    "es_fragmento": true,
+    "conversacion_id": "b29df83a-dbea-43e8-b41e-10c041227b7d",
+    "posicion_fragmento": 1
+  },
+  "9da98550-6b61-497b-aa72-838893d829fd": {
+    "titulo": "Reunión importante de ayer - Fragmento 1",
+    "texto": "Discutimos los objetivos del proyecto y definimos tareas",
+    "palabras_clave": [
+      "definimos",
+      "proyecto",
+      "tarea",
+      "discutimos",
+      "objetivo"
+    ],
+    "created_at": "2025-09-22T16:02:45.252668",
+    "es_temporal": true,
+    "timestamp": "2025-09-21T13:00:00.000Z",
+    "tipo_contexto": "tarea",
+    "es_fragmento": true,
+    "conversacion_id": "1f6a0134-8ed5-455e-8126-695f2658a765",
+    "posicion_fragmento": 1
+  },
+  "6a46c7c8-4280-4933-8d5b-63f463bd8c4f": {
+    "titulo": "Reunión de planificación de ayer - Fragmento 1",
+    "texto": "Ayer discutimos los avances del proyecto Alpha, definimos las tareas para esta semana y revisamos el cronograma general",
+    "palabras_clave": [
+      "tarea",
+      "proyecto",
+      "semana",
+      "general",
+      "revisamos",
+      "cronograma",
+      "alpha",
+      "definimos",
+      "ayer",
+      "avance",
+      "discutir"
+    ],
+    "created_at": "2025-09-22T19:57:49.691180",
+    "es_temporal": true,
+    "timestamp": "2025-09-20T11:00:00",
+    "tipo_contexto": "tarea",
+    "es_fragmento": true,
+    "conversacion_id": "399fb3ae-b0bb-48aa-86e4-cfde87e892d7",
+    "posicion_fragmento": 1
   }
 }

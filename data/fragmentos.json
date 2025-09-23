@@ -574,5 +574,230 @@
     "created_at": "2025-09-17T15:58:04.820232",
     "es_temporal": true,
     "tipo_contexto": "litigio"
+  },
+  "8c779cb0-06d6-4aed-baeb-94c11e2effe1": {
+    "fragmento_id": "8c779cb0-06d6-4aed-baeb-94c11e2effe1",
+    "conversacion_id": "533d4a73-dce0-4c1b-a7b2-b9e79bcf02e6",
+    "conversacion_titulo": "Reunión proyecto Alpha - Lunes",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Reunión de planificación del proyecto Alpha. Definimos objetivos para la próxima semana. Asignamos tareas de desarrollo y testing.",
+    "palabras_clave": [
+      "testing",
+      "planificación",
+      "alpha",
+      "próximo",
+      "asignar",
+      "definimos",
+      "desarrollo",
+      "proyecto",
+      "reunión",
+      "semana",
+      "objetivo",
+      "tarea"
+    ],
+    "timestamp": "2025-09-18T20:19:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-09-20T17:19:53.410032",
+    "es_temporal": true,
+    "tipo_contexto": "reunion"
+  },
+  "8c358330-ca0e-487e-a94f-2f7cf2af7034": {
+    "fragmento_id": "8c358330-ca0e-487e-a94f-2f7cf2af7034",
+    "conversacion_id": "cc9cdc82-a742-42ae-b1eb-a9b2915c9a1d",
+    "conversacion_titulo": "Reunión proyecto Alpha - Miércoles",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Seguimiento del proyecto Alpha. Revisamos el progreso de las tareas asignadas. Identificamos algunos problemas técnicos.",
+    "palabras_clave": [
+      "alpha",
+      "problema",
+      "asignado",
+      "revisir",
+      "técnico",
+      "progreso",
+      "proyecto",
+      "identificamos",
+      "tarea",
+      "seguimiento"
+    ],
+    "timestamp": "2025-09-20T20:20:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-09-20T17:20:38.332093",
+    "es_temporal": true,
+    "tipo_contexto": "problema"
+  },
+  "0a06a740-708f-4429-bab7-65c37bd185bf": {
+    "fragmento_id": "0a06a740-708f-4429-bab7-65c37bd185bf",
+    "conversacion_id": "0dd2f2dc-1ae2-47c5-8fc8-bb5473705b05",
+    "conversacion_titulo": "Documentación técnica Alpha",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Manual técnico del proyecto Alpha. Especificaciones de arquitectura y patrones de diseño utilizados en el desarrollo.",
+    "palabras_clave": [
+      "arquitectura",
+      "alpha",
+      "diseño",
+      "patrón",
+      "técnico",
+      "especificaciones",
+      "utilizado",
+      "desarrollo",
+      "proyecto",
+      "manual"
+    ],
+    "timestamp": "2025-09-20T17:22:00.954593",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "general"
+    },
+    "created_at": "2025-09-20T17:22:01.016437",
+    "es_temporal": true,
+    "tipo_contexto": "general"
+  },
+  "bbf6e671-f9e9-4c10-9330-4024aae73486": {
+    "fragmento_id": "bbf6e671-f9e9-4c10-9330-4024aae73486",
+    "conversacion_id": "209c0065-906f-449b-90fa-86fcaa21649e",
+    "conversacion_titulo": "Avance Trabajo Final",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Hoy se realizo avance en trabajo final sobre AGPC : Gestión Probabilística de Contextos con Dimensión Temporal",
+    "palabras_clave": [
+      "contextos",
+      "avance",
+      "realacer",
+      "dimensión",
+      "gestión",
+      "temporal",
+      "trabajo",
+      "probabilística",
+      "agpc"
+    ],
+    "timestamp": "2025-09-22T18:54:00",
+    "timestamp_original_conversacion": "2025-09-22T18:54:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "general"
+    },
+    "created_at": "2025-09-22T15:54:24.951928",
+    "es_temporal": true,
+    "tipo_contexto": "temporal_especifico",
+    "tiene_timestamp_especifico": true
+  },
+  "7ad582c5-acce-4615-a76b-7a6d3d238269": {
+    "fragmento_id": "7ad582c5-acce-4615-a76b-7a6d3d238269",
+    "conversacion_id": "c22ff31b-af73-45b4-9f0f-d3ef6764a043",
+    "conversacion_titulo": "Reunion Recursos Humano",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Se realizó reunión virtual para nueva bacante como ingeniero en informática en NoaVirtual",
+    "palabras_clave": [
+      "reunión",
+      "informática",
+      "bacante",
+      "ingeniero",
+      "noavirtual",
+      "virtual"
+    ],
+    "timestamp": "2025-09-21T18:55:00.000Z",
+    "timestamp_original_conversacion": "2025-09-21T18:55:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-09-22T15:55:29.342820",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta",
+    "tiene_timestamp_especifico": false
+  },
+  "8f4be3bb-cc94-467d-8687-aa109292f088": {
+    "fragmento_id": "8f4be3bb-cc94-467d-8687-aa109292f088",
+    "conversacion_id": "b29df83a-dbea-43e8-b41e-10c041227b7d",
+    "conversacion_titulo": "Marketing",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "mañana se debe armar 3 videos de marketing para NoaVirtual, para el Sistema de gestion de deportes",
+    "palabras_clave": [
+      "mañana",
+      "gestion",
+      "marketing",
+      "video",
+      "armar",
+      "sistema",
+      "deporte",
+      "noavirtual"
+    ],
+    "timestamp": "2025-09-24T18:56:00",
+    "timestamp_original_conversacion": "2025-09-23T18:56:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "planning"
+    },
+    "created_at": "2025-09-22T15:56:14.682110",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": true
+  },
+  "9da98550-6b61-497b-aa72-838893d829fd": {
+    "fragmento_id": "9da98550-6b61-497b-aa72-838893d829fd",
+    "conversacion_id": "1f6a0134-8ed5-455e-8126-695f2658a765",
+    "conversacion_titulo": "Reunión importante de ayer",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Discutimos los objetivos del proyecto y definimos tareas",
+    "palabras_clave": [
+      "definimos",
+      "proyecto",
+      "tarea",
+      "discutimos",
+      "objetivo"
+    ],
+    "timestamp": "2025-09-21T13:00:00.000Z",
+    "timestamp_original_conversacion": "2025-09-21T13:00:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-09-22T16:02:45.252668",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": false
+  },
+  "6a46c7c8-4280-4933-8d5b-63f463bd8c4f": {
+    "fragmento_id": "6a46c7c8-4280-4933-8d5b-63f463bd8c4f",
+    "conversacion_id": "399fb3ae-b0bb-48aa-86e4-cfde87e892d7",
+    "conversacion_titulo": "Reunión de planificación de ayer",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "Ayer discutimos los avances del proyecto Alpha, definimos las tareas para esta semana y revisamos el cronograma general",
+    "palabras_clave": [
+      "tarea",
+      "proyecto",
+      "semana",
+      "general",
+      "revisamos",
+      "cronograma",
+      "alpha",
+      "definimos",
+      "ayer",
+      "avance",
+      "discutir"
+    ],
+    "timestamp": "2025-09-20T11:00:00",
+    "timestamp_original_conversacion": "2025-09-21T11:00:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-09-22T19:57:49.691180",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": true
   }
 }

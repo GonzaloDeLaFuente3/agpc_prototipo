@@ -11,6 +11,7 @@ from agent.query_analyzer import analizar_intencion_temporal
 from datetime import datetime
 from agent.dataset_loader import DatasetLoader
 from fastapi import UploadFile, File
+from agent.utils import parse_iso_datetime_safe
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -21,11 +22,21 @@ for id, datos in grafo.obtener_todos().items():
 
 app = FastAPI()
 
+# Variables globales para los parámetros configurables
+parametros_sistema = {
+    'umbral_similitud': 0.5,
+    'factor_refuerzo_temporal': 1.5
+}
+
 class EntradaContexto(BaseModel):
     titulo: str
     texto: str
     es_temporal: Optional[bool] = None
     referencia_temporal: Optional[str] = None
+
+class ConfiguracionParametros(BaseModel):
+    umbral_similitud: Optional[float] = None
+    factor_refuerzo_temporal: Optional[float] = None
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
@@ -100,7 +111,10 @@ def preguntar(pregunta: str):
             
             # Agregar información temporal si existe
             if ctx.get("timestamp"):
-                fecha_ctx = datetime.fromisoformat(ctx["timestamp"])
+                fecha_ctx = parse_iso_datetime_safe(ctx["timestamp"])
+                if not fecha_ctx:
+                    # Si no se puede parsear la fecha, skip el cálculo temporal
+                    continue
                 info_ctx["fecha_contexto"] = fecha_ctx.isoformat()
                 
                 # Diferencia temporal con momento consulta
@@ -154,7 +168,7 @@ def preguntar(pregunta: str):
 
 @app.get("/preguntar-con-propagacion/")
 def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2,
-                             factor_decaimiento: float = None, umbral_activacion: float = None):
+                                       factor_decaimiento: float = None, umbral_activacion: float = None):
     """Responde a una pregunta usando propagación de activación."""
     pregunta = pregunta.strip()
     momento_consulta = datetime.now()
@@ -170,12 +184,21 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         }
 
     try:
+        k_busqueda = 5
+        # USAR PARÁMETROS CONFIGURABLES
+        factor_temporal = parametros_sistema['factor_refuerzo_temporal']
+        print(f"🔧 APLICANDO factor_refuerzo_temporal: {factor_temporal}")
         # Análisis con propagación
         analisis_completo = grafo.analizar_consulta_con_propagacion(
             pregunta, momento_consulta, usar_propagacion, max_pasos,
-            factor_decaimiento, umbral_activacion  
+            factor_decaimiento, umbral_activacion,
+            k_inicial=k_busqueda,
+            factor_refuerzo_temporal_custom=factor_temporal   
         )
-        
+        # VERIFICAR que se aplicó en la respuesta
+        if 'estrategia_aplicada' in analisis_completo:
+            analisis_completo['estrategia_aplicada']['factor_refuerzo_configurado'] = factor_temporal
+                
         analisis_intencion = analisis_completo["analisis_intencion"]
         ids_similares = analisis_completo["contextos_recuperados"]
         arbol = analisis_completo["arbol_consulta"]
@@ -221,7 +244,10 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
             
             # Agregar información temporal si existe
             if ctx.get("timestamp"):
-                fecha_ctx = datetime.fromisoformat(ctx["timestamp"])
+                fecha_ctx = parse_iso_datetime_safe(ctx["timestamp"])
+                if not fecha_ctx:
+                    # Si no se puede parsear la fecha, skip el cálculo temporal
+                    continue
                 info_ctx["fecha_contexto"] = fecha_ctx.isoformat()
                 
                 # Diferencia temporal con momento consulta
@@ -442,6 +468,109 @@ def obtener_estadisticas_actualizacion():
             "error": str(e),
             "timestamp": datetime.now().isoformat()
         }
+
+@app.post("/configurar-parametros/")
+def configurar_parametros_sistema(config: ConfiguracionParametros):
+    """Configura los parámetros principales del sistema."""
+    global parametros_sistema
+    
+    try:
+        recalcular_relaciones = False
+        
+        # Actualizar parámetros si se proporcionan
+        if config.umbral_similitud is not None:
+            if 0.1 <= config.umbral_similitud <= 0.9:
+                # Si cambió el umbral, marcar para recálculo
+                if parametros_sistema['umbral_similitud'] != config.umbral_similitud:
+                    recalcular_relaciones = True
+                
+                parametros_sistema['umbral_similitud'] = config.umbral_similitud
+                # Actualizar umbral en grafo.py
+                grafo.UMBRAL_SIMILITUD = config.umbral_similitud
+            else:
+                return {"status": "error", "mensaje": "Umbral de similitud debe estar entre 0.1 y 0.9"}
+        
+        if config.factor_refuerzo_temporal is not None:
+            if 0.5 <= config.factor_refuerzo_temporal <= 3.0:
+                parametros_sistema['factor_refuerzo_temporal'] = config.factor_refuerzo_temporal
+            else:
+                return {"status": "error", "mensaje": "Factor de refuerzo temporal debe estar entre 0.5 y 3.0"}
+        
+        # RECALCULAR RELACIONES SI CAMBIÓ EL UMBRAL
+        mensaje_recalculo = ""
+        if recalcular_relaciones:
+            print(f"🔄 Recalculando relaciones con nuevo umbral: {config.umbral_similitud}")
+            stats_antes = grafo.obtener_estadisticas()
+            grafo._recalcular_relaciones()
+            grafo._guardar_grafo()
+            stats_despues = grafo.obtener_estadisticas()
+            
+            mensaje_recalculo = f" | Relaciones recalculadas: {stats_antes['total_relaciones']} → {stats_despues['total_relaciones']}"
+        
+        return {
+            "status": "success",
+            "mensaje": f"Parámetros actualizados correctamente{mensaje_recalculo}",
+            "parametros": parametros_sistema,
+            "relaciones_recalculadas": recalcular_relaciones
+        }
+        
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+
+# Nuevo endpoint para forzar recálculo
+@app.post("/recalcular-relaciones/")
+def forzar_recalculo_relaciones():
+    """Fuerza el recálculo de todas las relaciones con los parámetros actuales."""
+    try:
+        stats_antes = grafo.obtener_estadisticas()
+        print(f"🔄 Iniciando recálculo de relaciones con umbral: {parametros_sistema['umbral_similitud']}")
+        
+        grafo._recalcular_relaciones()
+        grafo._guardar_grafo()
+        
+        stats_despues = grafo.obtener_estadisticas()
+        
+        return {
+            "status": "success",
+            "mensaje": "Relaciones recalculadas exitosamente",
+            "antes": {
+                "nodos": stats_antes["total_contextos"],
+                "relaciones": stats_antes["total_relaciones"]
+            },
+            "despues": {
+                "nodos": stats_despues["total_contextos"], 
+                "relaciones": stats_despues["total_relaciones"]
+            },
+            "umbral_aplicado": parametros_sistema['umbral_similitud']
+        }
+        
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+
+@app.get("/estado-parametros/")
+def obtener_estado_parametros():
+    """Obtiene el estado actual de los parámetros del sistema."""
+    return {
+        "status": "success",
+        "parametros": parametros_sistema,
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/debug-temporal/")
+def debug_analisis_temporal(pregunta: str):
+    """Endpoint para debuggear análisis temporal."""
+    from agent.query_analyzer import analizar_intencion_temporal
+    from datetime import datetime
+    
+    momento_consulta = datetime.now()
+    analisis = analizar_intencion_temporal(pregunta, momento_consulta)
+    
+    return {
+        "pregunta": pregunta,
+        "momento_consulta": momento_consulta.isoformat(),
+        "analisis": analisis,
+        "debug": True
+    }
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)

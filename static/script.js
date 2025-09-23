@@ -14,6 +14,9 @@ let parametrosPropagacion = {
     umbral_activacion: 0.01,
     max_pasos: 3
 };
+// Variables globales para los nuevos parámetros
+let umbralSimilitud = 0.5;
+let factorRefuerzoTemporal = 1.5;
 
 // Event listeners principales
 document.addEventListener('DOMContentLoaded', function() {
@@ -71,11 +74,166 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Verificar que los controles existen antes de agregar listeners
+    const umbralControl = document.getElementById('umbralSimilitud');
+    const refuerzoControl = document.getElementById('factorRefuerzoTemporal');
+    
+    if (umbralControl) {
+        umbralControl.addEventListener('input', function() {
+            actualizarValorParametro('umbralSimilitud', 'valorUmbralSimilitud');
+        });
+    } else {
+        console.error('No se encontró el control umbralSimilitud');
+    }
+    
+    if (refuerzoControl) {
+        refuerzoControl.addEventListener('input', function() {
+            actualizarValorParametro('factorRefuerzoTemporal', 'valorRefuerzoTemporal');
+        });
+    } else {
+        console.error('No se encontró el control factorRefuerzoTemporal');
+    }
+
     //Cargar estado inicial después de un breve delay
     setTimeout(() => {
         obtenerEstadoPropagacion();
     }, 1000);
 });
+
+// Función para aplicar configuración de parámetros
+async function aplicarConfiguracionParametros() {
+    try {
+        // Verificar que los elementos existen
+        const umbralControl = document.getElementById('umbralSimilitud');
+        const refuerzoControl = document.getElementById('factorRefuerzoTemporal');
+        
+        if (!umbralControl) {
+            throw new Error('No se encontró el control umbralSimilitud');
+        }
+        if (!refuerzoControl) {
+            throw new Error('No se encontró el control factorRefuerzoTemporal');
+        }
+        
+        // Obtener valores de los controles
+        const umbralAnterior = umbralSimilitud;
+        umbralSimilitud = parseFloat(umbralControl.value);
+        factorRefuerzoTemporal = parseFloat(refuerzoControl.value);
+        
+        const cambioUmbral = umbralAnterior !== umbralSimilitud;
+        
+        // Mostrar estado de carga
+        const boton = document.getElementById('aplicarParametros');
+        if (!boton) {
+            throw new Error('No se encontró el botón aplicarParametros');
+        }
+        
+        const textoOriginal = boton.textContent;
+        
+        if (cambioUmbral) {
+            boton.textContent = '🔄 Recalculando relaciones...';
+        } else {
+            boton.textContent = '⏳ Aplicando...';
+        }
+        boton.disabled = true;
+        
+        // Enviar configuración al backend
+        const response = await axios.post('/configurar-parametros/', {
+            umbral_similitud: umbralSimilitud,
+            factor_refuerzo_temporal: factorRefuerzoTemporal
+        });
+        
+        if (response.data.status === 'success') {
+            // Mostrar resultado con información de recálculo
+            let mensaje = '✅ Aplicado';
+            if (response.data.relaciones_recalculadas) {
+                mensaje += ' + Relaciones recalculadas';
+                
+                // Mostrar notificación adicional
+                setTimeout(() => {
+                    alert(`🔄 Grafo actualizado con nuevo umbral!\n\n${response.data.mensaje}`);
+                }, 500);
+            }
+            
+            boton.textContent = mensaje;
+            
+            setTimeout(() => {
+                boton.textContent = textoOriginal;
+                boton.disabled = false;
+            }, 3000);
+        } else {
+            alert('Error al aplicar configuración: ' + (response.data.mensaje || 'Error desconocido'));
+            boton.textContent = textoOriginal;
+            boton.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error en aplicarConfiguracionParametros:', error);
+        alert('Error: ' + error.message);
+        
+        const boton = document.getElementById('aplicarParametros');
+        if (boton) {
+            boton.textContent = '💾 Aplicar Configuración';
+            boton.disabled = false;
+        }
+    }
+}
+
+// Nueva función para forzar recálculo manual
+async function forzarRecalculoRelaciones() {
+    if (!confirm('¿Recalcular todas las relaciones del grafo?\n\nEsto puede tardar unos segundos con muchos contextos.')) {
+        return;
+    }
+    
+    try {
+        const response = await axios.post('/recalcular-relaciones/');
+        
+        if (response.data.status === 'success') {
+            const antes = response.data.antes;
+            const despues = response.data.despues;
+            const diferencia = despues.relaciones - antes.relaciones;
+            const signo = diferencia >= 0 ? '+' : '';
+            
+            alert(`✅ Relaciones recalculadas!\n\n` +
+                  `📊 Nodos: ${despues.nodos}\n` +
+                  `🔗 Relaciones: ${antes.relaciones} → ${despues.relaciones} (${signo}${diferencia})\n` +
+                  `🎯 Umbral aplicado: ${response.data.umbral_aplicado}`);
+            
+            // Actualizar estadísticas si están visibles
+            if (document.getElementById('estadisticas').innerHTML !== '') {
+                cargarEstadisticas();
+            }
+        } else {
+            alert('❌ Error: ' + response.data.mensaje);
+        }
+    } catch (error) {
+        alert('❌ Error de conexión: ' + error.message);
+    }
+}
+
+// Función para actualizar valores en tiempo real
+function actualizarValorParametro(parametro, elementoValor) {
+    const valor = document.getElementById(parametro).value;
+    document.getElementById(elementoValor).textContent = valor;
+}
+
+// Función para mostrar estado actual de parámetros
+async function mostrarEstadoParametros() {
+    try {
+        const response = await axios.get('/estado-parametros/');
+        if (response.data.status === 'success') {
+            const params = response.data.parametros;
+            
+            // Actualizar controles con valores actuales
+            document.getElementById('umbralSimilitud').value = params.umbral_similitud;
+            document.getElementById('factorRefuerzoTemporal').value = params.factor_refuerzo_temporal;
+            
+            // Actualizar displays de valores
+            document.getElementById('valorUmbralSimilitud').textContent = params.umbral_similitud;
+            document.getElementById('valorRefuerzoTemporal').textContent = params.factor_refuerzo_temporal;
+        }
+    } catch (error) {
+        console.error('Error cargando estado de parámetros:', error);
+    }
+}
 
 // Función mejorada de preguntar con propagación
 async function preguntarConPropagacion() {
@@ -116,6 +274,7 @@ async function preguntarConPropagacion() {
             const analisis = res.data.analisis_intencion;
             const estrategia = res.data.estrategia_aplicada;
             const propagacion = res.data.propagacion || {};
+            const factorMostrado = estrategia.factor_refuerzo || estrategia.factor_refuerzo || 1.0;
             
             let estrategiaHtml = `
                 <div class="grid grid-cols-2 gap-3 text-xs">
@@ -124,8 +283,8 @@ async function preguntarConPropagacion() {
                         <div>${analisis.intencion_temporal?.toUpperCase() || 'N/A'}</div>
                     </div>
                     <div>
-                        <div class="font-medium">⚙️ Factor:</div>
-                        <div>${(estrategia.factor_refuerzo || 1.0)}x</div>
+                        <div class="font-medium">⚙️ Factor de refuerzo:</div>
+                        <div>${factorMostrado}x</div>
                     </div>
                     <div>
                         <div class="font-medium">🔄 Propagación:</div>

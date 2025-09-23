@@ -153,5 +153,109 @@
       "b046434b-61d4-4533-906c-69b68bb6c5a0"
     ],
     "created_at": "2025-09-17T15:58:04.820232"
+  },
+  "533d4a73-dce0-4c1b-a7b2-b9e79bcf02e6": {
+    "titulo": "Reunión proyecto Alpha - Lunes",
+    "fecha": "2025-09-18T20:19:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "8c779cb0-06d6-4aed-baeb-94c11e2effe1"
+    ],
+    "created_at": "2025-09-20T17:19:53.411036"
+  },
+  "cc9cdc82-a742-42ae-b1eb-a9b2915c9a1d": {
+    "titulo": "Reunión proyecto Alpha - Miércoles",
+    "fecha": "2025-09-20T20:20:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "8c358330-ca0e-487e-a94f-2f7cf2af7034"
+    ],
+    "created_at": "2025-09-20T17:20:38.332093"
+  },
+  "0dd2f2dc-1ae2-47c5-8fc8-bb5473705b05": {
+    "titulo": "Documentación técnica Alpha",
+    "fecha": "2025-09-20T17:22:01.017213",
+    "participantes": [],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "0a06a740-708f-4429-bab7-65c37bd185bf"
+    ],
+    "created_at": "2025-09-20T17:22:01.017213"
+  },
+  "209c0065-906f-449b-90fa-86fcaa21649e": {
+    "titulo": "Avance Trabajo Final",
+    "fecha": "2025-09-22T18:54:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "bbf6e671-f9e9-4c10-9330-4024aae73486"
+    ],
+    "created_at": "2025-09-22T15:54:24.951928"
+  },
+  "c22ff31b-af73-45b4-9f0f-d3ef6764a043": {
+    "titulo": "Reunion Recursos Humano",
+    "fecha": "2025-09-21T18:55:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "7ad582c5-acce-4615-a76b-7a6d3d238269"
+    ],
+    "created_at": "2025-09-22T15:55:29.342820"
+  },
+  "b29df83a-dbea-43e8-b41e-10c041227b7d": {
+    "titulo": "Marketing",
+    "fecha": "2025-09-23T18:56:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "planning"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "8f4be3bb-cc94-467d-8687-aa109292f088"
+    ],
+    "created_at": "2025-09-22T15:56:14.682110"
+  },
+  "1f6a0134-8ed5-455e-8126-695f2658a765": {
+    "titulo": "Reunión importante de ayer",
+    "fecha": "2025-09-21T13:00:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "9da98550-6b61-497b-aa72-838893d829fd"
+    ],
+    "created_at": "2025-09-22T16:02:45.252668"
+  },
+  "399fb3ae-b0bb-48aa-86e4-cfde87e892d7": {
+    "titulo": "Reunión de planificación de ayer",
+    "fecha": "2025-09-21T11:00:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "6a46c7c8-4280-4933-8d5b-63f463bd8c4f"
+    ],
+    "created_at": "2025-09-22T19:57:49.691180"
   }
 }
