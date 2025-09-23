@@ -12,6 +12,7 @@ from datetime import datetime
 from agent.dataset_loader import DatasetLoader
 from fastapi import UploadFile, File
 from agent.utils import parse_iso_datetime_safe
+import re 
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -168,9 +169,28 @@ def preguntar(pregunta: str):
 
 @app.get("/preguntar-con-propagacion/")
 def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2,
-                                       factor_decaimiento: float = None, umbral_activacion: float = None):
+                             factor_decaimiento: float = None, umbral_activacion: float = None):
     """Responde a una pregunta usando propagación de activación."""
-    pregunta = pregunta.strip()
+    # VALIDACIÓN DE ENTRADA
+    if not pregunta or len(pregunta.strip()) < 2:
+        return {
+            "respuesta": "[ERROR] Pregunta demasiado corta o vacía",
+            "contextos_utilizados": [],
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "Entrada inválida"}},
+            "momento_consulta": datetime.now().isoformat()
+        }
+    
+    # Limpiar pregunta manteniendo caracteres esenciales
+    pregunta = re.sub(r'[^\w\sáéíóúñ¿?¡!]', ' ', pregunta.strip())
+    pregunta = re.sub(r'\s+', ' ', pregunta).strip()
+    
+    if len(pregunta) < 3:
+        return {
+            "respuesta": "[ERROR] Pregunta demasiado corta después de limpieza",
+            "contextos_utilizados": [],
+            "subgrafo": {"nodes": [], "edges": [], "meta": {"error": "Entrada inválida"}},
+            "momento_consulta": datetime.now().isoformat()
+        }
     momento_consulta = datetime.now()
     todos_contextos = grafo.obtener_todos()
 

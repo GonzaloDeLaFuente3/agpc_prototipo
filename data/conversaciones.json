@@ -257,5 +257,18 @@
       "6a46c7c8-4280-4933-8d5b-63f463bd8c4f"
     ],
     "created_at": "2025-09-22T19:57:49.691180"
+  },
+  "12a6ace7-9f4c-4156-9b35-2070d26931ab": {
+    "titulo": "Mejora en el prototipo AGPC",
+    "fecha": "2025-09-22T13:00:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "14a97f94-7eba-40d9-b38b-0fc25194e226"
+    ],
+    "created_at": "2025-09-23T16:43:31.518009"
   }
 }
