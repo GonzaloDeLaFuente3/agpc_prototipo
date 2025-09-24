@@ -1163,7 +1163,7 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
         # Construir árbol enriquecido con información de propagación
         if todos_contextos:
             referencia_temporal = analisis_basico['analisis_intencion'].get('timestamp_referencia')
-            factor_refuerzo = analisis_basico['analisis_intencion'].get('factor_refuerzo_temporal', 1.0)
+            factor_refuerzo = factor_refuerzo_temporal_custom
             
             arbol_enriquecido = construir_arbol_consulta(
                 pregunta, todos_contextos, referencia_temporal, factor_refuerzo, momento_consulta
