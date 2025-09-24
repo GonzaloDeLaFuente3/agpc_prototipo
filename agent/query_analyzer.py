@@ -243,7 +243,14 @@ class IntentionTemporalDetector:
                     'fuerte', referencia_contextual, pregunta
                 )
                 
-                factor_refuerzo = self._calcular_factor_refuerzo(pregunta_normalizada)
+                # Obtener factor base desde configuración
+                try:
+                    import main
+                    factor_base = main.parametros_sistema.get('factor_refuerzo_temporal', 1.5)
+                except:
+                    factor_base = 1.5
+
+                factor_refuerzo = self._calcular_factor_refuerzo(pregunta_normalizada, factor_base)
                 
                 return self._crear_respuesta(
                     'fuerte', 0.9, factor_refuerzo, 
@@ -299,16 +306,16 @@ class IntentionTemporalDetector:
             momento_consulta.isoformat()
         )
     
-    def _calcular_factor_refuerzo(self, pregunta_lower: str) -> float:
-        """Calcula factor de refuerzo específico según tipo de consulta temporal."""
+    def _calcular_factor_refuerzo(self, pregunta_lower: str, factor_base: float = 1.5) -> float:
+        """Calcula multiplicador sobre el factor base configurado."""
         if any(palabra in pregunta_lower for palabra in ['hoy', 'ahora', 'actual']):
-            return 3.0  # Máximo refuerzo para consultas de "hoy"
-        elif any(palabra in pregunta_lower for palabra in ['manana', 'ayer']):  # manana sin tilde
-            return 2.5  # Alto refuerzo para adyacente
+            return factor_base * 2.0  # 2x el valor configurado
+        elif any(palabra in pregunta_lower for palabra in ['manana', 'ayer']):
+            return factor_base * 1.5  # 1.5x el valor configurado
         elif any(palabra in pregunta_lower for palabra in ['semana', 'mes']):
-            return 2.0  # Refuerzo medio para rangos
+            return factor_base * 1.2  # 1.2x el valor configurado
         else:
-            return 1.5  # Refuerzo base
+            return factor_base  # Usar tal como está configurado
     
     def _crear_respuesta(self, intencion, confianza, factor, explicacion, 
                         timestamp=None, momento_consulta=None, 
