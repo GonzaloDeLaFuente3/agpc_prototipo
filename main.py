@@ -347,11 +347,6 @@ def buscar_por_texto(texto: str):
     todos = grafo.obtener_todos()
     return {id: todos[id] for id in ids_similares if id in todos}
 
-@app.get("/estadisticas/")
-def obtener_estadisticas():
-    """Obtiene estadísticas del grafo."""
-    return grafo.obtener_estadisticas()
-
 @app.get("/grafo/visualizacion/")
 def exportar_para_visualizacion():
     """Exporta el grafo para visualización."""

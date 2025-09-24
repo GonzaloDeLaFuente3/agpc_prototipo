@@ -19,12 +19,11 @@ let umbralSimilitud = 0.5;
 let factorRefuerzoTemporal = 1.5;
 
 // Event listeners principales
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Enter en campos de input
     document.getElementById('pregunta').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') preguntarConPropagacion();
     });
-
     document.getElementById('textoBusqueda').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') buscarSemantico();
     });
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cargar conversaciones inicialmente
     mostrarConversaciones();
 
-    // NUEVO: Radios de vista
+    // Radios de vista
     const radiosVista = document.querySelectorAll('input[name="tipoVista"]');
     radiosVista.forEach(radio => {
         radio.addEventListener('change', function() {
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar que los controles existen antes de agregar listeners
     const umbralControl = document.getElementById('umbralSimilitud');
     const refuerzoControl = document.getElementById('factorRefuerzoTemporal');
-    
     if (umbralControl) {
         umbralControl.addEventListener('input', function() {
             actualizarValorParametro('umbralSimilitud', 'valorUmbralSimilitud');
@@ -94,7 +92,25 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el control factorRefuerzoTemporal');
     }
 
-    //Cargar estado inicial después de un breve delay
+    // CARGAR PARÁMETROS INICIALES
+    try {
+        const response = await fetch('/estado-parametros/');
+        const data = await response.json();
+        if (data.status === 'success') {
+            // Solo actualizar si los controles existen
+            if (umbralControl) {
+                umbralControl.value = data.parametros.umbral_similitud;
+                actualizarValorParametro('umbralSimilitud', 'valorUmbralSimilitud');
+            }
+            if (refuerzoControl) {
+                refuerzoControl.value = data.parametros.factor_refuerzo_temporal;
+                actualizarValorParametro('factorRefuerzoTemporal', 'valorRefuerzoTemporal');
+            }
+        }
+    } catch (error) {
+        console.error('Error cargando parámetros iniciales:', error);
+    }
+    // Cargar estado inicial después de un breve delay
     setTimeout(() => {
         obtenerEstadoPropagacion();
     }, 1000);
