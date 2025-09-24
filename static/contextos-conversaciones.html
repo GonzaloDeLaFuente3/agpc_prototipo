@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contextos y Conversaciones - AGPC</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="contextos-conversaciones.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">📚 Biblioteca de Conocimiento</h1>
+                    <p class="text-gray-600 mt-1">Gestión completa de contextos y conversaciones</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button onclick="window.history.back()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                        ← Volver al Sistema
+                    </button>
+                    <button onclick="actualizarTodo()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        🔄 Actualizar Todo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Controles y Estadísticas -->
+        <div class="mb-8 bg-white rounded-xl shadow-lg p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Estadísticas Generales -->
+                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">📊 Estadísticas Generales</h3>
+                    <div id="estadisticasGenerales" class="text-sm space-y-1">
+                        <div>Total Contextos: <span class="font-bold" id="totalContextos">-</span></div>
+                        <div>Total Conversaciones: <span class="font-bold" id="totalConversaciones">-</span></div>
+                        <div>Total Fragmentos: <span class="font-bold" id="totalFragmentos">-</span></div>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="bg-white border-2 border-gray-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-800">🔍 Filtros</h3>
+                    <div class="space-y-2">
+                        <select id="filtroTipo" class="w-full p-2 border rounded text-sm" onchange="aplicarFiltros()">
+                            <option value="">Todos los tipos</option>
+                            <option value="temporal">Solo temporales</option>
+                            <option value="atemporal">Solo atemporales</option>
+                        </select>
+                        <input type="text" id="filtroTexto" placeholder="Buscar por título..." 
+                            class="w-full p-2 border rounded text-sm" onkeyup="aplicarFiltros()">
+                    </div>
+                </div>
+
+                <!-- Vista -->
+                <div class="bg-white border-2 border-gray-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-800">👁️ Vista</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" name="tipoVista" value="contextos" id="vistaContextos" checked onchange="cambiarVista()">
+                            <label for="vistaContextos" class="text-sm">📋 Solo Contextos</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" name="tipoVista" value="conversaciones" id="vistaConversaciones" onchange="cambiarVista()">
+                            <label for="vistaConversaciones" class="text-sm">💬 Solo Conversaciones</label>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" name="tipoVista" value="ambos" id="vistaAmbos" onchange="cambiarVista()">
+                            <label for="vistaAmbos" class="text-sm">📚 Ambos</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor Principal -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Sección de Contextos -->
+            <div id="seccionContextos" class="space-y-6">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
+                        📋 Contextos Individuales
+                        <span id="contadorContextos" class="text-sm font-normal text-gray-600">(0)</span>
+                    </h2>
+                    
+                    <div id="listaContextos" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                            Cargando contextos...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Conversaciones -->
+            <div id="seccionConversaciones" class="space-y-6">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">
+                        💬 Conversaciones
+                        <span id="contadorConversaciones" class="text-sm font-normal text-gray-600">(0)</span>
+                    </h2>
+                    
+                    <div id="listaConversaciones" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <div class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                            Cargando conversaciones...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles -->
+    <div id="modalDetalles" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 py-8">
+            <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modalTitulo" class="text-xl font-bold text-gray-800"></h3>
+                        <button onclick="cerrarModal()" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                    </div>
+                    <div id="modalContenido" class="space-y-4">
+                        <!-- Contenido dinámico -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="mostrarContextosConversaciones.js"></script>
+</body>
+</html>

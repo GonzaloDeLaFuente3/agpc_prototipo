@@ -1,0 +1,29 @@
+.contexto-card, .conversacion-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contexto-card:hover, .conversacion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tag {
+    display: inline-block;
+    background-color: #dbeafe; /* bg-blue-100 */
+    color: #1e40af;           /* text-blue-800 */
+    padding: 0.25rem 0.5rem;  /* px-2 py-1 */
+    border-radius: 9999px;    /* rounded-full */
+    font-size: 0.75rem;       /* text-xs */
+    margin-right: 0.25rem;    /* mr-1 */
+    margin-bottom: 0.25rem;   /* mb-1 */
+}
+
+.tag-temporal {
+    background-color: #dcfce7; /* bg-green-100 */
+    color: #166534;           /* text-green-800 */
+}
+
+.tag-atemporal {
+    background-color: #f3f4f6; /* bg-gray-100 */
+    color: #1f2937;           /* text-gray-800 */
+}

@@ -24,9 +24,17 @@
         
         <!-- COLUMNA IZQUIERDA - Contextos y Conversaciones -->
         <div class="w-1/4 bg-gray-300 rounded-lg shadow-md p-4 h-fit">
-            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📝 Gestión de Contenido</h2>
+            <h2 class="text-lg font-semibold mb-4 text-blue-800 border-b pb-2">📁 Gestión de Contenido</h2>
             
-            <!-- Panel de Conversaciones (nuevo) -->
+            <!-- NUEVO: Botón para vista completa -->
+            <div class="mb-6">
+                <button onclick="window.location.href='contextos-conversaciones.html'" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-md font-medium">
+                    Ver Contextos y Conversaciones 
+                </button>
+            </div>
+            
+            <!-- Panel de Conversaciones (existente) -->
             <div id="panelConversaciones" >
                 <!-- Agregar Conversación -->
                 <div class="mb-6">
@@ -68,23 +76,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Lista de Conversaciones -->
-                <div>
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-semibold text-gray-700">💬 Conversaciones</h3>
-                        <button onclick="mostrarConversaciones()" class="bg-green-600 text-white px-2 py-1 rounded text-xs hover:bg-green-700 transition-colors">
-                            🔄 Actualizar
-                        </button>
-                    </div>
-                    
-                    <div id="todasConversaciones" class="text-xs bg-gray-50 p-3 rounded max-h-96 overflow-y-auto border">
-                        <p class="text-gray-500 italic">Clic en "Actualizar" para cargar conversaciones</p>
-                    </div>
-                </div>
             </div>
+            
             <!-- Panel de Configuración de Parámetros -->
-            <div class="bg-yellow-200 rounded-lg shadow-md p-6">
+            <div class="bg-yellow-200 rounded-lg shadow-md p-6 mt-6">
                 <h2 class="text-xl font-semibold mb-4 text-yellow-800 border-b pb-2">⚙️ Configuración del Sistema</h2>
                 
                 <div class="space-y-4">
@@ -302,7 +297,7 @@
                     
                     <!-- Área de texto para JSON -->
                     <div class="p-3 bg-orange-50 border border-orange-200 rounded">
-                        <h3 class="font-medium text-orange-800 mb-2">✍️ Pegar JSON Dataset</h3>
+                        <h3 class="font-medium text-orange-800 mb-2">✏️ Pegar JSON Dataset</h3>
                         <div class="space-y-2">
                             <textarea id="jsonDataset" placeholder='Pegá aquí tu JSON dataset...' 
                                     class="border p-2 w-full rounded text-xs h-32 font-mono resize-none"></textarea>
@@ -361,7 +356,7 @@
                         <div class="space-y-2">
                             <div class="flex items-center space-x-2">
                                 <input type="radio" name="tipoVista" value="macro" id="vistaMacro" checked>
-                                <label for="vistaMacro" class="text-sm">🌐 Macro (Conversaciones)</label>
+                                <label for="vistaMacro" class="text-sm">🌍 Macro (Conversaciones)</label>
                             </div>
                             <div class="flex items-center space-x-2">
                                 <input type="radio" name="tipoVista" value="micro" id="vistaMicro">
@@ -388,7 +383,7 @@
                     
                     <!-- Información del nivel actual -->
                     <div id="infoNivelActual" class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
-                        <p><strong>🌐 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>
+                        <p><strong>🌍 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>
                     </div>
                 </div>
             </div>
@@ -423,7 +418,7 @@
                 <div id="headerGrafo" class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
                     <div class="flex justify-between items-center">
                         <div>
-                            <h2 class="text-lg font-bold text-purple-800" id="tituloVistaGrafo">🌐 Vista Macro - Conversaciones</h2>
+                            <h2 class="text-lg font-bold text-purple-800" id="tituloVistaGrafo">🌍 Vista Macro - Conversaciones</h2>
                             <p class="text-sm text-purple-600" id="descripcionVistaGrafo">Cada nodo representa una conversación completa</p>
                         </div>
                         <div class="text-right">
