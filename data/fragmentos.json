@@ -826,5 +826,42 @@
     "es_temporal": true,
     "tipo_contexto": "temporal_especifico",
     "tiene_timestamp_especifico": true
+  },
+  "50ac841c-0b83-4755-8083-269210dc496c": {
+    "fragmento_id": "50ac841c-0b83-4755-8083-269210dc496c",
+    "conversacion_id": "b6688c0f-4a72-4b57-aafc-e8fab65e67bb",
+    "conversacion_titulo": "ingeniería de contexto",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "es la disciplina que se encarga de diseñar, organizar y gestionar la información (el contexto) que rodea a un modelo de lenguaje grande (LLM) o a un agente de IA, para que pueda entender mejor una tarea y realizarla de forma precisa y fiable",
+    "palabras_clave": [
+      "diseñar",
+      "encargar",
+      "preciso",
+      "organizar",
+      "modelo",
+      "rodear",
+      "contexto",
+      "agente",
+      "disciplina",
+      "entender",
+      "realizar él",
+      "forma",
+      "información",
+      "gestionar",
+      "lenguaje",
+      "tarea",
+      "fiable"
+    ],
+    "timestamp": "2025-09-26T23:04:32.007425",
+    "timestamp_original_conversacion": "2025-09-26T23:04:32.007425",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "general"
+    },
+    "created_at": "2025-09-26T23:04:32.053878",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
   }
 }

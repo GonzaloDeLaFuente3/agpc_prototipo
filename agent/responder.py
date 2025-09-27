@@ -3,8 +3,7 @@ import requests
 import os
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDfgYQq3a0bAZ0pgDCkuy8xmmytv8FfvO8")
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GOOGLE_API_KEY}"
-
+API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key={GOOGLE_API_KEY}"
 def construir_prompt(pregunta: str, contextos: dict) -> str:
     """Construye el prompt para la IA."""
     prompt = """Usando los siguientes fragmentos de contexto, respondé a la pregunta.
