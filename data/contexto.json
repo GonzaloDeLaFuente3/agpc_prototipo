@@ -586,5 +586,35 @@
     "es_fragmento": true,
     "conversacion_id": "12a6ace7-9f4c-4156-9b35-2070d26931ab",
     "posicion_fragmento": 1
+  },
+  "50ac841c-0b83-4755-8083-269210dc496c": {
+    "titulo": "ingeniería de contexto - Fragmento 1",
+    "texto": "es la disciplina que se encarga de diseñar, organizar y gestionar la información (el contexto) que rodea a un modelo de lenguaje grande (LLM) o a un agente de IA, para que pueda entender mejor una tarea y realizarla de forma precisa y fiable",
+    "palabras_clave": [
+      "diseñar",
+      "encargar",
+      "preciso",
+      "organizar",
+      "modelo",
+      "rodear",
+      "contexto",
+      "agente",
+      "disciplina",
+      "entender",
+      "realizar él",
+      "forma",
+      "información",
+      "gestionar",
+      "lenguaje",
+      "tarea",
+      "fiable"
+    ],
+    "created_at": "2025-09-26T23:04:32.053878",
+    "es_temporal": true,
+    "timestamp": "2025-09-26T23:04:32.007425",
+    "tipo_contexto": "accion",
+    "es_fragmento": true,
+    "conversacion_id": "b6688c0f-4a72-4b57-aafc-e8fab65e67bb",
+    "posicion_fragmento": 1
   }
 }
