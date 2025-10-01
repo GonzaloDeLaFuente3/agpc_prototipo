@@ -14,6 +14,8 @@ let parametrosPropagacion = {
 };
 let umbralSimilitud = 0.5;
 let factorRefuerzoTemporal = 1.5;
+let conversacionesParseadas = null;
+let tipoEntradaActual = 'texto';
 
 // === SISTEMA UNIFICADO DE NOTIFICACIONES ===
 function mostrarNotificacion(mensaje, tipo = 'error', duracion = 5000) {
@@ -816,101 +818,101 @@ async function agregarConversacion() {
     }
 }
 
-async function subirDataset() {
-    const fileInput = document.getElementById('fileDataset');
-    const file = fileInput.files[0];
+// async function subirDataset() {
+//     const fileInput = document.getElementById('fileDataset');
+//     const file = fileInput.files[0];
     
-    if (!file) return mostrarNotificacion("Por favor selecciona un archivo JSON.", 'warning');
-    if (!file.name.endsWith('.json')) return mostrarNotificacion("Solo se permiten archivos .json", 'warning');
+//     if (!file) return mostrarNotificacion("Por favor selecciona un archivo JSON.", 'warning');
+//     if (!file.name.endsWith('.json')) return mostrarNotificacion("Solo se permiten archivos .json", 'warning');
     
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('sobrescribir', 'false');
+//     const formData = new FormData();
+//     formData.append('file', file);
+//     formData.append('sobrescribir', 'false');
     
-    const resultadosDiv = document.getElementById('resultadosDataset');
-    resultadosDiv.innerHTML = "📤 Subiendo y procesando archivo...";
+//     const resultadosDiv = document.getElementById('resultadosDataset');
+//     resultadosDiv.innerHTML = "📤 Subiendo y procesando archivo...";
     
-    try {
-        const response = await axios.post('/dataset/upload/', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-            timeout: 60000
-        });
+//     try {
+//         const response = await axios.post('/dataset/upload/', formData, {
+//             headers: { 'Content-Type': 'multipart/form-data' },
+//             timeout: 60000
+//         });
         
-        const data = response.data;
+//         const data = response.data;
         
-        if (data.status === 'archivo_procesado') {
-            const stats = data.estadisticas;
-            const duracion = stats.tiempo_fin && stats.tiempo_inicio ? 
-                ((new Date(stats.tiempo_fin) - new Date(stats.tiempo_inicio)) / 1000).toFixed(2) : 'N/A';
+//         if (data.status === 'archivo_procesado') {
+//             const stats = data.estadisticas;
+//             const duracion = stats.tiempo_fin && stats.tiempo_inicio ? 
+//                 ((new Date(stats.tiempo_fin) - new Date(stats.tiempo_inicio)) / 1000).toFixed(2) : 'N/A';
             
-            resultadosDiv.innerHTML = `
-                <div class="space-y-2 text-sm">
-                    <div class="font-medium text-green-700">✅ Dataset procesado exitosamente</div>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>📄 Archivo: ${data.archivo}</div>
-                        <div>🏷️ Dominio: ${stats.dominio}</div>
-                        <div>💬 Conversaciones: ${stats.conversaciones_procesadas}</div>
-                        <div>🔗 Fragmentos: ${stats.fragmentos_generados}</div>
-                        <div>⏱️ Tiempo: ${duracion}s</div>
-                        <div>❌ Errores: ${stats.errores?.length || 0}</div>
-                    </div>
-                </div>
-            `;
-        } else {
-            resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${data.mensaje}</div>`;
-        }
+//             resultadosDiv.innerHTML = `
+//                 <div class="space-y-2 text-sm">
+//                     <div class="font-medium text-green-700">✅ Dataset procesado exitosamente</div>
+//                     <div class="grid grid-cols-2 gap-2 text-xs">
+//                         <div>📄 Archivo: ${data.archivo}</div>
+//                         <div>🏷️ Dominio: ${stats.dominio}</div>
+//                         <div>💬 Conversaciones: ${stats.conversaciones_procesadas}</div>
+//                         <div>🔗 Fragmentos: ${stats.fragmentos_generados}</div>
+//                         <div>⏱️ Tiempo: ${duracion}s</div>
+//                         <div>❌ Errores: ${stats.errores?.length || 0}</div>
+//                     </div>
+//                 </div>
+//             `;
+//         } else {
+//             resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${data.mensaje}</div>`;
+//         }
         
-    } catch (error) {
-        resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.response?.data?.mensaje || error.message}</div>`;
-    } finally {
-        fileInput.value = '';
-    }
-}
+//     } catch (error) {
+//         resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.response?.data?.mensaje || error.message}</div>`;
+//     } finally {
+//         fileInput.value = '';
+//     }
+// }
 
-async function validarJSON() {
-    const jsonText = document.getElementById('jsonDataset').value.trim();
+// async function validarJSON() {
+//     const jsonText = document.getElementById('jsonDataset').value.trim();
     
-    if (!jsonText) return mostrarNotificacion("Por favor pega el JSON del dataset.", 'warning');
+//     if (!jsonText) return mostrarNotificacion("Por favor pega el JSON del dataset.", 'warning');
     
-    let dataset;
-    try {
-        dataset = JSON.parse(jsonText);
-    } catch (e) {
-        return mostrarNotificacion("JSON inválido: " + e.message, 'error');
-    }
+//     let dataset;
+//     try {
+//         dataset = JSON.parse(jsonText);
+//     } catch (e) {
+//         return mostrarNotificacion("JSON inválido: " + e.message, 'error');
+//     }
     
-    const resultadosDiv = document.getElementById('resultadosDataset');
-    resultadosDiv.innerHTML = "🔍 Validando formato...";
+//     const resultadosDiv = document.getElementById('resultadosDataset');
+//     resultadosDiv.innerHTML = "🔍 Validando formato...";
     
-    try {
-        const response = await axios.post('/dataset/validar/', dataset);
-        const data = response.data;
+//     try {
+//         const response = await axios.post('/dataset/validar/', dataset);
+//         const data = response.data;
         
-        if (data.valido) {
-            resultadosDiv.innerHTML = `
-                <div class="space-y-2 text-sm">
-                    <div class="font-medium text-green-700">✅ Dataset válido</div>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div>🏷️ Dominio: ${data.dominio}</div>
-                        <div>💬 Conversaciones: ${data.total_conversaciones}</div>
-                    </div>
-                </div>
-            `;
-        } else {
-            resultadosDiv.innerHTML = `
-                <div class="space-y-2 text-sm">
-                    <div class="font-medium text-red-700">❌ Dataset inválido</div>
-                    <div class="text-red-600 text-xs">
-                        ${data.errores.map(err => `<div>• ${err}</div>`).join('')}
-                    </div>
-                </div>
-            `;
-        }
+//         if (data.valido) {
+//             resultadosDiv.innerHTML = `
+//                 <div class="space-y-2 text-sm">
+//                     <div class="font-medium text-green-700">✅ Dataset válido</div>
+//                     <div class="grid grid-cols-2 gap-2 text-xs">
+//                         <div>🏷️ Dominio: ${data.dominio}</div>
+//                         <div>💬 Conversaciones: ${data.total_conversaciones}</div>
+//                     </div>
+//                 </div>
+//             `;
+//         } else {
+//             resultadosDiv.innerHTML = `
+//                 <div class="space-y-2 text-sm">
+//                     <div class="font-medium text-red-700">❌ Dataset inválido</div>
+//                     <div class="text-red-600 text-xs">
+//                         ${data.errores.map(err => `<div>• ${err}</div>`).join('')}
+//                     </div>
+//                 </div>
+//             `;
+//         }
         
-    } catch (error) {
-        resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.message}</div>`;
-    }
-}
+//     } catch (error) {
+//         resultadosDiv.innerHTML = `<div class="text-red-600 text-sm">❌ Error: ${error.message}</div>`;
+//     }
+// }
 
 async function cargarEstadisticas() {
     const estadisticasBtn = event.target;
@@ -1197,4 +1199,222 @@ async function forzarRecalculoRelaciones() {
     } catch (error) {
         mostrarNotificacion(`Error de conexión: ${error.message}`, 'error');
     }
+}
+
+// === PROCESAMIENTO DE CONVERSACIONES ===
+function cambiarTabEntrada(tipo) {
+    tipoEntradaActual = tipo;
+    
+    const tabTexto = document.getElementById('tabTextoPlano');
+    const tabJson = document.getElementById('tabArchivoJSON');
+    
+    if (tipo === 'texto') {
+        tabTexto.className = 'flex-1 py-2 text-sm font-medium border-b-2 border-orange-600 text-orange-800';
+        tabJson.className = 'flex-1 py-2 text-sm font-medium text-gray-600 hover:text-orange-800';
+        document.getElementById('contenidoTextoPlano').classList.remove('hidden');
+        document.getElementById('contenidoArchivoJSON').classList.add('hidden');
+    } else if (tipo === 'archivo') {
+        tabTexto.className = 'flex-1 py-2 text-sm font-medium text-gray-600 hover:text-orange-800';
+        tabJson.className = 'flex-1 py-2 text-sm font-medium border-b-2 border-orange-600 text-orange-800';
+        document.getElementById('contenidoTextoPlano').classList.add('hidden');
+        document.getElementById('contenidoArchivoJSON').classList.remove('hidden');
+    }
+}
+
+async function analizarYMostrarPreview() {
+    let payload;
+    
+    // Mostrar indicador de carga
+    const contenedorPrincipal = document.querySelector('.bg-orange-200.rounded-lg');
+    const indicadorCarga = document.createElement('div');
+    indicadorCarga.id = 'indicadorProcesamientoConv';
+    indicadorCarga.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+    indicadorCarga.innerHTML = `
+        <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-600"></div>
+                <p class="text-lg font-semibold text-gray-800">Analizando conversaciones...</p>
+                <p class="text-sm text-gray-600">Por favor espera</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(indicadorCarga);
+    
+    try {
+        if (tipoEntradaActual === 'texto') {
+            const texto = document.getElementById('textoPlanoConversaciones').value.trim();
+            if (!texto) {
+                document.getElementById('indicadorProcesamientoConv')?.remove();
+                return mostrarNotificacion("Por favor pega el texto con las conversaciones.", 'warning');
+            }
+            payload = { texto };
+            
+        } else if (tipoEntradaActual === 'archivo') {
+            const fileInput = document.getElementById('archivoJSONConversaciones');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                document.getElementById('indicadorProcesamientoConv')?.remove();
+                return mostrarNotificacion("Por favor selecciona un archivo JSON.", 'warning');
+            }
+            
+            if (!file.name.endsWith('.json')) {
+                document.getElementById('indicadorProcesamientoConv')?.remove();
+                return mostrarNotificacion("Solo se permiten archivos .json", 'warning');
+            }
+            
+            // Leer archivo
+            const contenidoArchivo = await file.text();
+            const jsonData = JSON.parse(contenidoArchivo);
+            payload = { json_data: jsonData };
+        }
+        
+        const response = await axios.post('/conversacion/parse-preview/', payload);
+        const data = response.data;
+        
+        if (data.status === 'preview_listo') {
+            conversacionesParseadas = data.conversaciones_parseadas;
+            mostrarPreviewEnModal(data.preview);
+        } else {
+            throw new Error(data.mensaje || 'Error en análisis');
+        }
+        
+    } catch (error) {
+        mostrarNotificacion(`Error: ${error.message}`, 'error');
+    } finally {
+        document.getElementById('indicadorProcesamientoConv')?.remove();
+    }
+}
+
+function mostrarPreviewEnModal(preview) {
+    const container = document.getElementById('previewConversaciones');
+    
+    let html = `<div class="text-sm font-semibold text-gray-700 mb-3">
+        ✅ ${preview.total_conversaciones} conversación(es) encontrada(s)
+    </div>`;
+    
+    preview.conversaciones.forEach((conv, idx) => {
+        const participantesStr = conv.participantes.length > 0 
+            ? ` | 👥 ${conv.participantes.length} participante(s)`
+            : '';
+        
+        html += `
+            <div class="bg-white border border-gray-300 rounded p-3">
+                <div class="font-medium text-gray-800">${idx + 1}. ${conv.titulo}</div>
+                <div class="text-xs text-gray-600 mt-1">
+                    📝 ${conv.palabras_aproximadas} palabras | 📄 ${conv.lineas_aproximadas} líneas${participantesStr}
+                </div>
+                ${conv.tiene_fecha ? '<div class="text-xs text-green-600 mt-1">📅 Fecha detectada</div>' : ''}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+    document.getElementById('modalMetadatosConversaciones').classList.remove('hidden');
+}
+
+async function confirmarYProcesarConversaciones() {
+    if (!conversacionesParseadas) {
+        return mostrarNotificacion("No hay conversaciones para procesar.", 'error');
+    }
+    
+    const metadataGlobal = {};
+    
+    // Solo leer la fecha (si existe)
+    const fecha = document.getElementById('metadataFecha')?.value;
+    if (fecha) {
+        metadataGlobal.fecha = new Date(fecha).toISOString();
+    }
+    
+    // Mostrar indicador de procesamiento
+    const indicadorProcesamiento = document.createElement('div');
+    indicadorProcesamiento.id = 'indicadorGuardandoConv';
+    indicadorProcesamiento.className = 'fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center';
+    indicadorProcesamiento.innerHTML = `
+        <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="animate-spin rounded-full h-20 w-20 border-b-4 border-green-600"></div>
+                <p class="text-xl font-bold text-gray-800">Guardando conversaciones...</p>
+                <p class="text-sm text-gray-600">Fragmentando y detectando metadatos</p>
+                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div class="bg-green-600 h-2 rounded-full animate-pulse" style="width: 70%"></div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(indicadorProcesamiento);
+    
+    try {
+        const response = await axios.post('/conversacion/procesar-con-metadata/', {
+            conversaciones: conversacionesParseadas,
+            metadata_global: metadataGlobal
+        });
+        
+        const data = response.data;
+        
+        if (data.status === 'procesado') {
+            cerrarModalMetadatos();
+            limpiarCamposConversaciones();
+            
+            // Calcular total de fragmentos
+            const totalFragmentos = data.conversaciones_procesadas.reduce(
+                (sum, conv) => sum + conv.fragmentos_creados, 0
+            );
+            
+            mostrarNotificacion(
+                `✅ ${data.total_procesadas} conversación(es) guardada(s) | ${totalFragmentos} fragmentos creados`, 
+                'exito',
+                6000
+            );
+            
+            if (data.total_errores > 0) {
+                console.warn('Errores en procesamiento:', data.errores);
+                mostrarNotificacion(
+                    `⚠️ ${data.total_errores} conversación(es) con errores`, 
+                    'warning',
+                    5000
+                );
+            }
+        } else {
+            throw new Error(data.mensaje || 'Error en procesamiento');
+        }
+        
+    } catch (error) {
+        mostrarNotificacion(
+            `Error: ${error.response?.data?.mensaje || error.message}`, 
+            'error'
+        );
+    } finally {
+        document.getElementById('indicadorGuardandoConv')?.remove();
+    }
+}
+
+function cerrarModalMetadatos() {
+    document.getElementById('modalMetadatosConversaciones').classList.add('hidden');
+    conversacionesParseadas = null;
+    
+    // Solo limpiar fecha
+    const metadataFecha = document.getElementById('metadataFecha');
+    if (metadataFecha) metadataFecha.value = '';
+}
+
+function limpiarCamposConversaciones() {
+    // Limpiar texto plano
+    const textoPlano = document.getElementById('textoPlanoConversaciones');
+    if (textoPlano) textoPlano.value = '';
+    
+    // Limpiar input de archivo JSON
+    const archivoInput = document.getElementById('archivoJSONConversaciones');
+    if (archivoInput) archivoInput.value = '';
+    
+    // Limpiar metadatos del modal (solo fecha)
+    const metadataFecha = document.getElementById('metadataFecha');
+    if (metadataFecha) metadataFecha.value = '';
+    
+    // Resetear variable global
+    conversacionesParseadas = null;
+    
+    // Resetear a tab de texto
+    tipoEntradaActual = 'texto';
+    cambiarTabEntrada('texto');
 }

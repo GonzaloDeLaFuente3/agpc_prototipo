@@ -3,14 +3,15 @@ import json
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Dict, List, Optional, Union
 import os
 from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
 from agent.query_analyzer import analizar_intencion_temporal
 from datetime import datetime
-from agent.dataset_loader import DatasetLoader
+# from agent.dataset_loader import DatasetLoader
 from fastapi import UploadFile, File
+from agent.text_batch_processor import TextBatchProcessor
 from agent.utils import parse_iso_datetime_safe
 import re 
 
@@ -38,6 +39,16 @@ class EntradaContexto(BaseModel):
 class ConfiguracionParametros(BaseModel):
     umbral_similitud: Optional[float] = None
     factor_refuerzo_temporal: Optional[float] = None
+
+class EntradaTextoPlano(BaseModel):
+    texto: str
+
+class EntradaJSON(BaseModel):
+    json_data: dict
+
+class ProcesarConMetadata(BaseModel):
+    conversaciones: List[Dict]
+    metadata_global: Optional[Dict] = None
 
 @app.post("/contexto/")
 def agregar_contexto(entrada: EntradaContexto):
@@ -399,42 +410,42 @@ class DatasetUpload(BaseModel):
     dataset: dict
     sobrescribir: bool = False
 
-@app.post("/dataset/validar/")
-def validar_dataset(dataset: dict):
-    """Valida el formato de un dataset sin procesarlo."""
-    loader = DatasetLoader()
-    es_valido, errores = loader.validar_formato(dataset)
+# @app.post("/dataset/validar/")
+# def validar_dataset(dataset: dict):
+#     """Valida el formato de un dataset sin procesarlo."""
+#     loader = DatasetLoader()
+#     es_valido, errores = loader.validar_formato(dataset)
     
-    return {
-        "valido": es_valido,
-        "errores": errores,
-        "total_conversaciones": len(dataset.get('conversaciones', [])),
-        "dominio": dataset.get('dominio', 'No especificado')
-    }
+#     return {
+#         "valido": es_valido,
+#         "errores": errores,
+#         "total_conversaciones": len(dataset.get('conversaciones', [])),
+#         "dominio": dataset.get('dominio', 'No especificado')
+#     }
 
-@app.post("/dataset/upload/")
-async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
-    """Sube y procesa un archivo JSON de dataset."""
-    if not file.filename.endswith('.json'):
-        return {"status": "error", "mensaje": "Solo se permiten archivos .json"}
+# @app.post("/dataset/upload/")
+# async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
+#     """Sube y procesa un archivo JSON de dataset."""
+#     if not file.filename.endswith('.json'):
+#         return {"status": "error", "mensaje": "Solo se permiten archivos .json"}
     
-    try:
-        contenido = await file.read()
-        dataset = json.loads(contenido.decode('utf-8'))
+#     try:
+#         contenido = await file.read()
+#         dataset = json.loads(contenido.decode('utf-8'))
         
-        loader = DatasetLoader()
-        estadisticas = loader.procesar_dataset(dataset, sobrescribir)
+#         loader = DatasetLoader()
+#         estadisticas = loader.procesar_dataset(dataset, sobrescribir)
         
-        return {
-            "status": "archivo_procesado",
-            "archivo": file.filename,
-            "estadisticas": estadisticas
-        }
+#         return {
+#             "status": "archivo_procesado",
+#             "archivo": file.filename,
+#             "estadisticas": estadisticas
+#         }
         
-    except json.JSONDecodeError:
-        return {"status": "error", "mensaje": "Archivo JSON inválido"}
-    except Exception as e:
-        return {"status": "error", "mensaje": str(e)}
+#     except json.JSONDecodeError:
+#         return {"status": "error", "mensaje": "Archivo JSON inválido"}
+#     except Exception as e:
+#         return {"status": "error", "mensaje": str(e)}
     
 #ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL
 @app.get("/grafo/macro/conversaciones/")
@@ -586,6 +597,114 @@ def debug_analisis_temporal(pregunta: str):
         "analisis": analisis,
         "debug": True
     }
+
+@app.post("/conversacion/parse-preview/")
+def parsear_conversaciones_preview(entrada: Union[EntradaTextoPlano, EntradaJSON]):
+    """Parsea entrada (texto o JSON) y devuelve preview"""
+    try:
+        processor = TextBatchProcessor()
+        
+        # Detectar tipo de entrada
+        if hasattr(entrada, 'texto') and entrada.texto:
+            conversaciones = processor.parse_texto_plano(entrada.texto)
+        elif hasattr(entrada, 'json_data') and entrada.json_data:
+            conversaciones = processor.parse_json_conversaciones(entrada.json_data)
+        else:
+            return {"status": "error", "mensaje": "Entrada inválida"}
+        
+        if not conversaciones:
+            return {"status": "error", "mensaje": "No se encontraron conversaciones válidas"}
+        
+        preview = processor.preparar_preview(conversaciones)
+        
+        return {
+            "status": "preview_listo",
+            "preview": preview,
+            "conversaciones_parseadas": conversaciones
+        }
+        
+    except ValueError as e:
+        return {"status": "error", "mensaje": f"Error de formato: {str(e)}"}
+    except Exception as e:
+        return {"status": "error", "mensaje": f"Error inesperado: {str(e)}"}
+
+@app.post("/conversacion/procesar-con-metadata/")
+def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
+    """Procesa y guarda conversaciones con metadatos (detección automática)"""
+    try:
+        resultados = {'conversaciones_procesadas': [], 'errores': []}
+        metadata_global = entrada.metadata_global or {}
+        
+        for conv in entrada.conversaciones:
+            try:
+                # Obtener fecha (global o individual)
+                fecha = metadata_global.get('fecha') or conv.get('fecha')
+                
+                # Detectar participantes del contenido si no están en metadata
+                participantes = conv.get('participantes', [])
+                if not participantes:
+                    # Detección automática básica de participantes
+                    # Busca patrones como "Nombre:" al inicio de líneas
+                    import re
+                    patron_participantes = r'^([A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]+):'
+                    matches = re.findall(patron_participantes, conv['contenido'], re.MULTILINE)
+                    participantes = list(set(matches))  # Eliminar duplicados
+                
+                # Detectar tipo de conversación del contenido
+                contenido_lower = conv['contenido'].lower()
+                tipo_detectado = 'general'
+                
+                palabras_clave = {
+                    'reunion': ['reunión', 'meeting', 'junta', 'agenda'],
+                    'brainstorm': ['brainstorm', 'ideas', 'propuestas', 'creatividad'],
+                    'planning': ['planning', 'planificación', 'sprint', 'tareas', 'objetivos'],
+                    'entrevista': ['entrevista', 'interview', 'candidato']
+                }
+                
+                for tipo, keywords in palabras_clave.items():
+                    if any(kw in contenido_lower for kw in keywords):
+                        tipo_detectado = tipo
+                        break
+                
+                # Crear metadata final con detecciones
+                metadata_final = {
+                    'tipo': tipo_detectado,
+                    'participantes_detectados': len(participantes),
+                    'origen': conv.get('origen', 'desconocido')
+                }
+                
+                # Agregar conversación
+                resultado = grafo.agregar_conversacion(
+                    titulo=conv['titulo'],
+                    contenido=conv['contenido'],
+                    fecha=fecha,
+                    participantes=participantes,
+                    metadata=metadata_final
+                )
+                
+                resultados['conversaciones_procesadas'].append({
+                    'titulo': conv['titulo'],
+                    'fragmentos_creados': resultado['total_fragmentos'],
+                    'conversacion_id': resultado['conversacion_id'],
+                    'tipo_detectado': tipo_detectado,
+                    'participantes_detectados': len(participantes)
+                })
+                
+            except Exception as e:
+                resultados['errores'].append({
+                    'titulo': conv.get('titulo', 'Sin título'),
+                    'error': str(e)
+                })
+        
+        return {
+            "status": "procesado",
+            "total_procesadas": len(resultados['conversaciones_procesadas']),
+            "total_errores": len(resultados['errores']),
+            **resultados
+        }
+        
+    except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)
