@@ -706,5 +706,713 @@
     "es_temporal": true,
     "tipo_contexto": "accion",
     "tiene_timestamp_especifico": false
+  },
+  "337c6d85-b463-4d14-9a25-75fc1b47fbcd": {
+    "fragmento_id": "337c6d85-b463-4d14-9a25-75fc1b47fbcd",
+    "conversacion_id": "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Carlos: Propongo priorizar la integración del sistema de autenticación con OAuth2.",
+    "palabras_clave": [
+      "proponer",
+      "autenticación",
+      "sistema",
+      "carlos",
+      "priorizar",
+      "integración"
+    ],
+    "timestamp": "2025-10-01T15:49:32.521386",
+    "timestamp_original_conversacion": "2025-10-01T15:49:32.521386",
+    "participantes": [
+      "Carlos",
+      "Laura",
+      "Javier",
+      "Marta"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:32.573638",
+    "es_temporal": true,
+    "tipo_contexto": "planning",
+    "tiene_timestamp_especifico": false
+  },
+  "2a6b2bd3-c400-4ad4-87a1-29b3615d1692": {
+    "fragmento_id": "2a6b2bd3-c400-4ad4-87a1-29b3615d1692",
+    "conversacion_id": "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Marta: Estoy de acuerdo, además deberíamos revisar los tests automatizados que fallaron en la última ejecución.",
+    "palabras_clave": [
+      "revisar",
+      "debeer",
+      "marta",
+      "fallar",
+      "automatizado",
+      "ejecución",
+      "tests"
+    ],
+    "timestamp": "2025-10-01T15:49:32.521386",
+    "timestamp_original_conversacion": "2025-10-01T15:49:32.521386",
+    "participantes": [
+      "Carlos",
+      "Laura",
+      "Javier",
+      "Marta"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:32.607004",
+    "es_temporal": true,
+    "tipo_contexto": "problema",
+    "tiene_timestamp_especifico": false
+  },
+  "cde23b0e-c38d-4468-8d3d-256f203f6a4b": {
+    "fragmento_id": "cde23b0e-c38d-4468-8d3d-256f203f6a4b",
+    "conversacion_id": "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Javier: Perfecto, ¿quién se encarga de documentar los endpoints de la API?",
+    "palabras_clave": [
+      "perfecto",
+      "javier",
+      "endpoint",
+      "documentar",
+      "encargar"
+    ],
+    "timestamp": "2025-10-01T15:49:32.521386",
+    "timestamp_original_conversacion": "2025-10-01T15:49:32.521386",
+    "participantes": [
+      "Carlos",
+      "Laura",
+      "Javier",
+      "Marta"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:32.624707",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta",
+    "tiene_timestamp_especifico": false
+  },
+  "bdfe428f-db9a-4c40-b1f1-ce82f271648a": {
+    "fragmento_id": "bdfe428f-db9a-4c40-b1f1-ce82f271648a",
+    "conversacion_id": "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Laura: Yo puedo hacerlo, pero necesito que alguien me pase los diagramas actualizados.",
+    "palabras_clave": [
+      "alguien",
+      "laura",
+      "pasar",
+      "diagrama",
+      "actualizado",
+      "necesitar"
+    ],
+    "timestamp": "2025-10-01T15:49:32.521386",
+    "timestamp_original_conversacion": "2025-10-01T15:49:32.521386",
+    "participantes": [
+      "Carlos",
+      "Laura",
+      "Javier",
+      "Marta"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:32.644894",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
+  },
+  "29231bca-5e2d-4760-8756-e2841190ff5d": {
+    "fragmento_id": "29231bca-5e2d-4760-8756-e2841190ff5d",
+    "conversacion_id": "c0cd1631-44e5-44d0-889f-1491a083e5b2",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: Estaba pensando en migrar parte del backend a microservicios para mejorar la escalabilidad.",
+    "palabras_clave": [
+      "mejorar",
+      "backend",
+      "andrés",
+      "pensar",
+      "escalabilidad",
+      "microservicio",
+      "migrar"
+    ],
+    "timestamp": "2025-10-01T15:49:53.435173",
+    "timestamp_original_conversacion": "2025-10-01T15:49:53.435173",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:53.461959",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "63b152da-24cc-41d0-9be9-f5ceb44dfb69": {
+    "fragmento_id": "63b152da-24cc-41d0-9be9-f5ceb44dfb69",
+    "conversacion_id": "c0cd1631-44e5-44d0-889f-1491a083e5b2",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Sofía: Buena idea, aunque deberíamos evaluar la sobrecarga de comunicación entre servicios.",
+    "palabras_clave": [
+      "evaluar",
+      "debeer",
+      "sobrecarga",
+      "comunicación",
+      "servicio",
+      "sofía",
+      "idea"
+    ],
+    "timestamp": "2025-10-01T15:49:53.435173",
+    "timestamp_original_conversacion": "2025-10-01T15:49:53.435173",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:53.483552",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": false
+  },
+  "302e0bc9-5b79-4485-8df1-f4106ccc7920": {
+    "fragmento_id": "302e0bc9-5b79-4485-8df1-f4106ccc7920",
+    "conversacion_id": "c0cd1631-44e5-44d0-889f-1491a083e5b2",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Diego: También podríamos implementar un balanceador de carga para distribuir mejor las peticiones.",
+    "palabras_clave": [
+      "diego",
+      "implementar",
+      "balanceador",
+      "poder",
+      "petición",
+      "distribuir",
+      "carga"
+    ],
+    "timestamp": "2025-10-01T15:49:53.435173",
+    "timestamp_original_conversacion": "2025-10-01T15:49:53.435173",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:53.506211",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
+  },
+  "9fc9e1c9-46f0-4a07-8f68-b4585256a044": {
+    "fragmento_id": "9fc9e1c9-46f0-4a07-8f68-b4585256a044",
+    "conversacion_id": "c0cd1631-44e5-44d0-889f-1491a083e5b2",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Valeria: Y no olvidemos la observabilidad, necesitamos métricas y logs centralizados desde el inicio.",
+    "palabras_clave": [
+      "olvidar",
+      "logs",
+      "observabilidad",
+      "métrica",
+      "centralizado",
+      "inicio",
+      "valeria",
+      "necesitar"
+    ],
+    "timestamp": "2025-10-01T15:49:53.435173",
+    "timestamp_original_conversacion": "2025-10-01T15:49:53.435173",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:53.521886",
+    "es_temporal": true,
+    "tipo_contexto": "evento",
+    "tiene_timestamp_especifico": false
+  },
+  "fbef406a-a20c-4405-96ee-6896857eb84d": {
+    "fragmento_id": "fbef406a-a20c-4405-96ee-6896857eb84d",
+    "conversacion_id": "c0cd1631-44e5-44d0-889f-1491a083e5b2",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 5,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: De acuerdo, entonces armamos un prototipo pequeño y validamos el rendimiento antes de avanzar.",
+    "palabras_clave": [
+      "validar",
+      "andrés",
+      "prototipo",
+      "rendimiento",
+      "avanzar",
+      "armar",
+      "pequeño"
+    ],
+    "timestamp": "2025-10-01T15:49:53.435173",
+    "timestamp_original_conversacion": "2025-10-01T15:49:53.435173",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "created_at": "2025-10-01T15:49:53.554381",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "cce11ccc-0d85-43e3-9f31-c4c168d87970": {
+    "fragmento_id": "cce11ccc-0d85-43e3-9f31-c4c168d87970",
+    "conversacion_id": "2287b094-95fa-42e5-ac78-accd29775867",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Carlos: Propongo priorizar la integración del sistema de autenticación con OAuth2.",
+    "palabras_clave": [
+      "proponer",
+      "autenticación",
+      "sistema",
+      "carlos",
+      "priorizar",
+      "integración"
+    ],
+    "timestamp": "2025-10-01T09:00:00",
+    "timestamp_original_conversacion": "2025-10-01T09:00:00",
+    "participantes": [
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:12.347586",
+    "es_temporal": true,
+    "tipo_contexto": "planning",
+    "tiene_timestamp_especifico": false
+  },
+  "a817d7c6-d1a8-42d4-af41-a53586fa4407": {
+    "fragmento_id": "a817d7c6-d1a8-42d4-af41-a53586fa4407",
+    "conversacion_id": "2287b094-95fa-42e5-ac78-accd29775867",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Marta: Estoy de acuerdo, además deberíamos revisar los tests automatizados que fallaron en la última ejecución.",
+    "palabras_clave": [
+      "revisar",
+      "debeer",
+      "marta",
+      "fallar",
+      "automatizado",
+      "ejecución",
+      "tests"
+    ],
+    "timestamp": "2025-10-01T09:00:00",
+    "timestamp_original_conversacion": "2025-10-01T09:00:00",
+    "participantes": [
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:12.370112",
+    "es_temporal": true,
+    "tipo_contexto": "problema",
+    "tiene_timestamp_especifico": false
+  },
+  "95dfbcf3-8d5e-407c-bb6f-5d110e0e7ef4": {
+    "fragmento_id": "95dfbcf3-8d5e-407c-bb6f-5d110e0e7ef4",
+    "conversacion_id": "2287b094-95fa-42e5-ac78-accd29775867",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Javier: Perfecto, ¿quién se encarga de documentar los endpoints de la API?",
+    "palabras_clave": [
+      "perfecto",
+      "javier",
+      "endpoint",
+      "documentar",
+      "encargar"
+    ],
+    "timestamp": "2025-10-01T09:00:00",
+    "timestamp_original_conversacion": "2025-10-01T09:00:00",
+    "participantes": [
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:12.392694",
+    "es_temporal": true,
+    "tipo_contexto": "pregunta",
+    "tiene_timestamp_especifico": false
+  },
+  "db5f7cc9-2bbc-4ce3-a9b8-43f91441adfe": {
+    "fragmento_id": "db5f7cc9-2bbc-4ce3-a9b8-43f91441adfe",
+    "conversacion_id": "2287b094-95fa-42e5-ac78-accd29775867",
+    "conversacion_titulo": "Reunión de planificación del sprint",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 4,
+    "texto": "Laura: Yo puedo hacerlo, pero necesito que alguien me pase los diagramas actualizados.",
+    "palabras_clave": [
+      "alguien",
+      "laura",
+      "pasar",
+      "diagrama",
+      "actualizado",
+      "necesitar"
+    ],
+    "timestamp": "2025-10-01T09:00:00",
+    "timestamp_original_conversacion": "2025-10-01T09:00:00",
+    "participantes": [
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
+    ],
+    "metadata_conversacion": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:12.411421",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
+  },
+  "67f52d68-d45d-46ec-9f52-1e840f06b328": {
+    "fragmento_id": "67f52d68-d45d-46ec-9f52-1e840f06b328",
+    "conversacion_id": "b8a80d04-e259-44c3-8147-4a97f060bd98",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: Estaba pensando en migrar parte del backend a microservicios para mejorar la escalabilidad.",
+    "palabras_clave": [
+      "mejorar",
+      "backend",
+      "andrés",
+      "pensar",
+      "escalabilidad",
+      "microservicio",
+      "migrar"
+    ],
+    "timestamp": "2025-10-01T11:30:00",
+    "timestamp_original_conversacion": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:41.030436",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "375f06bb-3ba7-44cf-9818-d202c83a5545": {
+    "fragmento_id": "375f06bb-3ba7-44cf-9818-d202c83a5545",
+    "conversacion_id": "b8a80d04-e259-44c3-8147-4a97f060bd98",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Sofía: Buena idea, aunque deberíamos evaluar la sobrecarga de comunicación entre servicios.",
+    "palabras_clave": [
+      "evaluar",
+      "debeer",
+      "sobrecarga",
+      "comunicación",
+      "servicio",
+      "sofía",
+      "idea"
+    ],
+    "timestamp": "2025-10-01T11:30:00",
+    "timestamp_original_conversacion": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:41.056062",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": false
+  },
+  "e4e940e7-2cec-4782-911b-c51e1f5a2d99": {
+    "fragmento_id": "e4e940e7-2cec-4782-911b-c51e1f5a2d99",
+    "conversacion_id": "b8a80d04-e259-44c3-8147-4a97f060bd98",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Diego: También podríamos implementar un balanceador de carga para distribuir mejor las peticiones.",
+    "palabras_clave": [
+      "diego",
+      "implementar",
+      "balanceador",
+      "poder",
+      "petición",
+      "distribuir",
+      "carga"
+    ],
+    "timestamp": "2025-10-01T11:30:00",
+    "timestamp_original_conversacion": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:41.078013",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
+  },
+  "a44d9da2-2eeb-4b9c-9c10-152000f88c2c": {
+    "fragmento_id": "a44d9da2-2eeb-4b9c-9c10-152000f88c2c",
+    "conversacion_id": "b8a80d04-e259-44c3-8147-4a97f060bd98",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 4,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Valeria: Y no olvidemos la observabilidad, necesitamos métricas y logs centralizados desde el inicio.",
+    "palabras_clave": [
+      "olvidar",
+      "logs",
+      "observabilidad",
+      "métrica",
+      "centralizado",
+      "inicio",
+      "valeria",
+      "necesitar"
+    ],
+    "timestamp": "2025-10-01T11:30:00",
+    "timestamp_original_conversacion": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:41.098619",
+    "es_temporal": true,
+    "tipo_contexto": "evento",
+    "tiene_timestamp_especifico": false
+  },
+  "cf3ac19f-1dc6-4c3f-8303-daccccbc3a07": {
+    "fragmento_id": "cf3ac19f-1dc6-4c3f-8303-daccccbc3a07",
+    "conversacion_id": "b8a80d04-e259-44c3-8147-4a97f060bd98",
+    "conversacion_titulo": "Brainstorm de arquitectura de software",
+    "posicion_en_conversacion": 5,
+    "total_fragmentos_conversacion": 5,
+    "texto": "Andrés: De acuerdo, entonces armamos un prototipo pequeño y validamos el rendimiento antes de avanzar.",
+    "palabras_clave": [
+      "validar",
+      "andrés",
+      "prototipo",
+      "rendimiento",
+      "avanzar",
+      "armar",
+      "pequeño"
+    ],
+    "timestamp": "2025-10-01T11:30:00",
+    "timestamp_original_conversacion": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:51:41.120143",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "709c2571-6b29-4df2-a87b-dedbeeeae92e": {
+    "fragmento_id": "709c2571-6b29-4df2-a87b-dedbeeeae92e",
+    "conversacion_id": "c9385133-cbce-42a4-bfb0-c91ee35f0422",
+    "conversacion_titulo": "Revisión de código",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 3,
+    "texto": "Marcos: Revisé el pull request del módulo de pagos y encontré un par de funciones sin validación de parámetros.",
+    "palabras_clave": [
+      "módulo",
+      "request",
+      "parámetro",
+      "encontrar",
+      "revisé",
+      "validación",
+      "función",
+      "pull",
+      "pago",
+      "marco"
+    ],
+    "timestamp": "2025-10-01T15:00:00",
+    "timestamp_original_conversacion": "2025-10-01T15:00:00",
+    "participantes": [
+      "Marcos",
+      "Elena",
+      "Pablo"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:52:21.684563",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "a00cde9e-2ed0-4a9e-b5ef-430db5314e67": {
+    "fragmento_id": "a00cde9e-2ed0-4a9e-b5ef-430db5314e67",
+    "conversacion_id": "c9385133-cbce-42a4-bfb0-c91ee35f0422",
+    "conversacion_titulo": "Revisión de código",
+    "posicion_en_conversacion": 2,
+    "total_fragmentos_conversacion": 3,
+    "texto": "Pablo: También noté que faltan comentarios en algunas clases, deberíamos mejorar la documentación interna.",
+    "palabras_clave": [
+      "mejorar",
+      "debeer",
+      "pablo",
+      "clase",
+      "faltar",
+      "interno",
+      "noté",
+      "documentación",
+      "comentario"
+    ],
+    "timestamp": "2025-10-01T15:00:00",
+    "timestamp_original_conversacion": "2025-10-01T15:00:00",
+    "participantes": [
+      "Marcos",
+      "Elena",
+      "Pablo"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:52:21.707913",
+    "es_temporal": true,
+    "tipo_contexto": "tarea",
+    "tiene_timestamp_especifico": false
+  },
+  "49dc90b3-54bb-4b08-a7da-162a0b4a3e65": {
+    "fragmento_id": "49dc90b3-54bb-4b08-a7da-162a0b4a3e65",
+    "conversacion_id": "c9385133-cbce-42a4-bfb0-c91ee35f0422",
+    "conversacion_titulo": "Revisión de código",
+    "posicion_en_conversacion": 3,
+    "total_fragmentos_conversacion": 3,
+    "texto": "Marcos: Perfecto, lo ajustamos antes de hacer el merge a main.",
+    "palabras_clave": [
+      "ajustamos",
+      "perfecto",
+      "main",
+      "merge",
+      "marco"
+    ],
+    "timestamp": "2025-10-01T15:00:00",
+    "timestamp_original_conversacion": "2025-10-01T15:00:00",
+    "participantes": [
+      "Marcos",
+      "Elena",
+      "Pablo"
+    ],
+    "metadata_conversacion": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "created_at": "2025-10-01T15:52:21.725403",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
   }
 }

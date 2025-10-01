@@ -9,7 +9,6 @@ from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
 from agent.query_analyzer import analizar_intencion_temporal
 from datetime import datetime
-# from agent.dataset_loader import DatasetLoader
 from fastapi import UploadFile, File
 from agent.text_batch_processor import TextBatchProcessor
 from agent.utils import parse_iso_datetime_safe
@@ -409,43 +408,6 @@ def obtener_fragmentos_conversacion(conversacion_id: str):
 class DatasetUpload(BaseModel):
     dataset: dict
     sobrescribir: bool = False
-
-# @app.post("/dataset/validar/")
-# def validar_dataset(dataset: dict):
-#     """Valida el formato de un dataset sin procesarlo."""
-#     loader = DatasetLoader()
-#     es_valido, errores = loader.validar_formato(dataset)
-    
-#     return {
-#         "valido": es_valido,
-#         "errores": errores,
-#         "total_conversaciones": len(dataset.get('conversaciones', [])),
-#         "dominio": dataset.get('dominio', 'No especificado')
-#     }
-
-# @app.post("/dataset/upload/")
-# async def upload_dataset_file(file: UploadFile = File(...), sobrescribir: bool = False):
-#     """Sube y procesa un archivo JSON de dataset."""
-#     if not file.filename.endswith('.json'):
-#         return {"status": "error", "mensaje": "Solo se permiten archivos .json"}
-    
-#     try:
-#         contenido = await file.read()
-#         dataset = json.loads(contenido.decode('utf-8'))
-        
-#         loader = DatasetLoader()
-#         estadisticas = loader.procesar_dataset(dataset, sobrescribir)
-        
-#         return {
-#             "status": "archivo_procesado",
-#             "archivo": file.filename,
-#             "estadisticas": estadisticas
-#         }
-        
-#     except json.JSONDecodeError:
-#         return {"status": "error", "mensaje": "Archivo JSON inválido"}
-#     except Exception as e:
-#         return {"status": "error", "mensaje": str(e)}
     
 #ENDPOINTS PARA VISUALIZACIÓN DOBLE NIVEL
 @app.get("/grafo/macro/conversaciones/")
