@@ -1,8 +1,5 @@
-# agent/text_batch_processor.py
-
 import re
 from typing import Dict, List
-
 
 class TextBatchProcessor:
     """Procesa texto plano o JSON con conversaciones"""

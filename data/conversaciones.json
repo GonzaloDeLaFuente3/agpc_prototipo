@@ -113,5 +113,120 @@
       "0a605d04-70e9-466c-aafd-c7fe34e5f8d7"
     ],
     "created_at": "2025-10-01T15:39:17.676645"
+  },
+  "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f": {
+    "titulo": "Reunión de planificación del sprint",
+    "fecha": "2025-10-01T15:49:32.644894",
+    "participantes": [
+      "Carlos",
+      "Laura",
+      "Javier",
+      "Marta"
+    ],
+    "metadata": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "337c6d85-b463-4d14-9a25-75fc1b47fbcd",
+      "2a6b2bd3-c400-4ad4-87a1-29b3615d1692",
+      "cde23b0e-c38d-4468-8d3d-256f203f6a4b",
+      "bdfe428f-db9a-4c40-b1f1-ce82f271648a"
+    ],
+    "created_at": "2025-10-01T15:49:32.644894"
+  },
+  "c0cd1631-44e5-44d0-889f-1491a083e5b2": {
+    "titulo": "Brainstorm de arquitectura de software",
+    "fecha": "2025-10-01T15:49:53.554381",
+    "participantes": [
+      "Valeria",
+      "Andrés",
+      "Sofía",
+      "Diego"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "29231bca-5e2d-4760-8756-e2841190ff5d",
+      "63b152da-24cc-41d0-9be9-f5ceb44dfb69",
+      "302e0bc9-5b79-4485-8df1-f4106ccc7920",
+      "9fc9e1c9-46f0-4a07-8f68-b4585256a044",
+      "fbef406a-a20c-4405-96ee-6896857eb84d"
+    ],
+    "created_at": "2025-10-01T15:49:53.554381"
+  },
+  "2287b094-95fa-42e5-ac78-accd29775867": {
+    "titulo": "Reunión de planificación del sprint",
+    "fecha": "2025-10-01T09:00:00",
+    "participantes": [
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
+    ],
+    "metadata": {
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "cce11ccc-0d85-43e3-9f31-c4c168d87970",
+      "a817d7c6-d1a8-42d4-af41-a53586fa4407",
+      "95dfbcf3-8d5e-407c-bb6f-5d110e0e7ef4",
+      "db5f7cc9-2bbc-4ce3-a9b8-43f91441adfe"
+    ],
+    "created_at": "2025-10-01T15:51:12.411421"
+  },
+  "b8a80d04-e259-44c3-8147-4a97f060bd98": {
+    "titulo": "Brainstorm de arquitectura de software",
+    "fecha": "2025-10-01T11:30:00",
+    "participantes": [
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "67f52d68-d45d-46ec-9f52-1e840f06b328",
+      "375f06bb-3ba7-44cf-9818-d202c83a5545",
+      "e4e940e7-2cec-4782-911b-c51e1f5a2d99",
+      "a44d9da2-2eeb-4b9c-9c10-152000f88c2c",
+      "cf3ac19f-1dc6-4c3f-8303-daccccbc3a07"
+    ],
+    "created_at": "2025-10-01T15:51:41.120143"
+  },
+  "c9385133-cbce-42a4-bfb0-c91ee35f0422": {
+    "titulo": "Revisión de código",
+    "fecha": "2025-10-01T15:00:00",
+    "participantes": [
+      "Marcos",
+      "Elena",
+      "Pablo"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "total_fragmentos": 3,
+    "fragmentos_ids": [
+      "709c2571-6b29-4df2-a87b-dedbeeeae92e",
+      "a00cde9e-2ed0-4a9e-b5ef-430db5314e67",
+      "49dc90b3-54bb-4b08-a7da-162a0b4a3e65"
+    ],
+    "created_at": "2025-10-01T15:52:21.725403"
   }
 }
