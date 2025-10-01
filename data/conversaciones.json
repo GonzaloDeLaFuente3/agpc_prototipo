@@ -1,287 +1,117 @@
 {
-  "85011eac-cd9f-42fc-8f30-7ee8f3ed45e6": {
-    "titulo": "Diseño de Arquitectura para un Sistema Web",
-    "fecha": "2025-01-25T10:00:00",
+  "194a5fc8-efbc-4d9e-a053-3379c7b1702c": {
+    "titulo": "Reunión de planificación del sprint",
+    "fecha": "2025-10-01T15:37:39.327368",
     "participantes": [
-      "Juan",
-      "María"
+      "Marta",
+      "Laura",
+      "Javier",
+      "Carlos"
     ],
     "metadata": {
-      "tipo": "reunion",
-      "proyecto": "Sistema Web de Gestión",
-      "dominio": "Ingeniería en Informática",
-      "dataset_metadata": {
-        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
-        "autor": "Uriel De La Fuente"
-      },
-      "posicion_en_dataset": 1,
-      "cargado_masivamente": true
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "4aab3c6c-f941-41b6-bafb-53f07d97c510",
-      "317f54e6-1bad-48c9-a4fe-273c8044b2e6",
-      "d80f9327-0193-4792-9a48-c84fb54e76f4",
-      "4a0a9995-21bf-422f-88a9-06c2179fc727"
+      "5b184f55-45b9-4124-8de7-369b3888f095",
+      "cc88d1b1-43b9-49d4-afac-06ae27507ff7",
+      "f3fcae13-7330-437f-8ac0-12a5145f170f",
+      "c338b869-9c45-432e-8155-0628c49e573c"
     ],
-    "created_at": "2025-09-04T17:56:35.585027"
+    "created_at": "2025-10-01T15:37:39.327368"
   },
-  "4d7e39f3-488d-484c-a2f1-9628195721b4": {
-    "titulo": "Discusión sobre Base de Datos",
-    "fecha": "2025-02-10T15:30:00",
+  "ba80be5b-ef8d-4478-b789-5615d2a15ba5": {
+    "titulo": "Brainstorm de arquitectura de software",
+    "fecha": "2025-10-01T15:37:41.796067",
     "participantes": [
-      "Pedro",
-      "Laura"
-    ],
-    "metadata": {
-      "tipo": "planificación",
-      "proyecto": "Plataforma de Pagos",
-      "dominio": "Ingeniería en Informática",
-      "dataset_metadata": {
-        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
-        "autor": "Uriel De La Fuente"
-      },
-      "posicion_en_dataset": 2,
-      "cargado_masivamente": true
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "71e38037-8fc1-4d38-b651-6beba71d88ea",
-      "82661493-5bf2-4e4e-8d74-211f26348813",
-      "60ed9ddb-9a68-4352-9ea8-860dba273214",
-      "fce76978-7ec5-4d97-82a9-9ee314004247"
-    ],
-    "created_at": "2025-09-04T17:56:36.882099"
-  },
-  "0fb1e9dc-e85f-4935-982e-3e2ea05517a9": {
-    "titulo": "Optimización de Algoritmo de Búsqueda",
-    "fecha": "2025-03-05T09:45:00",
-    "participantes": [
+      "Valeria",
+      "Diego",
       "Andrés",
-      "Carla"
+      "Sofía"
     ],
     "metadata": {
-      "tipo": "brainstorming",
-      "proyecto": "Motor de Búsqueda Interno",
-      "dominio": "Ingeniería en Informática",
-      "dataset_metadata": {
-        "descripcion": "Dataset que contiene 3 conversaciones relacionadas con proyectos y discusiones técnicas en el ámbito de la ingeniería en informática.",
-        "autor": "Uriel De La Fuente"
-      },
-      "posicion_en_dataset": 3,
-      "cargado_masivamente": true
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "texto_plano"
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "fd09d6f0-a3c7-4ef4-ab6f-528174450ae8",
-      "9817e0a1-bdfe-4ea3-9a13-162d1a87b597",
-      "fcd93166-640c-4301-aa3a-a031583a88ad",
-      "13b7d75c-30e1-4410-bb97-58042914759d",
-      "5cefb13e-c0d6-4010-b87e-d976e981ecc4"
+      "42c81f67-f1ab-4577-b6db-379d144f6f54",
+      "f7ef442b-6d79-42af-8cda-62d4b340cd2d",
+      "551d1044-f859-43cb-8247-4c81029036c9",
+      "ee9de0ce-dada-4dd7-89fb-19e14261be93",
+      "62807e8f-e4c4-4747-ac4c-ab2053eefd4e"
     ],
-    "created_at": "2025-09-04T17:56:40.519072"
+    "created_at": "2025-10-01T15:37:41.796067"
   },
-  "2d2f34c7-d420-4839-8378-a93c5d6b8e28": {
-    "titulo": "Contrato de Compraventa",
-    "fecha": "2023-03-15T09:00:00",
+  "24169aa8-c63b-4fad-ac39-52609fc052d5": {
+    "titulo": "Reunión de planificación del sprint",
+    "fecha": "2025-10-01T09:00:00",
     "participantes": [
-      "Abogado A",
-      "Cliente B"
+      "Laura",
+      "Carlos",
+      "Marta",
+      "Javier"
     ],
     "metadata": {
-      "tipo": "documento",
-      "proyecto": "Caso Compraventa",
-      "dominio": "Legal",
-      "dataset_metadata": {
-        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
-        "autor": "Gonzalo De la Fuente"
-      },
-      "posicion_en_dataset": 1,
-      "cargado_masivamente": true
+      "tipo": "planning",
+      "participantes_detectados": 4,
+      "origen": "json"
     },
-    "total_fragmentos": 1,
+    "total_fragmentos": 4,
     "fragmentos_ids": [
-      "fc630fe9-4301-4af5-b513-6faf760e2ddd"
+      "c6a19a96-3a79-41ab-9c4a-dfec407865a4",
+      "1c8c9f99-fafe-42b8-af29-71e31157f0f2",
+      "dfbac673-4620-4892-98bf-7a884282ae19",
+      "adf7f956-ee50-4f8b-aa1d-0b9e58ae25bb"
     ],
-    "created_at": "2025-09-17T15:57:34.854586"
+    "created_at": "2025-10-01T15:38:50.775971"
   },
-  "962366c9-a42c-42e9-afd0-03bfad2a9f27": {
-    "titulo": "Factura Emitida",
-    "fecha": "2024-05-10T11:30:00",
+  "8b1efca9-1349-4202-829a-ee486ff92e7b": {
+    "titulo": "Brainstorm de arquitectura de software",
+    "fecha": "2025-10-01T11:30:00",
     "participantes": [
-      "Contador B",
-      "Cliente A"
+      "Andrés",
+      "Sofía",
+      "Diego",
+      "Valeria"
     ],
     "metadata": {
-      "tipo": "documento",
-      "proyecto": "Caso Compraventa",
-      "dominio": "Legal",
-      "dataset_metadata": {
-        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
-        "autor": "Gonzalo De la Fuente"
-      },
-      "posicion_en_dataset": 2,
-      "cargado_masivamente": true
+      "tipo": "general",
+      "participantes_detectados": 4,
+      "origen": "json"
     },
-    "total_fragmentos": 1,
+    "total_fragmentos": 5,
     "fragmentos_ids": [
-      "e80de4c6-570a-4bfc-8cce-99332ffb8a85"
+      "fc829e61-8342-44b7-a673-30a350271891",
+      "01990056-d508-4839-a20e-02076d290208",
+      "d5e30261-0cc9-473a-ac63-c4afdf0971ec",
+      "6a13ea93-ef82-411b-a145-bc11add6cdcb",
+      "bedb315d-1cb6-40a5-b35f-8603a180a6b9"
     ],
-    "created_at": "2025-09-17T15:57:47.646296"
+    "created_at": "2025-10-01T15:39:00.308023"
   },
-  "34e4d820-6825-4163-9c24-02c2c775ea89": {
-    "titulo": "Litigio Judicial",
-    "fecha": "2024-06-20T14:00:00",
+  "2fa70e24-a9da-42a8-92dd-e3c3113030b2": {
+    "titulo": "Revisión de código",
+    "fecha": "2025-10-01T15:00:00",
     "participantes": [
-      "Juez",
-      "Abogado A",
-      "Abogado B"
+      "Marcos",
+      "Elena",
+      "Pablo"
     ],
     "metadata": {
-      "tipo": "litigio",
-      "proyecto": "Caso Compraventa",
-      "dominio": "Legal",
-      "dataset_metadata": {
-        "descripcion": "Dataset sintético con conversaciones legales para probar propagación probabilística en el GCP.",
-        "autor": "Gonzalo De la Fuente"
-      },
-      "posicion_en_dataset": 3,
-      "cargado_masivamente": true
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
     },
-    "total_fragmentos": 1,
+    "total_fragmentos": 3,
     "fragmentos_ids": [
-      "b046434b-61d4-4533-906c-69b68bb6c5a0"
+      "06b38166-5634-4617-97d0-113549c2fb5b",
+      "010db89f-9291-498d-ad8d-aefe11aa1feb",
+      "0a605d04-70e9-466c-aafd-c7fe34e5f8d7"
     ],
-    "created_at": "2025-09-17T15:58:04.820232"
-  },
-  "533d4a73-dce0-4c1b-a7b2-b9e79bcf02e6": {
-    "titulo": "Reunión proyecto Alpha - Lunes",
-    "fecha": "2025-09-18T20:19:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "reunion"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "8c779cb0-06d6-4aed-baeb-94c11e2effe1"
-    ],
-    "created_at": "2025-09-20T17:19:53.411036"
-  },
-  "cc9cdc82-a742-42ae-b1eb-a9b2915c9a1d": {
-    "titulo": "Reunión proyecto Alpha - Miércoles",
-    "fecha": "2025-09-20T20:20:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "reunion"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "8c358330-ca0e-487e-a94f-2f7cf2af7034"
-    ],
-    "created_at": "2025-09-20T17:20:38.332093"
-  },
-  "0dd2f2dc-1ae2-47c5-8fc8-bb5473705b05": {
-    "titulo": "Documentación técnica Alpha",
-    "fecha": "2025-09-20T17:22:01.017213",
-    "participantes": [],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "0a06a740-708f-4429-bab7-65c37bd185bf"
-    ],
-    "created_at": "2025-09-20T17:22:01.017213"
-  },
-  "209c0065-906f-449b-90fa-86fcaa21649e": {
-    "titulo": "Avance Trabajo Final",
-    "fecha": "2025-09-22T18:54:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "bbf6e671-f9e9-4c10-9330-4024aae73486"
-    ],
-    "created_at": "2025-09-22T15:54:24.951928"
-  },
-  "c22ff31b-af73-45b4-9f0f-d3ef6764a043": {
-    "titulo": "Reunion Recursos Humano",
-    "fecha": "2025-09-21T18:55:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "reunion"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "7ad582c5-acce-4615-a76b-7a6d3d238269"
-    ],
-    "created_at": "2025-09-22T15:55:29.342820"
-  },
-  "b29df83a-dbea-43e8-b41e-10c041227b7d": {
-    "titulo": "Marketing",
-    "fecha": "2025-09-23T18:56:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "planning"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "8f4be3bb-cc94-467d-8687-aa109292f088"
-    ],
-    "created_at": "2025-09-22T15:56:14.682110"
-  },
-  "1f6a0134-8ed5-455e-8126-695f2658a765": {
-    "titulo": "Reunión importante de ayer",
-    "fecha": "2025-09-21T13:00:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "reunion"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "9da98550-6b61-497b-aa72-838893d829fd"
-    ],
-    "created_at": "2025-09-22T16:02:45.252668"
-  },
-  "399fb3ae-b0bb-48aa-86e4-cfde87e892d7": {
-    "titulo": "Reunión de planificación de ayer",
-    "fecha": "2025-09-21T11:00:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "reunion"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "6a46c7c8-4280-4933-8d5b-63f463bd8c4f"
-    ],
-    "created_at": "2025-09-22T19:57:49.691180"
-  },
-  "12a6ace7-9f4c-4156-9b35-2070d26931ab": {
-    "titulo": "Mejora en el prototipo AGPC",
-    "fecha": "2025-09-22T13:00:00.000Z",
-    "participantes": [],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "14a97f94-7eba-40d9-b38b-0fc25194e226"
-    ],
-    "created_at": "2025-09-23T16:43:31.518009"
-  },
-  "b6688c0f-4a72-4b57-aafc-e8fab65e67bb": {
-    "titulo": "ingeniería de contexto",
-    "fecha": "2025-09-26T23:04:32.053878",
-    "participantes": [],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "50ac841c-0b83-4755-8083-269210dc496c"
-    ],
-    "created_at": "2025-09-26T23:04:32.053878"
+    "created_at": "2025-10-01T15:39:17.676645"
   }
 }
