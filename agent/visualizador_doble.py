@@ -146,7 +146,7 @@ Dominio: {conv_data.get('metadata', {}).get('dominio', 'N/A')}"""
                 color_arista = "#4caf50" if es_temporal else "#2196f3"
                 
                 # Label con información agregada
-                label = f"P:{peso_promedio:.2f}|C:{datos_relacion['conexiones_fragmentos']}"
+                label = f"P:{peso_promedio:.3f}|C:{datos_relacion['conexiones_fragmentos']}"
                 
                 # Tooltip detallado
                 tipos_str = ", ".join(datos_relacion['tipos_relacion'])

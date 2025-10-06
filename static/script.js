@@ -715,7 +715,7 @@ function abrirModalArbol(subgrafo) {
                 to: e.to,
                 arrows: { to: { enabled: true, scaleFactor: 1.2 } },
                 label: e.label || "",
-                title: `Peso Estructural: ${e.peso_estructural || 0}\nRelevancia Temporal: ${relevanciaTemp}\nPeso Efectivo: ${pesoEfectivo}`,
+                title: `Peso Estructural: ${(e.peso_estructural || 0).toFixed(3)}\nRelevancia Temporal: ${relevanciaTemp.toFixed(3)}\nPeso Efectivo: ${pesoEfectivo.toFixed(3)}`,
                 font: { 
                     size: 10, 
                     align: "top",
