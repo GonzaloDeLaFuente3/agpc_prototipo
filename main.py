@@ -368,7 +368,6 @@ def analizar_query(pregunta: str):
     return analizar_intencion_temporal(pregunta)
 
 # ENDPOINTS PARA CONVERSACIONES
-
 class EntradaConversacion(BaseModel):
     titulo: str
     contenido: str
@@ -547,9 +546,6 @@ def obtener_estado_parametros():
 @app.get("/debug-temporal/")
 def debug_analisis_temporal(pregunta: str):
     """Endpoint para debuggear análisis temporal."""
-    from agent.query_analyzer import analizar_intencion_temporal
-    from datetime import datetime
-    
     momento_consulta = datetime.now()
     analisis = analizar_intencion_temporal(pregunta, momento_consulta)
     
@@ -607,7 +603,6 @@ def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
                 if not participantes:
                     # Detección automática básica de participantes
                     # Busca patrones como "Nombre:" al inicio de líneas
-                    import re
                     patron_participantes = r'^([A-ZÁÉÍÓÚÑ][a-záéíóúñA-ZÁÉÍÓÚÑ\s]+):'
                     matches = re.findall(patron_participantes, conv['contenido'], re.MULTILINE)
                     participantes = list(set(matches))  # Eliminar duplicados

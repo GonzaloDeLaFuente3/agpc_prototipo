@@ -647,7 +647,7 @@ def exportar_grafo_para_visualizacion() -> Dict:
         
         # Etiqueta de arista
         label = f"E:{peso_estructural:.2f}|T:{relevancia_temporal:.2f}|W:{peso_efectivo:.2f}"
-        title = f"Peso Estructural: {peso_estructural:.3f}\nRelevancia Temporal: {relevancia_temporal:.3f}\nPeso Efectivo: {peso_efectivo:.3f}\nTipos: {tipos_contexto}"
+        title = f"Peso Estructural: {peso_estructural:.2f}\nRelevancia Temporal: {relevancia_temporal:.2f}\nPeso Efectivo: {peso_efectivo:.2f}\nTipos: {tipos_contexto}"
         
         edges.append({
             "from": origen,
@@ -756,7 +756,7 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             "peso_estructural": round(ws, 3),
             "relevancia_temporal": round(rt, 3),
             "peso_efectivo": round(we, 3),
-            "label": f"E:{round(ws,2)}|T:{round(rt,2)}|Ef:{round(we,2)}"
+            "label": f"E:{max(0.001, ws):.3f}|T:{max(0.001, rt) if rt > 0 else 0:.3f}|W:{max(0.001, we):.3f}"
         })
     
     return {
