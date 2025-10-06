@@ -564,8 +564,7 @@ async function aplicarConfiguracionPropagacion() {
             boton.textContent = '✅ Aplicado';
             mostrarNotificacion(`Propagación configurada: Decaimiento=${factorDecaimiento}, Pasos=${maxPasos}`, 'exito');
             
-            // Actualizar estado
-            setTimeout(() => obtenerEstadoPropagacion(), 1000);
+            await obtenerEstadoPropagacion(); 
         } else {
             throw new Error(response.data.error || 'Error desconocido');
         }
@@ -621,6 +620,10 @@ async function obtenerEstadoPropagacion() {
                 <div class="flex justify-between">
                     <span>📉 Factor decaimiento:</span>
                     <span class="font-bold">${estado.factor_decaimiento || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>🔢 Pasos máximos:</span>
+                    <span class="font-bold text-purple-600">${parametrosPropagacion.max_pasos}</span>
                 </div>
                 <div class="flex justify-between">
                     <span>🎯 Umbral activación:</span>
