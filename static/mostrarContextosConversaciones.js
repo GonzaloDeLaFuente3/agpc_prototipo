@@ -407,7 +407,7 @@ ${contexto.texto}</div>
                                 </h5>
                                 <div class="flex space-x-1">
                                     <span class="tag ${esTemporal ? 'tag-temporal' : 'tag-atemporal'}">
-                                        ${esTemporal ? '🕒' : '📋'} ${tipoContexto}
+                                        ${esTemporal ? '🕒(Temporal) - ' : '📋(No Temporal) - '} ${tipoContexto}
                                     </span>
                                 </div>
                             </div>

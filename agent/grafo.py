@@ -107,7 +107,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     conversacion_data = {
         'titulo': titulo,
         'contenido': contenido,
-        'fecha': fecha or datetime.now().isoformat(),
+        'fecha': fecha,
         'participantes': participantes or [],
         'metadata': metadata or {}
     }

@@ -512,6 +512,11 @@ function limpiarFormularioConversacion() {
     });
     const tipo = document.getElementById('tipoConversacion');
     if (tipo) tipo.value = 'general';
+    const checkboxAtemporal = document.getElementById('conversacionAtemporal');
+    if (checkboxAtemporal) {
+        checkboxAtemporal.checked = false;
+        toggleFechaConversacion(); // Restaurar estado del campo fecha
+    }
     document.getElementById('formAgregarConversacion').classList.add('hidden');
 }
 
@@ -791,8 +796,10 @@ async function agregarConversacion() {
     
     const participantesText = document.getElementById('participantesConversacion').value.trim();
     const participantes = participantesText ? participantesText.split(',').map(p => p.trim()).filter(p => p) : [];
-    const fecha = document.getElementById('fechaConversacion').value;
-    const tipo = document.getElementById('tipoConversacion').value;
+    const esAtemporal = document.getElementById('conversacionAtemporal').checked;
+    const fechaCampo = document.getElementById('fechaConversacion').value;
+    const fecha = esAtemporal ? null : (fechaCampo ? new Date(fechaCampo).toISOString() : null);
+        const tipo = document.getElementById('tipoConversacion').value;
     
     const payload = {
         titulo,
@@ -801,9 +808,10 @@ async function agregarConversacion() {
         metadata: { tipo }
     };
     
-    if (fecha) {
-        payload.fecha = new Date(fecha).toISOString();
+    if (fecha !== null) {  // Incluir fecha solo si no es null
+        payload.fecha = fecha;
     }
+    // Si fecha es null (atemporal), no incluir el campo en el payload
     
     try {
         const res = await axios.post('/conversacion/', payload);
@@ -1324,4 +1332,20 @@ function limpiarCamposConversaciones() {
     // Resetear a tab de texto
     tipoEntradaActual = 'texto';
     cambiarTabEntrada('texto');
+}
+
+function toggleFechaConversacion() {
+    const checkbox = document.getElementById('conversacionAtemporal');
+    const campoFecha = document.getElementById('fechaConversacion');
+    
+    if (checkbox.checked) {
+        campoFecha.disabled = true;
+        campoFecha.value = '';
+        campoFecha.classList.add('bg-gray-200', 'cursor-not-allowed');
+        campoFecha.classList.remove('bg-green-50');
+    } else {
+        campoFecha.disabled = false;
+        campoFecha.classList.remove('bg-gray-200', 'cursor-not-allowed');
+        campoFecha.classList.add('bg-green-50');
+    }
 }

@@ -832,5 +832,60 @@
     "es_fragmento": true,
     "conversacion_id": "c9385133-cbce-42a4-bfb0-c91ee35f0422",
     "posicion_fragmento": 3
+  },
+  "aab7fce4-e355-4298-92da-0966cf822263": {
+    "titulo": "prueba de conversacion no temporal - Fragmento 1",
+    "texto": "conversacion atemporal, esto es una prueba para ver si se genera dos fragmentos en la cual sean no temporales, vamos a ver como sale xd",
+    "palabras_clave": [
+      "salir",
+      "prueba",
+      "fragmento",
+      "generar",
+      "conversacion",
+      "temporal",
+      "atemporal"
+    ],
+    "created_at": "2025-10-06T22:52:59.100561",
+    "es_temporal": false,
+    "timestamp": null,
+    "tipo_contexto": "pregunta",
+    "es_fragmento": true,
+    "conversacion_id": "318f4064-f3e9-41f2-803d-701210c4cc28",
+    "posicion_fragmento": 1
+  },
+  "652e54cc-3bc3-463c-ad27-d7bb8ec46dec": {
+    "titulo": "prueba temporal - Fragmento 1",
+    "texto": "conversación temporal prueba luego de agregar una nueva funcionalidad",
+    "palabras_clave": [
+      "conversación",
+      "funcionalidad",
+      "agregar",
+      "temporal",
+      "probar"
+    ],
+    "created_at": "2025-10-06T23:04:03.800321",
+    "es_temporal": true,
+    "timestamp": "2025-10-02T02:04:00.000Z",
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "c24bd7a0-57d7-4682-ba88-81131eba2fbb",
+    "posicion_fragmento": 1
+  },
+  "7ca1503e-908e-4129-bff3-688b895b3119": {
+    "titulo": "prueba - Fragmento 1",
+    "texto": "prueba sin poner fecha ni marcar que sea no temporal",
+    "palabras_clave": [
+      "temporal",
+      "fecha",
+      "prueba",
+      "marcar"
+    ],
+    "created_at": "2025-10-06T23:05:03.585097",
+    "es_temporal": false,
+    "timestamp": null,
+    "tipo_contexto": "general",
+    "es_fragmento": true,
+    "conversacion_id": "39f6445e-a7c2-4c23-a6cd-daf500828cbb",
+    "posicion_fragmento": 1
   }
 }
