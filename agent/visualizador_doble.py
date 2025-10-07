@@ -146,15 +146,15 @@ Dominio: {conv_data.get('metadata', {}).get('dominio', 'N/A')}"""
                 color_arista = "#4caf50" if es_temporal else "#2196f3"
                 
                 # Label con información agregada
-                label = f"P:{peso_promedio:.3f}|C:{datos_relacion['conexiones_fragmentos']}"
+                label = f"P:{peso_promedio:.2f}|C:{datos_relacion['conexiones_fragmentos']}"
                 
                 # Tooltip detallado
                 tipos_str = ", ".join(datos_relacion['tipos_relacion'])
                 tooltip = f"""Conexiones entre conversaciones:
 Fragmentos conectados: {datos_relacion['conexiones_fragmentos']}
-Peso total: {datos_relacion['peso_total']:.3f}
-Peso promedio: {peso_promedio:.3f}
-Peso máximo individual: {datos_relacion['max_peso_individual']:.3f}
+Peso total: {datos_relacion['peso_total']:.2f}
+Peso promedio: {peso_promedio:.2f}
+Peso máximo individual: {datos_relacion['max_peso_individual']:.2f}
 Tipos: {tipos_str}"""
                 
                 edges_conversaciones.append({
@@ -164,7 +164,7 @@ Tipos: {tipos_str}"""
                     "label": label,
                     "title": tooltip,
                     "color": {"color": color_arista},
-                    "width": max(2, peso_promedio * 8),
+                    "width": max(1, peso_promedio * 5),
                     "conexiones_fragmentos": datos_relacion['conexiones_fragmentos'],
                     "peso_total": datos_relacion['peso_total'],
                     "es_temporal": es_temporal,
