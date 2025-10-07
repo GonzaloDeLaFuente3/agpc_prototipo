@@ -585,7 +585,6 @@ async function aplicarConfiguracionPropagacion() {
     }
 }
 
-// function cargarGrafo() { return cargarGrafoUnificado('principal'); }
 function cargarGrafoDobleNivel() { return cargarGrafoUnificado(vistaActual); }
 function cerrarModalGrafo() { gestionarModal('modalGrafo', 'cerrar'); }
 function cerrarModalArbol() { gestionarModal('modalArbol', 'cerrar'); }

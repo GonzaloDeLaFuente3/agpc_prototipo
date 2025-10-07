@@ -357,11 +357,6 @@ def buscar_por_texto(texto: str):
     todos = grafo.obtener_todos()
     return {id: todos[id] for id in ids_similares if id in todos}
 
-# @app.get("/grafo/visualizacion/")
-# def exportar_para_visualizacion():
-#     """Exporta el grafo para visualización."""
-#     return grafo.exportar_grafo_para_visualizacion()
-
 @app.get("/query/analizar/")
 def analizar_query(pregunta: str):
     """Analiza la intención temporal de una pregunta."""
