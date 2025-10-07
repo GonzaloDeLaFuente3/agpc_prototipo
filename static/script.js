@@ -333,7 +333,7 @@ async function cargarGrafoUnificado(tipo = 'principal') {
                 }
                 endpoint = `/grafo/micro/conversacion/${conversacionId}`;
                 break;
-            default: endpoint = '/grafo/visualizacion/';
+            default: endpoint = '/grafo/macro/conversaciones/';
         }
         
         const res = await axios.get(endpoint);
@@ -585,7 +585,7 @@ async function aplicarConfiguracionPropagacion() {
     }
 }
 
-function cargarGrafo() { return cargarGrafoUnificado('principal'); }
+// function cargarGrafo() { return cargarGrafoUnificado('principal'); }
 function cargarGrafoDobleNivel() { return cargarGrafoUnificado(vistaActual); }
 function cerrarModalGrafo() { gestionarModal('modalGrafo', 'cerrar'); }
 function cerrarModalArbol() { gestionarModal('modalArbol', 'cerrar'); }
