@@ -228,5 +228,44 @@
       "49dc90b3-54bb-4b08-a7da-162a0b4a3e65"
     ],
     "created_at": "2025-10-01T15:52:21.725403"
+  },
+  "318f4064-f3e9-41f2-803d-701210c4cc28": {
+    "titulo": "prueba de conversacion no temporal",
+    "fecha": "2025-10-06T22:52:59.100561",
+    "participantes": [],
+    "metadata": {
+      "tipo": "reunion"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "aab7fce4-e355-4298-92da-0966cf822263"
+    ],
+    "created_at": "2025-10-06T22:52:59.100561"
+  },
+  "c24bd7a0-57d7-4682-ba88-81131eba2fbb": {
+    "titulo": "prueba temporal",
+    "fecha": "2025-10-02T02:04:00.000Z",
+    "participantes": [],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "652e54cc-3bc3-463c-ad27-d7bb8ec46dec"
+    ],
+    "created_at": "2025-10-06T23:04:03.800321"
+  },
+  "39f6445e-a7c2-4c23-a6cd-daf500828cbb": {
+    "titulo": "prueba",
+    "fecha": "2025-10-06T23:05:03.585097",
+    "participantes": [],
+    "metadata": {
+      "tipo": "general"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "7ca1503e-908e-4129-bff3-688b895b3119"
+    ],
+    "created_at": "2025-10-06T23:05:03.585097"
   }
 }

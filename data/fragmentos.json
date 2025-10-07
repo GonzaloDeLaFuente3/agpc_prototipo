@@ -1414,5 +1414,81 @@
     "es_temporal": true,
     "tipo_contexto": "accion",
     "tiene_timestamp_especifico": false
+  },
+  "aab7fce4-e355-4298-92da-0966cf822263": {
+    "fragmento_id": "aab7fce4-e355-4298-92da-0966cf822263",
+    "conversacion_id": "318f4064-f3e9-41f2-803d-701210c4cc28",
+    "conversacion_titulo": "prueba de conversacion no temporal",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "conversacion atemporal, esto es una prueba para ver si se genera dos fragmentos en la cual sean no temporales, vamos a ver como sale xd",
+    "palabras_clave": [
+      "salir",
+      "prueba",
+      "fragmento",
+      "generar",
+      "conversacion",
+      "temporal",
+      "atemporal"
+    ],
+    "timestamp": null,
+    "timestamp_original_conversacion": null,
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "reunion"
+    },
+    "created_at": "2025-10-06T22:52:59.100561",
+    "es_temporal": false,
+    "tipo_contexto": "pregunta",
+    "tiene_timestamp_especifico": false
+  },
+  "652e54cc-3bc3-463c-ad27-d7bb8ec46dec": {
+    "fragmento_id": "652e54cc-3bc3-463c-ad27-d7bb8ec46dec",
+    "conversacion_id": "c24bd7a0-57d7-4682-ba88-81131eba2fbb",
+    "conversacion_titulo": "prueba temporal",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "conversación temporal prueba luego de agregar una nueva funcionalidad",
+    "palabras_clave": [
+      "conversación",
+      "funcionalidad",
+      "agregar",
+      "temporal",
+      "probar"
+    ],
+    "timestamp": "2025-10-02T02:04:00.000Z",
+    "timestamp_original_conversacion": "2025-10-02T02:04:00.000Z",
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "general"
+    },
+    "created_at": "2025-10-06T23:04:03.800321",
+    "es_temporal": true,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
+  },
+  "7ca1503e-908e-4129-bff3-688b895b3119": {
+    "fragmento_id": "7ca1503e-908e-4129-bff3-688b895b3119",
+    "conversacion_id": "39f6445e-a7c2-4c23-a6cd-daf500828cbb",
+    "conversacion_titulo": "prueba",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "prueba sin poner fecha ni marcar que sea no temporal",
+    "palabras_clave": [
+      "temporal",
+      "fecha",
+      "prueba",
+      "marcar"
+    ],
+    "timestamp": null,
+    "timestamp_original_conversacion": null,
+    "participantes": [],
+    "metadata_conversacion": {
+      "tipo": "general"
+    },
+    "created_at": "2025-10-06T23:05:03.585097",
+    "es_temporal": false,
+    "tipo_contexto": "general",
+    "tiene_timestamp_especifico": false
   }
 }
