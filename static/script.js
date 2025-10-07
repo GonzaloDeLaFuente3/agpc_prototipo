@@ -185,7 +185,7 @@ function procesarAristas(edges, vista) {
         if (vista === 'macro') {
             return {
                 ...baseConfig,
-                width: Math.max(1, (edge.peso_total || 1) * 1.5),
+                width: Math.max(1, (edge.peso_total || 1) * 0.8),
                 color: edge.es_temporal ? '#4caf50' : '#2196f3',
                 font: { size: 11, background: 'rgba(255,255,255,0.9)' }
             };
@@ -194,7 +194,7 @@ function procesarAristas(edges, vista) {
             const pesoEfectivo = edge.peso_efectivo || edge.weight || 0;
             return {
                 ...baseConfig,
-                width: Math.max(1, pesoEfectivo * 2),
+                width: Math.max(1, pesoEfectivo * 1.2),
                 color: relevanciaTemp > 0.3 ? '#4caf50' : '#2196f3',
                 font: { size: 9 }
             };
