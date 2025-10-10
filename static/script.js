@@ -797,8 +797,14 @@ async function agregarConversacion() {
     const participantes = participantesText ? participantesText.split(',').map(p => p.trim()).filter(p => p) : [];
     const esAtemporal = document.getElementById('conversacionAtemporal').checked;
     const fechaCampo = document.getElementById('fechaConversacion').value;
-    const fecha = esAtemporal ? null : (fechaCampo ? new Date(fechaCampo).toISOString() : null);
-        const tipo = document.getElementById('tipoConversacion').value;
+    //Convertir datetime-local directamente a formato ISO sin cambiar zona horaria
+    let fecha = null;
+    if (!esAtemporal && fechaCampo) {
+        // fechaCampo viene en formato: "2025-10-11T15:00"
+        // Simplemente agregar ":00" para segundos
+        fecha = fechaCampo + ':00';  // Resultado: "2025-10-11T15:00:00"
+    }
+    const tipo = document.getElementById('tipoConversacion').value;
     
     const payload = {
         titulo,

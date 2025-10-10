@@ -1,271 +1,241 @@
 {
-  "194a5fc8-efbc-4d9e-a053-3379c7b1702c": {
-    "titulo": "Reunión de planificación del sprint",
-    "fecha": "2025-10-01T15:37:39.327368",
+  "4dbefa81-d763-4da8-a760-47c4c7cb9b23": {
+    "titulo": "Reunión semanal de equipo - Sprint Planning",
+    "fecha": "2025-10-01T09:00:00",
     "participantes": [
-      "Marta",
-      "Laura",
-      "Javier",
+      "Juan",
+      "María",
+      "Pedro",
+      "Ana",
       "Carlos"
     ],
     "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 4,
-      "origen": "texto_plano"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "5b184f55-45b9-4124-8de7-369b3888f095",
-      "cc88d1b1-43b9-49d4-afac-06ae27507ff7",
-      "f3fcae13-7330-437f-8ac0-12a5145f170f",
-      "c338b869-9c45-432e-8155-0628c49e573c"
-    ],
-    "created_at": "2025-10-01T15:37:39.327368"
-  },
-  "ba80be5b-ef8d-4478-b789-5615d2a15ba5": {
-    "titulo": "Brainstorm de arquitectura de software",
-    "fecha": "2025-10-01T15:37:41.796067",
-    "participantes": [
-      "Valeria",
-      "Diego",
-      "Andrés",
-      "Sofía"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 4,
-      "origen": "texto_plano"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "42c81f67-f1ab-4577-b6db-379d144f6f54",
-      "f7ef442b-6d79-42af-8cda-62d4b340cd2d",
-      "551d1044-f859-43cb-8247-4c81029036c9",
-      "ee9de0ce-dada-4dd7-89fb-19e14261be93",
-      "62807e8f-e4c4-4747-ac4c-ab2053eefd4e"
-    ],
-    "created_at": "2025-10-01T15:37:41.796067"
-  },
-  "24169aa8-c63b-4fad-ac39-52609fc052d5": {
-    "titulo": "Reunión de planificación del sprint",
-    "fecha": "2025-10-01T09:00:00",
-    "participantes": [
-      "Laura",
-      "Carlos",
-      "Marta",
-      "Javier"
-    ],
-    "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 4,
+      "tipo": "reunion",
+      "participantes_detectados": 5,
       "origen": "json"
     },
-    "total_fragmentos": 4,
+    "total_fragmentos": 2,
     "fragmentos_ids": [
-      "c6a19a96-3a79-41ab-9c4a-dfec407865a4",
-      "1c8c9f99-fafe-42b8-af29-71e31157f0f2",
-      "dfbac673-4620-4892-98bf-7a884282ae19",
-      "adf7f956-ee50-4f8b-aa1d-0b9e58ae25bb"
+      "2628b68a-e291-4a08-a0b4-3cc4b7005b7e",
+      "375a4ada-c64b-4649-b468-b865071f09ac"
     ],
-    "created_at": "2025-10-01T15:38:50.775971"
+    "created_at": "2025-10-10T12:10:47"
   },
-  "8b1efca9-1349-4202-829a-ee486ff92e7b": {
-    "titulo": "Brainstorm de arquitectura de software",
+  "aed6aa98-2af4-4e96-916b-01e6f2e6a0b0": {
+    "titulo": "Brainstorm - Nueva funcionalidad de reportes",
     "fecha": "2025-10-01T11:30:00",
     "participantes": [
-      "Andrés",
-      "Sofía",
-      "Diego",
-      "Valeria"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 4,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "fc829e61-8342-44b7-a673-30a350271891",
-      "01990056-d508-4839-a20e-02076d290208",
-      "d5e30261-0cc9-473a-ac63-c4afdf0971ec",
-      "6a13ea93-ef82-411b-a145-bc11add6cdcb",
-      "bedb315d-1cb6-40a5-b35f-8603a180a6b9"
-    ],
-    "created_at": "2025-10-01T15:39:00.308023"
-  },
-  "2fa70e24-a9da-42a8-92dd-e3c3113030b2": {
-    "titulo": "Revisión de código",
-    "fecha": "2025-10-01T15:00:00",
-    "participantes": [
-      "Marcos",
-      "Elena",
-      "Pablo"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 3,
-    "fragmentos_ids": [
-      "06b38166-5634-4617-97d0-113549c2fb5b",
-      "010db89f-9291-498d-ad8d-aefe11aa1feb",
-      "0a605d04-70e9-466c-aafd-c7fe34e5f8d7"
-    ],
-    "created_at": "2025-10-01T15:39:17.676645"
-  },
-  "8791ae3c-00f3-497f-bd6f-a4dbe0cf722f": {
-    "titulo": "Reunión de planificación del sprint",
-    "fecha": "2025-10-01T15:49:32.644894",
-    "participantes": [
-      "Carlos",
-      "Laura",
-      "Javier",
-      "Marta"
-    ],
-    "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 4,
-      "origen": "texto_plano"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "337c6d85-b463-4d14-9a25-75fc1b47fbcd",
-      "2a6b2bd3-c400-4ad4-87a1-29b3615d1692",
-      "cde23b0e-c38d-4468-8d3d-256f203f6a4b",
-      "bdfe428f-db9a-4c40-b1f1-ce82f271648a"
-    ],
-    "created_at": "2025-10-01T15:49:32.644894"
-  },
-  "c0cd1631-44e5-44d0-889f-1491a083e5b2": {
-    "titulo": "Brainstorm de arquitectura de software",
-    "fecha": "2025-10-01T15:49:53.554381",
-    "participantes": [
-      "Valeria",
-      "Andrés",
+      "Luis",
       "Sofía",
       "Diego"
     ],
     "metadata": {
       "tipo": "general",
-      "participantes_detectados": 4,
-      "origen": "texto_plano"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "29231bca-5e2d-4760-8756-e2841190ff5d",
-      "63b152da-24cc-41d0-9be9-f5ceb44dfb69",
-      "302e0bc9-5b79-4485-8df1-f4106ccc7920",
-      "9fc9e1c9-46f0-4a07-8f68-b4585256a044",
-      "fbef406a-a20c-4405-96ee-6896857eb84d"
-    ],
-    "created_at": "2025-10-01T15:49:53.554381"
-  },
-  "2287b094-95fa-42e5-ac78-accd29775867": {
-    "titulo": "Reunión de planificación del sprint",
-    "fecha": "2025-10-01T09:00:00",
-    "participantes": [
-      "Laura",
-      "Carlos",
-      "Marta",
-      "Javier"
-    ],
-    "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 4,
+      "participantes_detectados": 3,
       "origen": "json"
     },
-    "total_fragmentos": 4,
+    "total_fragmentos": 1,
     "fragmentos_ids": [
-      "cce11ccc-0d85-43e3-9f31-c4c168d87970",
-      "a817d7c6-d1a8-42d4-af41-a53586fa4407",
-      "95dfbcf3-8d5e-407c-bb6f-5d110e0e7ef4",
-      "db5f7cc9-2bbc-4ce3-a9b8-43f91441adfe"
+      "475ada18-db96-4934-bd70-07bdefecccb5"
     ],
-    "created_at": "2025-10-01T15:51:12.411421"
+    "created_at": "2025-10-10T12:10:48"
   },
-  "b8a80d04-e259-44c3-8147-4a97f060bd98": {
-    "titulo": "Brainstorm de arquitectura de software",
-    "fecha": "2025-10-01T11:30:00",
+  "d7147406-f1e8-4caf-8eae-c1b3efb18e70": {
+    "titulo": "Code Review - Módulo de pagos",
+    "fecha": "2025-10-01T15:00:00",
     "participantes": [
-      "Andrés",
-      "Sofía",
-      "Diego",
-      "Valeria"
+      "Revisor Senior",
+      "Desarrollador Junior"
     ],
     "metadata": {
       "tipo": "general",
-      "participantes_detectados": 4,
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 2,
+    "fragmentos_ids": [
+      "2a103a95-9904-430a-ac62-c374d4a8540c",
+      "4cee720e-2d1c-4a6b-b886-7afcd52c01d5"
+    ],
+    "created_at": "2025-10-10T12:10:48"
+  },
+  "fbcbd329-fbd9-4c18-822a-70d2ec4eb5a2": {
+    "titulo": "Entrevista técnica - Candidato Backend",
+    "fecha": "2025-10-02T14:00:00",
+    "participantes": [
+      "Entrevistador",
+      "Candidato"
+    ],
+    "metadata": {
+      "tipo": "entrevista",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "e17e48bc-7cfc-4af8-a8c6-c267fccd9cbe"
+    ],
+    "created_at": "2025-10-10T12:10:50"
+  },
+  "69a6b0c6-ba15-440e-9d50-d9909519fc9a": {
+    "titulo": "Reunión con cliente - Feedback del MVP",
+    "fecha": "2025-10-03T10:00:00",
+    "participantes": [
+      "Cliente X",
+      "Project Manager"
+    ],
+    "metadata": {
+      "tipo": "planning",
+      "participantes_detectados": 2,
       "origen": "json"
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "67f52d68-d45d-46ec-9f52-1e840f06b328",
-      "375f06bb-3ba7-44cf-9818-d202c83a5545",
-      "e4e940e7-2cec-4782-911b-c51e1f5a2d99",
-      "a44d9da2-2eeb-4b9c-9c10-152000f88c2c",
-      "cf3ac19f-1dc6-4c3f-8303-daccccbc3a07"
+      "e25859df-49be-4f08-8c57-ba24f9d411c6",
+      "54d1e63e-18a0-4c42-b17f-015f220ba61a",
+      "1b35b392-ccce-491a-8722-90566e7872d5",
+      "ea34150f-de1b-4239-8caf-8114307a3ebb",
+      "7b55ad9f-424c-4e92-9aec-0dfa518c04d7"
     ],
-    "created_at": "2025-10-01T15:51:41.120143"
+    "created_at": "2025-10-10T12:10:50"
   },
-  "c9385133-cbce-42a4-bfb0-c91ee35f0422": {
-    "titulo": "Revisión de código",
-    "fecha": "2025-10-01T15:00:00",
+  "76f9f3a2-94e6-4f72-bbf7-026a5ed7093d": {
+    "titulo": "Daily Standup - Equipo Frontend",
+    "fecha": "2025-10-04T09:15:00",
     "participantes": [
-      "Marcos",
-      "Elena",
-      "Pablo"
+      "Ana",
+      "Carlos",
+      "Sofía"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "total_fragmentos": 2,
+    "fragmentos_ids": [
+      "83186325-02b9-4209-bdbf-8995b8613f2b",
+      "4347918f-ab66-4fc1-8474-0a3df4b4d5be"
+    ],
+    "created_at": "2025-10-10T12:10:56"
+  },
+  "559c061f-2042-42bd-88d0-d3b70578ab87": {
+    "titulo": "Planning - Refactorización de arquitectura",
+    "fecha": "2025-10-07T13:00:00",
+    "participantes": [
+      "Arquitecto de Software",
+      "Líder Técnico"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "9ad9ad1b-dd86-43c5-909d-1004b8be62a8",
+      "f7769eb8-7c77-4d5a-ac96-f1e46f86fdaf",
+      "979097e8-5eb3-4071-8937-dff792a99d5a",
+      "55e8c5f8-b4c2-4196-9736-346ee73c3075",
+      "bfdd5f8d-c117-46b6-b4c9-4c902626829b"
+    ],
+    "created_at": "2025-10-10T12:10:59"
+  },
+  "191f37ca-bb78-421b-9efa-aac02ef015d7": {
+    "titulo": "Retrospectiva Sprint 22",
+    "fecha": "2025-10-08T16:00:00",
+    "participantes": [
+      "Equipo Completo",
+      "Scrum Master"
+    ],
+    "metadata": {
+      "tipo": "brainstorm",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "8479f651-95db-41dc-a831-303930e1ddfb"
+    ],
+    "created_at": "2025-10-10T12:11:09"
+  },
+  "ea0550b2-ec41-4b3b-bf23-dca2dd36f839": {
+    "titulo": "Reunión urgente - Bug crítico en producción",
+    "fecha": "2025-10-09T11:45:00",
+    "participantes": [
+      "DevOps",
+      "Dev1",
+      "Dev2"
     ],
     "metadata": {
       "tipo": "general",
       "participantes_detectados": 3,
       "origen": "json"
     },
-    "total_fragmentos": 3,
+    "total_fragmentos": 1,
     "fragmentos_ids": [
-      "709c2571-6b29-4df2-a87b-dedbeeeae92e",
-      "a00cde9e-2ed0-4a9e-b5ef-430db5314e67",
-      "49dc90b3-54bb-4b08-a7da-162a0b4a3e65"
+      "406341b6-a323-4519-a00b-572329d9859d"
     ],
-    "created_at": "2025-10-01T15:52:21.725403"
+    "created_at": "2025-10-10T12:11:12"
   },
-  "318f4064-f3e9-41f2-803d-701210c4cc28": {
-    "titulo": "prueba de conversacion no temporal",
-    "fecha": "2025-10-06T22:52:59.100561",
-    "participantes": [],
+  "0ab3b71b-afbf-4e2f-bd01-3bf5891eac19": {
+    "titulo": "Presentación de resultados Q3",
+    "fecha": "2025-10-10T10:00:00",
+    "participantes": [
+      "CEO",
+      "CFO",
+      "Board"
+    ],
     "metadata": {
-      "tipo": "reunion"
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
     },
     "total_fragmentos": 1,
     "fragmentos_ids": [
-      "aab7fce4-e355-4298-92da-0966cf822263"
+      "41053867-091d-4aec-8a60-358ae57c038c"
     ],
-    "created_at": "2025-10-06T22:52:59.100561"
+    "created_at": "2025-10-10T12:11:16"
   },
-  "c24bd7a0-57d7-4682-ba88-81131eba2fbb": {
-    "titulo": "prueba temporal",
-    "fecha": "2025-10-02T02:04:00.000Z",
-    "participantes": [],
+  "24633209-1a12-4168-9831-817d3cca7b03": {
+    "titulo": "Planificación - Lanzamiento versión 2.0",
+    "fecha": "2025-10-11T15:00:00",
+    "participantes": [
+      "Product Manager",
+      "Tech Lead"
+    ],
     "metadata": {
-      "tipo": "general"
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
     },
     "total_fragmentos": 1,
     "fragmentos_ids": [
-      "652e54cc-3bc3-463c-ad27-d7bb8ec46dec"
+      "7f229096-4662-4c83-8419-02656aef394e"
     ],
-    "created_at": "2025-10-06T23:04:03.800321"
+    "created_at": "2025-10-10T12:11:20"
   },
-  "39f6445e-a7c2-4c23-a6cd-daf500828cbb": {
-    "titulo": "prueba",
-    "fecha": "2025-10-06T23:05:03.585097",
-    "participantes": [],
-    "metadata": {
-      "tipo": "general"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "7ca1503e-908e-4129-bff3-688b895b3119"
+  "7bb6ddc9-c17a-4c9d-b089-7714ae23c59f": {
+    "titulo": "Workshop - Introducción a GraphQL",
+    "fecha": "2025-10-11T17:30:00",
+    "participantes": [
+      "Instructor",
+      "Asistente1",
+      "Asistente2"
     ],
-    "created_at": "2025-10-06T23:05:03.585097"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "469a86b1-bb6b-458c-8b07-53e218542206",
+      "e811ce92-7dac-4e0b-8240-5258529d92fe",
+      "b97963be-6114-4cf8-b9ce-89053d9e1274",
+      "7257e0b0-0139-49d1-945c-ceab404a2017",
+      "97a561f0-eed5-4731-9ee6-19de8f1887ff"
+    ],
+    "created_at": "2025-10-10T12:11:24"
   }
 }
