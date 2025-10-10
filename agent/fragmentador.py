@@ -141,16 +141,30 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
     
     fragmentos_con_metadata = []
     conversacion_id = str(uuid.uuid4())
+    
+    # TIMESTAMP BASE YA NORMALIZADO (viene de agregar_conversacion)
     timestamp_base_conversacion = conversacion.get('fecha')
+    print(f"Timestamp base conversación: {timestamp_base_conversacion}")
     
     for i, texto_fragmento in enumerate(textos_fragmentos):
         fragmento_id = str(uuid.uuid4())
         
-        # NUEVO: Detectar timestamp específico del fragmento
+        # Detectar timestamp específico del fragmento
         timestamp_fragmento = detectar_timestamps_fragmento(
             texto_fragmento, 
             timestamp_base_conversacion
         )
+        
+        # NORMALIZAR TIMESTAMP DEL FRAGMENTO
+        if timestamp_fragmento:
+            from agent.utils import normalizar_timestamp_para_guardar
+            timestamp_normalizado = normalizar_timestamp_para_guardar(timestamp_fragmento)
+            timestamp_fragmento = timestamp_normalizado if timestamp_normalizado else timestamp_base_conversacion
+            print(f"  ✅ Fragmento {i+1} - timestamp específico normalizado: {timestamp_fragmento}")
+        elif timestamp_base_conversacion:
+            # Heredar timestamp base (ya normalizado)
+            timestamp_fragmento = timestamp_base_conversacion
+            print(f"  📋 Fragmento {i+1} - heredó timestamp base: {timestamp_fragmento}")
         
         # Determinar si es temporal basado en timestamp específico
         es_temporal = bool(timestamp_fragmento)
@@ -170,7 +184,7 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
             "timestamp_original_conversacion": timestamp_base_conversacion,  # NUEVO: preservar original
             "participantes": conversacion.get('participantes', []),
             "metadata_conversacion": conversacion.get('metadata', {}),
-            "created_at": datetime.now().isoformat(),
+            "created_at": datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
             "es_temporal": es_temporal,
             "tipo_contexto": _detectar_tipo_fragmento(texto_fragmento, conversacion.get('metadata', {})),
             "tiene_timestamp_especifico": timestamp_fragmento != timestamp_base_conversacion  # NUEVO: flag

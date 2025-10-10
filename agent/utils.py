@@ -53,3 +53,38 @@ def parse_iso_datetime_safe(iso_string) -> Optional[datetime]:
         
         print(f"❌ No se pudo parsear timestamp: {iso_string}")
         return None
+    
+def normalizar_timestamp_para_guardar(timestamp_str: str) -> str:
+    """
+    Normaliza cualquier formato de timestamp a formato ISO estándar.
+    Formato de salida: YYYY-MM-DDTHH:MM:SS (sin microsegundos, sin zona horaria)
+    Args:
+        timestamp_str: Timestamp en cualquier formato válido
+    
+    Returns:
+        Timestamp normalizado en formato ISO sin microsegundos ni zona horaria
+    Examples:
+        "2025-10-11T15:00:00.000Z" → "2025-10-11T15:00:00"
+        "2025-10-01T15:37:39.327368" → "2025-10-01T15:37:39"
+        "2025-10-11T18:00:00" → "2025-10-11T18:00:00"
+    """
+    if not timestamp_str:
+        return None
+    
+    try:
+        # Parsear usando la función segura existente
+        dt = parse_iso_datetime_safe(timestamp_str)
+        
+        if not dt:
+            return None
+        
+        # Asegurar que sea naive (sin timezone)
+        if dt.tzinfo is not None:
+            dt = dt.replace(tzinfo=None)
+        
+        # Formatear sin microsegundos: YYYY-MM-DDTHH:MM:SS
+        return dt.strftime('%Y-%m-%dT%H:%M:%S')
+        
+    except Exception as e:
+        print(f"⚠️ Error normalizando timestamp '{timestamp_str}': {e}")
+        return None

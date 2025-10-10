@@ -7,11 +7,14 @@ from typing import Dict, List, Optional, Union
 import os
 from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
-from agent.query_analyzer import analizar_intencion_temporal
+# from agent.query_analyzer import analizar_intencion_temporal
+# from agent.temporal_detection_enhanced import analizar_intencion_temporal_mejorado
+from agent.temporal_llm_parser import analizar_temporalidad_con_llm
 from datetime import datetime
 from fastapi import UploadFile, File
 from agent.text_batch_processor import TextBatchProcessor
 from agent.utils import parse_iso_datetime_safe
+from agent.utils import normalizar_timestamp_para_guardar
 import re 
 
 # Inicialización
@@ -215,19 +218,20 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
 
     try:
         k_busqueda = 5
-        # USAR PARÁMETROS CONFIGURABLES
-        factor_temporal = parametros_sistema['factor_refuerzo_temporal']
-        print(f"🔧 APLICANDO factor_refuerzo_temporal: {factor_temporal}")
+        # Obtener factor base configurado
+        factor_base = parametros_sistema.get('factor_refuerzo_temporal', 1.5)
+        print(f"⚙️ Factor base configurado: {factor_base}")
+        
         # Análisis con propagación
         analisis_completo = grafo.analizar_consulta_con_propagacion(
             pregunta, momento_consulta, usar_propagacion, max_pasos,
             factor_decaimiento, umbral_activacion,
             k_inicial=k_busqueda,
-            factor_refuerzo_temporal_custom=factor_temporal   
+            factor_refuerzo_temporal_custom=factor_base
         )
         # VERIFICAR que se aplicó en la respuesta
         if 'estrategia_aplicada' in analisis_completo:
-            analisis_completo['estrategia_aplicada']['factor_refuerzo_configurado'] = factor_temporal
+            analisis_completo['estrategia_aplicada']['factor_refuerzo_configurado'] = factor_base
                 
         analisis_intencion = analisis_completo["analisis_intencion"]
         ids_similares = analisis_completo["contextos_recuperados"]
@@ -360,7 +364,9 @@ def buscar_por_texto(texto: str):
 @app.get("/query/analizar/")
 def analizar_query(pregunta: str):
     """Analiza la intención temporal de una pregunta."""
-    return analizar_intencion_temporal(pregunta)
+    momento_consulta = datetime.now()
+    factor_base = parametros_sistema.get('factor_refuerzo_temporal', 1.5)
+    return analizar_temporalidad_con_llm(pregunta, momento_consulta, factor_base)
 
 # ENDPOINTS PARA CONVERSACIONES
 class EntradaConversacion(BaseModel):
@@ -374,10 +380,20 @@ class EntradaConversacion(BaseModel):
 def agregar_conversacion_endpoint(entrada: EntradaConversacion):
     """Agrega una conversación completa y la fragmenta automáticamente."""
     try:
+        fecha_normalizada = None
+        if entrada.fecha:
+            fecha_normalizada = normalizar_timestamp_para_guardar(entrada.fecha)
+            if not fecha_normalizada:
+                # Si falla la normalización, rechazar la conversación
+                return {
+                    "status": "error", 
+                    "mensaje": f"Formato de fecha inválido: {entrada.fecha}"
+                }
+            
         resultado = grafo.agregar_conversacion(
             titulo=entrada.titulo,
             contenido=entrada.contenido,
-            fecha=entrada.fecha,
+            fecha=fecha_normalizada,
             participantes=entrada.participantes,
             metadata=entrada.metadata
         )
@@ -542,7 +558,12 @@ def obtener_estado_parametros():
 def debug_analisis_temporal(pregunta: str):
     """Endpoint para debuggear análisis temporal."""
     momento_consulta = datetime.now()
-    analisis = analizar_intencion_temporal(pregunta, momento_consulta)
+    factor_base = parametros_sistema.get('factor_refuerzo_temporal', 1.5)
+    analisis = analizar_temporalidad_con_llm(
+        pregunta, 
+        momento_consulta, 
+        factor_base
+    )
     
     return {
         "pregunta": pregunta,
@@ -591,7 +612,13 @@ def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
         for conv in entrada.conversaciones:
             try:
                 # Obtener fecha (global o individual)
-                fecha = metadata_global.get('fecha') or conv.get('fecha')
+                fecha_raw = metadata_global.get('fecha') or conv.get('fecha')
+                fecha = None
+                if fecha_raw:
+                    fecha = normalizar_timestamp_para_guardar(fecha_raw)
+                    if not fecha:
+                        # Si falla normalización, usar None (conversación atemporal)
+                        print(f"⚠️ Fecha inválida para '{conv['titulo']}': {fecha_raw}")
                 
                 # Detectar participantes del contenido si no están en metadata
                 participantes = conv.get('participantes', [])
