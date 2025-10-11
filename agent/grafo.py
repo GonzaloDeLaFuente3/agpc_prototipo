@@ -18,6 +18,7 @@ from agent.fragmentador import fragmentar_conversacion
 from agent.propagacion import crear_propagador, propagar_desde_consulta_integrado
 from agent.utils import parse_iso_datetime_safe
 from agent.utils import normalizar_timestamp_para_guardar
+from agent.pdf_processor import fragmentar_texto_pdf, crear_attachment_pdf
 
 # Variable global para el propagador
 propagador_global = None
@@ -100,7 +101,7 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     return estadisticas
 
 def agregar_conversacion(titulo: str, contenido: str, fecha: str = None, 
-                        participantes: List[str] = None, metadata: Dict = None) -> Dict:
+                        participantes: List[str] = None, metadata: Dict = None, attachments: Optional[List[Dict]] = None ) -> Dict:
     """
     Agrega una conversación completa con actualización incremental por fragmento.
     """
@@ -187,26 +188,109 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         if (i + 1) % 3 == 0:
             print(f"  ✅ Fragmento {i+1}/{len(fragmentos)}: {stats_frag['conexiones_creadas']} conexiones creadas")
     
+    # PROCESAR ATTACHMENTS (PDFs)
+    fragmentos_pdf_ids = []
+    estadisticas_pdf = []
+    
+    if attachments:
+        print(f"📎 Procesando {len(attachments)} attachment(s) para conversación '{titulo}'")
+        for att_idx, attachment in enumerate(attachments):
+            if not attachment.get('extracted_text'):
+                print(f"⚠️ Attachment {att_idx} sin texto extraído, saltando...")
+                continue
+            
+            # Fragmentar texto del PDF
+            texto_pdf = attachment['extracted_text']
+            fragmentos_texto_pdf = fragmentar_texto_pdf(texto_pdf, max_palabras=500)
+            
+            print(f"📄 PDF '{attachment['filename']}' generó {len(fragmentos_texto_pdf)} fragmentos")
+            
+            for frag_idx, fragmento_texto in enumerate(fragmentos_texto_pdf):
+                # Crear ID único para este fragmento de PDF
+                fragmento_id = f"{conversacion_id}_pdf_{att_idx}_{frag_idx}"
+                
+                # Crear metadata del fragmento PDF
+                metadata_fragmento = {
+                    'conversacion_id': conversacion_id,
+                    'titulo_conversacion': titulo,
+                    'tipo': 'pdf_fragment',
+                    'titulo': f"{titulo} - {attachment['filename']} (Frag. {frag_idx+1}/{len(fragmentos_texto_pdf)})",
+                    'source_document': attachment['filename'],
+                    'position_in_doc': frag_idx,
+                    'total_fragmentos_pdf': len(fragmentos_texto_pdf),
+                    'texto': fragmento_texto,
+                    'palabras_clave': extraer_palabras_clave(fragmento_texto),
+                    'created_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
+                    'es_temporal': fecha_normalizada is not None,
+                    'timestamp': fecha_normalizada if fecha_normalizada else None,
+                    'tipo_contexto': 'documento',
+                    'es_fragmento': True,
+                    'es_pdf': True
+                }
+                
+                # Agregar nodo al grafo
+                titulo_fragmento = f"{titulo} - PDF: {attachment['filename']} (p.{frag_idx+1})"
+                grafo_contextos.add_node(fragmento_id, titulo=titulo_fragmento)
+                
+                # Guardar en metadatos de fragmentos
+                fragmentos_metadata[fragmento_id] = metadata_fragmento
+                
+                # Mantener compatibilidad con metadatos_contextos
+                metadatos_contextos[fragmento_id] = metadata_fragmento
+                
+                # Indexar para búsqueda semántica
+                indexar_documento(fragmento_id, fragmento_texto)
+                
+                # ACTUALIZACIÓN INCREMENTAL para este fragmento PDF
+                stats_pdf = _actualizar_relaciones_incremental(fragmento_id)
+                estadisticas_pdf.append(stats_pdf)
+                
+                fragmentos_pdf_ids.append(fragmento_id)
+                
+                # Mostrar progreso
+                if (frag_idx + 1) % 5 == 0:
+                    print(f"  ✅ Fragmento PDF {frag_idx+1}/{len(fragmentos_texto_pdf)}: {stats_pdf['conexiones_creadas']} conexiones")
+    
+    # Actualizar metadata de conversación con attachments e IDs de PDFs
+    if conversacion_id in conversaciones_metadata:
+        conversaciones_metadata[conversacion_id]['attachments'] = attachments or []
+        conversaciones_metadata[conversacion_id]['fragmentos_pdf_ids'] = fragmentos_pdf_ids
+        conversaciones_metadata[conversacion_id]['total_fragmentos_pdf'] = len(fragmentos_pdf_ids)
+        # Actualizar fragmentos_ids para incluir PDFs
+        conversaciones_metadata[conversacion_id]['fragmentos_ids'].extend(fragmentos_pdf_ids)
+        conversaciones_metadata[conversacion_id]['total_fragmentos'] += len(fragmentos_pdf_ids)
+    
     _guardar_grafo()
     _guardar_conversaciones()
     
     # Estadísticas finales
     total_conexiones = sum(s['conexiones_creadas'] for s in estadisticas_actualizacion)
     tiempo_total = sum(s['tiempo_ms'] for s in estadisticas_actualizacion)
+
+    if estadisticas_pdf:
+        total_conexiones_pdf = sum(s['conexiones_creadas'] for s in estadisticas_pdf)
+        tiempo_total_pdf = sum(s['tiempo_ms'] for s in estadisticas_pdf)
+        total_conexiones += total_conexiones_pdf
+        tiempo_total += tiempo_total_pdf
     
     print(f"🎉 Conversación procesada exitosamente:")
     print(f"   📊 Total conexiones creadas: {total_conexiones}")
+    if fragmentos_pdf_ids:
+        print(f"   📄 Fragmentos PDF: {len(fragmentos_pdf_ids)}")
     print(f"   ⚡ Tiempo total: {tiempo_total:.1f}ms")
     print(f"   🔗 Total relaciones en grafo: {len(grafo_contextos.edges())}")
     
     return {
         'conversacion_id': conversacion_id,
         'fragmentos_creados': fragmentos_ids,
-        'total_fragmentos': len(fragmentos),
+        'total_fragmentos': len(fragmentos) + len(fragmentos_pdf_ids),
+        'total_fragmentos_mensaje': len(fragmentos),
+        'total_fragmentos_pdf': len(fragmentos_pdf_ids),
         'estadisticas_actualizacion': {
             'total_conexiones_creadas': total_conexiones,
             'tiempo_total_ms': tiempo_total,
             'fragmentos_procesados': len(fragmentos),
+            'fragmentos_pdf_procesados': len(fragmentos_pdf_ids),
             'total_relaciones_grafo': len(grafo_contextos.edges())
         }
     }
@@ -608,27 +692,51 @@ def exportar_grafo_para_visualizacion() -> Dict:
             metadatos = metadatos_contextos[nodo_id]
             es_temporal = metadatos.get("es_temporal", False)
             tipo_contexto = metadatos.get("tipo_contexto", "general")
+            es_pdf = metadatos.get("es_pdf", False)
             
             # Emoji por tipo de contexto
-            iconos_tipo = {
-                "reunion": "👥",
-                "tarea": "📋", 
-                "evento": "🎯",
-                "proyecto": "🚀",
-                "conocimiento": "📚",
-                "general": "📄"
-            }
-            
-            icono = iconos_tipo.get(tipo_contexto, "📄")
-            titulo_con_icono = f"{icono} {metadatos.get('titulo', 'Sin título')}"
+            if es_pdf:
+                # 📄 NODO DE PDF con información de fragmento
+                source_doc = metadatos.get('source_document', 'documento.pdf')
+                posicion = metadatos.get('position_in_doc', 0)
+                total_frags = metadatos.get('total_fragmentos_pdf', 1)
+                
+                icono = "📄"
+                titulo_con_icono = f"{icono} {source_doc} ({posicion+1}/{total_frags})"
+                
+                tooltip = f"Documento: {source_doc}\n"
+                tooltip += f"Fragmento: {posicion+1} de {total_frags}\n"
+                tooltip += f"{metadatos.get('texto', '')[:150]}...\n"
+                tooltip += f"Tipo: documento PDF"
+                
+                # Color especial para PDFs
+                group = "pdf"
+            else:
+                # Nodo de conversación normal
+                iconos_tipo = {
+                    "reunion": "👥",
+                    "tarea": "📋", 
+                    "evento": "🎯",
+                    "proyecto": "🚀",
+                    "conocimiento": "📚",
+                    "general": "📄"
+                }
+                
+                icono = iconos_tipo.get(tipo_contexto, "📄")
+                titulo_con_icono = f"{icono} {metadatos.get('titulo', 'Sin título')}"
+                
+                tooltip = f"{metadatos.get('titulo', '')}\n{metadatos.get('texto', '')[:100]}...\nTipo: {tipo_contexto}"
+                
+                group = "temporal" if es_temporal else "atemporal"
             
             nodos.append({
                 "id": nodo_id,
                 "label": titulo_con_icono,
-                "title": f"{metadatos.get('titulo', '')}\n{metadatos.get('texto', '')[:100]}...\nTipo: {tipo_contexto}",
-                "group": "temporal" if es_temporal else "atemporal",
+                "title": tooltip,
+                "group": group,
                 "es_temporal": es_temporal,
-                "tipo_contexto": tipo_contexto
+                "tipo_contexto": tipo_contexto,
+                "es_pdf": es_pdf
             })
     
     # Extraer datos de aristas

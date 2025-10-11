@@ -64,13 +64,18 @@
                                 </div>  
                                 <input id="fechaConversacion" type="datetime-local" 
                                     class="border p-2 w-full rounded text-xs bg-green-50 border-green-300" />
-                                <select id="tipoConversacion" class="border p-2 w-full rounded text-xs bg-green-50 border-green-300">
-                                    <option value="reunion">👥 Reunión</option>
-                                    <option value="entrevista">🎤 Entrevista</option>
-                                    <option value="brainstorm">💡 Brainstorm</option>
-                                    <option value="planning">📋 Planning</option>
-                                    <option value="general">📄 General</option>
-                                </select>
+                                
+                                <!-- PDF -->
+                                <div class="bg-blue-50 border border-blue-300 rounded p-2">
+                                    <label class="text-xs font-medium text-blue-800 block mb-1">
+                                        📄 Adjuntar PDF (opcional):
+                                    </label>
+                                    <input type="file" id="pdfFileConversacion" accept=".pdf" 
+                                        class="w-full text-xs border rounded p-1 bg-white border-blue-300" />
+                                    <p class="text-xs text-blue-600 mt-1">
+                                        Solo archivos PDF. Tamaño máximo: 10MB
+                                    </p>
+                                </div>
                             </div>
                         </details>
                         
