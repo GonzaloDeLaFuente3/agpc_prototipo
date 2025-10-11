@@ -1,241 +1,69 @@
 {
-  "4dbefa81-d763-4da8-a760-47c4c7cb9b23": {
-    "titulo": "Reunión semanal de equipo - Sprint Planning",
-    "fecha": "2025-10-01T09:00:00",
-    "participantes": [
-      "Juan",
-      "María",
-      "Pedro",
-      "Ana",
-      "Carlos"
-    ],
-    "metadata": {
-      "tipo": "reunion",
-      "participantes_detectados": 5,
-      "origen": "json"
-    },
+  "c1be3bd0-03e7-42f4-b981-209ef4bb3a2d": {
+    "titulo": "Ramas git",
+    "fecha": "2025-10-11T13:37:34",
+    "participantes": [],
+    "metadata": {},
     "total_fragmentos": 2,
     "fragmentos_ids": [
-      "2628b68a-e291-4a08-a0b4-3cc4b7005b7e",
-      "375a4ada-c64b-4649-b468-b865071f09ac"
+      "cea96754-ea0c-4d9e-8736-50f219e1d056",
+      "c1be3bd0-03e7-42f4-b981-209ef4bb3a2d_pdf_0_0"
     ],
-    "created_at": "2025-10-10T12:10:47"
+    "created_at": "2025-10-11T13:37:34",
+    "attachments": [
+      {
+        "filename": "Manejo_de_Ramas_en_Git.pdf",
+        "file_path": "storage/documents/conv_20251011133734693968\\Manejo_de_Ramas_en_Git.pdf",
+        "extracted_text": "Manejo de Ramas en Git\n \nGit es un sistema de control de versiones distribuido que permite trabajar con diferentes\nversiones del código fuente simultáneamente. Uno de los conceptos más poderosos y\nútiles de Git es el manejo de ramas (branches), que facilita el desarrollo paralelo, la\nexperimentación y la colaboración.\n¿Qué es una rama?\nUna rama en Git es una línea independiente de desarrollo. Permite que los\ndesarrolladores trabajen en nuevas características, correcciones o experimentos sin\nafectar la rama principal (generalmente llamada main o master).\nComandos básicos para manejar ramas\n\n**Crear una nueva rama:** `git branch nombre_rama`\n\n**Cambiar de rama:** `git checkout nombre_rama` o `git switch nombre_rama`\n\n**Crear y cambiar a una nueva rama:** `git checkout -b nombre_rama`\n\n**Listar ramas existentes:** `git branch`\n\n**Eliminar una rama:** `git branch -d nombre_rama`\n\n**Fusionar ramas:** `git merge nombre_rama` (desde la rama donde se quiere\nintegrar los cambios)\nBuenas prácticas al trabajar con ramas\n\nUsar nombres descriptivos para las ramas, como `feature/login` o\n`bugfix/corrige-error-404`.\n\nMantener la rama principal (main/master) siempre estable y funcional.\n\nFusionar frecuentemente para evitar conflictos grandes.\n\nEliminar las ramas que ya no se utilicen para mantener el repositorio limpio.\n\nUtilizar `pull requests` o `merge requests` para revisar el código antes de fusionarlo.\nFlujo de trabajo común con ramas\n1. Crear una rama desde main para desarrollar una nueva funcionalidad. 2. Realizar\ncommits frecuentes en la nueva rama. 3. Fusionar los cambios en main cuando la\nfuncionalidad esté completa. 4. Resolver conflictos si los hubiera. 5. Eliminar la rama\nluego de la fusión.\nConclusión\nEl uso correcto de las ramas en Git mejora la organización, la colaboración y la calidad del\ndesarrollo de software. Dominar el flujo de trabajo con ramas es fundamental para\ncualquier equipo de desarrollo moderno.\n",
+        "metadata": {
+          "size_bytes": 2997,
+          "upload_date": "2025-10-11T13:37:34.737749",
+          "type": "pdf"
+        }
+      }
+    ],
+    "fragmentos_pdf_ids": [
+      "c1be3bd0-03e7-42f4-b981-209ef4bb3a2d_pdf_0_0"
+    ],
+    "total_fragmentos_pdf": 1
   },
-  "aed6aa98-2af4-4e96-916b-01e6f2e6a0b0": {
-    "titulo": "Brainstorm - Nueva funcionalidad de reportes",
-    "fecha": "2025-10-01T11:30:00",
+  "b90b220e-dfc8-4c24-9e87-adcefe2704dc": {
+    "titulo": "Aplicando el Ciclo de Vida del Software en un Proyecto Real",
+    "fecha": "2025-10-11T18:16:34",
     "participantes": [
-      "Luis",
-      "Sofía",
-      "Diego"
+      "Lucia",
+      "Diego",
+      "Camila",
+      "Julián",
+      "Sofia"
     ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
+    "metadata": {},
+    "total_fragmentos": 7,
     "fragmentos_ids": [
-      "475ada18-db96-4934-bd70-07bdefecccb5"
+      "35447a6b-c051-4477-b22e-7d3838fa00b9",
+      "83ab7f85-3012-467c-8eca-37cf1b5b8d24",
+      "24a6fcf4-ef7a-4434-b3f9-0903083d31cd",
+      "d5815b76-3289-44a9-95b4-5e74584072c0",
+      "9e7d96b3-16ef-4a3f-8ff4-4fd4cccc0782",
+      "fab21b39-9a3c-4970-9297-14c3920a56a4",
+      "b90b220e-dfc8-4c24-9e87-adcefe2704dc_pdf_0_0"
     ],
-    "created_at": "2025-10-10T12:10:48"
-  },
-  "d7147406-f1e8-4caf-8eae-c1b3efb18e70": {
-    "titulo": "Code Review - Módulo de pagos",
-    "fecha": "2025-10-01T15:00:00",
-    "participantes": [
-      "Revisor Senior",
-      "Desarrollador Junior"
+    "created_at": "2025-10-11T18:16:34",
+    "attachments": [
+      {
+        "filename": "Ciclo_de_Vida_del_Desarrollo_de_Software.pdf",
+        "file_path": "storage/documents/conv_20251011181634528071\\Ciclo_de_Vida_del_Desarrollo_de_Software.pdf",
+        "extracted_text": "Ciclo de Vida del Desarrollo de Software\nEl ciclo de vida del desarrollo de software (SDLC, por sus siglas en inglés) es un marco\nestructurado que define las fases involucradas en la creación, implementación y\nmantenimiento de un sistema de software. Su propósito es garantizar que el producto final\ncumpla con los requisitos del cliente, dentro de los plazos y costos establecidos.\nFases del Ciclo de Vida del Software\n\n**1. Análisis de Requisitos:** Se identifican las necesidades del cliente, se\ndocumentan los requerimientos funcionales y no funcionales, y se definen los\nobjetivos del sistema.\n\n**2. Diseño del Sistema:** Se elabora la arquitectura general del sistema, definiendo\nlos componentes, la interfaz, la base de datos y las tecnologías a utilizar.\n\n**3. Implementación o Desarrollo:** Los programadores escriben el código fuente de\nacuerdo con las especificaciones del diseño, aplicando buenas prácticas de\nprogramación.\n\n**4. Pruebas (Testing):** Se verifican y validan las funcionalidades del software,\ndetectando errores y asegurando que el sistema cumpla con los requisitos\nestablecidos.\n\n**5. Despliegue:** El sistema se pone en funcionamiento en el entorno de producción,\ndisponible para los usuarios finales.\n\n**6. Mantenimiento:** Se corrigen errores, se realizan actualizaciones y mejoras para\nasegurar el correcto funcionamiento del software a largo plazo.\nModelos del Ciclo de Vida del Software\n\n**Modelo en Cascada:** Las fases se ejecutan secuencialmente. Es sencillo pero\nrígido ante cambios.\n\n**Modelo Incremental:** El desarrollo se realiza en módulos o incrementos, añadiendo\nfuncionalidades progresivamente.\n\n**Modelo en Espiral:** Combina desarrollo iterativo con gestión de riesgos. Ideal para\nproyectos grandes y complejos.\n\n**Modelo Ágil:** Promueve entregas rápidas, comunicación constante y adaptación\ncontinua al cambio (Scrum, Kanban).\nImportancia del Ciclo de Vida del Software\nAplicar un ciclo de vida bien definido permite mejorar la calidad del software, reducir\ncostos, cumplir con los plazos de entrega y aumentar la satisfacción del cliente. Además,\nfacilita la comunicación entre equipos y promueve la mejora continua en los procesos de\ndesarrollo.\nConclusión\n\n\nEl ciclo de vida del desarrollo de software proporciona una guía estructurada para\nplanificar, diseñar, construir y mantener sistemas eficientes. Elegir el modelo adecuado\nsegún las necesidades del proyecto es clave para garantizar su éxito.\n",
+        "metadata": {
+          "size_bytes": 3780,
+          "upload_date": "2025-10-11T18:16:34.557231",
+          "type": "pdf"
+        }
+      }
     ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 2,
-    "fragmentos_ids": [
-      "2a103a95-9904-430a-ac62-c374d4a8540c",
-      "4cee720e-2d1c-4a6b-b886-7afcd52c01d5"
+    "fragmentos_pdf_ids": [
+      "b90b220e-dfc8-4c24-9e87-adcefe2704dc_pdf_0_0"
     ],
-    "created_at": "2025-10-10T12:10:48"
-  },
-  "fbcbd329-fbd9-4c18-822a-70d2ec4eb5a2": {
-    "titulo": "Entrevista técnica - Candidato Backend",
-    "fecha": "2025-10-02T14:00:00",
-    "participantes": [
-      "Entrevistador",
-      "Candidato"
-    ],
-    "metadata": {
-      "tipo": "entrevista",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "e17e48bc-7cfc-4af8-a8c6-c267fccd9cbe"
-    ],
-    "created_at": "2025-10-10T12:10:50"
-  },
-  "69a6b0c6-ba15-440e-9d50-d9909519fc9a": {
-    "titulo": "Reunión con cliente - Feedback del MVP",
-    "fecha": "2025-10-03T10:00:00",
-    "participantes": [
-      "Cliente X",
-      "Project Manager"
-    ],
-    "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "e25859df-49be-4f08-8c57-ba24f9d411c6",
-      "54d1e63e-18a0-4c42-b17f-015f220ba61a",
-      "1b35b392-ccce-491a-8722-90566e7872d5",
-      "ea34150f-de1b-4239-8caf-8114307a3ebb",
-      "7b55ad9f-424c-4e92-9aec-0dfa518c04d7"
-    ],
-    "created_at": "2025-10-10T12:10:50"
-  },
-  "76f9f3a2-94e6-4f72-bbf7-026a5ed7093d": {
-    "titulo": "Daily Standup - Equipo Frontend",
-    "fecha": "2025-10-04T09:15:00",
-    "participantes": [
-      "Ana",
-      "Carlos",
-      "Sofía"
-    ],
-    "metadata": {
-      "tipo": "reunion",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 2,
-    "fragmentos_ids": [
-      "83186325-02b9-4209-bdbf-8995b8613f2b",
-      "4347918f-ab66-4fc1-8474-0a3df4b4d5be"
-    ],
-    "created_at": "2025-10-10T12:10:56"
-  },
-  "559c061f-2042-42bd-88d0-d3b70578ab87": {
-    "titulo": "Planning - Refactorización de arquitectura",
-    "fecha": "2025-10-07T13:00:00",
-    "participantes": [
-      "Arquitecto de Software",
-      "Líder Técnico"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "9ad9ad1b-dd86-43c5-909d-1004b8be62a8",
-      "f7769eb8-7c77-4d5a-ac96-f1e46f86fdaf",
-      "979097e8-5eb3-4071-8937-dff792a99d5a",
-      "55e8c5f8-b4c2-4196-9736-346ee73c3075",
-      "bfdd5f8d-c117-46b6-b4c9-4c902626829b"
-    ],
-    "created_at": "2025-10-10T12:10:59"
-  },
-  "191f37ca-bb78-421b-9efa-aac02ef015d7": {
-    "titulo": "Retrospectiva Sprint 22",
-    "fecha": "2025-10-08T16:00:00",
-    "participantes": [
-      "Equipo Completo",
-      "Scrum Master"
-    ],
-    "metadata": {
-      "tipo": "brainstorm",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "8479f651-95db-41dc-a831-303930e1ddfb"
-    ],
-    "created_at": "2025-10-10T12:11:09"
-  },
-  "ea0550b2-ec41-4b3b-bf23-dca2dd36f839": {
-    "titulo": "Reunión urgente - Bug crítico en producción",
-    "fecha": "2025-10-09T11:45:00",
-    "participantes": [
-      "DevOps",
-      "Dev1",
-      "Dev2"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "406341b6-a323-4519-a00b-572329d9859d"
-    ],
-    "created_at": "2025-10-10T12:11:12"
-  },
-  "0ab3b71b-afbf-4e2f-bd01-3bf5891eac19": {
-    "titulo": "Presentación de resultados Q3",
-    "fecha": "2025-10-10T10:00:00",
-    "participantes": [
-      "CEO",
-      "CFO",
-      "Board"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "41053867-091d-4aec-8a60-358ae57c038c"
-    ],
-    "created_at": "2025-10-10T12:11:16"
-  },
-  "24633209-1a12-4168-9831-817d3cca7b03": {
-    "titulo": "Planificación - Lanzamiento versión 2.0",
-    "fecha": "2025-10-11T15:00:00",
-    "participantes": [
-      "Product Manager",
-      "Tech Lead"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "7f229096-4662-4c83-8419-02656aef394e"
-    ],
-    "created_at": "2025-10-10T12:11:20"
-  },
-  "7bb6ddc9-c17a-4c9d-b089-7714ae23c59f": {
-    "titulo": "Workshop - Introducción a GraphQL",
-    "fecha": "2025-10-11T17:30:00",
-    "participantes": [
-      "Instructor",
-      "Asistente1",
-      "Asistente2"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "469a86b1-bb6b-458c-8b07-53e218542206",
-      "e811ce92-7dac-4e0b-8240-5258529d92fe",
-      "b97963be-6114-4cf8-b9ce-89053d9e1274",
-      "7257e0b0-0139-49d1-945c-ceab404a2017",
-      "97a561f0-eed5-4731-9ee6-19de8f1887ff"
-    ],
-    "created_at": "2025-10-10T12:11:24"
+    "total_fragmentos_pdf": 1
   }
 }

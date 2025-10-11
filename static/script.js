@@ -139,7 +139,8 @@ const tiposContexto = {
     'evento': { bg: '#fce4ec', border: '#c2185b', icon: '⚡' },
     'proyecto': { bg: '#f3e5f5', border: '#7b1fa2', icon: '❓' },
     'conocimiento': { bg: '#e1f5fe', border: '#0288d1', icon: '📚' },
-    'general': { bg: '#f5f5f5', border: '#757575', icon: '📄' }
+    'general': { bg: '#f5f5f5', border: '#757575', icon: '📄' },
+    'documento': { bg: '#ffe4e1', border: '#ff69b4', icon: '📄' }
 };
 
 function procesarNodos(nodes, vista) {
@@ -149,6 +150,9 @@ function procesarNodos(nodes, vista) {
             borderWidth: 2,
             shadow: { enabled: true, size: 5, x: 2, y: 2, color: 'rgba(0,0,0,0.1)' }
         };
+
+        // Detectar si es un nodo PDF
+        const esPDF = node.es_pdf || node.tipo_contexto === 'documento';
 
         if (vista === 'macro') {
             const tipo = node.tipo_conversacion || 'general';
@@ -160,16 +164,32 @@ function procesarNodos(nodes, vista) {
                 font: { size: 12, color: '#1565c0' }
             };
         } else {
-            const esTemporal = node.group === 'temporal';
+            // Vista micro: diferenciar PDFs de conversaciones
             const tipo = node.tipo_contexto || 'general';
             const colores = tiposContexto[tipo] || tiposContexto['general'];
-            return {
-                ...baseConfig,
-                color: esTemporal ? 
-                    { background: colores.bg, border: colores.border } : 
-                    { background: '#f5f5f5', border: '#757575' },
-                font: { size: 10, color: esTemporal ? '#1565c0' : '#424242' }
-            };
+            
+            if (esPDF) {
+                // Nodos de PDF: Color rosa distintivo
+                return {
+                    ...baseConfig,
+                    color: { 
+                        background: '#ffe4e1',  // Rosa claro
+                        border: '#ff69b4'       // Rosa fuerte
+                    },
+                    shape: 'box',
+                    font: { size: 10, color: '#d81b60', bold: true }
+                };
+            } else {
+                // Nodos de conversación: Colores según temporalidad y tipo
+                const esTemporal = node.group === 'temporal' || node.es_temporal;
+                return {
+                    ...baseConfig,
+                    color: esTemporal ? 
+                        { background: colores.bg, border: colores.border } : 
+                        { background: '#f5f5f5', border: '#757575' },
+                    font: { size: 10, color: esTemporal ? '#1565c0' : '#424242' }
+                };
+            }
         }
     });
 }
@@ -788,49 +808,81 @@ function abrirModalArbol(subgrafo) {
 async function agregarConversacion() {
     const titulo = document.getElementById('tituloConversacion').value.trim();
     const contenido = document.getElementById('contenidoConversacion').value.trim();
+    const participantes = document.getElementById('participantesConversacion').value.trim();
+    const fecha = document.getElementById('fechaConversacion').value;
+    const esAtemporal = document.getElementById('conversacionAtemporal').checked;
+    const pdfFile = document.getElementById('pdfFileConversacion').files[0];
     
     if (!titulo || !contenido) {
-        return mostrarNotificacion("Por favor completá título y contenido de la conversación.", 'warning');
+        alert('Por favor completa título y contenido');
+        return;
     }
     
-    const participantesText = document.getElementById('participantesConversacion').value.trim();
-    const participantes = participantesText ? participantesText.split(',').map(p => p.trim()).filter(p => p) : [];
-    const esAtemporal = document.getElementById('conversacionAtemporal').checked;
-    const fechaCampo = document.getElementById('fechaConversacion').value;
-    //Convertir datetime-local directamente a formato ISO sin cambiar zona horaria
-    let fecha = null;
-    if (!esAtemporal && fechaCampo) {
-        // fechaCampo viene en formato: "2025-10-11T15:00"
-        // Simplemente agregar ":00" para segundos
-        fecha = fechaCampo + ':00';  // Resultado: "2025-10-11T15:00:00"
-    }
-    const tipo = document.getElementById('tipoConversacion').value;
-    
-    const payload = {
-        titulo,
-        contenido,
-        participantes,
-        metadata: { tipo }
-    };
-    
-    if (fecha !== null) {  // Incluir fecha solo si no es null
-        payload.fecha = fecha;
-    }
-    // Si fecha es null (atemporal), no incluir el campo en el payload
+    // Mostrar indicador de carga
+    const btnGuardar = event.target;
+    const textoOriginal = btnGuardar.textContent;
+    btnGuardar.disabled = true;
+    btnGuardar.textContent = '⏳ Procesando...';
     
     try {
-        const res = await axios.post('/conversacion/', payload);
-        const data = res.data;
+        // Crear FormData para enviar archivo
+        const formData = new FormData();
+        formData.append('titulo', titulo);
+        formData.append('contenido', contenido);
         
-        if (data.status === 'conversacion_agregada') {
-            mostrarNotificacion(`Conversación fragmentada exitosamente! Fragmentos creados: ${data.total_fragmentos}`, 'exito');
-            limpiarFormularioConversacion();
-        } else {
-            throw new Error(data.mensaje || 'Error desconocido');
+        if (participantes) {
+            formData.append('participantes', participantes);
         }
         
+        if (!esAtemporal && fecha) {
+            formData.append('fecha', fecha);
+        }
+        
+        // Agregar PDF si existe
+        if (pdfFile) {
+            formData.append('pdf_file', pdfFile);
+            console.log('📎 Adjuntando PDF:', pdfFile.name);
+        }
+        
+        // Enviar al servidor
+        const response = await fetch('/agregar_conversacion_con_pdf', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'éxito') {
+            let mensaje = `✅ ${data.mensaje}\n`;
+            mensaje += `📊 Total fragmentos: ${data.total_fragmentos}\n`;
+            mensaje += `💬 Fragmentos de mensajes: ${data.total_fragmentos_mensaje}`;
+            
+            if (data.total_fragmentos_pdf > 0) {
+                mensaje += `\n📄 Fragmentos del PDF: ${data.total_fragmentos_pdf}`;
+            }
+            
+            alert(mensaje);
+            
+            // Limpiar formulario
+            document.getElementById('tituloConversacion').value = '';
+            document.getElementById('contenidoConversacion').value = '';
+            document.getElementById('participantesConversacion').value = '';
+            document.getElementById('fechaConversacion').value = '';
+            document.getElementById('conversacionAtemporal').checked = false;
+            document.getElementById('pdfFileConversacion').value = '';
+            
+            // Ocultar formulario
+            document.getElementById('formAgregarConversacion').classList.add('hidden');
+        } else {
+            alert(`❌ Error: ${data.mensaje}`);
+        }
     } catch (error) {
-        mostrarNotificacion(`Error: ${error.response?.data?.mensaje || error.message}`, 'error');
+        console.error('Error:', error);
+        alert(`❌ Error al agregar conversación: ${error.message}`);
+    } finally {
+        // Restaurar botón
+        btnGuardar.disabled = false;
+        btnGuardar.textContent = textoOriginal;
     }
 }
 
@@ -1063,6 +1115,10 @@ function actualizarLeyendaGrafo() {
                     <div class="flex items-center">
                         <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">⚡</div>
                         <span>Acción</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4" style="background: #ffe4e1; border: 2px solid #ff69b4;" class="rounded mr-2 flex items-center justify-center text-xs">📄</div>
+                        <span>Documento PDF</span>
                     </div>
                 </div>
             </div>

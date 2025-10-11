@@ -16,6 +16,9 @@ from agent.text_batch_processor import TextBatchProcessor
 from agent.utils import parse_iso_datetime_safe
 from agent.utils import normalizar_timestamp_para_guardar
 import re 
+from fastapi import File, UploadFile, Form
+from agent.pdf_processor import guardar_pdf_en_storage, crear_attachment_pdf
+import shutil
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -402,6 +405,113 @@ def agregar_conversacion_endpoint(entrada: EntradaConversacion):
             **resultado
         }
     except Exception as e:
+        return {"status": "error", "mensaje": str(e)}
+    
+@app.post("/agregar_conversacion_con_pdf")
+async def agregar_conversacion_con_pdf(
+    titulo: str = Form(...),
+    contenido: str = Form(...),
+    fecha: Optional[str] = Form(None),
+    participantes: Optional[str] = Form(None),
+    pdf_file: Optional[UploadFile] = File(None)
+):
+    """
+    Agrega una nueva conversación con opción de adjuntar un PDF.
+    """
+    try:
+        # Generar ID de conversación
+        conversacion_id = f"conv_{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
+        
+        # Procesar participantes
+        lista_participantes = []
+        if participantes:
+            lista_participantes = [p.strip() for p in participantes.split(',') if p.strip()]
+        
+        # Procesar fecha
+        fecha_procesada = None
+        if fecha:
+            fecha_procesada = normalizar_timestamp_para_guardar(fecha)
+            if not fecha_procesada:
+                return {
+                    "status": "error",
+                    "mensaje": f"Formato de fecha inválido: {fecha}"
+                }
+        
+        # Procesar PDF si existe
+        attachments = []
+        if pdf_file and pdf_file.filename:
+            print(f"📎 Procesando PDF: {pdf_file.filename}")
+            
+            # Validar que sea PDF
+            if not pdf_file.filename.lower().endswith('.pdf'):
+                return {
+                    "status": "error",
+                    "mensaje": "Solo se permiten archivos PDF"
+                }
+            
+            # Validar tamaño (máximo 10MB)
+            contenido_pdf = await pdf_file.read()
+            tamaño_mb = len(contenido_pdf) / (1024 * 1024)
+            
+            if tamaño_mb > 10:
+                return {
+                    "status": "error",
+                    "mensaje": f"El archivo es demasiado grande ({tamaño_mb:.1f}MB). Máximo 10MB."
+                }
+            
+            # Guardar PDF en storage
+            ruta_pdf = guardar_pdf_en_storage(
+                contenido_pdf,
+                pdf_file.filename,
+                conversacion_id
+            )
+            
+            if not ruta_pdf:
+                return {
+                    "status": "error",
+                    "mensaje": "Error al guardar el archivo PDF"
+                }
+            
+            # Crear estructura de attachment
+            attachment = crear_attachment_pdf(
+                ruta_pdf,
+                pdf_file.filename,
+                conversacion_id
+            )
+            
+            if not attachment:
+                return {
+                    "status": "error",
+                    "mensaje": "Error al procesar el contenido del PDF"
+                }
+            
+            attachments.append(attachment)
+            print(f"PDF procesado: {pdf_file.filename}")
+        
+        # Agregar conversación al grafo
+        resultado = grafo.agregar_conversacion(
+            titulo=titulo,
+            contenido=contenido,
+            fecha=fecha_procesada,
+            participantes=lista_participantes,
+            attachments=attachments
+        )
+        
+        mensaje = f"Conversación '{titulo}' agregada correctamente"
+        if attachments:
+            mensaje += f" con PDF adjunto"
+        
+        return {
+            "status": "éxito",
+            "mensaje": mensaje,
+            "conversacion_id": conversacion_id,
+            **resultado
+        }
+    
+    except Exception as e:
+        print(f"❌ Error al agregar conversación: {e}")
+        import traceback
+        traceback.print_exc()
         return {"status": "error", "mensaje": str(e)}
 
 @app.get("/conversaciones/")
