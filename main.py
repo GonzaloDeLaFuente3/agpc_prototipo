@@ -378,34 +378,6 @@ class EntradaConversacion(BaseModel):
     fecha: Optional[str] = None
     participantes: Optional[List[str]] = None
     metadata: Optional[dict] = None
-
-@app.post("/conversacion/")
-def agregar_conversacion_endpoint(entrada: EntradaConversacion):
-    """Agrega una conversación completa y la fragmenta automáticamente."""
-    try:
-        fecha_normalizada = None
-        if entrada.fecha:
-            fecha_normalizada = normalizar_timestamp_para_guardar(entrada.fecha)
-            if not fecha_normalizada:
-                # Si falla la normalización, rechazar la conversación
-                return {
-                    "status": "error", 
-                    "mensaje": f"Formato de fecha inválido: {entrada.fecha}"
-                }
-            
-        resultado = grafo.agregar_conversacion(
-            titulo=entrada.titulo,
-            contenido=entrada.contenido,
-            fecha=fecha_normalizada,
-            participantes=entrada.participantes,
-            metadata=entrada.metadata
-        )
-        return {
-            "status": "conversacion_agregada",
-            **resultado
-        }
-    except Exception as e:
-        return {"status": "error", "mensaje": str(e)}
     
 @app.post("/agregar_conversacion_con_pdf")
 async def agregar_conversacion_con_pdf(

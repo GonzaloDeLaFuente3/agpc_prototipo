@@ -5,7 +5,6 @@ let networkInstance = null;
 let ultimoSubgrafo = null;
 let vistaActual = 'macro';
 let conversacionesList = {};
-let estadisticasDobleNivel = null;
 let propagacionHabilitada = true;
 let parametrosPropagacion = {
     factor_decaimiento: 0.8,
