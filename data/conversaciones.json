@@ -65,5 +65,48 @@
       "b90b220e-dfc8-4c24-9e87-adcefe2704dc_pdf_0_0"
     ],
     "total_fragmentos_pdf": 1
+  },
+  "012948cf-0f20-4150-acb4-c7c29bef2d36": {
+    "titulo": "Diseñando la Base de Datos para un Sistema de Ventas",
+    "fecha": "2025-10-11T18:41:33",
+    "participantes": [
+      "Martina",
+      "Tomas",
+      "Valentina",
+      "Santiago"
+    ],
+    "metadata": {},
+    "total_fragmentos": 12,
+    "fragmentos_ids": [
+      "255ba791-0d4e-44b0-86db-a527ac7ca19f",
+      "61d15737-99d2-40dd-b7a7-1a9527d58a53",
+      "6f58cf33-8d6e-414d-9c0e-b59f8797ba02",
+      "cc927241-e72f-4171-9687-19347f1708da",
+      "0d90e602-ea08-4a9c-9de7-fc32cf0a8368",
+      "d1e12be6-2c98-4f86-9eab-012591afd527",
+      "fecd2eb5-ec57-4ac3-ba45-e23a6f058659",
+      "92bbe9b8-9a1f-480d-b6c5-4f0db6e05fd6",
+      "27435b7b-5697-425d-93b5-0b58e4f3f462",
+      "93373e7b-3c30-4464-adec-840a61ec0dde",
+      "561cce31-e48c-4d3a-814b-2887572ba602",
+      "012948cf-0f20-4150-acb4-c7c29bef2d36_pdf_0_0"
+    ],
+    "created_at": "2025-10-11T18:41:33",
+    "attachments": [
+      {
+        "filename": "Base de datos y diseño relacional.pdf",
+        "file_path": "storage/documents/conv_20251011184133478705\\Base de datos y diseño relacional.pdf",
+        "extracted_text": "Bases de Datos y Diseño Relacional  \nIntroducción  \nLas bases de datos son sistemas que permiten almacenar, organizar y recuperar información \nde manera eficiente. El diseño relacional  es un enfoque que organiza los datos en tablas \n(relaciones) , asegurando consistencia, integridad y facilidad de acceso media nte un modelo \nestructurado . \nConceptos Clave  \n• Tabla (Relación):  Contenedor de datos organizados en filas (tuplas) y columnas \n(atributos).  \n• Clave primaria:  Identificador único de cada fila en una tabla.  \n• Clave foránea:  Atributo que establece la relación entre d os tablas, apuntando a la \nclave primaria de otra.  \n• Normalización:  Proceso de organizar datos para reducir redundancia y \ndependencia.  \n• Integridad referencial:  Garantiza que las relaciones entre tablas sean coherentes.  \nProceso de Diseño Relacional  \n1. Identificación de entidades y atributos:  Reconocer los objetos principales del \nsistema y sus propiedades.  \n2. Definición de relaciones:  Determinar cómo se relacionan las en tidades entre sí \n(uno a uno, uno a muchos, muchos a muchos).  \n3. Normalización:  Aplicar las formas normales para eliminar redundancias y \ndependencias no deseadas.  \n4. Asignación de claves:  Definir claves primarias y foráneas que aseguren la \nintegridad de los datos . \n5. Validación del modelo:  Revisar que el diseño soporte los requerimientos del \nsistema y facilite consultas eficientes.  \nModelos de Base de Datos  \n• Modelo Relacional:  Organiza datos en tablas, el más utilizado en sistemas \ncomerciales.  \n• Modelo No Relacional (NoS QL):  Diseñado para grandes volúmenes de datos o \nestructuras flexibles (documentos, grafos, clave -valor).  \n\n• Modelo Jerárquico y de Red:  Más antiguos, usados en sistemas específicos.  \nBuenas Prácticas  \n• Usar nombres claros y consistentes para tablas y columnas.  \n• Evitar redundancia y duplicidad de información.  \n• Documentar relaciones y restricciones.  \n• Diseñar pensando en el crecimiento y la escalabilidad del sistema.  \n• Implementar índices para mejorar el rendimiento de consultas frecuentes.  \nConclusión  \nEl diseño relaciona l es fundamental para desarrollar sistemas de información sólidos, \neficientes y fáciles de mantener. Una buena base de datos garantiza consistencia, \nintegridad y rendimiento , siendo esencial para cualquier aplicación moderna que maneje \ndatos críticos.  \n ",
+        "metadata": {
+          "size_bytes": 41774,
+          "upload_date": "2025-10-11T18:41:33.582226",
+          "type": "pdf"
+        }
+      }
+    ],
+    "fragmentos_pdf_ids": [
+      "012948cf-0f20-4150-acb4-c7c29bef2d36_pdf_0_0"
+    ],
+    "total_fragmentos_pdf": 1
   }
 }
