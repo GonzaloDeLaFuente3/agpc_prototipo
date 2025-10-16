@@ -1,10 +1,7 @@
 // Variables globales
 let ultimaRespuesta = "";
 let ultimaPregunta = "";
-let networkInstance = null;
 let ultimoSubgrafo = null;
-let vistaActual = 'macro';
-let conversacionesList = {};
 let propagacionHabilitada = true;
 let parametrosPropagacion = {
     factor_decaimiento: 0.8,
@@ -16,7 +13,7 @@ let factorRefuerzoTemporal = 1.5;
 let conversacionesParseadas = null;
 let tipoEntradaActual = 'texto';
 
-// === SISTEMA UNIFICADO DE NOTIFICACIONES ===
+// SISTEMA UNIFICADO DE NOTIFICACIONES
 function mostrarNotificacion(mensaje, tipo = 'error', duracion = 5000) {
     const clases = {
         error: 'bg-red-500',
@@ -32,7 +29,7 @@ function mostrarNotificacion(mensaje, tipo = 'error', duracion = 5000) {
     setTimeout(() => toast.remove(), duracion);
 }
 
-// === SISTEMA UNIFICADO DE MODALES ===
+// SISTEMA UNIFICADO DE MODALES
 function gestionarModal(modalId, accion, contenido = null) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
@@ -51,7 +48,7 @@ function gestionarModal(modalId, accion, contenido = null) {
     }
 }
 
-// === SISTEMA UNIFICADO DE PARÁMETROS ===
+// SISTEMA UNIFICADO DE PARÁMETROS
 const configuracionesParametros = {
     umbral: { 
         url: '/configurar-parametros/', 
@@ -128,7 +125,7 @@ function actualizarValorParametro(parametro, elementoValor) {
     if (parametro === 'factorRefuerzoTemporal') factorRefuerzoTemporal = parseFloat(valor);
 }
 
-// === PROCESAMIENTO UNIFICADO DE GRAFOS ===
+// PROCESAMIENTO UNIFICADO DE GRAFOS
 const tiposContexto = {
     'reunion': { bg: '#e8f5e8', border: '#4caf50', icon: '👥' },
     'entrevista': { bg: '#e3f2fd', border: '#2196f3', icon: '🎤' },
@@ -142,109 +139,7 @@ const tiposContexto = {
     'documento': { bg: '#ffe4e1', border: '#ff69b4', icon: '📄' }
 };
 
-function procesarNodos(nodes, vista) {
-    return nodes.map(node => {
-        const baseConfig = {
-            ...node,
-            borderWidth: 2,
-            shadow: { enabled: true, size: 5, x: 2, y: 2, color: 'rgba(0,0,0,0.1)' }
-        };
-
-        // Detectar si es un nodo PDF
-        const esPDF = node.es_pdf || node.tipo_contexto === 'documento';
-
-        if (vista === 'macro') {
-            const tipo = node.tipo_conversacion || 'general';
-            const colores = tiposContexto[tipo] || tiposContexto['general'];
-            return {
-                ...baseConfig,
-                color: { background: colores.bg, border: colores.border },
-                size: Math.max(20, Math.min(50, (node.total_fragmentos || 1) * 4)),
-                font: { size: 12, color: '#1565c0' }
-            };
-        } else {
-            // Vista micro: diferenciar PDFs de conversaciones
-            const tipo = node.tipo_contexto || 'general';
-            const colores = tiposContexto[tipo] || tiposContexto['general'];
-            
-            if (esPDF) {
-                // Nodos de PDF: Color rosa distintivo
-                return {
-                    ...baseConfig,
-                    color: { 
-                        background: '#ffe4e1',  // Rosa claro
-                        border: '#ff69b4'       // Rosa fuerte
-                    },
-                    shape: 'box',
-                    font: { size: 10, color: '#d81b60', bold: true }
-                };
-            } else {
-                // Nodos de conversación: Colores según temporalidad y tipo
-                const esTemporal = node.group === 'temporal' || node.es_temporal;
-                return {
-                    ...baseConfig,
-                    color: esTemporal ? 
-                        { background: colores.bg, border: colores.border } : 
-                        { background: '#f5f5f5', border: '#757575' },
-                    font: { size: 10, color: esTemporal ? '#1565c0' : '#424242' }
-                };
-            }
-        }
-    });
-}
-
-function procesarAristas(edges, vista) {
-    return edges.map(edge => {
-        const baseConfig = {
-            ...edge,
-            arrows: { to: { enabled: true, scaleFactor: 1.2 } },
-            smooth: { type: 'continuous', roundness: 0.3 }
-        };
-
-        if (vista === 'macro') {
-            return {
-                ...baseConfig,
-                width: Math.max(1, (edge.peso_total || 1) * 0.8),
-                color: edge.es_temporal ? '#4caf50' : '#2196f3',
-                font: { size: 11, background: 'rgba(255,255,255,0.9)' }
-            };
-        } else {
-            const relevanciaTemp = edge.relevancia_temporal || 0;
-            const pesoEfectivo = edge.peso_efectivo || edge.weight || 0;
-            return {
-                ...baseConfig,
-                width: Math.max(1, pesoEfectivo * 1.2),
-                color: relevanciaTemp > 0.3 ? '#4caf50' : '#2196f3',
-                font: { size: 9 }
-            };
-        }
-    });
-}
-
-function crearOpcionesGrafo(vista) {
-    const baseOptions = {
-        nodes: { 
-            shape: 'box',
-            margin: { top: 8, right: 8, bottom: 8, left: 8 }
-        },
-        edges: { labelHighlightBold: false, selectionWidth: 3 },
-        physics: false,
-        interaction: {
-            hover: true, hoverConnectedEdges: true, selectConnectedEdges: true,
-            zoomView: true, dragView: true, dragNodes: true, tooltipDelay: 200
-        }
-    };
-
-    if (vista === 'macro') {
-        baseOptions.layout = { improvedLayout: true, randomSeed: 1, avoidOverlap: 0.5 };
-    } else {
-        baseOptions.layout = { improvedLayout: false, randomSeed: 1 };
-    }
-
-    return baseOptions;
-}
-
-// === FUNCIONES PRINCIPALES SIMPLIFICADAS ===
+// FUNCIONES PRINCIPALES SIMPLIFICADAS
 async function preguntarConPropagacion() {
     const pregunta = document.getElementById('pregunta').value.trim();
     if (!pregunta) return mostrarNotificacion("Por favor escribí una pregunta.", 'warning');
@@ -333,81 +228,7 @@ function mostrarInformacionEstrategia(data, elementos) {
     elementos.panelEstrategia.classList.remove('hidden');
 }
 
-async function cargarGrafoUnificado(tipo = 'principal') {
-    const container = document.getElementById('grafo');
-    if (!container) return;
-    
-    container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>Cargando grafo...</p></div>';
-    
-    try {
-        let endpoint = '';
-        switch(tipo) {
-            case 'macro': endpoint = '/grafo/macro/conversaciones/'; break;
-            case 'micro': endpoint = '/grafo/micro/fragmentos/'; break;
-            case 'micro-filtrada':
-                const conversacionId = document.getElementById('conversacionFiltro')?.value;
-                if (!conversacionId) {
-                    container.innerHTML = '<div class="flex items-center justify-center h-full text-orange-500"><p>⚠️ Selecciona una conversación para filtrar</p></div>';
-                    return;
-                }
-                endpoint = `/grafo/micro/conversacion/${conversacionId}`;
-                break;
-            default: endpoint = '/grafo/macro/conversaciones/';
-        }
-        
-        const res = await axios.get(endpoint);
-        const datos = res.data;
-        
-        if (!datos.nodes || datos.nodes.length === 0) {
-            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>No hay datos para visualizar.</p></div>';
-            return;
-        }
-        
-        // Procesar datos con funciones unificadas
-        const nodes = procesarNodos(datos.nodes, tipo);
-        const edges = procesarAristas(datos.edges, tipo);
-        const options = crearOpcionesGrafo(tipo);
-        
-        // Crear red
-        networkInstance = new vis.Network(container, {
-            nodes: new vis.DataSet(nodes),
-            edges: new vis.DataSet(edges)
-        }, options);
-        
-        // Eventos específicos
-        if (tipo === 'macro') {
-            networkInstance.on("doubleClick", function (params) {
-                if (params.nodes.length > 0) {
-                    const conversacionId = params.nodes[0];
-                    document.getElementById('vistaMicroFiltrada').checked = true;
-                    document.getElementById('conversacionFiltro').value = conversacionId;
-                    actualizarVistaSeleccionada('micro-filtrada');
-                    setTimeout(() => cargarGrafoDobleNivel(), 100);
-                }
-            });
-        }
-        
-        // Actualizar UI si es vista doble nivel
-        if (tipo !== 'principal') {
-            actualizarHeaderGrafo(datos);
-            actualizarLeyendaGrafo();
-        }
-        
-        setTimeout(() => networkInstance && networkInstance.fit(), 100);
-        
-    } catch (error) {
-        container.innerHTML = `
-            <div class="text-red-600 p-4 text-center">
-                <p class="font-semibold">❌ Error cargando grafo</p>
-                <p class="text-sm mt-1">${error.message}</p>
-                <button onclick="cargarGrafoUnificado('${tipo}')" class="mt-3 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700">
-                    🔄 Reintentar
-                </button>
-            </div>`;
-    }
-}
-
-// === FUNCIONES DE INTERFAZ SIMPLIFICADAS ===
+// FUNCIONES DE INTERFAZ SIMPLIFICADAS
 async function buscarSemantico() {
     const texto = document.getElementById('textoBusqueda').value.trim();
     if (!texto) return mostrarNotificacion("Por favor escribí algo para buscar.", 'warning');
@@ -466,7 +287,7 @@ async function agregarRespuestaComoContexto() {
     }
 }
 
-// === DELEGACIÓN DE EVENTOS UNIFICADA ===
+// DELEGACIÓN DE EVENTOS UNIFICADA
 document.addEventListener('DOMContentLoaded', async function() {
     // Event listeners principales
     const eventos = {
@@ -476,19 +297,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         'cancelarAgregarConversacion': { evento: 'click', funcion: limpiarFormularioConversacion },
         'umbralSimilitud': { evento: 'input', funcion: () => actualizarValorParametro('umbralSimilitud', 'valorUmbralSimilitud') },
         'factorRefuerzoTemporal': { evento: 'input', funcion: () => actualizarValorParametro('factorRefuerzoTemporal', 'valorRefuerzoTemporal') },
-        'conversacionFiltro': { evento: 'change', funcion: () => vistaActual === 'micro-filtrada' && cargarGrafoDobleNivel() }
     };
 
     Object.entries(eventos).forEach(([id, config]) => {
         const elemento = document.getElementById(id);
         if (elemento) elemento.addEventListener(config.evento, config.funcion);
-    });
-
-    // Radios de vista
-    document.querySelectorAll('input[name="tipoVista"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            actualizarVistaSeleccionada(this.value);
-        });
     });
 
     // Cargar parámetros iniciales
@@ -515,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     setTimeout(() => obtenerEstadoPropagacion(), 1000);
 });
 
-// === FUNCIONES AUXILIARES RESTANTES ===
+// FUNCIONES AUXILIARES RESTANTES
 function toggleFormularioConversacion() {
     const form = document.getElementById('formAgregarConversacion');
     form.classList.toggle('hidden');
@@ -558,7 +371,7 @@ function alternarPropagacion() {
     }
 }
 
-// === FUNCIONES DE COMPATIBILIDAD (mantienen nombres originales) ===
+// FUNCIONES DE COMPATIBILIDAD (mantienen nombres originales)
 function aplicarConfiguracionParametros() { return aplicarConfiguracion('umbral'); }
 
 // Función específica para propagación (CORREGIDA)
@@ -604,21 +417,17 @@ async function aplicarConfiguracionPropagacion() {
     }
 }
 
-function cargarGrafoDobleNivel() { return cargarGrafoUnificado(vistaActual); }
-function cerrarModalGrafo() { gestionarModal('modalGrafo', 'cerrar'); }
 function cerrarModalArbol() { gestionarModal('modalArbol', 'cerrar'); }
-function abrirModalGrafoDobleNivel() { gestionarModal('modalGrafo', 'abrir'); setTimeout(() => cargarGrafoDobleNivel(), 100); }
 function mostrarArbolConsulta() { ultimoSubgrafo ? abrirModalArbol(ultimoSubgrafo) : mostrarNotificacion("No hay subgrafo disponible para mostrar.", 'warning'); }
 
-// Event listeners globales para cerrar modales
+// Event listener para cerrar modal de árbol
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        gestionarModal('modalGrafo', 'cerrar');
         gestionarModal('modalArbol', 'cerrar');
     }
 });
 
-// === FUNCIONES QUE PERMANECEN SIN CAMBIOS SIGNIFICATIVOS ===
+// FUNCIONES QUE PERMANECEN SIN CAMBIOS SIGNIFICATIVOS
 
 async function obtenerEstadoPropagacion() {
     try {
@@ -986,169 +795,6 @@ async function cargarEstadisticasDobleNivel() {
     }
 }
 
-function actualizarVistaSeleccionada(vista) {
-    vistaActual = vista;
-    
-    const selectorConv = document.getElementById('selectorConversacion');
-    const infoNivel = document.getElementById('infoNivelActual');
-    
-    if (vista === 'micro-filtrada') {
-        selectorConv.classList.remove('hidden');
-        cargarListaConversacionesParaFiltro();
-    } else {
-        selectorConv.classList.add('hidden');
-    }
-    
-    const infoTextos = {
-        'macro': '<p><strong>🌍 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>',
-        'micro': '<p><strong>🔬 Nivel Micro:</strong> Cada nodo = fragmento individual. Muestra todas las conexiones semánticas y temporales con máxima granularidad.</p>',
-        'micro-filtrada': '<p><strong>🎯 Micro Filtrada:</strong> Solo fragmentos de una conversación específica. Útil para analizar la estructura interna de una conversación.</p>'
-    };
-    
-    infoNivel.innerHTML = infoTextos[vista] || infoTextos['macro'];
-}
-
-async function cargarListaConversacionesParaFiltro() {
-    if (Object.keys(conversacionesList).length === 0) {
-        try {
-            const res = await axios.get('/conversaciones/');
-            conversacionesList = res.data;
-        } catch (error) {
-            console.error('Error cargando conversaciones:', error);
-            return;
-        }
-    }
-    
-    const selector = document.getElementById('conversacionFiltro');
-    selector.innerHTML = '<option value="">Seleccionar conversación...</option>';
-    
-    for (const [id, datos] of Object.entries(conversacionesList)) {
-        const option = document.createElement('option');
-        option.value = id;
-        option.textContent = `${datos.titulo} (${datos.total_fragmentos} frags)`;
-        selector.appendChild(option);
-    }
-}
-
-function actualizarHeaderGrafo(datos) {
-    const meta = datos.meta || {};
-    
-    const titulos = {
-        'macro': '🌍 Vista Macro - Conversaciones',
-        'micro': '🔬 Vista Micro - Fragmentos Completa', 
-        'micro-filtrada': '🎯 Vista Micro - Fragmentos Filtrada'
-    };
-    
-    const descripciones = {
-        'macro': 'Cada nodo representa una conversación completa',
-        'micro': 'Cada nodo representa un fragmento individual',
-        'micro-filtrada': `Fragmentos de: ${meta.conversacion_titulo || 'Conversación seleccionada'}`
-    };
-    
-    document.getElementById('tituloVistaGrafo').textContent = titulos[vistaActual] || titulos['macro'];
-    document.getElementById('descripcionVistaGrafo').textContent = descripciones[vistaActual] || descripciones['macro'];
-    document.getElementById('totalNodos').textContent = datos.nodes?.length || 0;
-    document.getElementById('totalAristas').textContent = datos.edges?.length || 0;
-}
-
-function actualizarLeyendaGrafo() {
-    const leyendaMacro = document.getElementById('leyendaMacro');
-    const leyendaMicro = document.getElementById('leyendaMicro');
-    
-    if (vistaActual === 'macro') {
-        leyendaMacro.classList.remove('hidden');
-        leyendaMicro.classList.add('hidden');
-        
-        leyendaMacro.innerHTML = `
-            <div>
-                <p class="font-semibold text-blue-800 mb-2">💬 Nodos por Tipo de Conversación:</p>
-                <div class="space-y-1 text-xs">
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
-                        <span>Reuniones</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">🎤</div>
-                        <span>Entrevistas</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-purple-100 border border-purple-600 rounded mr-2 flex items-center justify-center text-xs">💡</div>
-                        <span>Brainstorms</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">📋</div>
-                        <span>Planning</span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="font-semibold text-blue-800 mb-2">🔗 Aristas entre Conversaciones:</p>
-                <div class="space-y-1 text-xs">
-                    <div class="flex items-center">
-                        <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
-                        <span>Relaciones temporales</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
-                        <span>Relaciones semánticas</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else {
-        leyendaMacro.classList.add('hidden');
-        leyendaMicro.classList.remove('hidden');
-        
-        leyendaMicro.innerHTML = `
-            <div>
-                <p class="font-semibold text-purple-800 mb-2">🧩 Fragmentos por Tipo:</p>
-                <div class="space-y-1 text-xs">
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-blue-100 border border-blue-600 rounded mr-2 flex items-center justify-center text-xs">👥</div>
-                        <span>Reunión</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-green-100 border border-green-600 rounded mr-2 flex items-center justify-center text-xs">⚖️</div>
-                        <span>Decisión</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4 bg-orange-100 border border-orange-600 rounded mr-2 flex items-center justify-center text-xs">⚡</div>
-                        <span>Acción</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-4 h-4" style="background: #ffe4e1; border: 2px solid #ff69b4;" class="rounded mr-2 flex items-center justify-center text-xs">📄</div>
-                        <span>Documento PDF</span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="font-semibold text-purple-800 mb-2">🔗 Conexiones entre Fragmentos:</p>
-                <div class="space-y-1 text-xs">
-                    <div class="flex items-center">
-                        <div class="w-8 h-1 bg-green-500 mr-2 rounded"></div>
-                        <span>🕐 Con relevancia temporal</span>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-8 h-1 bg-blue-400 mr-2 rounded"></div>
-                        <span>📋 Solo semánticas</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-}
-
-function cambiarVistaGrafo() {
-    const vistas = ['macro', 'micro', 'micro-filtrada'];
-    const indiceActual = vistas.indexOf(vistaActual);
-    const siguienteIndice = (indiceActual + 1) % vistas.length;
-    const siguienteVista = vistas[siguienteIndice];
-    
-    document.getElementById(`vista${siguienteVista.charAt(0).toUpperCase() + siguienteVista.slice(1).replace('-', '')}`).checked = true;
-    actualizarVistaSeleccionada(siguienteVista);
-    cargarGrafoDobleNivel();
-}
-
 async function forzarRecalculoRelaciones() {
     if (!confirm('¿Recalcular todas las relaciones del grafo?\n\nEsto puede tardar unos segundos con muchos contextos.')) {
         return;
@@ -1176,7 +822,7 @@ async function forzarRecalculoRelaciones() {
     }
 }
 
-// === PROCESAMIENTO DE CONVERSACIONES ===
+// PROCESAMIENTO DE CONVERSACIONES
 function cambiarTabEntrada(tipo) {
     tipoEntradaActual = tipo;
     
@@ -1408,4 +1054,9 @@ function toggleFechaConversacion() {
         campoFecha.classList.remove('bg-gray-200', 'cursor-not-allowed');
         campoFecha.classList.add('bg-green-50');
     }
+}
+
+// Función para abrir la página dedicada del grafo
+function abrirPaginaGrafo() {
+    window.open('/grafo.html', '_blank');
 }

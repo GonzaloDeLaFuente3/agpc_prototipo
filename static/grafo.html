@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGPC - Visualización de Grafos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- Vis.js para grafos -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        .full-height {
+            height: 100vh;
+        }
+        
+        #grafoContainer {
+            width: 100%;
+            height: calc(100vh - 120px);
+        }
+        
+        .control-panel {
+            background: linear-gradient(to right, #7c3aed, #a855f7);
+            color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stats-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Panel de Control Superior -->
+    <div class="control-panel">
+        <div class="max-w-full mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Título y descripción -->
+            <div class="flex-1 min-w-[300px]">
+                <h1 class="text-2xl font-bold mb-1" id="tituloVista">🌍 Vista Macro - Conversaciones</h1>
+                <p class="text-sm opacity-90" id="descripcionVista">Cada nodo representa una conversación completa</p>
+            </div>
+            
+            <!-- Selector de Vista -->
+            <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                <label class="block text-sm font-semibold mb-2">👁️ Tipo de Vista</label>
+                <div class="flex gap-3">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="tipoVista" value="macro" id="vistaMacro" checked 
+                                onchange="cambiarVista('macro')" class="cursor-pointer">
+                        <span class="text-sm">🌍 Macro</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="tipoVista" value="micro" id="vistaMicro" 
+                                onchange="cambiarVista('micro')" class="cursor-pointer">
+                        <span class="text-sm">🔬 Micro</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="tipoVista" value="micro-filtrada" id="vistaMicroFiltrada" 
+                                onchange="cambiarVista('micro-filtrada')" class="cursor-pointer">
+                        <span class="text-sm">🎯 Filtrada</span>
+                    </label>
+                </div>
+                
+                <!-- Selector de conversación para vista micro filtrada -->
+                <div id="selectorConversacion" class="mt-2 hidden">
+                    <select id="conversacionFiltro" 
+                            class="w-full p-2 text-sm border rounded bg-white text-gray-800"
+                            onchange="aplicarFiltroConversacion()">
+                        <option value="">Seleccionar conversación...</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Estadísticas -->
+            <div class="stats-badge">
+                <div class="text-xs font-semibold mb-1">📊 Estadísticas</div>
+                <div class="flex gap-4 text-sm">
+                    <div>Nodos: <span id="totalNodos" class="font-bold">-</span></div>
+                    <div>Aristas: <span id="totalAristas" class="font-bold">-</span></div>
+                </div>
+            </div>
+            
+            <!-- Botones de acción -->
+            <div class="flex gap-2">
+                <button onclick="actualizarGrafo()" 
+                        class="btn bg-white text-purple-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-100">
+                    🔄 Actualizar
+                </button>
+                <button onclick="volverInicio()" 
+                        class="btn bg-purple-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-950">
+                    🏠 Volver
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Leyenda dinámica -->
+    <div class="bg-blue-50 border-b border-blue-200 px-4 py-2">
+        <div id="leyendaContenido" class="max-w-full mx-auto">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </div>
+    
+    <!-- Contenedor del Grafo -->
+    <div id="grafoContainer" class="bg-white"></div>
+    
+    <!-- Notificaciones -->
+    <div id="notificaciones" class="fixed top-20 right-4 z-50"></div>
+    
+    <script src="grafo.js"></script>
+</body>
+</html>
