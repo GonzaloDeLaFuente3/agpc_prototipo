@@ -1,6 +1,7 @@
 # main.py
 import json
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Union
@@ -766,6 +767,16 @@ def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
         
     except Exception as e:
         return {"status": "error", "mensaje": str(e)}
+
+@app.get("/grafo.html")
+async def pagina_grafo():
+    """Sirve la página dedicada de visualización de grafos."""
+    return FileResponse('static/grafo.html')
+
+@app.get("/grafo.js")
+async def script_grafo():
+    """Sirve el script JavaScript para la página de grafos."""
+    return FileResponse('static/grafo.js')
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)

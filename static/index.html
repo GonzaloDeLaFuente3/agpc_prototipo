@@ -399,45 +399,25 @@
 
         <!-- COLUMNA DERECHA - Visualización y Estadísticas -->
         <div class="w-1/4 space-y-4">
-            <!-- Visualización del Grafo con Doble Nivel -->
-            <div class="bg-gray-300 rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">🕸️ Visualización Doble Nivel</h2>
+            <!-- Visualización del Grafo -->
+            <div class="bg-purple-100 rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-4 text-purple-800 border-b pb-2">Visualización de Grafos</h2>
                 
                 <div class="space-y-3">
-                    <!-- Selector de Vista -->
-                    <div class="bg-purple-50 p-3 rounded border border-purple-200">
-                        <h3 class="font-medium text-purple-800 mb-2">👁️ Nivel de Vista</h3>
-                        <div class="space-y-2">
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="tipoVista" value="macro" id="vistaMacro" checked>
-                                <label for="vistaMacro" class="text-sm">🌍 Macro (Conversaciones)</label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="tipoVista" value="micro" id="vistaMicro">
-                                <label for="vistaMicro" class="text-sm">🔬 Micro (Fragmentos)</label>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" name="tipoVista" value="micro-filtrada" id="vistaMicroFiltrada">
-                                <label for="vistaMicroFiltrada" class="text-sm">🎯 Micro Filtrada</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Selector de conversación para vista micro filtrada -->
-                        <div id="selectorConversacion" class="mt-2 hidden">
-                            <select id="conversacionFiltro" class="w-full p-1 text-xs border rounded bg-white">
-                                <option value="">Seleccionar conversación...</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- Botones de visualización -->
-                    <button onclick="abrirModalGrafoDobleNivel()" class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
-                        📊 Ver Grafo (Doble Nivel)
+                    <button onclick="abrirPaginaGrafo()" 
+                            class="w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium shadow-md">
+                        Ver Grafos
                     </button>
                     
-                    <!-- Información del nivel actual -->
-                    <div id="infoNivelActual" class="text-xs text-gray-600 bg-purple-50 p-2 rounded">
-                        <p><strong>🌍 Nivel Macro:</strong> Cada nodo = conversación completa. Las aristas muestran relaciones calculadas entre fragmentos de diferentes conversaciones.</p>
+                    <div class="bg-white p-3 rounded border border-purple-200">
+                        <p class="text-xs text-gray-600 font-medium mb-2">
+                            Tipos de vista disponibles:
+                        </p>
+                        <ul class="text-xs text-gray-600 space-y-1">
+                            <li><strong>Macro:</strong> Conversaciones completas</li>
+                            <li><strong>Micro:</strong> Todos los fragmentos o contextos</li>
+                            <li><strong>Micro Filtrada:</strong> Fragmentos de una conversación</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -458,62 +438,6 @@
                     <div id="estadisticas" class="text-xs bg-gray-50 p-3 rounded max-h-64 overflow-y-auto">
                         <p class="text-gray-500 italic">Clic en "Stats Básicas" para ver estadísticas</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para el Grafo Doble Nivel -->
-    <div id="modalGrafo" class="fixed inset-0 bg-black bg-opacity-50 hidden overflow-y-auto p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl w-11/12 max-w-6xl mx-auto my-4 flex flex-col">
-            <div class="p-4 flex flex-col h-full max-h-[90vh]">
-                
-                <!-- Header con información del nivel actual -->
-                <div id="headerGrafo" class="mb-3 p-3 bg-purple-50 border border-purple-200 rounded">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h2 class="text-lg font-bold text-purple-800" id="tituloVistaGrafo">🌍 Vista Macro - Conversaciones</h2>
-                            <p class="text-sm text-purple-600" id="descripcionVistaGrafo">Cada nodo representa una conversación completa</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-xs text-purple-700" id="metricasVistaGrafo">
-                                <div>Nodos: <span id="totalNodos">-</span></div>
-                                <div>Aristas: <span id="totalAristas">-</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Leyenda dinámica según el tipo de vista -->
-                <div id="leyendaGrafo" class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded">
-                    <div id="leyendaMacro" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <!-- Se llena dinámicamente -->
-                    </div>
-                    <div id="leyendaMicro" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <!-- Se llena dinámicamente -->
-                    </div>
-                </div>
-                
-                <!-- Contenedor del grafo -->
-                <div id="grafo" class="w-full h-[60vh] border border-gray-300 rounded-lg bg-gray-50 mb-4">
-                    <div class="flex items-center justify-center h-full text-gray-500">
-                        <p>Cargando grafo...</p>
-                    </div>
-                </div>
-                
-                <!-- Botones con opciones avanzadas -->
-                <div class="mt-auto flex justify-between items-center">
-                    <div class="flex space-x-2">
-                        <button onclick="cargarGrafoDobleNivel()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors">
-                            🔄 Actualizar
-                        </button>
-                        <button onclick="cambiarVistaGrafo()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-                            🔄 Cambiar Vista
-                        </button>
-                    </div>
-                    <button onclick="cerrarModalGrafo()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
-                        ❌ Cerrar
-                    </button>
                 </div>
             </div>
         </div>
