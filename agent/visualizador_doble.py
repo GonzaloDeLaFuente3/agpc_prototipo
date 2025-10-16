@@ -170,6 +170,9 @@ Tipos: {tipos_str}"""
                     "es_temporal": es_temporal,
                     "arrows": {"to": {"enabled": True, "scaleFactor": 1.2}}
                 })
+
+        # Eliminar aristas duplicadas y convertir a bidireccionales
+        edges_conversaciones = self._eliminar_aristas_duplicadas(edges_conversaciones)
         
         return {
             "nodes": nodos_conversaciones,
@@ -219,6 +222,9 @@ Tipos: {tipos_str}"""
                     # Modificar label para indicar que es fragmento
                     label_original = nodo.get("label", "")
                     nodo["label"] = f"🧩 {label_original}"
+
+            # Eliminar aristas duplicadas y convertir a bidireccionales
+            grafo_base["edges"] = self._eliminar_aristas_duplicadas(grafo_base["edges"])
             
             grafo_base["meta"] = {
                 "tipo_vista": "micro_fragmentos_completa",
@@ -257,25 +263,46 @@ Tipos: {tipos_str}"""
                 total_frags = conv_data.get("total_fragmentos", "?")
                 es_temporal = meta.get("es_temporal", False)
                 
-                # Icono por tipo
-                iconos_tipo = {
-                    "reunion": "👥", "tarea": "📋", "evento": "🎯",
-                    "proyecto": "🚀", "conocimiento": "📚", "general": "📄",
-                    "decision": "⚖️", "accion": "⚡", "pregunta": "❓",
-                    "conclusion": "🎯", "problema": "🚨"
-                }
-                
-                icono = iconos_tipo.get(tipo_contexto, "📄")
-                
-                # Label compacto con posición
-                label = f"{icono} Frag {posicion}/{total_frags}"
-                
-                # Tooltip detallado
-                tooltip = f"""Fragmento {posicion} de {total_frags}
-Tipo: {tipo_contexto}
-Temporal: {'Sí' if es_temporal else 'No'}
-Palabras clave: {', '.join(meta.get('palabras_clave', [])[:5])}
-Texto: {texto[:100]}..."""
+                # Detectar si es un fragmento de PDF
+                es_pdf = meta.get("es_pdf", False)
+
+                if es_pdf:
+                    # 📄 FRAGMENTO DE PDF - Mostrar nombre del documento
+                    source_doc = meta.get('source_document', 'documento.pdf')
+                    posicion_pdf = meta.get('position_in_doc', posicion)
+                    total_frags_pdf = meta.get('total_fragmentos_pdf', total_frags)
+                    
+                    icono = "📄"
+                    label = f"{icono} {source_doc} ({posicion_pdf + 1}/{total_frags_pdf})"
+                    
+                    # Tooltip específico para PDF
+                    tooltip = f"""Documento: {source_doc}
+                Fragmento {posicion_pdf + 1} de {total_frags_pdf}
+                Tipo: PDF
+                Temporal: {'Sí' if es_temporal else 'No'}
+                Texto: {texto[:100]}..."""
+                    
+                else:
+                    # FRAGMENTO DE CONVERSACIÓN NORMAL
+                    # Icono por tipo
+                    iconos_tipo = {
+                        "reunion": "👥", "tarea": "📋", "evento": "🎯",
+                        "proyecto": "🚀", "conocimiento": "📚", "general": "📄",
+                        "decision": "⚖️", "accion": "⚡", "pregunta": "❓",
+                        "conclusion": "🎯", "problema": "🚨"
+                    }
+                    
+                    icono = iconos_tipo.get(tipo_contexto, "📄")
+                    
+                    # Label compacto con posición
+                    label = f"{icono} Frag {posicion}/{total_frags}"
+                    
+                    # Tooltip detallado para conversación
+                    tooltip = f"""Fragmento {posicion} de {total_frags}
+                Tipo: {tipo_contexto}
+                Temporal: {'Sí' if es_temporal else 'No'}
+                Palabras clave: {', '.join(meta.get('palabras_clave', [])[:5])}
+                Texto: {texto[:100]}..."""
                 
                 nodos_filtrados.append({
                     "id": frag_id,
@@ -314,6 +341,9 @@ Texto: {texto[:100]}..."""
                     "relevancia_temporal": relevancia_temporal,
                     "peso_efectivo": peso_efectivo
                 })
+
+        # Eliminar aristas duplicadas y convertir a bidireccionales
+        edges_filtrados = self._eliminar_aristas_duplicadas(edges_filtrados)
         
         return {
             "nodes": nodos_filtrados,
@@ -394,3 +424,73 @@ Texto: {texto[:100]}..."""
                 "ratio_temporal_micro": round(fragmentos_temporales / max(1, total_fragmentos) * 100, 1)
             }
         }
+    
+    def _eliminar_aristas_duplicadas(self, edges: List[Dict]) -> List[Dict]:
+        """
+        Elimina aristas duplicadas manteniendo solo una por par de nodos.
+        Si existen A→B y B→A, las convierte en una sola arista bidireccional,
+        promediando los pesos.
+        """
+        aristas_unicas = {}
+        
+        for edge in edges:
+            nodo_a, nodo_b = edge['from'], edge['to']
+            # Crear clave ordenada para detectar duplicados
+            clave = tuple(sorted([nodo_a, nodo_b]))
+            
+            if clave in aristas_unicas:
+                # Ya existe, promediar pesos
+                edge_existente = aristas_unicas[clave]
+                
+                # Promediar peso_efectivo
+                peso_actual = edge.get('peso_efectivo', edge.get('weight', 0))
+                peso_existente = edge_existente.get('peso_efectivo', edge_existente.get('weight', 0))
+                peso_promedio = (peso_actual + peso_existente) / 2
+                
+                # Promediar peso_estructural si existe
+                if 'peso_estructural' in edge or 'peso_estructural' in edge_existente:
+                    peso_est_actual = edge.get('peso_estructural', 0)
+                    peso_est_existente = edge_existente.get('peso_estructural', 0)
+                    peso_est_promedio = (peso_est_actual + peso_est_existente) / 2
+                    edge_existente['peso_estructural'] = peso_est_promedio
+                
+                # Promediar relevancia_temporal si existe
+                if 'relevancia_temporal' in edge or 'relevancia_temporal' in edge_existente:
+                    rel_temp_actual = edge.get('relevancia_temporal', 0)
+                    rel_temp_existente = edge_existente.get('relevancia_temporal', 0)
+                    rel_temp_promedio = (rel_temp_actual + rel_temp_existente) / 2
+                    edge_existente['relevancia_temporal'] = rel_temp_promedio
+                
+                # Promediar peso_total si existe (para vista macro)
+                if 'peso_total' in edge or 'peso_total' in edge_existente:
+                    peso_total_actual = edge.get('peso_total', 0)
+                    peso_total_existente = edge_existente.get('peso_total', 0)
+                    peso_total_promedio = (peso_total_actual + peso_total_existente) / 2
+                    edge_existente['peso_total'] = peso_total_promedio
+                
+                # Promediar conexiones_fragmentos si existe (para vista macro)
+                if 'conexiones_fragmentos' in edge or 'conexiones_fragmentos' in edge_existente:
+                    conex_actual = edge.get('conexiones_fragmentos', 0)
+                    conex_existente = edge_existente.get('conexiones_fragmentos', 0)
+                    conex_promedio = int((conex_actual + conex_existente) / 2)
+                    edge_existente['conexiones_fragmentos'] = conex_promedio
+                
+                # Actualizar weight y width
+                edge_existente['peso_efectivo'] = peso_promedio
+                edge_existente['weight'] = peso_promedio
+                
+                if 'width' in edge_existente:
+                    edge_existente['width'] = max(1, peso_promedio * 5)
+                
+            else:
+                # Primera vez que vemos este par, agregarlo
+                aristas_unicas[clave] = edge.copy()
+        
+        # Convertir a bidireccionales (sin flechas)
+        resultado = []
+        for edge in aristas_unicas.values():
+            # Remover direccionalidad visual
+            edge['arrows'] = {'to': {'enabled': False}, 'from': {'enabled': False}}
+            resultado.append(edge)
+        
+        return resultado
