@@ -139,7 +139,7 @@ Dominio: {conv_data.get('metadata', {}).get('dominio', 'N/A')}"""
             if datos_relacion['peso_total'] > 0.3:  # Umbral mínimo para mostrar relación
                 # Peso promedio de conexiones
                 peso_promedio = datos_relacion['peso_total'] / datos_relacion['conexiones_fragmentos']
-                peso_normalizado = min(1.0, datos_relacion['peso_total'] / 3.0)  # Normalizar para visualización
+                peso_normalizado = min(1.0, datos_relacion['peso_total'] / 2.0)  # Normalizar para visualización
                 
                 # Determinar color según tipo de relación predominante
                 es_temporal = 'temporal' in datos_relacion['tipos_relacion']
