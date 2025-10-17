@@ -68,7 +68,11 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
         relevancia_temporal = _calcular_relevancia_temporal(
             fecha_nuevo, fecha_existente, tipo_nuevo, tipo_existente
         )
-        peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
+        # calcular peso efectivo bruto
+        peso_efectivo_bruto = similitud_estructural * (1 + relevancia_temporal)
+
+        # NUEVA: Normalizar peso efectivo a [0,1] usando sigmoidea
+        peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto)
         
         # Solo crear arista si supera el umbral
         if similitud_estructural > umbral_actual:
@@ -86,6 +90,9 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
             conexiones_creadas += 1
     
     tiempo_transcurrido = time.time() - inicio_tiempo
+
+    # Calcular relaciones únicas (dividir entre 2 porque son bidireccionales)
+    relaciones_unicas = len(grafo_contextos.edges()) // 2
     
     # Estadísticas de la actualización
     estadisticas = {
@@ -95,7 +102,7 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
         "conexiones_creadas": conexiones_creadas,
         "tiempo_ms": round(tiempo_transcurrido * 1000, 2),
         "total_nodos_grafo": len(grafo_contextos.nodes()),
-        "total_relaciones_grafo": len(grafo_contextos.edges())
+        "total_relaciones_grafo": relaciones_unicas,
     }
     
     return estadisticas
@@ -273,12 +280,14 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         total_conexiones += total_conexiones_pdf
         tiempo_total += tiempo_total_pdf
     
+    # Calcular relaciones únicas
+    relaciones_unicas = len(grafo_contextos.edges()) // 2
     print(f"🎉 Conversación procesada exitosamente:")
     print(f"   📊 Total conexiones creadas: {total_conexiones}")
     if fragmentos_pdf_ids:
         print(f"   📄 Fragmentos PDF: {len(fragmentos_pdf_ids)}")
     print(f"   ⚡ Tiempo total: {tiempo_total:.1f}ms")
-    print(f"   🔗 Total relaciones en grafo: {len(grafo_contextos.edges())}")
+    print(f"   🔗 Total relaciones en grafo: {relaciones_unicas} pares únicos ({len(grafo_contextos.edges())} direccionales)")
     
     return {
         'conversacion_id': conversacion_id,
@@ -511,6 +520,8 @@ def _recalcular_relaciones():
     grafo_contextos.clear_edges()
     nodos = list(grafo_contextos.nodes())
     print(f"Recalculando relaciones para {len(nodos)} nodos...")
+    # CONTADOR LOCAL de pares únicos
+    pares_unicos_creados = 0
     
     for i, nodo_a in enumerate(nodos):
         metadatos_a = metadatos_contextos.get(nodo_a, {})
@@ -529,7 +540,10 @@ def _recalcular_relaciones():
             # Calcular similitudes
             similitud_estructural = _calcular_similitud_estructural(claves_a, claves_b, texto_a, texto_b)
             relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b, tipo_a, tipo_b)
-            peso_efectivo = similitud_estructural * (1 + relevancia_temporal)
+            
+            # Calcular y normalizar peso efectivo
+            peso_efectivo_bruto = similitud_estructural * (1 + relevancia_temporal)
+            peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto)  # Normalización sigmoidea
             
             if similitud_estructural > UMBRAL_SIMILITUD:
                 datos_arista = {
@@ -540,9 +554,16 @@ def _recalcular_relaciones():
                     "tipos_contexto": f"{tipo_a}-{tipo_b}"
                 }
                 
+                # Crear aristas bidireccionales
                 grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
                 grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
-    print(f"Total aristas creadas: {grafo_contextos.number_of_edges()}")
+                
+                # INCREMENTAR CONTADOR DE PARES ÚNICOS
+                pares_unicos_creados += 1
+    
+    # LOGGING CORREGIDO
+    print(f"✅ Pares únicos creados: {pares_unicos_creados}")
+    print(f"   (Total aristas direccionales: {grafo_contextos.number_of_edges()})")
 
 def _guardar_grafo():
     """Guarda el grafo en disco de forma thread-safe."""
@@ -882,6 +903,9 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             # 📚 Fórmula estructural/mixta: base semántica + bonus temporal
             we = ws * (1 + rt * factor_refuerzo)
             estrategia_usada = "ESTRUCTURAL/MIXTA"
+
+        # Normalizar a [0,1] usando función sigmoidea suave
+        we = min(1.0, we / (1 + we))  # Normalización sigmoidea
 
         print(f"📊 Contexto {cid[:8]}: estrategia={estrategia_usada}, ws={ws:.3f}, rt={rt:.3f}, factor={factor_refuerzo}, we={we:.3f}")
         
