@@ -6,7 +6,7 @@ from typing import List, Dict, Tuple
 from agent.extractor import extraer_palabras_clave
 from agent.temporal_parser import detectar_timestamps_fragmento
 
-def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 150) -> List[str]:
+def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300) -> List[str]:
     """
     Fragmenta una conversación en bloques semánticamente coherentes.
     Criterios de fragmentación:

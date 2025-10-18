@@ -95,7 +95,7 @@
                             </h3>
                             <div class="flex space-x-1">
                                 <span class="tag ${esTemporal ? 'tag-temporal' : 'tag-atemporal'}">
-                                    ${esTemporal ? '🕒 Temporal' : '📋 Atemporal'}
+                                    ${esTemporal ? '🕒 Temporal' : '📋 Atemporal (No Temporal)'}
                                 </span>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                         </div>
                         
                         <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
-                            <div>📊 ${totalFragmentos} fragmentos</div>
+                            <div>${totalFragmentos} fragmentos</div>
                             <div>👥 ${participantes.length} participantes</div>
                             <div class="col-span-2">📅 ${fecha}</div>
                         </div>
@@ -372,7 +372,7 @@ ${contexto.texto}</div>
                         <div class="space-y-2">
                             <button onclick="verFragmentosConversacion('${id}')" 
                                     class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
-                                🔍 Ver ${totalFragmentos} Fragmentos
+                                Ver ${totalFragmentos} Fragmentos
                             </button>
                             <p class="text-blue-700 text-xs">Los fragmentos son las partes individuales en las que se dividió esta conversación para procesamiento.</p>
                         </div>
@@ -389,7 +389,7 @@ ${contexto.texto}</div>
                 const fragmentos = response.data;
 
                 document.getElementById('modalTitulo').innerHTML = `
-                    🧩 Fragmentos de Conversación (${fragmentos.length})
+                    Fragmentos de Conversación (${fragmentos.length})
                 `;
 
                 const fragmentosHTML = fragmentos.map((fragmento, index) => {
@@ -448,7 +448,7 @@ ${contexto.texto}</div>
             const boton = event.target;
             const textoOriginal = boton.textContent;
             
-            boton.textContent = '🔄 Actualizando...';
+            boton.textContent = 'Actualizando...';
             boton.disabled = true;
             
             try {

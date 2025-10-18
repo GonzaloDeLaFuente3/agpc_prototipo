@@ -43,7 +43,7 @@ class VisualizadorDobleNivel:
                 "reunion": "👥",
                 "entrevista": "🎤", 
                 "brainstorm": "💡",
-                "planning": "📋",
+                "planning": "📄",
                 "general": "💬"
             }
             
@@ -286,7 +286,7 @@ Tipos: {tipos_str}"""
                     # FRAGMENTO DE CONVERSACIÓN NORMAL
                     # Icono por tipo
                     iconos_tipo = {
-                        "reunion": "👥", "tarea": "📋", "evento": "🎯",
+                        "reunion": "👥", "tarea": "📄", "evento": "🎯",
                         "proyecto": "🚀", "conocimiento": "📚", "general": "📄",
                         "decision": "⚖️", "accion": "⚡", "pregunta": "❓",
                         "conclusion": "🎯", "problema": "🚨"
