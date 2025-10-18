@@ -152,7 +152,7 @@ async function preguntarConPropagacion() {
         contenidoEstrategia: document.getElementById('contenidoEstrategia')
     };
     
-    elementos.respuesta.innerHTML = "🧠 Analizando con propagación de activación...";
+    elementos.respuesta.innerHTML = "Analizando con propagación de activación...";
     elementos.botonAgregar.style.display = 'none';
     elementos.botonArbol.style.display = 'none';
     elementos.panelEstrategia.classList.add('hidden');
@@ -203,9 +203,9 @@ function mostrarInformacionEstrategia(data, elementos) {
     
     let estrategiaHtml = `
         <div class="grid grid-cols-2 gap-3 text-xs">
-            <div><div class="font-medium">🧠 Intención:</div><div>${analisis.intencion_temporal?.toUpperCase() || 'N/A'}</div></div>
-            <div><div class="font-medium">⚙️ Factor de refuerzo:</div><div>${factorMostrado}x</div></div>
-            <div><div class="font-medium">🔄 Propagación:</div><div>${propagacionHabilitada ? 'ACTIVA' : 'DESACTIVADA'}</div></div>
+            <div><div class="font-medium">Intención:</div><div>${analisis.intencion_temporal?.toUpperCase() || 'N/A'}</div></div>
+            <div><div class="font-medium">Factor de refuerzo:</div><div>${factorMostrado}x</div></div>
+            <div><div class="font-medium">Propagación:</div><div>${propagacionHabilitada ? 'ACTIVA' : 'DESACTIVADA'}</div></div>
             <div><div class="font-medium">➕ Nuevos contextos:</div><div>${estrategia.nodos_adicionales_propagacion || 0}</div></div>
         </div>
     `;
@@ -268,7 +268,7 @@ async function agregarRespuestaComoContexto() {
     
     if (!titulo || !titulo.trim()) return mostrarNotificacion("Se necesita un título.", 'warning');
 
-    const esTemporal = confirm("🕐 ¿Hacer este contexto TEMPORAL?\n\n✅ SÍ = Con fecha actual\n❌ NO = Atemporal");
+    const esTemporal = confirm("🕐 ¿Hacer este contexto TEMPORAL?\n\n✅ SÍ = Con fecha actual\n❌ NO = Atemporal (No Temporal)");
 
     try {
         const respuestaLimpia = ultimaRespuesta.split('\n\n📚 Contextos:')[0];
@@ -278,7 +278,7 @@ async function agregarRespuestaComoContexto() {
             es_temporal: esTemporal
         });
         
-        const tipoContexto = esTemporal ? "TEMPORAL 🕐" : "ATEMPORAL 📋";
+        const tipoContexto = esTemporal ? "TEMPORAL 🕐" : "ATEMPORAL (No Temporal) 📋";
         mostrarNotificacion(`Respuesta agregada como contexto ${tipoContexto}! ID: ${res.data.id}`, 'exito');
         document.getElementById('botonAgregarRespuesta').style.display = 'none';
         
@@ -360,21 +360,21 @@ function alternarPropagacion() {
     
     if (propagacionHabilitada) {
         boton.className = boton.className.replace('bg-red-600 hover:bg-red-700', 'bg-green-600 hover:bg-green-700');
-        boton.textContent = '🔄 Desactivar Propagación';
+        boton.textContent = 'Desactivar Propagación';
         estado.textContent = 'ACTIVA';
         estado.className = estado.className.replace('text-red-600', 'text-green-600');
     } else {
         boton.className = boton.className.replace('bg-green-600 hover:bg-green-700', 'bg-red-600 hover:bg-red-700');
-        boton.textContent = '🔄 Activar Propagación';
+        boton.textContent = 'Activar Propagación';
         estado.textContent = 'INACTIVA';
         estado.className = estado.className.replace('text-green-600', 'text-red-600');
     }
 }
 
-// FUNCIONES DE COMPATIBILIDAD (mantienen nombres originales)
+// FUNCIONES DE COMPATIBILIDAD 
 function aplicarConfiguracionParametros() { return aplicarConfiguracion('umbral'); }
 
-// Función específica para propagación (CORREGIDA)
+// Función específica para propagación 
 async function aplicarConfiguracionPropagacion() {
     const factorDecaimiento = parseFloat(document.getElementById('factorDecaimiento').value);
     const maxPasos = parseInt(document.getElementById('maxPasosPropagacion').value);
@@ -444,7 +444,7 @@ async function obtenerEstadoPropagacion() {
         const estadoHtml = `
             <div class="space-y-2 text-xs">
                 <div class="flex justify-between">
-                    <span>🔄 Propagación:</span>
+                    <span>Propagación:</span>
                     <span class="font-bold ${estado.propagacion_habilitada ? 'text-green-600' : 'text-red-600'}">
                         ${estado.propagacion_habilitada ? 'HABILITADA' : 'DESHABILITADA'}
                     </span>
@@ -454,19 +454,19 @@ async function obtenerEstadoPropagacion() {
                     <span class="font-bold">${estado.factor_decaimiento || 'N/A'}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>🔢 Pasos máximos:</span>
+                    <span>Pasos máximos:</span>
                     <span class="font-bold text-purple-600">${parametrosPropagacion.max_pasos}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>🎯 Umbral activación:</span>
+                    <span>Umbral activación:</span>
                     <span class="font-bold">${estado.umbral_activacion || 'N/A'}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>📊 Nodos totales:</span>
+                    <span>Nodos totales:</span>
                     <span class="font-bold text-blue-600">${estado.total_nodos}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>🔗 Aristas totales:</span>
+                    <span>Aristas totales:</span>
                     <span class="font-bold text-blue-600">${estado.total_aristas}</span>
                 </div>
                 <div class="flex justify-between">
@@ -662,7 +662,7 @@ async function agregarConversacion() {
         
         if (data.status === 'éxito') {
             let mensaje = `✅ ${data.mensaje}\n`;
-            mensaje += `📊 Total fragmentos: ${data.total_fragmentos}\n`;
+            mensaje += `Total fragmentos: ${data.total_fragmentos}\n`;
             mensaje += `💬 Fragmentos de mensajes: ${data.total_fragmentos_mensaje}`;
             
             if (data.total_fragmentos_pdf > 0) {
@@ -710,19 +710,19 @@ async function cargarEstadisticas() {
             document.getElementById('estadisticas').innerHTML = `
                 <div class="space-y-2">
                     <div class="flex justify-between">
-                        <span>📊 Total Nodos:</span>
+                        <span>Total Nodos:</span>
                         <span class="font-bold text-blue-600">${stats.total_nodos}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>🔗 Total Relaciones:</span>
+                        <span>Total Relaciones:</span>
                         <span class="font-bold text-green-600">${stats.total_relaciones}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>⚡ Actualización:</span>
+                        <span>Actualización:</span>
                         <span class="font-bold text-purple-600">INCREMENTAL</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>🎯 Umbral:</span>
+                        <span>Umbral:</span>
                         <span class="font-bold">${stats.umbral_similitud}</span>
                     </div>
                     <div class="flex justify-between">

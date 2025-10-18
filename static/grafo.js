@@ -4,10 +4,7 @@ let vistaActual = 'macro';
 let conversacionesList = {};
 let conversacionFiltroSeleccionada = null;
 
-// ============================================
-// PALETA DE COLORES MEJORADA
-// ============================================
-
+// PALETA DE COLORES 
 const coloresTipoContexto = {
     'reunion': {
         temporal: { bg: '#FF6B6B', border: '#C92A2A' },      // Rojo vibrante
@@ -43,10 +40,7 @@ const coloresTipoContexto = {
     }
 };
 
-// ============================================
 // FUNCIONES DE NOTIFICACIÓN
-// ============================================
-
 function mostrarNotificacion(mensaje, tipo = 'info', duracion = 4000) {
     const colores = {
         error: 'bg-red-500',
@@ -68,18 +62,12 @@ function mostrarNotificacion(mensaje, tipo = 'info', duracion = 4000) {
     }, duracion);
 }
 
-// ============================================
 // FUNCIONES DE NAVEGACIÓN
-// ============================================
-
 function volverInicio() {
     window.location.href = '/';
 }
 
-// ============================================
 // GESTIÓN DE VISTAS
-// ============================================
-
 function cambiarVista(nuevaVista) {
     vistaActual = nuevaVista;
     
@@ -101,14 +89,14 @@ function cambiarVista(nuevaVista) {
 
 function actualizarTituloVista() {
     const titulos = {
-        'macro': '🌍 Vista Macro - Conversaciones',
-        'micro': '🔬 Vista Micro - Fragmentos Completa',
-        'micro-filtrada': '🎯 Vista Micro - Fragmentos Filtrada'
+        'macro': 'Vista Macro - Conversaciones',
+        'micro': 'Vista Micro - Fragmentos/Contextos Completa',
+        'micro-filtrada': 'Vista Micro - Fragmentos Filtrada'
     };
     
     const descripciones = {
         'macro': 'Cada nodo representa una conversación completa',
-        'micro': 'Cada nodo representa un fragmento individual',
+        'micro': 'Cada nodo representa un fragmento o contexto individual',
         'micro-filtrada': 'Fragmentos de una conversación específica'
     };
     
@@ -149,10 +137,7 @@ function aplicarFiltroConversacion() {
     }
 }
 
-// ============================================
 // PROCESAMIENTO DE NODOS CON COLORES MEJORADOS
-// ============================================
-
 function procesarNodos(nodos, vista) {
     return nodos.map(node => {
         const esPDF = node.es_pdf || node.tipo_contexto === 'documento';
@@ -228,10 +213,7 @@ function procesarNodos(nodos, vista) {
     });
 }
 
-// ============================================
-// PROCESAMIENTO DE ARISTAS CON COLORES MEJORADOS
-// ============================================
-
+// PROCESAMIENTO DE ARISTAS CON COLORES
 function procesarAristas(aristas, vista) {
     return aristas.map(edge => {
         const relevanciaTemp = edge.relevancia_temporal || 0;
@@ -275,9 +257,9 @@ function procesarAristas(aristas, vista) {
             // Tooltip para vista macro
             tooltip = `🔗 Conexión entre conversaciones
 ━━━━━━━━━━━━━━━━━━━━━━
-📊 Peso total: ${pesoTotal.toFixed(3)}
-🔢 Fragmentos conectados: ${conexiones}
-💪 Peso promedio: ${(pesoTotal / conexiones).toFixed(3)}
+Peso total: ${pesoTotal.toFixed(3)}
+Fragmentos conectados: ${conexiones}
+Peso promedio: ${(pesoTotal / conexiones).toFixed(3)}
 ━━━━━━━━━━━━━━━━━━━━━━
 Tipo: ${relevanciaTemp > 0.3 ? 'Temporal' : 'Semántica'}`;
             
@@ -288,11 +270,11 @@ Tipo: ${relevanciaTemp > 0.3 ? 'Temporal' : 'Semántica'}`;
             }
             
             // Tooltip para vista micro
-            tooltip = `🔗 Conexión entre fragmentos
+            tooltip = `Conexión entre fragmentos
 ━━━━━━━━━━━━━━━━━━━━━━
-💪 Peso estructural: ${(edge.peso_estructural || 0).toFixed(3)}
-⏰ Relevancia temporal: ${relevanciaTemp.toFixed(3)}
-⚡ Peso efectivo: ${pesoEfectivo.toFixed(3)}
+Peso estructural: ${(edge.peso_estructural || 0).toFixed(3)}
+Relevancia temporal: ${relevanciaTemp.toFixed(3)}
+Peso efectivo: ${pesoEfectivo.toFixed(3)}
 ━━━━━━━━━━━━━━━━━━━━━━
 Tipo: ${relevanciaTemp > 0.3 ? 'Temporal' : 'Semántica'}`;
         }
@@ -330,10 +312,7 @@ Tipo: ${relevanciaTemp > 0.3 ? 'Temporal' : 'Semántica'}`;
     });
 }
 
-// ============================================
 // CARGA Y VISUALIZACIÓN DEL GRAFO
-// ============================================
-
 async function cargarGrafo() {
     const container = document.getElementById('grafoContainer');
     container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p class="text-lg">⏳ Cargando grafo...</p></div>';
@@ -474,62 +453,10 @@ function actualizarLeyenda() {
         leyendaContainer.innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 <div>
-                    <p class="font-semibold text-blue-800 mb-2">📦 Nodos (Conversaciones):</p>
-                    <div class="space-y-1 text-xs">
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #FF6B6B; border: 2px solid #C92A2A;"></div>
-                            <span>Reunión</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #4ECDC4; border: 2px solid #0B7A75;"></div>
-                            <span>Tarea</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #FFD93D; border: 2px solid #F59F00;"></div>
-                            <span>Evento</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #FF85C0; border: 2px solid #E056A3;"></div>
-                            <span>PDF</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #95A5A6; border: 2px solid #7F8C8D;"></div>
-                            <span>Conversación general</span>
-                        </div>
-                    </div>
+                    <p class="font-semibold text-blue-800 mb-2">Nodos (Conversaciones)</p>
                 </div>
                 <div>
-                    <p class="font-semibold text-blue-800 mb-2">🔗 Aristas:</p>
-                    <div class="space-y-1 text-xs">
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-1 rounded" style="background: #2ECC71;"></div>
-                            <span>Temporal fuerte (>0.5)</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-1 rounded" style="background: #F39C12;"></div>
-                            <span>Temporal media (0.3-0.5)</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-8 h-1 rounded" style="background: #3498DB;"></div>
-                            <span>Solo semántica</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-semibold text-blue-800 mb-2">🎨 Saturación:</p>
-                    <div class="space-y-1 text-xs">
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #FF6B6B; border: 3px solid #C92A2A;"></div>
-                            <span>Temporal (vibrante)</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-4 h-4 rounded" style="background: #FFD1D1; border: 1.5px solid #FFA8A8;"></div>
-                            <span>Atemporal (suave)</span>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-600 mt-2">
-                        Grosor = # conexiones
-                    </p>
+                    <p class="font-semibold text-blue-800 mb-2">Aristas</p>
                 </div>
             </div>
         `;
@@ -537,7 +464,7 @@ function actualizarLeyenda() {
         leyendaContainer.innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 <div>
-                    <p class="font-semibold text-purple-800 mb-2">📦 Tipos de Fragmentos:</p>
+                    <p class="font-semibold text-purple-800 mb-2">Tipos de Fragmentos:</p>
                     <div class="grid grid-cols-2 gap-1 text-xs">
                         <div class="flex items-center gap-1">
                             <div class="w-3 h-3 rounded" style="background: #FF6B6B; border: 2px solid #C92A2A;"></div>
@@ -562,7 +489,7 @@ function actualizarLeyenda() {
                     </div>
                 </div>
                 <div>
-                    <p class="font-semibold text-purple-800 mb-2">🔗 Conexiones:</p>
+                    <p class="font-semibold text-purple-800 mb-2">Conexiones:</p>
                     <div class="space-y-1 text-xs">
                         <div class="flex items-center gap-2">
                             <div class="w-8 h-1 rounded" style="background: #2ECC71;"></div>
@@ -591,7 +518,7 @@ function actualizarLeyenda() {
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="font-bold">📋</span>
-                            <span>= Atemporal</span>
+                            <span>= Atemporal (No Temporal)</span>
                         </div>
                     </div>
                 </div>
@@ -604,10 +531,7 @@ function actualizarGrafo() {
     cargarGrafo();
 }
 
-// ============================================
 // INICIALIZACIÓN
-// ============================================
-
 document.addEventListener('DOMContentLoaded', function() {
     // Cargar grafo inicial
     cargarGrafo();

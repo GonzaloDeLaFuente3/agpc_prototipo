@@ -21,32 +21,26 @@
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        
         .full-height {
             height: 100vh;
         }
-        
         #grafoContainer {
             width: 100%;
             height: calc(100vh - 240px);
         }
-        
         .control-panel {
             background: linear-gradient(to right, #7c3aed, #a855f7);
             color: white;
             padding: 1rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
         .btn {
             transition: all 0.3s ease;
         }
-        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        
         .stats-badge {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -55,7 +49,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-blue-50">
     
     <!-- Panel de Control Superior -->
     <div class="control-panel">
@@ -63,28 +57,28 @@
             
             <!-- Título y descripción -->
             <div class="flex-1 min-w-[300px]">
-                <h1 class="text-2xl font-bold mb-1" id="tituloVista">🌍 Vista Macro - Conversaciones</h1>
+                <h1 class="text-2xl font-bold mb-1" id="tituloVista">Vista Macro - Conversaciones</h1>
                 <p class="text-sm opacity-90" id="descripcionVista">Cada nodo representa una conversación completa</p>
             </div>
             
             <!-- Selector de Vista -->
             <div class="bg-white bg-opacity-20 rounded-lg p-3">
-                <label class="block text-sm font-semibold mb-2">👁️ Tipo de Vista</label>
+                <label class="block text-sm font-semibold mb-2 text-center">Tipo de Vista</label>
                 <div class="flex gap-3">
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="tipoVista" value="macro" id="vistaMacro" checked 
                                 onchange="cambiarVista('macro')" class="cursor-pointer">
-                        <span class="text-sm">🌍 Macro</span>
+                        <span class="text-sm">Macro</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="tipoVista" value="micro" id="vistaMicro" 
                                 onchange="cambiarVista('micro')" class="cursor-pointer">
-                        <span class="text-sm">🔬 Micro</span>
+                        <span class="text-sm">Micro</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="tipoVista" value="micro-filtrada" id="vistaMicroFiltrada" 
                                 onchange="cambiarVista('micro-filtrada')" class="cursor-pointer">
-                        <span class="text-sm">🎯 Filtrada</span>
+                        <span class="text-sm">Micro - Filtrada</span>
                     </label>
                 </div>
                 
@@ -93,14 +87,14 @@
                     <select id="conversacionFiltro" 
                             class="w-full p-2 text-sm border rounded bg-white text-gray-800"
                             onchange="aplicarFiltroConversacion()">
-                        <option value="">Seleccionar conversación...</option>
+                        <option value="">Seleccionar una conversación...</option>
                     </select>
                 </div>
             </div>
             
             <!-- Estadísticas -->
             <div class="stats-badge">
-                <div class="text-xs font-semibold mb-1">📊 Estadísticas</div>
+                <div class="text-xs font-semibold mb-1 text-center">📊 Estadísticas</div>
                 <div class="flex gap-4 text-sm">
                     <div>Nodos: <span id="totalNodos" class="font-bold">-</span></div>
                     <div>Aristas: <span id="totalAristas" class="font-bold">-</span></div>
@@ -110,12 +104,12 @@
             <!-- Botones de acción -->
             <div class="flex gap-2">
                 <button onclick="actualizarGrafo()" 
-                        class="btn bg-white text-purple-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-100">
-                    🔄 Actualizar
+                        class="btn bg-white text-purple-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-100">
+                    Actualizar
                 </button>
                 <button onclick="volverInicio()" 
-                        class="btn bg-purple-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-950">
-                    🏠 Volver
+                        class="btn bg-purple-800 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-950">
+                    Volver ←
                 </button>
             </div>
         </div>
