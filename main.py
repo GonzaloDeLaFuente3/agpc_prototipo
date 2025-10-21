@@ -20,6 +20,8 @@ import re
 from fastapi import File, UploadFile, Form
 from agent.pdf_processor import guardar_pdf_en_storage, crear_attachment_pdf
 import shutil
+from agent import grafo as modulo_grafo
+import networkx as nx
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -538,7 +540,7 @@ def obtener_estadisticas_actualizacion():
                 "contextos_atemporales": stats.get("contextos_atemporales", 0),
                 "tipos_contexto": stats.get("tipos_contexto", {}),
                 "actualizacion_incremental": "habilitada",
-                "umbral_similitud": 0.1,
+                "umbral_similitud": parametros_sistema['umbral_similitud'],
                 "mensaje": f"Sistema funcionando con {stats['total_contextos']} nodos y {stats['total_relaciones']} relaciones"
             },
             "timestamp": datetime.now().isoformat()
@@ -777,6 +779,88 @@ async def pagina_grafo():
 async def script_grafo():
     """Sirve el script JavaScript para la página de grafos."""
     return FileResponse('static/grafo.js')
+
+@app.delete("/api/borrar-todos-datos")
+async def borrar_todos_datos():
+    """
+    Endpoint para borrar todos los datos del sistema:
+    """
+    try:
+        # 1. Reinicializar estructuras globales del grafo
+        # Reinicializar grafo y metadatos globales
+        modulo_grafo.grafo_contextos = nx.DiGraph()
+        modulo_grafo.metadatos_contextos = {}
+        modulo_grafo.conversaciones_metadata = {}
+        modulo_grafo.fragmentos_metadata = {}
+        modulo_grafo.propagador_global = None
+        
+        # 2. Borrar archivos de datos persistentes
+        archivos_a_borrar = [
+            "data/grafo_contextos.pickle",
+            "data/contexto.json",
+            "data/conversaciones.json",
+            "data/fragmentos.json",
+            "contextos.db"
+        ]
+        
+        for archivo in archivos_a_borrar:
+            if os.path.exists(archivo):
+                os.remove(archivo)
+                print(f"Eliminado: {archivo}")
+        
+        # 3. Borrar directorio data completo y recrearlo
+        if os.path.exists("data"):
+            shutil.rmtree("data")
+            print("Directorio data eliminado")
+        os.makedirs("data", exist_ok=True)
+        
+        # 4. Limpiar directorio de storage (PDFs)
+        storage_dir = os.path.join('static', 'storage')
+        if os.path.exists(storage_dir):
+            for item in os.listdir(storage_dir):
+                item_path = os.path.join(storage_dir, item)
+                try:
+                    if os.path.isfile(item_path):
+                        os.remove(item_path)
+                    elif os.path.isdir(item_path):
+                        shutil.rmtree(item_path)
+                except Exception as e:
+                    print(f"Error al borrar {item_path}: {e}")
+            print(f"Storage limpiado: {storage_dir}")
+        
+        # 5. Limpiar colección de ChromaDB (embeddings)
+        try:
+            from agent.semantica import coleccion
+            # Obtener todos los IDs y borrarlos
+            todos_ids = coleccion.get()['ids']
+            if todos_ids:
+                coleccion.delete(ids=todos_ids)
+                print(f"ChromaDB limpiado: {len(todos_ids)} documentos eliminados")
+        except Exception as e:
+            print(f"Error limpiando ChromaDB: {e}")
+        
+        # 6. Recrear directorios necesarios
+        os.makedirs("data", exist_ok=True)
+        os.makedirs(storage_dir, exist_ok=True)
+        
+        # 7. Reinicializar la variable global 'grafo' en main
+        global grafo
+        grafo = modulo_grafo  # Mantener referencia al módulo
+        print("Sistema completamente reinicializado")
+        
+        return {
+            "status": "success",
+            "mensaje": "Todos los datos fueron eliminados exitosamente"
+        }
+        
+    except Exception as e:
+        print(f"Error al borrar datos: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {
+            "status": "error",
+            "mensaje": f"Error al borrar datos: {str(e)}"
+        }
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)

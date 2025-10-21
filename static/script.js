@@ -759,28 +759,28 @@ async function cargarEstadisticasDobleNivel() {
         document.getElementById('estadisticas').innerHTML = `
             <div class="space-y-3 text-xs">
                 <div class="border-b pb-2">
-                    <div class="font-medium text-purple-700 mb-1">🌍 Nivel Macro (Conversaciones)</div>
+                    <div class="font-medium text-purple-700 mb-1">Nivel Macro (Conversaciones)</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>Total: <span class="font-bold text-purple-600">${macro.total_conversaciones}</span></div>
                         <div>Complejas: <span class="font-bold">${macro.conversaciones_complejas}</span></div>
                     </div>
                 </div>
                 <div class="border-b pb-2">
-                    <div class="font-medium text-blue-700 mb-1">🔬 Nivel Micro (Fragmentos)</div>
+                    <div class="font-medium text-blue-700 mb-1">Nivel Micro (Fragmentos)</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>Total: <span class="font-bold text-blue-600">${micro.total_fragmentos}</span></div>
                         <div>Temporales: <span class="font-bold text-green-600">${micro.fragmentos_temporales}</span></div>
                     </div>
                 </div>
                 <div class="border-b pb-2">
-                    <div class="font-medium text-orange-700 mb-1">🔗 Relaciones</div>
+                    <div class="font-medium text-orange-700 mb-1">Relaciones</div>
                     <div class="grid grid-cols-2 gap-2">
                         <div>Internas: <span class="font-bold text-orange-600">${relaciones.intra_conversacion}</span></div>
                         <div>Entre conv: <span class="font-bold text-red-600">${relaciones.inter_conversacion}</span></div>
                     </div>
                 </div>
                 <div>
-                    <div class="font-medium text-green-700 mb-1">📊 Métricas</div>
+                    <div class="font-medium text-green-700 mb-1">Métricas</div>
                     <div class="space-y-1">
                         <div>Frags/Conv: <span class="font-bold">${metricas.promedio_fragmentos_por_conversacion}</span></div>
                         <div>% Rel. Internas: <span class="font-bold">${metricas.ratio_relaciones_internas}%</span></div>
@@ -1059,4 +1059,67 @@ function toggleFechaConversacion() {
 // Función para abrir la página dedicada del grafo
 function abrirPaginaGrafo() {
     window.open('/grafo.html', '_blank');
+}
+
+
+//Borra todos los datos del sistema tras doble confirmación
+async function borrarTodosDatos() {
+    // Primera confirmación
+    const confirmacion1 = confirm(
+        '⚠️ ADVERTENCIA CRÍTICA ⚠️\n\n' +
+        'Esta acción ELIMINARÁ PERMANENTEMENTE:\n\n' +
+        '❌ Todos los contextos generados\n' +
+        '❌ Todas las conversaciones guardadas\n' +
+        '❌ Todos los documentos PDF procesados\n' +
+        '❌ Toda la estructura del grafo\n' +
+        '❌ Toda la base de datos\n' +
+        '❌ Todos los embeddings (ChromaDB)\n\n' +
+        '¿Estás completamente seguro de continuar?'
+    );
+    
+    if (!confirmacion1) {
+        return;
+    }
+    
+    // Segunda confirmación de seguridad
+    // const confirmacion2 = confirm(
+    //     '🚨 ÚLTIMA ADVERTENCIA 🚨\n\n' +
+    //     'Esta acción es IRREVERSIBLE.\n' +
+    //     'NO existe forma de recuperar los datos después.\n\n' +
+    //     '¿CONFIRMAS que deseas BORRAR TODO?'
+    // );
+    
+    // if (!confirmacion2) {
+    //     mostrarNotificacion('❌ Operación cancelada', 'warning', 3000);
+    //     return;
+    // }
+    
+    try {
+        mostrarNotificacion('🗑️ Eliminando todos los datos del sistema...', 'warning', 3000);
+        
+        const response = await axios.delete('/api/borrar-todos-datos');
+        
+        if (response.data.status === 'success') {
+            mostrarNotificacion(
+                '✅ Todos los datos fueron eliminados exitosamente', 
+                'exito',
+                5000
+            );
+            
+            // Esperar 2 segundos y recargar la página
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            throw new Error(response.data.mensaje || 'Error desconocido');
+        }
+        
+    } catch (error) {
+        console.error('❌ Error al borrar datos:', error);
+        mostrarNotificacion(
+            `❌ Error: ${error.response?.data?.mensaje || error.message}`,
+            'error',
+            6000
+        );
+    }
 }

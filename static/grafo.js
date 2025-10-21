@@ -340,7 +340,7 @@ async function cargarGrafo() {
         const data = response.data;
         
         if (!data.nodes || data.nodes.length === 0) {
-            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>📭 No hay datos para visualizar</p></div>';
+            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500"><p>No hay datos para visualizar</p></div>';
             return;
         }
         
