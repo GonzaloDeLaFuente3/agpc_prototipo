@@ -26,3 +26,4 @@ __pycache__/
 *.pyc
 
 chroma_db/
+storage/documents/
