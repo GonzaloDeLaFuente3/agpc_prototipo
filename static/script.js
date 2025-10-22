@@ -23,10 +23,26 @@ function mostrarNotificacion(mensaje, tipo = 'error', duracion = 5000) {
     };
     
     const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 ${clases[tipo]} text-white px-6 py-3 rounded-lg shadow-lg z-50`;
-    toast.textContent = mensaje;
+    toast.className = `fixed top-4 right-4 ${clases[tipo]} text-white px-6 py-4 rounded-lg shadow-2xl z-50 max-w-md`;
+    
+    // Soportar mensajes multilínea
+    const lineas = mensaje.split('\n');
+    if (lineas.length > 1) {
+        toast.innerHTML = lineas.map(linea => `<div class="mb-1">${linea}</div>`).join('');
+    } else {
+        toast.textContent = mensaje;
+    }
+    
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), duracion);
+    
+    // Animación de entrada
+    // setTimeout(() => toast.classList.add('animate-pulse'), 100);
+    
+    setTimeout(() => {
+        toast.style.transition = 'transform 0.3s ease';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => toast.remove(), 300);
+    }, duracion);
 }
 
 // SISTEMA UNIFICADO DE MODALES
@@ -168,9 +184,16 @@ async function preguntarConPropagacion() {
         
         const res = await axios.get(`/preguntar-con-propagacion/?${params}`);
         
-        elementos.respuesta.innerText = res.data.respuesta;
+        // CAPTURAR TIEMPO DE RESPUESTA ⏱️
+        const tiempoMs = res.data.tiempo_respuesta_ms || 0;
+        
+        // Mostrar respuesta con badge de tiempo
+        elementos.respuesta.innerHTML = res.data.respuesta + ' ' + formatearTiempoRespuesta(tiempoMs);
         ultimaRespuesta = res.data.respuesta;
         ultimaPregunta = pregunta;
+
+        // ACTUALIZAR MÉTRICAS 
+        actualizarUltimaConsulta(tiempoMs);
         
         // Mostrar información de estrategia
         if (res.data.analisis_intencion && res.data.estrategia_aplicada) {
@@ -632,6 +655,9 @@ async function agregarConversacion() {
     btnGuardar.disabled = true;
     btnGuardar.textContent = '⏳ Procesando...';
     
+    // INICIAR MEDICIÓN DE TIEMPO
+    const tiempoInicio = Date.now();
+    
     try {
         // Crear FormData para enviar archivo
         const formData = new FormData();
@@ -659,6 +685,11 @@ async function agregarConversacion() {
         });
         
         const data = await response.json();
+
+        // CALCULAR TIEMPO TRANSCURRIDO
+        const tiempoFin = Date.now();
+        const tiempoMs = tiempoFin - tiempoInicio;
+        const tiempoSegundos = (tiempoMs / 1000).toFixed(2);
         
         if (data.status === 'éxito') {
             let mensaje = `✅ ${data.mensaje}\n`;
@@ -668,8 +699,24 @@ async function agregarConversacion() {
             if (data.total_fragmentos_pdf > 0) {
                 mensaje += `\n📄 Fragmentos del PDF: ${data.total_fragmentos_pdf}`;
             }
+
+            // AGREGAR TIEMPO AL MENSAJE
+            mensaje += `\n⚡ Tiempo de procesamiento: ${tiempoSegundos}s`;
             
-            alert(mensaje);
+            // Mostrar con color según velocidad
+            let tipoNotificacion = 'exito';
+            if (tiempoMs > 10000) {
+                tipoNotificacion = 'warning';
+                mensaje += ' (procesamiento lento)';
+            } else if (tiempoMs > 5000) {
+                tipoNotificacion = 'info';
+            }
+            
+            mostrarNotificacion(mensaje, tipoNotificacion, 8000);
+
+            // 📊 REGISTRAR EN MÉTRICAS (simulación manual ya que el backend ya lo hace)
+            document.getElementById('ultima-carga-tiempo').textContent = tiempoSegundos + ' s';
+            actualizarEstadisticas();
             
             // Limpiar formulario
             document.getElementById('tituloConversacion').value = '';
@@ -982,11 +1029,41 @@ async function confirmarYProcesarConversaciones() {
                 (sum, conv) => sum + conv.fragmentos_creados, 0
             );
             
-            mostrarNotificacion(
-                `✅ ${data.total_procesadas} conversación(es) guardada(s) | ${totalFragmentos} fragmentos creados`, 
-                'exito',
-                6000
-            );
+            // CONSTRUIR MENSAJE CON TIEMPO
+            const tiempoSegundos = data.tiempo_procesamiento_segundos || 0;
+            let mensaje = `✅ ${data.total_procesadas} conversación(es) guardada(s)\n`;
+            mensaje += `📊 ${totalFragmentos} fragmentos creados\n`;
+            mensaje += `⚡ Tiempo de procesamiento: ${tiempoSegundos}s`;
+            
+            // Determinar tipo de notificación según velocidad
+            let tipoNotificacion = 'exito';
+            if (tiempoSegundos > 15) {
+                tipoNotificacion = 'warning';
+                mensaje += ' (procesamiento lento)';
+            } else if (tiempoSegundos > 8) {
+                tipoNotificacion = 'info';
+            }
+            
+            mostrarNotificacion(mensaje, tipoNotificacion, 8000);
+
+            // ACTUALIZAR PANEL DE MÉTRICAS
+            if (data.tiempo_procesamiento_segundos) {
+                document.getElementById('ultima-carga-tiempo').textContent = 
+                    data.tiempo_procesamiento_segundos + ' s';
+                
+                // Colorear según duración
+                const elemento = document.getElementById('ultima-carga-tiempo');
+                elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
+                if (tiempoSegundos < 3) {
+                    elemento.classList.add('text-green-600');
+                } else if (tiempoSegundos < 10) {
+                    elemento.classList.add('text-orange-600');
+                } else {
+                    elemento.classList.add('text-red-600');
+                }
+                
+                actualizarEstadisticas();
+            }
             
             if (data.total_errores > 0) {
                 console.warn('Errores en procesamiento:', data.errores);
@@ -1081,19 +1158,6 @@ async function borrarTodosDatos() {
         return;
     }
     
-    // Segunda confirmación de seguridad
-    // const confirmacion2 = confirm(
-    //     '🚨 ÚLTIMA ADVERTENCIA 🚨\n\n' +
-    //     'Esta acción es IRREVERSIBLE.\n' +
-    //     'NO existe forma de recuperar los datos después.\n\n' +
-    //     '¿CONFIRMAS que deseas BORRAR TODO?'
-    // );
-    
-    // if (!confirmacion2) {
-    //     mostrarNotificacion('❌ Operación cancelada', 'warning', 3000);
-    //     return;
-    // }
-    
     try {
         mostrarNotificacion('🗑️ Eliminando todos los datos del sistema...', 'warning', 3000);
         
@@ -1120,6 +1184,169 @@ async function borrarTodosDatos() {
             `❌ Error: ${error.response?.data?.mensaje || error.message}`,
             'error',
             6000
+        );
+    }
+}
+
+// Toggle del panel
+function toggleMetricasVisibilidad() {
+    const contenido = document.getElementById('contenidoMetricas');
+    const boton = document.getElementById('btnToggleMetricas');
+    
+    if (contenido.classList.contains('hidden')) {
+        contenido.classList.remove('hidden');
+        boton.textContent = '▼';
+    } else {
+        contenido.classList.add('hidden');
+        boton.textContent = '▶';
+    }
+}
+
+// Actualizar estadísticas desde el backend
+async function actualizarEstadisticas() {
+    try {
+        const response = await fetch('/metricas/estadisticas/');
+        const stats = await response.json();
+        
+        // Actualizar total operaciones
+        document.getElementById('total-operaciones').textContent = 
+            stats.total_operaciones || 0;
+        
+        // Actualizar promedio de consultas
+        if (stats.consultas && stats.consultas.tiempo_promedio_ms) {
+            const promedioMs = Math.round(stats.consultas.tiempo_promedio_ms);
+            const elemento = document.getElementById('promedio-consultas');
+            elemento.textContent = promedioMs + ' ms';
+            
+            // Colorear según velocidad
+            elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
+            if (promedioMs < 2000) {
+                elemento.classList.add('text-green-600');
+            } else if (promedioMs < 5000) {
+                elemento.classList.add('text-orange-600');
+            } else {
+                elemento.classList.add('text-red-600');
+            }
+        }
+        
+        // Actualizar contextos promedio
+        if (stats.consultas && stats.consultas.contextos_promedio) {
+            document.getElementById('contextos-promedio').textContent = 
+                stats.consultas.contextos_promedio.toFixed(1);
+        }
+        
+        // Actualizar última carga (si existe)
+        if (stats.cargas_dataset && stats.cargas_dataset.tiempo_promedio_ms > 0) {
+            const segundos = (stats.cargas_dataset.tiempo_promedio_ms / 1000).toFixed(2);
+            const elemento = document.getElementById('ultima-carga-tiempo');
+            elemento.textContent = segundos + ' s';
+            
+            // Colorear según duración
+            elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
+            if (parseFloat(segundos) < 3) {
+                elemento.classList.add('text-green-600');
+            } else if (parseFloat(segundos) < 10) {
+                elemento.classList.add('text-orange-600');
+            } else {
+                elemento.classList.add('text-red-600');
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error actualizando estadísticas:', error);
+    }
+}
+
+// Formatear tiempo con badge de Tailwind según duración
+function formatearTiempoRespuesta(ms) {
+    let colorClasses = 'bg-green-500'; // Por defecto verde
+    
+    if (ms > 5000) {
+        colorClasses = 'bg-red-500';
+    } else if (ms > 2000) {
+        colorClasses = 'bg-orange-500';
+    }
+    
+    const segundos = (ms / 1000).toFixed(2);
+    return `<span class="inline-block ${colorClasses} text-white px-2 py-1 rounded-full text-xs font-bold ml-2">⚡ ${segundos}s</span>`;
+}
+
+// Actualizar el display de última consulta
+function actualizarUltimaConsulta(tiempoMs) {
+    const elemento = document.getElementById('ultima-consulta-tiempo');
+    elemento.textContent = Math.round(tiempoMs) + ' ms';
+    
+    // Colorear según velocidad
+    elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
+    if (tiempoMs < 2000) {
+        elemento.classList.add('text-green-600');
+    } else if (tiempoMs < 5000) {
+        elemento.classList.add('text-orange-600');
+    } else {
+        elemento.classList.add('text-red-600');
+    }
+    
+    // Actualizar también el promedio
+    actualizarEstadisticas();
+}
+
+// Inicializar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarEstadisticas();
+    
+    // Actualizar cada 30 segundos automáticamente
+    setInterval(actualizarEstadisticas, 30000);
+});
+
+// Limpiar solo las métricas de performance
+async function limpiarMetricas() {
+    if (!confirm('¿Estás seguro de que deseas limpiar todas las métricas de performance?\n\n' +
+                 'Esto eliminará:\n' +
+                 '❌ Historial de tiempos de consultas\n' +
+                 '❌ Historial de tiempos de carga\n' +
+                 '❌ Todas las estadísticas acumuladas\n\n' +
+                 'Los contextos y conversaciones NO se verán afectados.')) {
+        return;
+    }
+    
+    try {
+        mostrarNotificacion('🗑️ Limpiando métricas...', 'info', 2000);
+        
+        const response = await axios.delete('/metricas/limpiar/');
+        
+        if (response.data.status === 'success') {
+            // Resetear valores en la UI
+            document.getElementById('ultima-consulta-tiempo').textContent = '-- ms';
+            document.getElementById('promedio-consultas').textContent = '-- ms';
+            document.getElementById('total-operaciones').textContent = '0';
+            document.getElementById('ultima-carga-tiempo').textContent = '-- s';
+            document.getElementById('contextos-promedio').textContent = '--';
+            
+            // Remover colores
+            const elementos = [
+                document.getElementById('ultima-consulta-tiempo'),
+                document.getElementById('promedio-consultas'),
+                document.getElementById('ultima-carga-tiempo')
+            ];
+            
+            elementos.forEach(el => {
+                if (el) {
+                    el.classList.remove('text-green-600', 'text-orange-600', 'text-red-600');
+                    el.classList.add('text-gray-800');
+                }
+            });
+            
+            mostrarNotificacion('✅ Métricas limpiadas exitosamente', 'exito', 3000);
+        } else {
+            throw new Error(response.data.mensaje || 'Error desconocido');
+        }
+        
+    } catch (error) {
+        console.error('❌ Error al limpiar métricas:', error);
+        mostrarNotificacion(
+            `❌ Error: ${error.response?.data?.mensaje || error.message}`,
+            'error',
+            5000
         );
     }
 }

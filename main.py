@@ -22,6 +22,8 @@ from agent.pdf_processor import guardar_pdf_en_storage, crear_attachment_pdf
 import shutil
 from agent import grafo as modulo_grafo
 import networkx as nx
+from agent.metricas import metricas_sistema
+import time
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -190,6 +192,9 @@ def preguntar(pregunta: str):
 def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2,
                              factor_decaimiento: float = None, umbral_activacion: float = None):
     """Responde a una pregunta usando propagación de activación."""
+    # INICIAR MEDICIÓN DE TIEMPO
+    tiempo_inicio = time.time()
+
     # VALIDACIÓN DE ENTRADA
     if not pregunta or len(pregunta.strip()) < 2:
         return {
@@ -337,6 +342,18 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
     
     respuesta_completa = f"{respuesta}\n\n📚 Contextos: {', '.join(titulos_utilizados)}{info_temporal}{info_propagacion_resp}\n🕐 Consultado: {momento_str}{info_estrategia}"
 
+    # CALCULAR TIEMPO TRANSCURRIDO
+    tiempo_fin = time.time()
+    tiempo_ms = (tiempo_fin - tiempo_inicio) * 1000
+    
+    # REGISTRAR MÉTRICA
+    metricas_sistema.registrar_consulta(
+        pregunta=pregunta,
+        tiempo_ms=tiempo_ms,
+        contextos_utilizados=len(contextos_utilizados_info),
+        usa_propagacion=usar_propagacion
+    )
+
     return {
         "respuesta": respuesta_completa,
         "contextos_utilizados": contextos_utilizados_info,
@@ -344,7 +361,9 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         "analisis_intencion": analisis_intencion,
         "estrategia_aplicada": estrategia,
         "momento_consulta": momento_consulta.isoformat(),
-        "propagacion": info_propagacion
+        "propagacion": info_propagacion,
+        "tiempo_respuesta_ms": round(tiempo_ms, 2),  
+        "tiempo_respuesta_segundos": round(tiempo_ms / 1000, 2)  
     }
 
 @app.post("/configurar-propagacion/")
@@ -393,6 +412,9 @@ async def agregar_conversacion_con_pdf(
     """
     Agrega una nueva conversación con opción de adjuntar un PDF.
     """
+    # INICIAR MEDICIÓN
+    tiempo_inicio = time.time()
+
     try:
         # Generar ID de conversación
         conversacion_id = f"conv_{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
@@ -471,6 +493,23 @@ async def agregar_conversacion_con_pdf(
             participantes=lista_participantes,
             attachments=attachments
         )
+
+        # ⏱️ CALCULAR TIEMPO
+        tiempo_fin = time.time()
+        tiempo_ms = (tiempo_fin - tiempo_inicio) * 1000
+        
+        # 📊 REGISTRAR MÉTRICA
+        total_fragmentos = resultado.get('total_fragmentos', 0)
+        metricas_sistema.registrar_carga_dataset(
+            tipo='conversacion_individual',
+            cantidad=1,
+            tiempo_ms=tiempo_ms,
+            detalles={
+                "titulo": titulo,
+                "total_fragmentos": total_fragmentos,
+                "tiene_pdf": bool(attachments)
+            }
+        )
         
         mensaje = f"Conversación '{titulo}' agregada correctamente"
         if attachments:
@@ -480,6 +519,8 @@ async def agregar_conversacion_con_pdf(
             "status": "éxito",
             "mensaje": mensaje,
             "conversacion_id": conversacion_id,
+            "tiempo_procesamiento_ms": round(tiempo_ms, 2),  
+            "tiempo_procesamiento_segundos": round(tiempo_ms / 1000, 2),  
             **resultado
         }
     
@@ -690,6 +731,9 @@ def parsear_conversaciones_preview(entrada: Union[EntradaTextoPlano, EntradaJSON
 @app.post("/conversacion/procesar-con-metadata/")
 def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
     """Procesa y guarda conversaciones con metadatos (detección automática)"""
+    # INICIAR MEDICIÓN
+    tiempo_inicio = time.time()
+
     try:
         resultados = {'conversaciones_procesadas': [], 'errores': []}
         metadata_global = entrada.metadata_global or {}
@@ -759,6 +803,25 @@ def procesar_conversaciones_con_metadata(entrada: ProcesarConMetadata):
                     'titulo': conv.get('titulo', 'Sin título'),
                     'error': str(e)
                 })
+
+        #CALCULAR TIEMPO
+        tiempo_fin = time.time()
+        tiempo_ms = (tiempo_fin - tiempo_inicio) * 1000
+        
+        #REGISTRAR MÉTRICA
+        total_procesados = len(resultados['conversaciones_procesadas'])
+        metricas_sistema.registrar_carga_dataset(
+            tipo='conversaciones',
+            cantidad=total_procesados,
+            tiempo_ms=tiempo_ms,
+            detalles={
+                "total_fragmentos": sum(c['fragmentos_creados'] for c in resultados['conversaciones_procesadas'])
+            }
+        )
+        
+        # Agregar tiempo al response
+        resultados['tiempo_procesamiento_ms'] = round(tiempo_ms, 2)
+        resultados['tiempo_procesamiento_segundos'] = round(tiempo_ms / 1000, 2)
         
         return {
             "status": "procesado",
@@ -861,6 +924,28 @@ async def borrar_todos_datos():
             "status": "error",
             "mensaje": f"Error al borrar datos: {str(e)}"
         }
+    
+@app.get("/metricas/estadisticas/")
+def obtener_estadisticas_performance():
+    """Obtiene estadísticas agregadas de performance del sistema"""
+    return metricas_sistema.obtener_estadisticas()
+
+@app.get("/metricas/historial/")
+def obtener_historial_completo(ultimos: int = 50):
+    """Obtiene el historial de métricas (por defecto últimos 50)"""
+    historial = metricas_sistema.historial[-ultimos:]
+    return {
+        "total_registros": len(metricas_sistema.historial),
+        "mostrando_ultimos": len(historial),
+        "historial": historial
+    }
+
+@app.delete("/metricas/limpiar/")
+def limpiar_historial_metricas():
+    """Limpia el historial de métricas (útil para testing)"""
+    metricas_sistema.historial = []
+    metricas_sistema._guardar_historial()
+    return {"status": "success", "mensaje": "Historial de métricas limpiado"}
 
 # Servir archivos estáticos
 os.makedirs("static", exist_ok=True)

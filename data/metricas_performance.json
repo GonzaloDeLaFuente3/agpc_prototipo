@@ -1,0 +1,76 @@
+[
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversaciones",
+    "cantidad_items": 50,
+    "tiempo_ms": 5612176.56,
+    "tiempo_segundos": 5612.18,
+    "timestamp": "2025-10-22T17:55:23.468793",
+    "detalles": {
+      "total_fragmentos": 272
+    }
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 46,
+    "tiempo_ms": 10202.11,
+    "tiempo_segundos": 10.2,
+    "contextos_utilizados": 19,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T17:59:32.992266"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 46,
+    "tiempo_ms": 8855.73,
+    "tiempo_segundos": 8.86,
+    "contextos_utilizados": 19,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T18:01:37.089902"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 50,
+    "tiempo_ms": 5860.23,
+    "tiempo_segundos": 5.86,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-22T18:07:48.483436"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 50,
+    "tiempo_ms": 7260.49,
+    "tiempo_segundos": 7.26,
+    "contextos_utilizados": 10,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T18:08:41.603031"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 50,
+    "tiempo_ms": 4186.94,
+    "tiempo_segundos": 4.19,
+    "contextos_utilizados": 3,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T18:10:25.444096"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 44,
+    "tiempo_ms": 8407.98,
+    "tiempo_segundos": 8.41,
+    "contextos_utilizados": 19,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T18:11:36.800606"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 4832.02,
+    "tiempo_segundos": 4.83,
+    "contextos_utilizados": 3,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-22T18:12:40.809586"
+  }
+]
