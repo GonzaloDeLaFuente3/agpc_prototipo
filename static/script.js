@@ -10,6 +10,7 @@ let parametrosPropagacion = {
 };
 let umbralSimilitud = 0.5;
 let factorRefuerzoTemporal = 1.5;
+let kResultados = 5;
 let conversacionesParseadas = null;
 let tipoEntradaActual = 'texto';
 
@@ -70,7 +71,8 @@ const configuracionesParametros = {
         url: '/configurar-parametros/', 
         payload: () => ({ 
             umbral_similitud: umbralSimilitud, 
-            factor_refuerzo_temporal: factorRefuerzoTemporal 
+            factor_refuerzo_temporal: factorRefuerzoTemporal,
+            k_resultados: kResultados
         }),
         onSuccess: (data) => {
             if (data.relaciones_recalculadas) {
@@ -139,6 +141,7 @@ function actualizarValorParametro(parametro, elementoValor) {
     // Actualizar variables globales
     if (parametro === 'umbralSimilitud') umbralSimilitud = parseFloat(valor);
     if (parametro === 'factorRefuerzoTemporal') factorRefuerzoTemporal = parseFloat(valor);
+    if (parametro === 'kResultados') kResultados = parseInt(valor);
 }
 
 // PROCESAMIENTO UNIFICADO DE GRAFOS
@@ -179,7 +182,8 @@ async function preguntarConPropagacion() {
             usar_propagacion: propagacionHabilitada,
             max_pasos: parametrosPropagacion.max_pasos,
             factor_decaimiento: parametrosPropagacion.factor_decaimiento,
-            umbral_activacion: parametrosPropagacion.umbral_activacion
+            umbral_activacion: parametrosPropagacion.umbral_activacion,
+            k_inicial: kResultados
         });
         
         const res = await axios.get(`/preguntar-con-propagacion/?${params}`);
@@ -320,6 +324,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         'cancelarAgregarConversacion': { evento: 'click', funcion: limpiarFormularioConversacion },
         'umbralSimilitud': { evento: 'input', funcion: () => actualizarValorParametro('umbralSimilitud', 'valorUmbralSimilitud') },
         'factorRefuerzoTemporal': { evento: 'input', funcion: () => actualizarValorParametro('factorRefuerzoTemporal', 'valorRefuerzoTemporal') },
+        'kResultados': { evento: 'input', funcion: () => actualizarValorParametro('kResultados', 'valorKResultados') },
     };
 
     Object.entries(eventos).forEach(([id, config]) => {
@@ -334,6 +339,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (data.status === 'success') {
             const umbralControl = document.getElementById('umbralSimilitud');
             const refuerzoControl = document.getElementById('factorRefuerzoTemporal');
+            const kControl = document.getElementById('kResultados');
             
             if (umbralControl) {
                 umbralControl.value = data.parametros.umbral_similitud;
@@ -342,6 +348,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (refuerzoControl) {
                 refuerzoControl.value = data.parametros.factor_refuerzo_temporal;
                 actualizarValorParametro('factorRefuerzoTemporal', 'valorRefuerzoTemporal');
+            }
+            if (kControl && data.parametros.k_resultados) { 
+                kControl.value = data.parametros.k_resultados;
+                actualizarValorParametro('kResultados', 'valorKResultados');
             }
         }
     } catch (error) {

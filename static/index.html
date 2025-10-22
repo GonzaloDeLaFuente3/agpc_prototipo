@@ -414,6 +414,19 @@
                             recientes dominan las respuestas.
                         </p>
                     </div>
+                    <!-- NUEVO: Cantidad de Resultados Iniciales -->
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+                        <h3 class="font-medium text-blue-800 mb-2">
+                            Resultados Iniciales Directos (k): <span id="valorKResultados" class="font-bold">5</span>
+                        </h3>
+                        <input type="range" id="kResultados" min="3" max="15" step="1" value="5" 
+                            class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer">
+                        <p class="text-xs text-blue-700 mt-2">
+                            Cantidad de contextos iniciales recuperados de forma directa por pregunta o consultas al prototipo. 
+                            Valores altos = más contextos 
+                            pero puede incluir menos relevantes. Valores bajos = solo los más relevantes.
+                        </p>
+                    </div>
                     <div class="mt-3 space-y-2">
                         <!-- Botón de aplicar-->
                         <button id="aplicarParametros" onclick="aplicarConfiguracionParametros()" 
@@ -435,6 +448,8 @@
                             <li><strong>Umbral bajo (0.1-0.3):</strong> Muchas conexiones, propagación amplia</li>
                             <li><strong>Umbral alto (0.4-0.6):</strong> Solo conexiones muy fuertes</li>
                             <li><strong>Refuerzo alto (7-9):</strong> Contextos recientes dominan, Muchas conexiones</li>
+                            <li><strong>k bajo (3-5):</strong> Solo contextos muy relevantes</li>
+                            <li><strong>k alto (10-15):</strong> Recuperación amplia, útil con propagación</li>
                         </ul>
                     </div>
                 </div>

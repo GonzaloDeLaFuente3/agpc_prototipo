@@ -190,8 +190,17 @@ def _parsear_respuesta(respuesta: str, factor_base: float, momento: datetime) ->
             factor_refuerzo = factor_base
         
         # Logging para debugging
-        print(f"🧠 LLM Análisis: es_temporal={es_temporal}, intencion='{intencion}', confianza={confianza:.2f}, factor={factor_refuerzo}")
-        
+        print(f"\n🧠 LLM ANÁLISIS COMPLETO:")
+        print(f"   ├─ es_temporal: {es_temporal}")
+        print(f"   ├─ intencion: '{intencion}'")
+        print(f"   ├─ confianza: {confianza:.2f}")
+        print(f"   ├─ factor_refuerzo: {factor_refuerzo}")
+        if es_temporal:
+            print(f"   ├─ ventana_temporal: {datos.get('ventana_inicio')} → {datos.get('ventana_fin')}")
+        else:
+            print(f"   ├─ ventana_temporal: NO (consulta estructural)")
+        print(f"   └─ explicacion: {datos.get('explicacion', 'N/A')[:80]}...")  
+              
         # Construir resultado
         resultado = {
             'es_temporal': es_temporal,

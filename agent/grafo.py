@@ -959,9 +959,17 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         # BUSCAR MÁS CONTEXTOS INICIALMENTE para mayor diversidad
         ids_candidatos = buscar_similares(pregunta, k=k_busqueda * 3)  # 3x más candidatos
     except Exception as e:
-        print(f"Error en búsqueda semántica: {e}")
+        print(f"❌ Error en búsqueda semántica: {e}")
         ids_candidatos = []
     
+    # 🔍 LOGGING: Mostrar contextos candidatos
+    print(f"\n📋 CONTEXTOS CANDIDATOS (top {min(10, len(ids_candidatos))}):")
+    for i, ctx_id in enumerate(ids_candidatos[:10]):
+        if ctx_id in metadatos_contextos:
+            titulo = metadatos_contextos[ctx_id].get('titulo', 'Sin título')[:60]
+            es_temp = metadatos_contextos[ctx_id].get('es_temporal', False)
+            print(f"   {i+1}. {'⏰' if es_temp else '📄'} {titulo}")
+
     # Filtrar por ventana temporal si existe
     ids_similares = ids_candidatos
     contextos_filtrados_temporalmente = 0
@@ -970,7 +978,8 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         ventana_inicio = ventana_temporal['inicio']
         ventana_fin = ventana_temporal['fin']
         
-        print(f"🔍 Aplicando filtro temporal. Ventana: {ventana_inicio} a {ventana_fin}")
+        print(f"\n🔍 APLICANDO FILTRO TEMPORAL:")
+        print(f"   Ventana: {ventana_inicio} → {ventana_fin}")
         
         # Filtrar contextos por ventana temporal
         ids_en_ventana = []
@@ -1003,20 +1012,20 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                     if fecha_inicio <= fecha_contexto <= fecha_fin:
                         ids_en_ventana.append(ctx_id)
                         contexto_titulo = meta.get("titulo", "Sin título")[:30]
-                        print(f"✓ {ctx_id[:8]} '{contexto_titulo}' INCLUIDO en ventana")
+                        print(f"   ✓ {ctx_id[:8]}... '{contexto_titulo}' INCLUIDO")
                         
                 except Exception as e:
-                    print(f"Error procesando timestamp para contexto {ctx_id[:8]}: {e}")
+                    print(f"   ⚠️ Error procesando {ctx_id[:8]}...: {e}")
                     continue
             else:
-                print(f"⚠️ Contexto {ctx_id[:8]} sin timestamp - EXCLUIDO")
+                print(f"   ⚠️ Contexto {ctx_id[:8]}... sin timestamp - EXCLUIDO")
         
         if ids_en_ventana:
             ids_similares = ids_en_ventana[:k_busqueda]
             contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_en_ventana)
-            print(f"✅ {len(ids_en_ventana)} contextos encontrados en ventana temporal")
+            print(f"\n   ✅ {len(ids_en_ventana)} contextos en ventana → seleccionando {len(ids_similares)}")
         else:
-            print(f"⚠️ Ningún contexto en ventana temporal. Aplicando fallback...")
+            print(f"\n   ⚠️ NINGÚN CONTEXTO en ventana temporal. Aplicando fallback...")
             
             # FALLBACK MEJORADO: Buscar en TODOS los contextos
             contextos_con_fechas = []
@@ -1037,15 +1046,17 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                         if fecha_inicio <= fecha_ctx <= fecha_fin:
                             contextos_en_ventana_completa.append(ctx_id)
                             titulo = meta.get('titulo', 'Sin título')
-                            print(f"  ✓ Encontrado en ventana: {titulo[:40]}")
+                            print(f"      ✓ Encontrado: {titulo[:40]}")
             
             if contextos_en_ventana_completa:
                 # Éxito: encontramos contextos en ventana
                 ids_similares = contextos_en_ventana_completa[:k_busqueda]
-                print(f"📅 Fallback exitoso: {len(contextos_en_ventana_completa)} contextos en ventana")
+                print(f"\n   📅 Fallback exitoso: {len(contextos_en_ventana_completa)} contextos en ventana")
                 contextos_filtrados_temporalmente = 0
             else:
                 # PASO 2: Si no hay nada en ventana, buscar por proximidad
+                print(f"      ⚠️ Sin contextos en ventana. Buscando por proximidad temporal...")
+                
                 for ctx_id, meta in metadatos_contextos.items():
                     timestamp = meta.get('timestamp')
                     if timestamp:
@@ -1058,24 +1069,27 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                 if contextos_con_fechas:
                     contextos_con_fechas.sort(key=lambda x: x[1])
                     
-                    print(f"📅 Contextos por proximidad temporal:")
+                    print(f"\n   📅 Contextos por proximidad temporal (top 10):")
                     for ctx_id, dias_diff, fecha_ctx in contextos_con_fechas[:10]:
                         meta = metadatos_contextos.get(ctx_id, {})
                         titulo = meta.get('titulo', 'Sin título')
-                        print(f"  - {titulo[:40]}: {fecha_ctx.strftime('%d/%m/%Y')} (±{dias_diff} días)")
+                        print(f"      - {titulo[:40]}: {fecha_ctx.strftime('%d/%m/%Y')} (±{dias_diff} días)")
                     
-                    print(f"📄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
+                    print(f"\n   📄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
                     ids_similares = [ctx_id for ctx_id, _, _ in contextos_con_fechas[:k_busqueda]]
                     
                     contextos_filtrados_temporalmente = 0
                 else:
                     # Último recurso: búsqueda semántica pura
+                    print(f"\n   📄 ÚLTIMO RECURSO: Usando búsqueda semántica pura")
                     ids_similares = ids_candidatos[:k_busqueda]
                     contextos_filtrados_temporalmente = 0
-                    print(f"📄 Usando búsqueda semántica pura como último recurso")
     else:
+        # ✅ CASO SEMÁNTICO/ESTRUCTURAL (SIN FILTRO TEMPORAL)
+        print(f"\n📚 CONSULTA SEMÁNTICA/ESTRUCTURAL (sin filtro temporal)")
         ids_similares = ids_candidatos[:k_busqueda]
         contextos_filtrados_temporalmente = 0
+        print(f"   Usando top {len(ids_similares)} resultados semánticos de {len(ids_candidatos)} candidatos")
     
     # Construir árbol CON INTENCIÓN
     if ids_similares:
@@ -1083,10 +1097,11 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         intencion_detectada = analisis_intencion.get('intencion_temporal', 'ESTRUCTURAL')
         construir_arbol_consulta._intencion_actual = intencion_detectada
         
-        print(f"- Construyendo árbol con intención: {intencion_detectada}")
+        print(f"\n🏗️  Construyendo árbol de consulta con intención: {intencion_detectada}")
         
         arbol = construir_arbol_consulta(pregunta, ids_similares, referencia_temporal, factor_refuerzo, momento_consulta)
     else:
+        print(f"\n❌ NO SE ENCONTRARON CONTEXTOS RELEVANTES")
         arbol = {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
     
     return {

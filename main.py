@@ -37,7 +37,8 @@ app = FastAPI()
 # Variables globales para los parámetros configurables
 parametros_sistema = {
     'umbral_similitud': 0.5,
-    'factor_refuerzo_temporal': 1.5
+    'factor_refuerzo_temporal': 1.5,
+    'k_resultados': 5,
 }
 
 class EntradaContexto(BaseModel):
@@ -49,6 +50,7 @@ class EntradaContexto(BaseModel):
 class ConfiguracionParametros(BaseModel):
     umbral_similitud: Optional[float] = None
     factor_refuerzo_temporal: Optional[float] = None
+    k_resultados: Optional[int] = None 
 
 class EntradaTextoPlano(BaseModel):
     texto: str
@@ -190,7 +192,7 @@ def preguntar(pregunta: str):
 
 @app.get("/preguntar-con-propagacion/")
 def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_pasos: int = 2,
-                             factor_decaimiento: float = None, umbral_activacion: float = None):
+                             factor_decaimiento: float = None, umbral_activacion: float = None,k_inicial: int = None):
     """Responde a una pregunta usando propagación de activación."""
     # INICIAR MEDICIÓN DE TIEMPO
     tiempo_inicio = time.time()
@@ -228,10 +230,12 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         }
 
     try:
-        k_busqueda = 5
+        # Usar k_inicial del parámetro o el valor configurado en el sistema
+        k_busqueda = k_inicial if k_inicial is not None else parametros_sistema.get('k_resultados', 5)
         # Obtener factor base configurado
         factor_base = parametros_sistema.get('factor_refuerzo_temporal', 1.5)
         print(f"⚙️ Factor base configurado: {factor_base}")
+        print(f"⚙️ k_inicial: {k_busqueda}") 
         
         # Análisis con propagación
         analisis_completo = grafo.analizar_consulta_con_propagacion(
@@ -619,6 +623,13 @@ def configurar_parametros_sistema(config: ConfiguracionParametros):
                 parametros_sistema['factor_refuerzo_temporal'] = config.factor_refuerzo_temporal
             else:
                 return {"status": "error", "mensaje": "Factor de refuerzo temporal debe estar entre 0.5 y 3.0"}
+            
+        #  VALIDACIÓN DE K_RESULTADOS
+        if config.k_resultados is not None:
+            if 3 <= config.k_resultados <= 15:
+                parametros_sistema['k_resultados'] = config.k_resultados
+            else:
+                return {"status": "error", "mensaje": "k_resultados debe estar entre 3 y 15"}
         
         # RECALCULAR RELACIONES SI CAMBIÓ EL UMBRAL
         mensaje_recalculo = ""
