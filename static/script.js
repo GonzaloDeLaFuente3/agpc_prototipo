@@ -853,21 +853,55 @@ async function cargarEstadisticasDobleNivel() {
 }
 
 async function forzarRecalculoRelaciones() {
-    if (!confirm('¿Recalcular todas las relaciones del grafo?\n\nEsto puede tardar unos segundos con muchos contextos.')) {
+    const confirmar = confirm('⚠️ ¿Deseas recalcular todas las relaciones con el nuevo umbral?\n\n' +
+        'Esto puede tomar varios minutos dependiendo del tamaño del grafo.\n\n');
+    
+    if (!confirmar) {
         return;
     }
     
+    // Crear modal de progreso
+    const modalProgreso = document.createElement('div');
+    modalProgreso.id = 'modalRecalculo';
+    modalProgreso.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+    modalProgreso.innerHTML = `
+        <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600"></div>
+                <p class="text-lg font-semibold text-gray-800">Recalculando relaciones...</p>
+                <p class="text-sm text-gray-600">Esto puede tomar algunos minutos</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="barraProgreso" class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p id="textoProgreso" class="text-xs text-gray-500">Iniciando...</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modalProgreso);
+    
     try {
         const response = await axios.post('/recalcular-relaciones/');
+        
+        // Remover modal
+        document.getElementById('modalRecalculo')?.remove();
         
         if (response.data.status === 'success') {
             const antes = response.data.antes;
             const despues = response.data.despues;
             const diferencia = despues.relaciones - antes.relaciones;
             const signo = diferencia >= 0 ? '+' : '';
+            const tiempo = response.data.tiempo || 'N/A';
             
-            mostrarNotificacion(`Relaciones recalculadas! Nodos: ${despues.nodos}, Relaciones: ${antes.relaciones} → ${despues.relaciones} (${signo}${diferencia})`, 'exito', 8000);
+            mostrarNotificacion(
+                `✅ Relaciones recalculadas!\n\n` +
+                `Nodos: ${despues.nodos}\n` +
+                `Relaciones: ${antes.relaciones} → ${despues.relaciones} (${signo}${diferencia})\n` +
+                `Tiempo: ${tiempo}`,
+                'exito', 
+                8000
+            );
             
+            // Recargar estadísticas si están visibles
             if (document.getElementById('estadisticas').innerHTML !== '') {
                 cargarEstadisticas();
             }
@@ -875,6 +909,7 @@ async function forzarRecalculoRelaciones() {
             mostrarNotificacion(`Error: ${response.data.mensaje}`, 'error');
         }
     } catch (error) {
+        document.getElementById('modalRecalculo')?.remove();
         mostrarNotificacion(`Error de conexión: ${error.message}`, 'error');
     }
 }

@@ -19,6 +19,9 @@ from agent.propagacion import crear_propagador, propagar_desde_consulta_integrad
 from agent.utils import parse_iso_datetime_safe
 from agent.utils import normalizar_timestamp_para_guardar
 from agent.pdf_processor import fragmentar_texto_pdf, crear_attachment_pdf
+from agent.semantica import calcular_similitudes_batch
+from agent.semantica import indexar_documentos_batch
+from agent.semantica import verificar_estado_coleccion
 
 # Variable global para el propagador
 propagador_global = None
@@ -32,10 +35,8 @@ UMBRAL_SIMILITUD = 0.5
 
 def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     """
-    Actualiza solo las relaciones del nodo nuevo con los nodos existentes.
-    Esto evita el recálculo completo O(n²) y solo hace O(n) operaciones.
-    Returns:
-        Diccionario con estadísticas de la actualización
+    VERSIÓN OPTIMIZADA - Actualiza relaciones usando batch de similitudes.
+    Esto evita cálculos individuales y usa el poder de ChromaDB.
     """
     parametros = usar_parametros_configurables()
     umbral_actual = parametros.get('umbral_similitud', UMBRAL_SIMILITUD)
@@ -43,6 +44,17 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     
     # Obtener todos los nodos excepto el nuevo
     nodos_existentes = [n for n in grafo_contextos.nodes() if n != nodo_nuevo]
+    
+    if not nodos_existentes:
+        return {
+            "tipo_actualizacion": "incremental",
+            "nodo_procesado": nodo_nuevo,
+            "nodos_comparados": 0,
+            "conexiones_creadas": 0,
+            "tiempo_ms": 0,
+            "total_nodos_grafo": 1,
+            "total_relaciones_grafo": 0,
+        }
     
     # Metadatos del nodo nuevo
     metadatos_nuevo = metadatos_contextos.get(nodo_nuevo, {})
@@ -53,7 +65,10 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     
     conexiones_creadas = 0
     
-    # Calcular relaciones solo con nodos existentes
+    # Calcular TODAS las similitudes semánticas en UN SOLO BATCH
+    similitudes_semanticas = calcular_similitudes_batch(texto_nuevo, nodos_existentes)
+    
+    # Ahora iterar sobre nodos existentes usando las similitudes pre-calculadas
     for nodo_existente in nodos_existentes:
         metadatos_existente = metadatos_contextos.get(nodo_existente, {})
         claves_existente = set(metadatos_existente.get("palabras_clave", []))
@@ -61,18 +76,23 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
         tipo_existente = metadatos_existente.get("tipo_contexto", "general")
         texto_existente = metadatos_existente.get("texto", "")
         
-        # Calcular similitudes usando las funciones existentes
-        similitud_estructural = _calcular_similitud_estructural(
-            claves_nuevo, claves_existente, texto_nuevo, texto_existente
-        )
+        # Calcular similitud Jaccard (rápido, no necesita optimización)
+        similitud_jaccard = _calcular_similitud_jaccard(claves_nuevo, claves_existente)
+        
+        # Obtener similitud semántica del batch (ya calculada)
+        similitud_semantica = similitudes_semanticas.get(nodo_existente, 0.0)
+        
+        # Calcular similitud estructural (promedio)
+        similitud_estructural = (similitud_jaccard + similitud_semantica) / 2
+        
+        # Calcular relevancia temporal
         relevancia_temporal = _calcular_relevancia_temporal(
             fecha_nuevo, fecha_existente, tipo_nuevo, tipo_existente
         )
-        # calcular peso efectivo bruto
+        
+        # Calcular peso efectivo
         peso_efectivo_bruto = similitud_estructural * (1 + relevancia_temporal)
-
-        # NUEVA: Normalizar peso efectivo a [0,1] usando sigmoidea
-        peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto)
+        peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto) # Normalizar a [0,1]
         
         # Solo crear arista si supera el umbral
         if similitud_estructural > umbral_actual:
@@ -90,11 +110,8 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
             conexiones_creadas += 1
     
     tiempo_transcurrido = time.time() - inicio_tiempo
-
-    # Calcular relaciones únicas (dividir entre 2 porque son bidireccionales)
     relaciones_unicas = len(grafo_contextos.edges()) // 2
     
-    # Estadísticas de la actualización
     estadisticas = {
         "tipo_actualizacion": "incremental",
         "nodo_procesado": nodo_nuevo,
@@ -111,7 +128,9 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
                         participantes: List[str] = None, metadata: Dict = None, attachments: Optional[List[Dict]] = None ) -> Dict:
     """
     Agrega una conversación completa con actualización incremental por fragmento.
+    VERSIÓN OPTIMIZADA CON BATCH PROCESSING
     """
+    # Normalizar fecha
     fecha_normalizada = None
     if fecha:
         fecha_normalizada = normalizar_timestamp_para_guardar(fecha)
@@ -156,7 +175,11 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     
     print(f"📝 Procesando conversación '{titulo}' con {len(fragmentos)} fragmentos...")
     
-    # Procesar cada fragmento con actualización incremental
+    # Recolectar todos los fragmentos para indexado batch
+    fragmentos_para_indexar_ids = []
+    fragmentos_para_indexar_textos = []
+    
+    # Procesar cada fragmento - PRIMERO preparar todo sin indexar
     for i, fragmento in enumerate(fragmentos):
         frag_id = fragmento['id']
         frag_meta = fragmento['metadata']
@@ -182,14 +205,24 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             "posicion_fragmento": frag_meta['posicion_en_conversacion']
         }
         
-        # Indexar para búsqueda semántica
-        indexar_documento(frag_id, frag_meta['texto'])
+        # Agregar a lista para indexado batch (NO indexar ahora)
+        fragmentos_para_indexar_ids.append(frag_id)
+        fragmentos_para_indexar_textos.append(frag_meta['texto'])
+        
+        fragmentos_ids.append(frag_id)
+    
+    # INDEXAR TODOS LOS FRAGMENTOS EN UN SOLO BATCH
+    if fragmentos_para_indexar_ids:
+        print(f"Indexando {len(fragmentos_para_indexar_ids)} fragmentos en batch...")
+        indexar_documentos_batch(fragmentos_para_indexar_ids, fragmentos_para_indexar_textos)
+    
+    # AHORA sí, calcular relaciones incrementales para cada fragmento
+    for i, fragmento in enumerate(fragmentos):
+        frag_id = fragmento['id']
         
         # ACTUALIZACIÓN INCREMENTAL para este fragmento
         stats_frag = _actualizar_relaciones_incremental(frag_id)
         estadisticas_actualizacion.append(stats_frag)
-        
-        fragmentos_ids.append(frag_id)
         
         # Mostrar progreso cada 3 fragmentos
         if (i + 1) % 3 == 0:
@@ -200,7 +233,12 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     estadisticas_pdf = []
     
     if attachments:
-        print(f"📎 Procesando {len(attachments)} attachment(s) para conversación '{titulo}'")
+        print(f"Procesando {len(attachments)} attachment(s) para conversación '{titulo}'")
+        
+        # Lista para batch de PDFs
+        fragmentos_pdf_para_indexar_ids = []
+        fragmentos_pdf_para_indexar_textos = []
+        
         for att_idx, attachment in enumerate(attachments):
             if not attachment.get('extracted_text'):
                 print(f"⚠️ Attachment {att_idx} sin texto extraído, saltando...")
@@ -245,64 +283,53 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
                 # Mantener compatibilidad con metadatos_contextos
                 metadatos_contextos[fragmento_id] = metadata_fragmento
                 
-                # Indexar para búsqueda semántica
-                indexar_documento(fragmento_id, fragmento_texto)
-                
-                # ACTUALIZACIÓN INCREMENTAL para este fragmento PDF
-                stats_pdf = _actualizar_relaciones_incremental(fragmento_id)
-                estadisticas_pdf.append(stats_pdf)
+                # Agregar a lista para indexado batch
+                fragmentos_pdf_para_indexar_ids.append(fragmento_id)
+                fragmentos_pdf_para_indexar_textos.append(fragmento_texto)
                 
                 fragmentos_pdf_ids.append(fragmento_id)
-                
-                # Mostrar progreso
-                if (frag_idx + 1) % 5 == 0:
-                    print(f"  ✅ Fragmento PDF {frag_idx+1}/{len(fragmentos_texto_pdf)}: {stats_pdf['conexiones_creadas']} conexiones")
+        
+        # INDEXAR FRAGMENTOS PDF EN BATCH
+        if fragmentos_pdf_para_indexar_ids:
+            print(f"Indexando {len(fragmentos_pdf_para_indexar_ids)} fragmentos PDF en batch...")
+            indexar_documentos_batch(fragmentos_pdf_para_indexar_ids, fragmentos_pdf_para_indexar_textos)
+        
+        # AHORA calcular relaciones para PDFs
+        for fragmento_id in fragmentos_pdf_ids:
+            stats_pdf = _actualizar_relaciones_incremental(fragmento_id)
+            estadisticas_pdf.append(stats_pdf)
+        
+        print(f"✅ Procesados {len(fragmentos_pdf_ids)} fragmentos PDF con relaciones calculadas")
     
-    # Actualizar metadata de conversación con attachments e IDs de PDFs
-    if conversacion_id in conversaciones_metadata:
-        conversaciones_metadata[conversacion_id]['attachments'] = attachments or []
-        conversaciones_metadata[conversacion_id]['fragmentos_pdf_ids'] = fragmentos_pdf_ids
-        conversaciones_metadata[conversacion_id]['total_fragmentos_pdf'] = len(fragmentos_pdf_ids)
-        # Actualizar fragmentos_ids para incluir PDFs
-        conversaciones_metadata[conversacion_id]['fragmentos_ids'].extend(fragmentos_pdf_ids)
-        conversaciones_metadata[conversacion_id]['total_fragmentos'] += len(fragmentos_pdf_ids)
+    # Actualizar IDs de conversación con PDFs
+    conversaciones_metadata[conversacion_id]['fragmentos_ids'].extend(fragmentos_pdf_ids)
+    conversaciones_metadata[conversacion_id]['total_fragmentos'] += len(fragmentos_pdf_ids)
     
-    _guardar_grafo()
-    _guardar_conversaciones()
+    # Guardar todo (una sola vez al final)
+    guardar_conversaciones_en_disco()
+    _guardar_grafo_con_propagador()  #Guardar con propagador solo al final
     
-    # Estadísticas finales
+    # Preparar estadísticas finales
     total_conexiones = sum(s['conexiones_creadas'] for s in estadisticas_actualizacion)
-    tiempo_total = sum(s['tiempo_ms'] for s in estadisticas_actualizacion)
-
-    if estadisticas_pdf:
-        total_conexiones_pdf = sum(s['conexiones_creadas'] for s in estadisticas_pdf)
-        tiempo_total_pdf = sum(s['tiempo_ms'] for s in estadisticas_pdf)
-        total_conexiones += total_conexiones_pdf
-        tiempo_total += tiempo_total_pdf
+    total_conexiones += sum(s['conexiones_creadas'] for s in estadisticas_pdf)
     
-    # Calcular relaciones únicas
-    relaciones_unicas = len(grafo_contextos.edges()) // 2
-    print(f"🎉 Conversación procesada exitosamente:")
-    print(f"   📊 Total conexiones creadas: {total_conexiones}")
-    if fragmentos_pdf_ids:
-        print(f"   📄 Fragmentos PDF: {len(fragmentos_pdf_ids)}")
-    print(f"   ⚡ Tiempo total: {tiempo_total:.1f}ms")
-    print(f"   🔗 Total relaciones en grafo: {relaciones_unicas} pares únicos ({len(grafo_contextos.edges())} direccionales)")
-    
-    return {
+    resultado = {
         'conversacion_id': conversacion_id,
-        'fragmentos_creados': fragmentos_ids,
         'total_fragmentos': len(fragmentos) + len(fragmentos_pdf_ids),
-        'total_fragmentos_mensaje': len(fragmentos),
-        'total_fragmentos_pdf': len(fragmentos_pdf_ids),
-        'estadisticas_actualizacion': {
-            'total_conexiones_creadas': total_conexiones,
-            'tiempo_total_ms': tiempo_total,
-            'fragmentos_procesados': len(fragmentos),
-            'fragmentos_pdf_procesados': len(fragmentos_pdf_ids),
-            'total_relaciones_grafo': len(grafo_contextos.edges())
-        }
+        'fragmentos_conversacion': len(fragmentos),
+        'fragmentos_pdf': len(fragmentos_pdf_ids),
+        'total_conexiones_creadas': total_conexiones,
+        'fragmentos_ids': conversaciones_metadata[conversacion_id]['fragmentos_ids']
     }
+    
+    print(f"Conversación '{titulo}' agregada exitosamente")
+    print(f"Total fragmentos: {resultado['total_fragmentos']}")
+    print(f"Conexiones creadas: {total_conexiones}")
+
+    # Al final de agregar_conversacion, antes del return
+    verificar_estado_coleccion()
+    
+    return resultado
 
 def _guardar_conversaciones():
     """Guarda metadatos de conversaciones y fragmentos."""
@@ -415,58 +442,47 @@ def _calcular_similitud_jaccard(claves_a: Set[str], claves_b: Set[str]) -> float
     jaccard = interseccion / union if union > 0 else 0.0
     return jaccard
 
-def _calcular_similitud_semantica_simple(texto_a: str, texto_b: str) -> float:
-    """Calcula similitud semántica usando ChromaDB query."""
+def _calcular_similitud_estructural(claves_a: Set[str], claves_b: Set[str], texto_a: str, texto_b: str) -> float:
+    """
+    Calcula similitud estructural como el promedio de similitud Jaccard y semántica.
+    NOTA: Esta función ya NO se usa en _actualizar_relaciones_incremental optimizada,
+    pero se mantiene por compatibilidad con recalcular_relaciones().
+    """
+    # Calcular Jaccard
+    similitud_jaccard = _calcular_similitud_jaccard(claves_a, claves_b)
+    
+    # Para similitud semántica, usar un cálculo directo simple
+    # (no podemos usar batch aquí porque solo comparamos 2 textos)
     try:
-        if not texto_a.strip() or not texto_b.strip():
-            return 0.0
-        
-        # Crear un documento temporal para comparar
+        # Indexar temporalmente texto_a
         temp_id = f"temp_{hash(texto_a)}"
-        
-        # Indexar temporalmente el primer texto
         indexar_documento(temp_id, texto_a)
         
-        # Buscar similitud con el segundo texto
+        # Buscar similitud con texto_b
         resultado = coleccion.query(
             query_texts=[texto_b],
-            n_results=10,  # Buscar más resultados para encontrar nuestro temp
+            n_results=10,
             include=['distances']
         )
         
-        # Buscar nuestro documento temporal en los resultados
+        similitud_semantica = 0.0
         if temp_id in resultado['ids'][0]:
             index = resultado['ids'][0].index(temp_id)
             distance = resultado['distances'][0][index]
-            # Convertir distancia a similitud (0=idéntico, 2=muy diferente)
-            similitud = max(0.0, 1.0 - distance / 2.0)
-        else:
-            similitud = 0.0
+            similitud_semantica = max(0.0, 1.0 - distance / 2.0)
         
-        # Limpiar documento temporal
+        # Limpiar temporal
         try:
             coleccion.delete(ids=[temp_id])
         except:
             pass
             
-        return similitud
-        
     except Exception as e:
         print(f"Error en similitud semántica: {e}")
-        return 0.0
-
-def _calcular_similitud_estructural(claves_a: Set[str], claves_b: Set[str], texto_a: str, texto_b: str) -> float:
-    """
-    Calcula similitud estructural como el promedio de similitud Jaccard y semántica.
-    Similitud_estructural = (Similitud_jaccard + Similitud_semantica) / 2
-    """
-    # Calcular componentes
-    similitud_jaccard = _calcular_similitud_jaccard(claves_a, claves_b)
-    similitud_semantica = _calcular_similitud_semantica_simple(texto_a, texto_b)
+        similitud_semantica = 0.0
     
-    # Promedio de ambas similitudes
+    # Promedio
     similitud_estructural = (similitud_jaccard + similitud_semantica) / 2
-    
     return similitud_estructural
 
 def _calcular_relevancia_temporal(fecha_a: str, fecha_b: str, tipo_a: str = "general", tipo_b: str = "general") -> float:
@@ -516,57 +532,113 @@ def _calcular_similitud_textual_exacta(texto_a: str, texto_b: str) -> float:
     return intersection / union if union > 0 else 0.0
 
 def _recalcular_relaciones():
-    """Recalcula todas las relaciones del grafo con similitud estructural corregida."""
+    """
+    VERSIÓN OPTIMIZADA: Recalcula todas las relaciones usando batch processing.
+    Mucho más rápido que el método original.
+    """
+    print("Iniciando recálculo optimizado de relaciones...")
+    inicio_total = time.time()
+    
+    # Limpiar todas las aristas
     grafo_contextos.clear_edges()
     nodos = list(grafo_contextos.nodes())
-    print(f"Recalculando relaciones para {len(nodos)} nodos...")
-    # CONTADOR LOCAL de pares únicos
+    total_nodos = len(nodos)
+    
+    print(f"Recalculando relaciones para {total_nodos} nodos...")
+    print(f"⚙️  Umbral de similitud: {UMBRAL_SIMILITUD}")
+    
     pares_unicos_creados = 0
+    total_comparaciones = (total_nodos * (total_nodos - 1)) // 2
+    comparaciones_realizadas = 0
     
-    for i, nodo_a in enumerate(nodos):
-        metadatos_a = metadatos_contextos.get(nodo_a, {})
-        claves_a = set(metadatos_a.get("palabras_clave", []))
-        fecha_a = metadatos_a.get("timestamp")
-        tipo_a = metadatos_a.get("tipo_contexto", "general")
-        texto_a = metadatos_a.get("texto", "")
+    # Procesar por lotes de nodos para mejor progreso visual
+    BATCH_SIZE = 10
+    
+    for i in range(0, total_nodos, BATCH_SIZE):
+        batch_nodos = nodos[i:min(i + BATCH_SIZE, total_nodos)]
         
-        for nodo_b in nodos[i+1:]:
-            metadatos_b = metadatos_contextos.get(nodo_b, {})
-            claves_b = set(metadatos_b.get("palabras_clave", []))
-            fecha_b = metadatos_b.get("timestamp")
-            tipo_b = metadatos_b.get("tipo_contexto", "general")
-            texto_b = metadatos_b.get("texto", "")
+        for idx_en_batch, nodo_a in enumerate(batch_nodos):
+            nodo_idx_global = i + idx_en_batch
             
-            # Calcular similitudes
-            similitud_estructural = _calcular_similitud_estructural(claves_a, claves_b, texto_a, texto_b)
-            relevancia_temporal = _calcular_relevancia_temporal(fecha_a, fecha_b, tipo_a, tipo_b)
+            metadatos_a = metadatos_contextos.get(nodo_a, {})
+            claves_a = set(metadatos_a.get("palabras_clave", []))
+            fecha_a = metadatos_a.get("timestamp")
+            tipo_a = metadatos_a.get("tipo_contexto", "general")
+            texto_a = metadatos_a.get("texto", "")
             
-            # Calcular y normalizar peso efectivo
-            peso_efectivo_bruto = similitud_estructural * (1 + relevancia_temporal)
-            peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto)  # Normalización sigmoidea
+            # Obtener todos los nodos posteriores para comparar
+            nodos_restantes = nodos[nodo_idx_global + 1:]
             
-            if similitud_estructural > UMBRAL_SIMILITUD:
-                datos_arista = {
-                    "peso_estructural": round(similitud_estructural, 3),
-                    "relevancia_temporal": round(relevancia_temporal, 3),
-                    "peso_efectivo": round(peso_efectivo, 3),
-                    "tipo": "semantica_temporal" if (fecha_a and fecha_b) else "semantica",
-                    "tipos_contexto": f"{tipo_a}-{tipo_b}"
-                }
+            if not nodos_restantes:
+                continue
+            
+            # Calcular TODAS las similitudes semánticas en UN SOLO BATCH
+            similitudes_semanticas = calcular_similitudes_batch(texto_a, nodos_restantes)
+            
+            # Ahora iterar sobre nodos restantes con similitudes pre-calculadas
+            for nodo_b in nodos_restantes:
+                metadatos_b = metadatos_contextos.get(nodo_b, {})
+                claves_b = set(metadatos_b.get("palabras_clave", []))
+                fecha_b = metadatos_b.get("timestamp")
+                tipo_b = metadatos_b.get("tipo_contexto", "general")
                 
-                # Crear aristas bidireccionales
-                grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
-                grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
+                # Calcular Jaccard (rápido)
+                similitud_jaccard = _calcular_similitud_jaccard(claves_a, claves_b)
                 
-                # INCREMENTAR CONTADOR DE PARES ÚNICOS
-                pares_unicos_creados += 1
+                # Obtener similitud semántica del batch (ya calculada)
+                similitud_semantica = similitudes_semanticas.get(nodo_b, 0.0)
+                
+                # Calcular similitud estructural (promedio)
+                similitud_estructural = (similitud_jaccard + similitud_semantica) / 2
+                
+                # Calcular relevancia temporal
+                relevancia_temporal = _calcular_relevancia_temporal(
+                    fecha_a, fecha_b, tipo_a, tipo_b
+                )
+                
+                # Calcular peso efectivo
+                peso_efectivo_bruto = similitud_estructural * (1 + relevancia_temporal)
+                peso_efectivo = peso_efectivo_bruto / (1 + peso_efectivo_bruto)
+                
+                # Solo crear arista si supera el umbral
+                if similitud_estructural > UMBRAL_SIMILITUD:
+                    datos_arista = {
+                        "peso_estructural": round(similitud_estructural, 3),
+                        "relevancia_temporal": round(relevancia_temporal, 3),
+                        "peso_efectivo": round(peso_efectivo, 3),
+                        "tipo": "semantica_temporal" if (fecha_a and fecha_b) else "semantica",
+                        "tipos_contexto": f"{tipo_a}-{tipo_b}"
+                    }
+                    
+                    # Crear aristas bidireccionales
+                    grafo_contextos.add_edge(nodo_a, nodo_b, **datos_arista)
+                    grafo_contextos.add_edge(nodo_b, nodo_a, **datos_arista)
+                    pares_unicos_creados += 1
+                
+                comparaciones_realizadas += 1
+            
+            # Mostrar progreso cada 5 nodos
+            if (nodo_idx_global + 1) % 5 == 0:
+                porcentaje = (comparaciones_realizadas / total_comparaciones) * 100
+                print(f"  📈 Progreso: {nodo_idx_global + 1}/{total_nodos} nodos | "
+                      f"{porcentaje:.1f}% completado | "
+                      f"Relaciones creadas: {pares_unicos_creados}")
     
-    # LOGGING CORREGIDO
-    print(f"✅ Pares únicos creados: {pares_unicos_creados}")
-    print(f"   (Total aristas direccionales: {grafo_contextos.number_of_edges()})")
+    tiempo_total = time.time() - inicio_total
+    
+    print(f"\n✅ Recálculo completado en {tiempo_total:.2f} segundos")
+    print(f"Pares únicos creados: {pares_unicos_creados}")
+    print(f"Total aristas direccionales: {grafo_contextos.number_of_edges()}")
+    print(f"Comparaciones procesadas: {comparaciones_realizadas:,}")
+    
+    return {
+        "pares_creados": pares_unicos_creados,
+        "tiempo_segundos": round(tiempo_total, 2),
+        "comparaciones": comparaciones_realizadas
+    }
 
 def _guardar_grafo():
-    """Guarda el grafo en disco de forma thread-safe."""
+    """Guarda el grafo y metadatos en disco - VERSIÓN OPTIMIZADA."""
     with _lock:
         os.makedirs("data", exist_ok=True)
         
@@ -576,8 +648,23 @@ def _guardar_grafo():
         with open(ARCHIVO_METADATOS, 'w', encoding='utf-8') as f:
             json.dump(metadatos_contextos, f, ensure_ascii=False, indent=2)
 
-        #Actualizar propagador después de guardar
-        actualizar_propagador()
+        # NO llamar a actualizar_propagador() aquí - se hará al final de cada conversación
+
+# guardar al final del batch
+def _guardar_grafo_con_propagador():
+    """Guarda el grafo Y actualiza el propagador (solo al final de conversaciones completas)."""
+    _guardar_grafo()
+    actualizar_propagador()
+
+def guardar_conversaciones_en_disco():
+    """Guarda metadatos de conversaciones y fragmentos en disco."""
+    os.makedirs("data", exist_ok=True)
+    
+    with open("data/conversaciones.json", 'w', encoding='utf-8') as f:
+        json.dump(conversaciones_metadata, f, ensure_ascii=False, indent=2)
+    
+    with open("data/fragmentos.json", 'w', encoding='utf-8') as f:
+        json.dump(fragmentos_metadata, f, ensure_ascii=False, indent=2)
 
 def cargar_desde_disco():
     """Carga el grafo desde disco."""

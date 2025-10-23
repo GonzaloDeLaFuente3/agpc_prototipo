@@ -8,11 +8,8 @@ from typing import Dict, List, Optional, Union
 import os
 from agent import grafo, responder
 from agent.semantica import indexar_documento, buscar_similares
-# from agent.query_analyzer import analizar_intencion_temporal
-# from agent.temporal_detection_enhanced import analizar_intencion_temporal_mejorado
 from agent.temporal_llm_parser import analizar_temporalidad_con_llm
 from datetime import datetime
-from fastapi import UploadFile, File
 from agent.text_batch_processor import TextBatchProcessor
 from agent.utils import parse_iso_datetime_safe
 from agent.utils import normalizar_timestamp_para_guardar
@@ -24,6 +21,7 @@ from agent import grafo as modulo_grafo
 import networkx as nx
 from agent.metricas import metricas_sistema
 import time
+import traceback
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -653,17 +651,19 @@ def configurar_parametros_sistema(config: ConfiguracionParametros):
         return {"status": "error", "mensaje": str(e)}
 
 # Nuevo endpoint para forzar recálculo
-@app.post("/recalcular-relaciones/")
 def forzar_recalculo_relaciones():
     """Fuerza el recálculo de todas las relaciones con los parámetros actuales."""
     try:
+        inicio = time.time()
         stats_antes = grafo.obtener_estadisticas()
         print(f"🔄 Iniciando recálculo de relaciones con umbral: {parametros_sistema['umbral_similitud']}")
         
-        grafo._recalcular_relaciones()
-        grafo._guardar_grafo()
+        # Usar la versión optimizada
+        resultado_recalculo = grafo._recalcular_relaciones()
+        grafo._guardar_grafo_con_propagador()  # Usar versión con propagador
         
         stats_despues = grafo.obtener_estadisticas()
+        tiempo_total = time.time() - inicio
         
         return {
             "status": "success",
@@ -676,12 +676,15 @@ def forzar_recalculo_relaciones():
                 "nodos": stats_despues["total_contextos"], 
                 "relaciones": stats_despues["total_relaciones"]
             },
-            "umbral_aplicado": parametros_sistema['umbral_similitud']
+            "umbral_aplicado": parametros_sistema['umbral_similitud'],
+            "tiempo": f"{tiempo_total:.2f}s",
+            "detalles": resultado_recalculo
         }
         
     except Exception as e:
+        traceback.print_exc()
         return {"status": "error", "mensaje": str(e)}
-
+    
 @app.get("/estado-parametros/")
 def obtener_estado_parametros():
     """Obtiene el estado actual de los parámetros del sistema."""

@@ -1,5 +1,5 @@
 {
-  "4e6b963d-c40e-47b6-a4a0-35fc63f405b0": {
+  "751e3442-807c-48a9-ab68-933be18289a6": {
     "titulo": "Trabajo no registrado - Caso 2",
     "fecha": "2023-01-26T00:00:00",
     "participantes": [
@@ -13,18 +13,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "07636882-0707-46fc-8c09-1f5a9a41ff33",
-      "e8bdf724-91b0-4730-90c4-b444c535e6b7",
-      "a93af8c1-64a8-4025-b362-1b146dd09b6e",
-      "2739f682-4b16-49b6-9168-1cd4b2fd4679",
-      "ee774a3e-fdd7-4e2f-851f-7eee033e6499"
+      "818592dd-d78c-4f3a-84f0-fc031575dad4",
+      "f3776f97-1e28-4e6a-b694-7782daa72665",
+      "7f096ac5-521d-40ed-b609-4e59f8ddca0e",
+      "cfde5523-f76a-4a77-9dc6-8cc54addea53",
+      "c6cf6e39-8a52-478d-9fae-9813ee8f7b4e"
     ],
-    "created_at": "2025-10-22T16:21:51",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:56"
   },
-  "96fbc4f6-06e5-4086-a614-0debe51a2afa": {
+  "04888296-b88b-47dd-89c0-5771aaf6da13": {
     "titulo": "Usucapión de inmueble por posesión - Caso 1",
     "fecha": "2023-01-30T00:00:00",
     "participantes": [
@@ -38,19 +35,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "82904a92-6776-4ef0-845f-3b75460a2712",
-      "9b462fc8-41a1-46cc-a21b-196765d7ed4c",
-      "3c439c59-57a7-4435-beb3-d41a7bd70627",
-      "c5e733d2-db33-49ee-957c-37d00f6c72d0",
-      "da8b33dd-c5ab-480f-8e9f-1b434cd046e1",
-      "f15ba1f3-dabe-4048-ac2e-6772546d2651"
+      "118844a9-01e9-4c7b-a719-2fbbfc6ac137",
+      "02ab95df-a4b2-494e-b69c-f94d71d4acb1",
+      "1be6e39b-e6f8-4f36-9338-a751ded72aea",
+      "357fc34c-43ed-4d3d-b72a-ccdb6a7d8c5f",
+      "0708952b-c7ea-4b44-9c21-3b4e6361738c",
+      "bb01c759-4376-41f2-b8ad-98a55a7fc524"
     ],
-    "created_at": "2025-10-22T16:21:53",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:57"
   },
-  "072ee75e-4e07-462c-bf61-169113e57abf": {
+  "29aeb364-43b9-4bc3-b7f9-18a8c1c3b945": {
     "titulo": "Usucapión de inmueble por posesión - Caso 2",
     "fecha": "2023-02-14T00:00:00",
     "participantes": [
@@ -64,19 +58,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "c4bf3c97-bc3c-48db-959c-1991054f37dc",
-      "2c41a845-d0ce-4570-ba22-1f47cf624bad",
-      "85d83f00-6336-4b34-8242-387f640426d6",
-      "5b40e545-a165-41c1-858a-b47d13351890",
-      "eb0822ca-d284-475d-ae90-f97c5ad50bdc",
-      "9ac40328-85c0-41f8-abcd-3c7293760b8d"
+      "c1f1bac1-9ec4-4a44-9952-24e634b90579",
+      "bddb93a3-d61d-43dd-a9d6-fda6416f5c1e",
+      "871bf6d5-8c5e-4643-a5f8-4aeb2afcfef5",
+      "36590fcb-db8b-4974-9ce2-83bdaaa96924",
+      "c641f372-4f25-4694-bc9f-3e52b581aaf8",
+      "4b3ffaf6-d3ae-413d-a8c7-85fff4a169a6"
     ],
-    "created_at": "2025-10-22T16:22:00",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:57"
   },
-  "2331418a-ed5a-4313-8ce2-96ad08fc6933": {
+  "ec43672d-7850-4c68-8a04-1e69f52cf656": {
     "titulo": "Solicitud de excarcelación - Caso 1",
     "fecha": "2023-02-19T00:00:00",
     "participantes": [
@@ -90,19 +81,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "bee87984-4698-4a1c-a4da-f504b7ec5dec",
-      "53300650-bfa8-45f8-93a7-6587b76ab5be",
-      "51ebd8f3-7ee2-4caf-9268-0955dcf1b403",
-      "0f64a525-c290-4a9d-8a78-f96ed6e18790",
-      "d329e022-4059-443f-b833-32855f709d31",
-      "467988fc-70fc-4f31-a27c-72f3fcca75f6"
+      "829a0e74-2dc5-4fbe-8376-bd2e59eddd50",
+      "dfd75358-9b71-4205-93c3-6b815277bb77",
+      "e6c292e7-1286-411b-b80a-9cc7c64efd18",
+      "801e7c7e-fe8b-43f3-a83e-6995d6992e20",
+      "e520d8c1-6d2d-410a-8a32-350c35026df3",
+      "6b855c57-b347-4a88-9bb3-08fdf3838543"
     ],
-    "created_at": "2025-10-22T16:22:19",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:57"
   },
-  "6d9c6982-fec1-44c4-a0e4-9878d3996f61": {
+  "98f99c0f-dd14-4074-a030-39ac0cb1b558": {
     "titulo": "Disolución de sociedad - Caso 3",
     "fecha": "2023-02-26T00:00:00",
     "participantes": [
@@ -116,18 +104,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "07342d47-a747-403c-b874-bf17c9cede42",
-      "7b213619-a10f-43b9-8da2-4c4e89340a1e",
-      "a902c12d-90bb-4b3b-b600-b083d8456097",
-      "7ec817b7-39da-49af-a6db-a493035bac29",
-      "18451eb5-fa05-42f2-8d16-97dc3157fd59"
+      "0202dd3e-1d23-4bb3-a5ce-083b0582f204",
+      "2f7ed222-9fe4-4353-8c81-22b15a8f0670",
+      "25cf0535-200c-4ae3-9d4c-cdaac12fe134",
+      "92d308f9-3e98-4642-b651-56d0e435ad04",
+      "37c1fa95-4ea0-4b12-ae26-c8a9a7ce95eb"
     ],
-    "created_at": "2025-10-22T16:22:42",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:58"
   },
-  "54a1737a-dad3-4ba5-b58e-8f979e0cd418": {
+  "e60f8340-2ddc-4e02-b10b-95bada271df9": {
     "titulo": "Trabajo no registrado - Caso 1",
     "fecha": "2023-03-11T00:00:00",
     "participantes": [
@@ -141,18 +126,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "df47bde6-755a-4ae0-a7e4-bf5b23af572c",
-      "4d05acd6-0808-4c61-a30d-5a31421ca90d",
-      "5bd8a58c-b078-4f36-bc4d-5a1c2a88d04b",
-      "e4f5bd6f-712f-4ef2-a29d-268b9e37e492",
-      "d7b4db3d-d5e8-4140-b650-15efce8a01ae"
+      "e4468a0b-1356-4a07-8138-f5ccc3f7bdd6",
+      "051dc715-7682-4106-86ea-8a9293f3537a",
+      "0b64200f-5e4d-4d76-aaf6-3b45bb46f507",
+      "45c86df0-ef51-4c71-9fbd-462cf703cb4e",
+      "07cd6376-de3f-498f-80b9-36b567440fad"
     ],
-    "created_at": "2025-10-22T16:23:01",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:58"
   },
-  "a932c33e-d121-48ff-8d1e-fa443867a52b": {
+  "41e869d1-ba8c-4523-a86c-b73b89a2dd9b": {
     "titulo": "Reclamo de cuota alimentaria - Caso 1",
     "fecha": "2023-03-13T00:00:00",
     "participantes": [
@@ -166,20 +148,17 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "945275f2-bbf3-42f9-b1b0-6336e34b9a16",
-      "f1f19c0c-afbf-4898-8f61-f388bed27c41",
-      "b365afef-e65a-4027-9b4e-96300b79a383",
-      "d16e70ba-cb20-4e8d-a974-48b34c449c8e",
-      "dd472a4c-8777-4cf1-8fff-6b87250d3377",
-      "549b5fce-d131-4d10-9e73-ca3faaba6b79",
-      "0a6880c1-b25b-476a-a6b9-2c3979b3a240"
+      "b08ca316-e136-466a-8bce-9e660a9ba60d",
+      "4f47f52f-b3a0-4390-9544-30740d67a32b",
+      "da09099e-d415-46e2-b6af-e3ffeda6a73b",
+      "ba002ef7-f001-45d0-bc38-36db4fb9e2a3",
+      "de6575a1-ef5b-42ab-9055-f3d9081a81a9",
+      "9aa5bcb4-028c-403b-b999-a1c1b952b874",
+      "4a677aa0-a078-4f55-a9c2-73b2a329628f"
     ],
-    "created_at": "2025-10-22T16:23:26",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:58"
   },
-  "03169916-bffd-45fb-8af3-b5b34f3b4e59": {
+  "66827c50-321f-4277-bebc-8cc827c4af97": {
     "titulo": "Accidente de tránsito - Reclamo de daños - Caso 1",
     "fecha": "2023-03-26T00:00:00",
     "participantes": [
@@ -193,19 +172,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "706a0f29-05f6-4f15-a1db-51d01e4b3a9a",
-      "8dd7c5d2-6032-4359-8c0e-9337086928a5",
-      "9585fd52-33bd-4f82-8ceb-756dce130a34",
-      "a3a45190-e026-46b2-9404-19c66a201c4b",
-      "abca7914-58d4-4663-beda-0acec230e330",
-      "01603646-2978-4777-9db9-46dfed2b01b3"
+      "89ec1c99-ffa9-42c5-9669-231e27226c96",
+      "91a27466-a702-4ae7-8f42-b3c6c00721c7",
+      "db1b4a59-618e-4776-b234-7585d3b69bd1",
+      "77c99ad2-37f3-47cf-80ed-322cc9202dfe",
+      "318aa237-404c-40bd-910d-a998b163e2a4",
+      "cda73e23-6faa-476e-b1ec-8c6c636f6969"
     ],
-    "created_at": "2025-10-22T16:24:08",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:59"
   },
-  "79821f73-e3e8-41b6-9ab1-b824486fb3b0": {
+  "9568c98c-dbd9-4fb5-b1e1-e7b4f44b0cfd": {
     "titulo": "Despido sin causa - Caso 4",
     "fecha": "2023-04-19T00:00:00",
     "participantes": [
@@ -219,19 +195,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "20361c89-b501-474f-875c-b6de1cff495c",
-      "489877af-9c09-4f34-b0ce-14eb689052ee",
-      "ece91436-1986-4e7b-950c-b2e043f1957e",
-      "43990d9f-41b7-4224-8b3a-86977330c0cf",
-      "080117cd-6f66-4460-9c18-b8a010b17ff7",
-      "29649da3-14a2-44ff-afa2-347d05d41318"
+      "9885af8d-f38d-4767-bbab-4fd538bd6e8d",
+      "bdb262b0-68f9-4a4f-a3eb-f53902405458",
+      "ead7b6d2-ca65-40d9-8a62-02bdf9019825",
+      "a867d907-4105-48a9-baf1-e9d6741d9c4c",
+      "34e04675-c995-4a4c-b6ab-50c06f68d3fe",
+      "2456e694-09df-4b2a-9302-9fd60fda83b3"
     ],
-    "created_at": "2025-10-22T16:24:49",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:16:59"
   },
-  "6cbb6e65-a19c-445e-97ae-222ed3319084": {
+  "94560ab9-4fc3-4905-b30d-da4e09687ffa": {
     "titulo": "Amparo por mora administrativa - Caso 1",
     "fecha": "2023-04-19T00:00:00",
     "participantes": [
@@ -245,18 +218,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "da416f53-ca55-483b-a9e2-de6748aee32d",
-      "05aeff3f-005c-4818-9583-98a6752a5513",
-      "8e520a36-5d00-414c-b9ba-d59fa5d74597",
-      "44416168-55bd-4f73-a50c-08c54e065d22",
-      "5ac6524e-2cba-4698-a2eb-102c646ead57"
+      "80aa2e80-a5f5-4595-b185-1e20190e1383",
+      "b93d3fd2-a500-4b3c-9ccc-d0c02fe79459",
+      "291bbb83-950c-4035-b1aa-68028eb2875e",
+      "056c8a47-4aec-4af4-9730-d7ab6f6e4730",
+      "b3ef0362-927b-4dd2-b9a7-358916aa748f"
     ],
-    "created_at": "2025-10-22T16:25:36",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:00"
   },
-  "f5ed680b-27e5-470d-8248-42d8d0719c9b": {
+  "e45deb0a-e937-4113-833e-7832cfa887ba": {
     "titulo": "Cheque rechazado - Caso 2",
     "fecha": "2023-06-11T00:00:00",
     "participantes": [
@@ -270,18 +240,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "63287ba8-a9b8-4361-9395-7f99f74fc9ca",
-      "92aa81ca-4ed6-4491-b516-093cc1c097b2",
-      "c9b9017b-3e67-485e-8ab6-627388a2965f",
-      "db210cf4-f39c-44a6-9338-c94c38439256",
-      "056245c8-8655-4675-916e-014b88bf13ed"
+      "6bab45f6-886a-416c-95d7-53ba4e255591",
+      "8731e2d6-a065-44fe-9f89-96beb378f872",
+      "6480d7a8-96ff-411a-bf47-ecfc6ecb7ee1",
+      "35406546-e920-4534-8ecc-9c8ecb61a30a",
+      "86322108-8937-4469-80f9-9e25013395dd"
     ],
-    "created_at": "2025-10-22T16:26:18",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:00"
   },
-  "28abd19d-384e-4cfc-8418-f530430dc570": {
+  "152622b1-1e87-4e14-a540-4dc243ebf0a8": {
     "titulo": "Recurso contra multa tributaria - Caso 1",
     "fecha": "2023-06-23T00:00:00",
     "participantes": [
@@ -295,18 +262,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "46a1f620-43dd-4c1b-a991-42bdf8c61093",
-      "ef7082cd-1fdf-4ef2-919f-552eed75a037",
-      "8f820cd9-8062-4c16-a767-5565127909f2",
-      "e4d09e4b-9502-4802-a9c0-928bb991c4fb",
-      "50458ee8-2d32-4f2d-9447-65ff9e5d4c26"
+      "99017c8a-711f-474c-b36a-0972c6373919",
+      "d349022a-52ee-4591-af6f-754ea4d40a6b",
+      "305869f6-5169-4761-8302-005ef369560b",
+      "8a75413e-c306-4bec-924f-6f8ca25dffc5",
+      "fb459418-137c-4812-8671-43935257d434"
     ],
-    "created_at": "2025-10-22T16:27:05",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:00"
   },
-  "096f54bd-bc4e-455a-ae96-dcab2f2b52b1": {
+  "54081582-7582-4438-83bd-7c65d07fbcec": {
     "titulo": "Despido sin causa - Caso 3",
     "fecha": "2023-07-02T00:00:00",
     "participantes": [
@@ -320,19 +284,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "8d570449-3ff9-4709-aa08-17bf8b356a59",
-      "6bd3ecca-75c7-4b4d-a9a5-275ea50de086",
-      "51070aa5-309e-44bd-a810-0894bce04a53",
-      "0f0ffef7-e3d2-4dfe-a096-444cb168cba1",
-      "b24db895-a1cf-45cd-ba66-f510877584f6",
-      "1a02a3c2-2efd-4bfd-bdb4-94c703374973"
+      "73a0bd45-f9fb-42ee-b378-411799acd010",
+      "a0b4c79a-5c0c-41bf-ad7d-28ec975c64de",
+      "83c6cea1-d660-429f-b8e5-2224ac5eae13",
+      "6978f82a-973f-4e31-b4a7-c7009d303fc7",
+      "0dadc507-d93a-4e64-a54f-5439b50347b3",
+      "e967b31d-9bf5-4e28-9998-1e0e1ec22ec3"
     ],
-    "created_at": "2025-10-22T16:27:59",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:01"
   },
-  "17c3d4b4-973a-4ec5-af04-796da831d08a": {
+  "45d08b22-a1bc-46ee-9a73-597cef5ee07f": {
     "titulo": "Reclamo de cuota alimentaria - Caso 2",
     "fecha": "2023-08-06T00:00:00",
     "participantes": [
@@ -346,20 +307,17 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "3a1bc155-ba42-4c13-875f-ff07bd371379",
-      "c94982a1-6acf-4070-b914-0f05f248be55",
-      "02586677-0562-4a50-902a-13129c621301",
-      "4656a864-b9ea-49a0-873d-2bb22cc7db97",
-      "47d61d60-ad40-4cf0-aee3-f807bb23cc6f",
-      "638df7b9-3fdf-4946-a305-8165e6a0f4a8",
-      "94626cde-77ee-4c9e-aeaa-4f5e16ba2dc6"
+      "bfd3cca6-6687-48d8-8b9c-8d40fb869d85",
+      "4d970fa4-bd8b-4ae9-bf18-89676f17c84a",
+      "26b4d94d-6dfe-4ea4-8967-6a852aef3ea5",
+      "d2bf6fe7-c77b-4fa6-9980-54a5572d6aeb",
+      "015a4b0a-1bee-4f48-9722-4788ef310708",
+      "be858873-730c-4266-8eeb-c09b22b890fc",
+      "3dfd6914-fb75-48cd-af8e-511c9a7d9ec7"
     ],
-    "created_at": "2025-10-22T16:29:05",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:01"
   },
-  "96e3358a-40dc-4723-8248-f21c878a8acd": {
+  "a33dc04f-bab6-4f9b-8394-8347e0709dbe": {
     "titulo": "Incumplimiento de contrato comercial - Caso 3",
     "fecha": "2023-08-16T00:00:00",
     "participantes": [
@@ -373,17 +331,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "8cc7016c-2666-409d-9e03-7e8ed9e53c3e",
-      "8c4f1fb6-60ab-4720-9863-3a99d5b0a1f0",
-      "ea965cb8-842e-4789-badf-bd74eccdaa7c",
-      "b047aef2-2191-4c27-8449-b17560807406"
+      "b798e051-58c6-4026-8ff8-4e6b1b88ffc5",
+      "60787580-d45d-4367-b95c-d973a010998e",
+      "9fefaaa5-460c-4298-a1e2-9adf733384c1",
+      "2e18fb86-1b91-4d66-a337-06db5b5afc46"
     ],
-    "created_at": "2025-10-22T16:30:31",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:01"
   },
-  "75e43965-f81a-4b58-8f4c-d3129b1c2f2b": {
+  "5fac9efa-d3a7-40d6-a186-731136c09e48": {
     "titulo": "Despido sin causa - Caso 1",
     "fecha": "2023-08-21T00:00:00",
     "participantes": [
@@ -397,19 +352,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "4cb45f26-8bc4-4d68-ae69-2e865313d337",
-      "80e15dc3-31d8-488f-8b30-dc38c780d1d5",
-      "c57a2c24-cd34-42bf-b3cc-47f74be77951",
-      "5165b9ac-3366-4542-b27f-f818c965f2c1",
-      "9335e5e4-2b75-41e5-ad47-573d16b571ba",
-      "149ec23c-121a-4ef9-a16f-d5b6d750a7f3"
+      "9c1c3d69-0d89-4efb-ac5c-1e4ce3da8800",
+      "df45bf74-e241-4b9b-93c8-6776f9aac11b",
+      "c084417b-c70f-46b9-891a-6982976f6906",
+      "4c0e96c4-a757-48e7-890d-3a0dedb2929f",
+      "8c64c7d7-d5fa-4c7a-904b-99baaeb746a9",
+      "2e65ca52-b9b5-4641-a22b-e1778bce3a7c"
     ],
-    "created_at": "2025-10-22T16:31:21",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:02"
   },
-  "5781516f-5d29-44c7-a660-7fb77bc9adaa": {
+  "f7ef5548-e9d7-4761-a1eb-ce8df8354449": {
     "titulo": "Desalojo por falta de pago - Caso 1",
     "fecha": "2023-08-25T00:00:00",
     "participantes": [
@@ -423,18 +375,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "5a369948-dad8-4083-9ce7-e36e790506b1",
-      "615d70d7-3f05-480f-b799-bdb1f200bba5",
-      "ab321c21-b5eb-418d-9195-9f95df551916",
-      "ca79a61d-baa9-4b6a-a968-f15fcecd0679",
-      "31c25780-7ac9-48fd-8f45-2181d4b8c486"
+      "5e762208-c7ca-49d9-b3b4-3369a83e9276",
+      "aea9bcc3-933d-4d09-b0c4-33bc4572a623",
+      "656a7645-f579-45e8-ae4d-1441cd5947d2",
+      "b7e8a658-7040-4b9e-b2d5-39ea92bee7b4",
+      "e82d8e5f-61ea-4869-99a6-413325881b95"
     ],
-    "created_at": "2025-10-22T16:32:44",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:02"
   },
-  "c5fd2538-12cb-48a7-ba6a-c334714b22b5": {
+  "bcd7d49e-4732-40a0-b845-bc045e266800": {
     "titulo": "Defensa en causa por estafa - Caso 1",
     "fecha": "2023-08-30T00:00:00",
     "participantes": [
@@ -448,18 +397,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "9c934bfe-5f6c-4521-8d55-97a3fa9d8e1c",
-      "95106c6f-35df-460d-8ebd-68492769e3cc",
-      "acec6a3c-3432-40c4-8c36-0ba70915ecbd",
-      "77246373-c40a-4171-87f5-d2e6f62bb2cf",
-      "e0682233-0736-4f53-9361-137adfd5d7ab"
+      "ec484a6d-b543-43b7-b001-62203ba3809c",
+      "f1b34865-f7e0-44d6-a0d4-64769bdd13f4",
+      "43955ba1-4bfa-44cd-9f33-f0d71829e805",
+      "d45f1e0d-01f4-4b4d-a76f-72e0bd234b07",
+      "b9a8caa6-714e-4fe9-8532-35be8fc0e02e"
     ],
-    "created_at": "2025-10-22T16:34:00",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:03"
   },
-  "33392e94-b0e5-4ccc-88ea-53489491fa22": {
+  "aef09861-441b-45fe-b0de-2abcf256f435": {
     "titulo": "Defensa en causa por estafa - Caso 2",
     "fecha": "2023-09-08T00:00:00",
     "participantes": [
@@ -473,18 +419,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "8227f064-b6bd-4434-8e7d-3ae9f93152f7",
-      "15a11d58-55e6-4438-9fbf-44cda59df9e3",
-      "5acd31fe-7d99-49d1-a285-ab8be45398c4",
-      "9367a511-467f-4023-add6-ddfd39fee258",
-      "1bab72da-03cc-46a6-9c32-633c5aefb26b"
+      "eced2d1a-1274-4736-9319-fa24a30fe331",
+      "942cec84-c3df-481b-add5-b5be9a59b4ec",
+      "b9464742-aafe-4d8b-b421-f134ba075a5c",
+      "6e8537f6-3e41-4618-af37-f2d6ca54cde7",
+      "8a7175d4-c09f-4a54-8f62-d91939df811b"
     ],
-    "created_at": "2025-10-22T16:35:19",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:03"
   },
-  "ac3378cc-1e47-4048-97a6-dffefeb54274": {
+  "d18af7a7-f60d-4b11-aec9-3f8228639940": {
     "titulo": "Incumplimiento de régimen de visitas - Caso 2",
     "fecha": "2023-09-18T00:00:00",
     "participantes": [
@@ -498,20 +441,17 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "c4763dd7-24df-44d3-9ec9-a9f2c66496cd",
-      "e8995a9f-5922-4249-8f56-22d7b8c1ce50",
-      "6063b4ef-d751-4d51-8c9e-7c492237f160",
-      "8ab2060f-4783-4ec2-a28e-7b896dc0d41e",
-      "fbbdd1b1-3641-413c-bd0d-e7099f3b395f",
-      "5cebd059-e242-4b61-8b5f-61ddd3a0ff40",
-      "51f277fd-ba06-48e1-8bab-f6297d10d450"
+      "e27a547e-6d80-4d64-b5b9-b054c28f26e2",
+      "285e40c4-5691-483e-a934-551fe231d7f1",
+      "a942ce4c-1452-4e1a-ba47-e291c7fa766b",
+      "835213dc-e18d-47f8-a22c-851c23664168",
+      "ca68c1ba-4ee7-4e98-b47b-8b182a6fe4a1",
+      "6ed7cac6-b0b4-41ea-a6f6-c7ee5ce79da8",
+      "d62cc134-3cb2-49c1-b5f0-da7c06bfb80c"
     ],
-    "created_at": "2025-10-22T16:36:37",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:03"
   },
-  "36ce9560-1e86-4675-83fa-c2bb01d637ac": {
+  "8e4cc60c-3c06-45ca-b7c0-b287e3d17100": {
     "titulo": "Accidente de trabajo - Caso 1",
     "fecha": "2023-09-27T00:00:00",
     "participantes": [
@@ -525,18 +465,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "c1907cc7-a0a9-4e6c-b811-410a6050bec7",
-      "6ce501c6-36e8-4460-827f-378b2e956782",
-      "3ace991c-81f5-48a4-a812-d6f4d756dede",
-      "749076f8-8e43-4c5e-9360-b38686c60bd6",
-      "5d2c1b61-42e4-4bb5-aebe-c6f0e0521df1"
+      "acb4528f-dff0-4989-a796-bc1bad658481",
+      "1dae24fd-4142-47f1-bc45-8ceaafb0bb14",
+      "deba226f-bd60-420f-9bbf-dbff5ab73c25",
+      "943224e0-2097-4029-8a46-47e1a0c1ff02",
+      "044b2cdc-03fe-46ae-8e4d-fa6dc2cc1412"
     ],
-    "created_at": "2025-10-22T16:38:32",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:04"
   },
-  "4d07f55d-5f1f-464e-888f-5dc35bb6a699": {
+  "a4d4bf2b-c0aa-4fa9-9111-80d620852e0d": {
     "titulo": "Divorcio contencioso con bienes - Caso 2",
     "fecha": "2023-10-02T00:00:00",
     "participantes": [
@@ -550,21 +487,18 @@
     },
     "total_fragmentos": 8,
     "fragmentos_ids": [
-      "999f2653-6bc3-4d9f-a721-2e5326be049c",
-      "8f1b57dd-0fd7-42ef-8c7e-f7ecee7f53c6",
-      "5f7e1511-f378-44c2-96ba-72022d8e9d47",
-      "6349ee2c-6a76-4ed0-8166-d7b9e8f40498",
-      "d7a29f50-85a5-4802-b518-c65ec03d8ed2",
-      "e12be3de-60f8-4d06-a751-b7ccd5bee8aa",
-      "5d704a04-a0a1-4b79-ba42-d72e1c9105d3",
-      "a903f4aa-d1ae-4dea-8188-0ca869d05a41"
+      "c4cdf041-ca80-4d24-bf84-dd1229078520",
+      "d3751ee7-309a-45cd-9348-4ff5dc2dfc2b",
+      "8e7dc94b-9039-4615-9dbd-3b371d1ec8aa",
+      "672b46c6-ffdf-4e72-85d9-8f8b3c6bbf39",
+      "94c2b967-a13f-492d-8c46-69f0c7201104",
+      "700c74bd-00ea-46d7-a048-bb918f8384d6",
+      "083c822c-3cd6-49f8-8f17-e8f6dca07010",
+      "136b3b62-1794-4e06-8f48-90908aaa60a6"
     ],
-    "created_at": "2025-10-22T16:39:58",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:04"
   },
-  "c6e23755-e08c-43b9-93e8-436d4c4f3403": {
+  "40130269-0cca-49a3-afe2-e14929cc259f": {
     "titulo": "Accidente de tránsito - Reclamo de daños - Caso 3",
     "fecha": "2023-10-03T00:00:00",
     "participantes": [
@@ -578,19 +512,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "c41f1e6b-a56a-44ea-a966-9d8293ed1042",
-      "88a197c6-87f6-4b1b-ac11-5e276d6bee7c",
-      "66427c47-a78f-4ce8-a6d7-609b2169e62f",
-      "cca6ebe0-3515-4f71-a06f-6184f9c46675",
-      "04e29deb-88a8-4ae0-97a3-7f68730b4468",
-      "e9aa55bc-8fc0-4292-aef2-6f3d9fc1ccae"
+      "82098648-ea86-408a-9b3b-a333e2b4d693",
+      "8b68a422-92a1-403b-ae0d-f69cb89705fa",
+      "cc7c650a-f9d4-47e0-b0f4-32ef133ed36b",
+      "a53a2d9c-4ffe-423f-989c-b7f2cac6b1bf",
+      "d78e5e87-587f-4a94-8ea0-ef320491fa51",
+      "5fce289d-e8ea-4eec-90a0-1b619c6b0ced"
     ],
-    "created_at": "2025-10-22T16:42:24",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:05"
   },
-  "637921d4-bfa3-4b5b-ba2b-38684414de2e": {
+  "19d0d5da-5e74-4fb7-8989-3787f5d8112d": {
     "titulo": "Defensa en causa por lesiones - Caso 2",
     "fecha": "2023-10-04T00:00:00",
     "participantes": [
@@ -604,18 +535,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "8c6d46d7-f5f7-446a-be59-645fbd8c62b5",
-      "44e4d27d-f5dc-4fef-bd97-515767b9f88b",
-      "d22c1cec-dc6f-4d56-a68a-84a1732253c6",
-      "a136f5c3-e5f6-48cd-bfcf-729b6863f7c2",
-      "067cfdba-856c-4e6d-83fc-7d85b6c2ff7f"
+      "76eb2bad-d64e-4478-911d-4367f8e53c2e",
+      "c98b65c2-29aa-4f34-be7f-bdafcf727110",
+      "7dd8879e-025c-46fe-8da5-c04afdadfb62",
+      "39a980fa-9d6e-4651-8837-ef88e8178b6e",
+      "8d0fc301-4f72-403d-ba86-7415e481a8cf"
     ],
-    "created_at": "2025-10-22T16:44:21",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:05"
   },
-  "dddadaf6-7334-4f02-8f83-8df2093477ac": {
+  "efa13c6d-7183-4951-a413-a78e139e4922": {
     "titulo": "Acoso laboral y hostigamiento - Caso 2",
     "fecha": "2023-11-20T00:00:00",
     "participantes": [
@@ -629,18 +557,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "c3d45168-7f43-41f2-ac2b-5de238e04a1d",
-      "b1edd8a6-20f1-401b-b20b-887109ab6654",
-      "61e3a60b-14b9-4a40-ad38-84e548b0c9d5",
-      "b41531c2-f992-4852-9112-2b354de0d5eb",
-      "4bb7aac8-cc19-4e6e-bbdc-368710fa9190"
+      "8e06d68a-20e0-491c-93f0-87f81f728174",
+      "a046bb5e-4d21-4f7c-a56b-3c4f1241a396",
+      "dc5bb563-c6d6-413d-b832-24352b431361",
+      "bad843aa-99f1-44ea-b3b0-3b0d060ee179",
+      "96bb45c2-adaf-4681-a71a-89f8886518ae"
     ],
-    "created_at": "2025-10-22T16:46:04",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:05"
   },
-  "1e59ccf6-ffdc-49f9-a785-744941ace3a5": {
+  "544df75f-5a84-41b7-ace5-a63de9b83b01": {
     "titulo": "Disolución de sociedad - Caso 2",
     "fecha": "2023-12-06T00:00:00",
     "participantes": [
@@ -654,18 +579,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "3abf5691-8cf8-4e24-a4ba-596475c96e5e",
-      "2676ec77-6ce8-4ade-a243-02f3239e8967",
-      "b595bc0e-a763-47bd-a1f1-e137d9abee25",
-      "3ac6cca7-db05-48c4-a3b9-76251abc6a18",
-      "8f31dba7-af99-41ef-ba10-bcbe9f5ee021"
+      "3cc5395a-c3c0-4f87-9e9a-0e50ef2d13b4",
+      "ef604b1e-bc1d-4584-889f-a562a8fac00f",
+      "ca43d75a-2197-4e20-99ea-15c04898cb19",
+      "127cc352-15e7-40ec-97b0-7b7b87e44a74",
+      "d9e0c8cf-23a2-4c80-978f-cf7cfab835db"
     ],
-    "created_at": "2025-10-22T16:47:47",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:06"
   },
-  "2007706b-8b1f-4703-9f6d-74a46ae41aa5": {
+  "36ac6b9c-c917-4a7d-a344-e972c09a34a1": {
     "titulo": "Accidente de trabajo - Caso 2",
     "fecha": "2023-12-15T00:00:00",
     "participantes": [
@@ -679,18 +601,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "e450bbef-a64c-4b06-924d-ae6655805aff",
-      "b38ae368-1357-47a5-9bfb-58ed36b5ae7c",
-      "c0a20e1d-5c06-45b6-a528-65d34a4f4ef4",
-      "ac2c33ca-6959-465e-8b40-cff10085e87e",
-      "4fbf41c9-abc4-4867-9a35-1018f36721c8"
+      "f8bf3552-77a9-4bd9-a595-04e0d1213c15",
+      "1da7a7f8-c735-4ddb-986a-913a41900ba5",
+      "3fd8f0a9-7c73-4b0e-a11e-bec6c5bef8e7",
+      "b5dd4ec1-e2a0-4640-ae32-bd5cfe43adcf",
+      "bfb0a690-c57e-4005-bfb4-4df79147233b"
     ],
-    "created_at": "2025-10-22T16:49:37",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:06"
   },
-  "44d887a7-c8f6-4c67-8bf7-b7d78d956cea": {
+  "8152a3e2-cb41-4e1b-8b04-f1c9ecc8fe04": {
     "titulo": "Pedido de quiebra - Caso 2",
     "fecha": "2023-12-28T00:00:00",
     "participantes": [
@@ -704,17 +623,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "68aeee34-6e93-4379-9f4a-cf8dce7ea415",
-      "c5ad2222-2483-4bc1-b4c6-4ca4ae35821b",
-      "66de98f9-4f01-42ec-b981-1c4380adf2e1",
-      "ca9a6acd-0ce3-4635-9797-425c27d9d8e2"
+      "eb74a1c5-c1d0-4e13-bdb8-1b303c095800",
+      "37d6a3e6-bf95-44bd-b970-d239d75a6af5",
+      "41e89592-0895-4a1c-b7be-faaa54999285",
+      "a3f3aa33-fa9c-4911-addf-3de52d890214"
     ],
-    "created_at": "2025-10-22T16:51:31",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:07"
   },
-  "b6e865b5-ba7d-4f33-aaf7-ffad4c9a9de1": {
+  "aa7cb49d-cd81-4d7f-a3a9-94a0c66eca22": {
     "titulo": "Accidente de trabajo - Caso 3",
     "fecha": "2023-12-31T00:00:00",
     "participantes": [
@@ -728,18 +644,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "727c1260-c374-42cb-b4c4-c1814eb8e113",
-      "fbfca097-ee3f-4408-88fe-0d728785b32b",
-      "da4aad19-aa11-4d5e-9abd-6eb4e993be39",
-      "ca429a52-b633-4fff-83c5-46f2cfa1b247",
-      "b52b3195-9f8f-4768-9074-2a7dbc031d33"
+      "880bf58c-9846-4a64-ae8a-33e4a8550ff3",
+      "452f31e5-b952-4e97-ab0e-440378b25b12",
+      "a2b789b5-8003-45e7-8231-4a88a7c46e3c",
+      "3e5beb19-131b-4bc1-953e-c52b2f6fc030",
+      "e1a350d7-e08c-4efd-ab28-52fdcc192524"
     ],
-    "created_at": "2025-10-22T16:53:02",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:07"
   },
-  "366f5ed3-68bf-4525-a09c-85ddeec84244": {
+  "7698f08a-dcfd-46e3-bc12-632611e69766": {
     "titulo": "Trabajo no registrado - Caso 3",
     "fecha": "2024-01-01T00:00:00",
     "participantes": [
@@ -753,18 +666,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "a67160d5-2541-486f-8a98-ce97fdbb14b3",
-      "b03b4d03-780c-4be2-909b-b29ce286690d",
-      "323c8da6-9154-48d4-8687-eca8030ce11b",
-      "89fc94ee-9f57-473b-8edf-564d1b6ad633",
-      "50d31f13-697e-45b1-b37d-c809e8341e5e"
+      "eb5f3693-a369-4652-b506-415bfebe91dd",
+      "8fdc3e24-0129-4c32-93dc-bd660d04209f",
+      "9ed98745-dfd8-4127-b3be-ef084bfc60b6",
+      "9ed0b4d4-77b3-40b2-a7ac-3eb08036e9ed",
+      "43f4da92-17b9-45cb-bfca-9455dcd802fe"
     ],
-    "created_at": "2025-10-22T16:55:09",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:07"
   },
-  "69103e06-bdae-42f6-9db2-40fe4625c1c3": {
+  "1c6dd7a4-967e-4d2a-9829-a7860c97dfa1": {
     "titulo": "Incumplimiento de régimen de visitas - Caso 1",
     "fecha": "2024-01-14T00:00:00",
     "participantes": [
@@ -778,20 +688,17 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "e462fdf0-09c4-4ffa-9a56-0543bd9967a7",
-      "7ad2efb4-89e4-4dfb-b7ec-b412b65caae9",
-      "f7aaaa31-e1a2-4cdf-8b2b-b73e7afe1dbe",
-      "80814d5f-1e58-4ee3-a6ff-6f634010af11",
-      "202b2406-4b42-40f6-b99e-98a6401bc411",
-      "cac0812a-6e9e-436b-a6f0-ad863d7fd239",
-      "bbe41c19-d117-4e76-9176-308f2e5f6c81"
+      "a20e1d0b-86f7-4df9-99ae-f63371c305fb",
+      "5aeeeb9b-ba01-4427-8165-60a4a5a558d4",
+      "9aabab60-db75-41c1-b201-8386d75b7b78",
+      "33236397-9ced-4bff-a017-45597f6b4a78",
+      "c781f9b3-1fcb-425d-8475-d7c704a452b4",
+      "f8ed1766-4bad-4335-a74b-1dea79addfb7",
+      "74d8c23f-2e5f-47b6-9aa0-c086746c9db7"
     ],
-    "created_at": "2025-10-22T16:57:10",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:08"
   },
-  "2535feda-b6dd-4853-a3b7-bce9526661f0": {
+  "52b95ce0-2b14-431c-9733-2bf8aaeb3dbf": {
     "titulo": "Incumplimiento de contrato comercial - Caso 1",
     "fecha": "2024-01-25T00:00:00",
     "participantes": [
@@ -805,17 +712,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "570ef6df-43d4-4a9e-ab0c-8a8f81556781",
-      "4d6b041d-e7db-4238-9698-dfefeffa0853",
-      "a66148d8-a422-44fa-9061-971c19383c3a",
-      "0a5f7646-2373-4b08-b4c1-5c1b5b021f07"
+      "5a1f2276-09fb-46e0-a047-2236be5debde",
+      "ef7d4f75-beed-4844-b16a-73176b91805c",
+      "80313480-5077-476a-9283-e3e877ee6c24",
+      "e473207a-17f7-4c38-ad4f-f181aebaca5d"
     ],
-    "created_at": "2025-10-22T17:00:14",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:08"
   },
-  "7014bcd7-3f77-489b-84cc-517c146a2f82": {
+  "c728f96c-bd14-4705-b25f-ac778d371c4f": {
     "titulo": "Accidente de tránsito - Reclamo de daños - Caso 2",
     "fecha": "2024-02-10T00:00:00",
     "participantes": [
@@ -829,19 +733,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "b234c523-518f-4f84-870d-57545545cf3d",
-      "4c7aa039-1a8a-46eb-8442-f75699d9d11e",
-      "db63060a-caba-4db8-8463-310f97e5f825",
-      "158ec9f0-b110-45c5-afaa-be0e5f57c49d",
-      "a0c36091-66d2-4668-a49c-06bd55d0231d",
-      "80479d40-e612-4120-b53f-c1c1aa5fc24c"
+      "e2457275-1faa-4c7c-92f5-8b8a9ca8673d",
+      "fea33699-7f30-4d83-8847-2de270694ad3",
+      "ffc5ab99-5a7a-4068-9223-5b45316c1212",
+      "0e513115-bb14-4dc2-bfee-fa4647e32e9e",
+      "6542eb59-754d-4b13-b20a-add622f57ac3",
+      "233d1466-b5b5-4baf-ad5c-f626481da417"
     ],
-    "created_at": "2025-10-22T17:01:59",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:08"
   },
-  "cb63e2cb-0013-40ee-ba43-5e9c3989fd31": {
+  "1160a786-17dd-49b5-9caa-9506e8950130": {
     "titulo": "Desalojo por falta de pago - Caso 3",
     "fecha": "2024-02-13T00:00:00",
     "participantes": [
@@ -855,18 +756,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "591723f4-e7f4-425b-97e4-d456cfc8fc9c",
-      "32b1dbcb-575d-45fa-95d2-8f9c84bf3fbd",
-      "ecefdb85-70fb-4d0d-9aab-f12780ac6a43",
-      "fb7f48cc-b6e5-43b3-8d01-12d818a67d8d",
-      "d82add56-0be7-4c1c-b6bc-3af0fc49f019"
+      "b16a3f8f-4796-40b0-b841-64dd585fe7e1",
+      "053b39c3-9f65-4c4a-a14a-14951c8b67bb",
+      "8bbd67c1-8b9e-44fb-b08d-8d47f1097fef",
+      "2c091b00-d40b-4129-9ac1-1bbc1626ab46",
+      "09b30733-b9bc-478b-b9da-5818749e9b53"
     ],
-    "created_at": "2025-10-22T17:04:46",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:09"
   },
-  "d093d59e-69f7-4fd3-9165-6917a67edf6d": {
+  "afd39318-4d1c-410e-910e-258395c618ed": {
     "titulo": "Despido sin causa - Caso 2",
     "fecha": "2024-04-12T00:00:00",
     "participantes": [
@@ -880,19 +778,16 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "13468780-c33d-4961-a3d5-52b4f06be5e7",
-      "08359243-2063-4a37-b3ea-8333cb0bccd3",
-      "85e488b7-a6b3-495e-8998-2638794f0899",
-      "512b547b-aecd-4841-baaa-73362f0a6ba0",
-      "ec7c6cc1-6045-4aca-97f0-284880cb0a84",
-      "69db6bcb-9776-49d1-9d65-77d90cda2b20"
+      "3952658d-43b3-4a7d-812c-c86a4143670c",
+      "207ea3dc-c56c-4d04-b150-ac92dcc7fd3f",
+      "7c519f96-3a1e-413b-b580-62ae1ab7fcf7",
+      "d2e7325b-74ca-49f4-b2fd-36045abc09b7",
+      "6489dffe-8131-4204-9ab1-aeb98bdcf25e",
+      "bb6287b0-4e2f-4e95-b6de-7da70bef244b"
     ],
-    "created_at": "2025-10-22T17:07:06",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:09"
   },
-  "0ed834c3-ab70-4aaa-a78c-5bd1beb7cb99": {
+  "1317ca1e-0311-4c82-b481-5739cb2faeea": {
     "titulo": "Incumplimiento de contrato comercial - Caso 2",
     "fecha": "2024-04-19T00:00:00",
     "participantes": [
@@ -906,17 +801,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "a1587e7c-834c-43d9-bab8-92069ccadc61",
-      "c8f47cc3-994d-4543-8036-458d6b223ef1",
-      "8613ce49-882c-4282-8e6a-be2fd01ff211",
-      "a0d56b36-f45d-4e11-8849-ec96178894a3"
+      "5b0a3586-2765-4549-855d-a3890a1b59c7",
+      "4e37e32d-e15d-4669-802e-35b85488358d",
+      "2ba49425-d81b-4e95-8eb0-9b929123574f",
+      "5dcfdc10-ed92-4c4c-9323-1e70eddc0d31"
     ],
-    "created_at": "2025-10-22T17:09:54",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:09"
   },
-  "44668bda-8a49-4bfb-bae3-d9b5d3ea428c": {
+  "f972ec34-f8a0-43a9-86a5-56959072fbf4": {
     "titulo": "Habeas corpus por detención arbitraria - Caso 1",
     "fecha": "2024-04-26T00:00:00",
     "participantes": [
@@ -930,18 +822,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "0a16d5ee-a200-439c-8fd5-e954f205bfb2",
-      "37a38230-8acc-4470-a950-3b1d3bf25189",
-      "e7d47899-af71-4c03-a3f8-73dcd5e31786",
-      "9b753cf2-402e-4a7d-95d2-5b8ccaa9c60e",
-      "27c51b06-bd0e-4fd7-a1a5-8da19fa294f3"
+      "58953ce6-1a6e-4e05-8a10-f1bc38e07461",
+      "45b2f71e-a9e8-4517-84b4-fc7da492ea87",
+      "51d19e91-5bd0-46c5-a3b0-28176c21de1d",
+      "34a1c6cc-f96a-45c7-9917-bfc8967de052",
+      "5b183729-7346-48de-ae35-82bc814a61ad"
     ],
-    "created_at": "2025-10-22T17:11:47",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:10"
   },
-  "befd1d82-0613-4003-afab-776390043c7d": {
+  "57dc500d-4978-49b4-af3b-39bc0882212d": {
     "titulo": "Pedido de quiebra - Caso 1",
     "fecha": "2024-06-14T00:00:00",
     "participantes": [
@@ -955,17 +844,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "14cb59b3-3d20-49dc-9307-79fa5eb7158f",
-      "5135c59d-5f44-46c3-9a09-ab4a82c2fbde",
-      "a3e7f2b8-a4ad-41be-8dbc-ef76c03c1485",
-      "17ef6944-9164-4d98-b3d9-5bd3729d4ada"
+      "c9672f9a-7833-469b-83d0-20723b7d2b16",
+      "7013d247-d9d4-470b-8995-e7139d432edf",
+      "58e308d8-b3fd-48b8-80dd-00c66cbfb629",
+      "17075a45-36eb-456f-b6fa-4ce79188356b"
     ],
-    "created_at": "2025-10-22T17:14:13",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:10"
   },
-  "0041cb1e-bea4-4677-8973-c3fcf5b734a8": {
+  "5a5fd0c6-898a-42e5-af29-ed338d6d7f14": {
     "titulo": "Defensa en causa por lesiones - Caso 1",
     "fecha": "2024-06-16T00:00:00",
     "participantes": [
@@ -979,18 +865,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "118b32dc-a02c-4229-bdc1-0affc88dc599",
-      "83864b1c-4401-46fd-be8e-21ce8332fea3",
-      "444803a0-2016-4d05-ac54-6781194a16c1",
-      "79eea9a0-8b2b-48c8-8bc8-6f7f8a2792b6",
-      "657065c8-0259-47d0-9d57-e4499d389de4"
+      "7be1473a-61b1-4a65-86aa-3789c59a15dc",
+      "0ab6c92d-15bc-49e6-939e-c417a1d7f15d",
+      "ecba7347-adeb-4cff-9b39-5898f6d84244",
+      "79d4010c-c682-43a3-9208-01d8515c6cfa",
+      "90399796-5630-4df7-bd78-88139e3fc4d6"
     ],
-    "created_at": "2025-10-22T17:16:15",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:10"
   },
-  "d989e3a4-b810-4fe7-847c-8200264f2a5c": {
+  "42af844f-e003-43d9-8297-ce32908bd0af": {
     "titulo": "Amparo por mora administrativa - Caso 2",
     "fecha": "2024-06-19T00:00:00",
     "participantes": [
@@ -1004,18 +887,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "06115f6e-0eac-4035-9e30-1b9783314c1a",
-      "bf15de45-2170-45d0-84d3-8e6fc5c264f2",
-      "fc35ff26-5356-4180-a381-c48d46b2fcbd",
-      "7213d81c-ecc2-4dd7-9d86-0ed74608b048",
-      "e3e7e5db-9ad1-4119-ba6e-6cafcb728e4a"
+      "ea9b28d4-7486-49c0-bf55-f22be0c0c8d1",
+      "0c121439-20ff-4d5c-b1c7-7cb172a2df62",
+      "3fe008fd-635d-4ffb-9915-d0e01a1ad036",
+      "f5fd6b43-cdb0-47e6-a41a-9ec2c38744bb",
+      "e51e6eea-47d2-4e56-bbc9-b030c69a2d17"
     ],
-    "created_at": "2025-10-22T17:18:53",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:11"
   },
-  "4dd2ebfe-8c62-4b4f-a1b8-c6168e4e2282": {
+  "16d9261e-bd98-4886-9acc-4b05b81ca244": {
     "titulo": "Cheque rechazado - Caso 1",
     "fecha": "2024-06-30T00:00:00",
     "participantes": [
@@ -1029,18 +909,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "14142fdd-2372-4a97-a852-df254ee8df50",
-      "9a13cc7f-f895-427b-93c3-2b384e5d56d1",
-      "df7266ff-fe80-4551-be2b-5d373e4cc08c",
-      "dd3feaea-7f43-4dfb-ae82-98023f95d86e",
-      "9b0644a5-4204-458c-b272-ad3a4a34a2a8"
+      "78e51e2a-e555-4bed-a834-865e3fce15de",
+      "27b7e62c-3a85-4170-a868-a1ab735e86c5",
+      "ae798a98-8c7e-4ab9-a743-543f1c0ac40d",
+      "c0bc7418-c9f4-44a3-a2c7-c12bab945fb1",
+      "04a00486-87c3-4304-be72-e08987ce9556"
     ],
-    "created_at": "2025-10-22T17:21:31",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:11"
   },
-  "527c25bc-d691-4e3c-8fff-72085a7a6e6c": {
+  "d38b1dc9-a271-495b-a447-e128951862e8": {
     "titulo": "Desalojo por falta de pago - Caso 2",
     "fecha": "2024-08-06T00:00:00",
     "participantes": [
@@ -1054,18 +931,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "0e7978a0-4fd2-4e07-8696-080aca3ad061",
-      "b5f6a2ef-4bfc-4360-baf0-ce2606ff2115",
-      "cdd6c328-9612-4d77-99fe-01112aeee017",
-      "378be841-c64b-4106-969a-f6fc1af0168b",
-      "a9771d6e-9c84-4420-8dfd-e2ddf55c48cd"
+      "f2b58a7e-82f7-411f-aa0c-1c98e16aa258",
+      "18ef3157-beab-467e-be19-a0ad6096e57f",
+      "cad76757-6b67-4338-931a-a233afbd9f5d",
+      "a66ff616-d033-4b73-bcb6-bcb781c3c949",
+      "c0ad9f5e-d270-47f4-b657-d44907ba0e2f"
     ],
-    "created_at": "2025-10-22T17:24:16",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:12"
   },
-  "66e74045-a695-46e0-8ba7-c37e2c584faf": {
+  "e704499c-de30-4113-a5f7-7aa3e7d0bcf1": {
     "titulo": "Recurso de apelación contra sentencia - Caso 2",
     "fecha": "2024-08-16T00:00:00",
     "participantes": [
@@ -1079,18 +953,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "a5cc5ebc-586d-4766-a2fd-6ac230285412",
-      "815e5c4d-d672-4792-b58c-257f78b84189",
-      "f32aa633-7ed8-4a21-9364-cb261e8938f2",
-      "a39022ae-1689-435b-913a-9d90e94f798d",
-      "6c3b4fb5-7d55-4bec-a18c-5aa636c4b582"
+      "a0178461-2204-449c-9e79-7f9e1136d8de",
+      "83e9e4f4-e3b8-4224-90c4-f46569ee3585",
+      "111c4a6a-8c41-456f-aa05-62cd09c44fa8",
+      "136fbb8f-54c5-4b3b-a5ae-ca70e7ce756a",
+      "6446b593-4d64-4ef5-8438-c6302bc1cbed"
     ],
-    "created_at": "2025-10-22T17:26:59",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:12"
   },
-  "af91f666-333d-4783-9c4b-394302b8c7e2": {
+  "186c2857-e507-448c-88a9-0aa11b359060": {
     "titulo": "Divorcio contencioso con bienes - Caso 3",
     "fecha": "2024-09-02T00:00:00",
     "participantes": [
@@ -1104,21 +975,18 @@
     },
     "total_fragmentos": 8,
     "fragmentos_ids": [
-      "829d5cc0-e800-4ccf-aea0-115e5c5fb5f7",
-      "2808123c-1b6c-4c73-a888-5cfd82289dcf",
-      "50bcad42-06c8-4fba-b6bd-68ca9e72f470",
-      "1ccfb969-1705-4a11-b68b-21345199c60b",
-      "a12729c8-b7fe-4b23-a02c-a578b373bbf1",
-      "5dd8b8e9-9b30-4cb2-8160-af7109536900",
-      "f82d469a-4311-427f-88f7-769a7fb6899a",
-      "bbedfe37-a169-4838-aad4-fd6dec7cdd7f"
+      "2f5e7e62-fc0e-40e3-b588-c239c095ffb0",
+      "b0d278e6-a895-4436-9ee8-72ffad87221e",
+      "fa651a80-148c-4682-8abb-56c2f60a240d",
+      "1dacbef8-412e-435e-8677-b90b94c68fbb",
+      "13847426-5820-4e60-a1f7-1923b025b00d",
+      "d3b11e06-cfa8-4560-9b5d-4e758376038a",
+      "1236dc17-f40a-41cf-9be1-b0093cb696c0",
+      "857b409b-a08f-4052-a0b2-2cf66213c11e"
     ],
-    "created_at": "2025-10-22T17:29:51",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:13"
   },
-  "e06ee07a-9881-4e69-90c8-f525d39c9288": {
+  "32e2764a-187c-4c5b-8afc-6945ad8b5684": {
     "titulo": "Divorcio contencioso con bienes - Caso 1",
     "fecha": "2024-09-04T00:00:00",
     "participantes": [
@@ -1132,21 +1000,18 @@
     },
     "total_fragmentos": 8,
     "fragmentos_ids": [
-      "6c796019-cb8a-4986-940f-61782d1b38c5",
-      "f28ee553-8cdb-4065-8df7-d2458cae991b",
-      "7d21c49a-3a5b-42d8-aec5-38d4e9e9d59d",
-      "6de6ed1b-e3f3-4bf5-8168-4ec40a5497db",
-      "89d1189f-c16d-4546-acb9-0b003c8934c6",
-      "d3309a37-2775-4079-b76a-52768fb0e146",
-      "af93b6f2-524b-46a9-aa32-103e41ee33b7",
-      "68198a84-1038-482f-8244-47f12927d997"
+      "86a3f75b-842b-46c6-bdde-a97038123223",
+      "08b7923a-212a-4d4b-a1cf-85b10dfcb739",
+      "41d6c457-160b-4655-a73f-bd728cc2386d",
+      "51ef2abb-d99e-41a3-83c6-ee3d2a982017",
+      "93b7658e-b21a-43f2-8e0f-e574ed7135b1",
+      "7e8e9037-d397-4dda-aaa0-6fc28a660910",
+      "f96849f4-b5b7-4ae9-ac13-15a7ae05c734",
+      "d051d436-a7c4-42bd-8c72-6235e3ae9465"
     ],
-    "created_at": "2025-10-22T17:34:29",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:14"
   },
-  "a3d0524d-989e-4410-9c48-7d0a57d782bc": {
+  "391cb879-c97b-48bf-b229-d6f0361bf871": {
     "titulo": "Recurso de apelación contra sentencia - Caso 1",
     "fecha": "2024-09-04T00:00:00",
     "participantes": [
@@ -1160,18 +1025,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "497d715c-a385-4f9c-830c-9f3257f6a9cf",
-      "5a1d8b55-6d8b-4b12-a75b-f6fa2886c5b8",
-      "a93e3cd6-5a23-4d12-9234-d157958d215c",
-      "964d4ab7-17f8-47cf-9a87-a8495c8ba261",
-      "e8011fad-20ee-4407-b4da-58972963227f"
+      "444ada43-f777-46ac-9bc8-e8044a2a4f54",
+      "5191e3f5-a13c-4980-b096-900aa527f33e",
+      "0d19c062-a76e-4813-9c3d-da8fc5d6bfd2",
+      "7b53785b-bbe2-4cf2-87b3-9dc9c36f6ae3",
+      "4f958387-eda8-4713-843f-c67e92cee39c"
     ],
-    "created_at": "2025-10-22T17:39:16",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:14"
   },
-  "20b3837c-42b5-44be-acb9-b172592a1aa4": {
+  "783868f7-730f-4279-b65c-7e95fd2eba6f": {
     "titulo": "Acoso laboral y hostigamiento - Caso 1",
     "fecha": "2024-10-06T00:00:00",
     "participantes": [
@@ -1185,18 +1047,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "753508a7-d1e0-4983-9f51-9a37318e60c2",
-      "931959c1-5502-476a-8e66-d524ee7400c6",
-      "8cd9f827-aea9-4159-b662-d43a0d291dae",
-      "adcb5064-5082-4ec5-8db1-411561d6728d",
-      "566cadcd-e895-4d3f-ad84-ed70d76218e7"
+      "defdba66-29d7-4237-a215-0cb8b5cf888f",
+      "c9f84a7c-af34-454a-bed6-dec85b07896e",
+      "70628b5a-ff51-4837-ab9d-f1ec6da4f752",
+      "6ca31930-2186-424d-883a-a5a0af4304c4",
+      "b686aebb-c881-4ced-ab63-fb040b3291c2"
     ],
-    "created_at": "2025-10-22T17:42:18",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:15"
   },
-  "fd066214-69fe-4071-a34f-4ed9982bd37f": {
+  "867695a5-0ef9-43e3-885e-1ff29492ee8e": {
     "titulo": "Disolución de sociedad - Caso 1",
     "fecha": "2024-10-07T00:00:00",
     "participantes": [
@@ -1210,18 +1069,15 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "39c5f3b6-a3a3-4ddd-b765-96f8a2e5f7d6",
-      "fd382ffb-76d3-4e6c-829f-8d606bbcc4a7",
-      "a9942d4c-cf70-4f9e-80e4-cfec751678b1",
-      "1a31f8c1-b04f-41aa-97e3-c52cc2ed002d",
-      "e1baf786-58e5-4c69-9c1d-c42d152099bd"
+      "63b377ca-fc3d-4db3-8dec-56d5ffe6e667",
+      "bae984b2-3acc-418d-9888-6a26c5273b11",
+      "e0dd62c9-dc42-45a1-ad5a-766d618453a7",
+      "f7d9d943-4dfb-4514-8102-51c1eae6925f",
+      "0a2b285f-fa4d-4673-b3c0-7e944b43695e"
     ],
-    "created_at": "2025-10-22T17:45:24",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:15"
   },
-  "59ed0570-001d-4fc8-afe9-26410d5f3677": {
+  "80701c4d-7126-41a7-b57c-56bb5e62846c": {
     "titulo": "Impugnación determinación de oficio AFIP - Caso 1",
     "fecha": "2024-10-29T00:00:00",
     "participantes": [
@@ -1235,17 +1091,14 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "c4761a6d-0512-4348-b339-6a95421b54cd",
-      "2ca0906c-09f4-44c9-9b5e-43fcf8e70ffb",
-      "1dfa5132-ad66-4364-8db1-be9e414845ab",
-      "7b3e7e7f-5403-4e46-8d1e-77dff2dd24c2"
+      "107987b8-2393-4aed-9965-eb6a89733492",
+      "ebb8ec1e-cea7-4479-8bce-87ff901c63d2",
+      "a1e5639c-5984-4368-8302-bf920b9409a9",
+      "ba32f65b-2b1b-4b04-809f-ca64924aeaab"
     ],
-    "created_at": "2025-10-22T17:48:36",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:16"
   },
-  "a23316dd-c835-41f0-b08d-9d247e1a7a55": {
+  "f26cb254-aa21-4379-b64f-2ca2d9ec64db": {
     "titulo": "Solicitud de excarcelación - Caso 2",
     "fecha": "2024-11-09T00:00:00",
     "participantes": [
@@ -1259,16 +1112,98 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "63c6bb3f-bc82-46fe-bc9f-7f0e20f5b227",
-      "545a8e6c-5dc6-4d58-b1bb-01b99d6c63c2",
-      "5806d036-ae37-4c14-b1ed-e1b1d59af5c2",
-      "7ff401d4-8c6b-4880-9537-58842eced6c7",
-      "83df3876-b83f-4fe7-bde9-848ae161c12f",
-      "0a72947d-c461-4c80-bb9b-57367d2caa12"
+      "406a7d44-dfdd-430b-8e72-1fcbc8ec81c0",
+      "87d30560-1095-451e-90e1-5bf2be01afff",
+      "967b2d94-2f27-4b9a-b1ae-f39bb53f4c04",
+      "c99d717b-1f35-43e8-b46a-e556d0492921",
+      "d17f0a76-6440-4581-8f5e-559909bdb780",
+      "58022615-1c00-40e9-9e46-cb024a95673c"
     ],
-    "created_at": "2025-10-22T17:51:14",
-    "attachments": [],
-    "fragmentos_pdf_ids": [],
-    "total_fragmentos_pdf": 0
+    "created_at": "2025-10-23T18:17:16"
+  },
+  "c0615c82-920a-4ec9-9bb6-97dcb3598af7": {
+    "titulo": "Conversacion 1",
+    "fecha": "2025-10-23T18:49:57",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "175bbbd1-524e-494a-9359-97b0c79137e7"
+    ],
+    "created_at": "2025-10-23T18:49:57"
+  },
+  "5363129c-c20f-464d-b734-e00e6509ddb9": {
+    "titulo": "conversacion 2",
+    "fecha": "2025-10-23T18:50:30",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "2f7283ef-6a44-49e2-8dd8-8be44cdc1b63"
+    ],
+    "created_at": "2025-10-23T18:50:30"
+  },
+  "9c954af4-441a-4dd2-97b4-0a2415fcf415": {
+    "titulo": "Reunión de planificación semanal",
+    "fecha": "2025-10-23T18:51:19",
+    "participantes": [
+      "Carla",
+      "Julián",
+      "Lucía"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 3,
+      "origen": "texto_plano"
+    },
+    "total_fragmentos": 2,
+    "fragmentos_ids": [
+      "db34c209-d214-4f87-a857-1edaee44d46e",
+      "97490c4f-f3a9-44f0-88e1-c2f8cf2ddca1"
+    ],
+    "created_at": "2025-10-23T18:51:19"
+  },
+  "5be468aa-a240-48f7-9d99-150c5edd650f": {
+    "titulo": "Análisis de resultados del sprint",
+    "fecha": "2025-10-23T18:51:20",
+    "participantes": [
+      "Marta",
+      "Diego",
+      "Pablo"
+    ],
+    "metadata": {
+      "tipo": "planning",
+      "participantes_detectados": 3,
+      "origen": "texto_plano"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "eab9f949-ff8d-4288-9ec8-6854bfd8d764",
+      "550ad553-d9c2-40d4-b6ad-2ccdc3c36ebf",
+      "fe35c184-85d4-4508-84cb-8d2565ed7411",
+      "13d97c7d-4477-4f48-aa15-6d7a8d775d9c"
+    ],
+    "created_at": "2025-10-23T18:51:20"
+  },
+  "3c8f5f3e-6ae9-4f84-a1d1-560e9af80c69": {
+    "titulo": "Brainstorm para nueva funcionalidad",
+    "fecha": "2025-10-23T18:51:20",
+    "participantes": [
+      "Tomás",
+      "Sofía",
+      "Laura"
+    ],
+    "metadata": {
+      "tipo": "brainstorm",
+      "participantes_detectados": 3,
+      "origen": "texto_plano"
+    },
+    "total_fragmentos": 3,
+    "fragmentos_ids": [
+      "b101556a-b4b3-4076-949e-ddbf50210f69",
+      "c327bf9a-4781-4def-93f3-fd45b3f1b812",
+      "754a4cc9-be6d-4cc8-83aa-3fa5078a8883"
+    ],
+    "created_at": "2025-10-23T18:51:20"
   }
 }
