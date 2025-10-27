@@ -273,5 +273,183 @@
     "contextos_utilizados": 7,
     "usa_propagacion": false,
     "timestamp": "2025-10-23T19:04:29.088249"
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 1594.63,
+    "tiempo_segundos": 1.59,
+    "timestamp": "2025-10-24T19:29:11.545782",
+    "detalles": {
+      "titulo": "Conversacion No temporal",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 359.48,
+    "tiempo_segundos": 0.36,
+    "timestamp": "2025-10-24T20:54:52.085279",
+    "detalles": {
+      "titulo": "Prueba no temporal",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 131.01,
+    "tiempo_segundos": 0.13,
+    "timestamp": "2025-10-24T20:56:02.036063",
+    "detalles": {
+      "titulo": "prueba 2",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 435.26,
+    "tiempo_segundos": 0.44,
+    "timestamp": "2025-10-24T21:17:47.086327",
+    "detalles": {
+      "titulo": "nueva prueba no temporal",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 820.52,
+    "tiempo_segundos": 0.82,
+    "timestamp": "2025-10-24T21:20:53.246319",
+    "detalles": {
+      "titulo": "nuevamente prueba no temporal",
+      "total_fragmentos": 3,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 805.77,
+    "tiempo_segundos": 0.81,
+    "timestamp": "2025-10-24T21:37:24.109374",
+    "detalles": {
+      "titulo": "prueba x",
+      "total_fragmentos": 3,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 931.34,
+    "tiempo_segundos": 0.93,
+    "timestamp": "2025-10-25T16:23:41.943108",
+    "detalles": {
+      "titulo": "prueba conversacion no temporal",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 288.62,
+    "tiempo_segundos": 0.29,
+    "timestamp": "2025-10-25T16:24:49.790521",
+    "detalles": {
+      "titulo": "conversacion temporal con fecha",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 380.27,
+    "tiempo_segundos": 0.38,
+    "timestamp": "2025-10-25T16:29:04.578589",
+    "detalles": {
+      "titulo": "conversacion sin fehca",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 447.4,
+    "tiempo_segundos": 0.45,
+    "timestamp": "2025-10-25T16:34:14.846245",
+    "detalles": {
+      "titulo": "Reunión de proyecto",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 412.77,
+    "tiempo_segundos": 0.41,
+    "timestamp": "2025-10-27T06:04:42.313264",
+    "detalles": {
+      "titulo": "prueba temporal con fecha especifica",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 194.14,
+    "tiempo_segundos": 0.19,
+    "timestamp": "2025-10-27T06:05:47.332624",
+    "detalles": {
+      "titulo": "prueba no temporal",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 201.41,
+    "tiempo_segundos": 0.2,
+    "timestamp": "2025-10-27T06:07:32.592221",
+    "detalles": {
+      "titulo": "conversacion sin nada",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 8471.82,
+    "tiempo_segundos": 8.47,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-27T06:11:12.855506"
   }
 ]

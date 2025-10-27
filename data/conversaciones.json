@@ -1205,5 +1205,152 @@
       "754a4cc9-be6d-4cc8-83aa-3fa5078a8883"
     ],
     "created_at": "2025-10-23T18:51:20"
+  },
+  "0cc9e6e7-2ffd-4734-a2fe-8de4ab392077": {
+    "titulo": "Conversacion No temporal",
+    "fecha": "2025-10-24T19:29:09",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "125b4581-a1c5-47c8-8c5e-c802483290fe"
+    ],
+    "created_at": "2025-10-24T19:29:10"
+  },
+  "5fb00804-10c1-4598-ac82-208547941a0e": {
+    "titulo": "Prueba no temporal",
+    "fecha": "2025-10-24T20:54:51",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "2daebc1b-944d-43fe-9f02-98d6b6028f14"
+    ],
+    "created_at": "2025-10-24T20:54:51"
+  },
+  "63719e8b-8ec7-44de-b04d-b8ca8580bcb2": {
+    "titulo": "prueba 2",
+    "fecha": "2025-10-24T20:56:01",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "772cf62c-44e3-4e61-b631-60725e0a209a"
+    ],
+    "created_at": "2025-10-24T20:56:01"
+  },
+  "7c08fcea-6663-4a45-a918-3056a00d4326": {
+    "titulo": "nueva prueba no temporal",
+    "fecha": "2025-10-24T21:17:46",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "89d14bf9-0fba-4c8e-bcc4-8f7e949ab7a5"
+    ],
+    "created_at": "2025-10-24T21:17:46"
+  },
+  "8b65c524-8d5c-4c40-8f45-405ae7a5220a": {
+    "titulo": "nuevamente prueba no temporal",
+    "fecha": "2025-10-24T21:20:52",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 3,
+    "fragmentos_ids": [
+      "03ba0629-afe3-4a53-a8aa-7c9b95b0be40",
+      "5d4674f7-2271-4073-b20f-c9783761606f",
+      "0ae4a2ef-1923-4660-a405-f37e06c2c4d3"
+    ],
+    "created_at": "2025-10-24T21:20:52"
+  },
+  "e21d2208-8ca6-415e-908b-07185f10c51c": {
+    "titulo": "prueba x",
+    "fecha": "2025-10-24T21:37:23",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 3,
+    "fragmentos_ids": [
+      "b37bacc4-88cd-4630-a672-3d65a33717b5",
+      "842886ea-5aac-44b3-8d43-407d12a6d291",
+      "5195e6a2-5487-46b4-a2ad-f4555d9598df"
+    ],
+    "created_at": "2025-10-24T21:37:23"
+  },
+  "47794e8a-b7ef-46b9-a8cf-01351af20c76": {
+    "titulo": "prueba conversacion no temporal",
+    "fecha": null,
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "86280f22-9a59-4291-b20d-ea965e0f18ba"
+    ],
+    "created_at": "2025-10-25T16:23:41"
+  },
+  "8698c5b5-5694-4e50-90e1-99261c16be42": {
+    "titulo": "conversacion temporal con fecha",
+    "fecha": "2025-10-16T16:24:00",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "61fbd0c8-1b33-4e9c-85d5-14a452e667e4"
+    ],
+    "created_at": "2025-10-25T16:24:49"
+  },
+  "e01d2557-2067-47c4-87b1-fe4b6b5e5868": {
+    "titulo": "conversacion sin fehca",
+    "fecha": null,
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "16d20bcb-6b6e-406b-a4ec-c90eeb851c6a"
+    ],
+    "created_at": "2025-10-25T16:29:04"
+  },
+  "492bfc74-d103-4bba-ac58-f571a054773d": {
+    "titulo": "Reunión de proyecto",
+    "fecha": null,
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "2708b9e3-0c68-4dcb-8ae1-2883a2b5fadf"
+    ],
+    "created_at": "2025-10-25T16:34:14"
+  },
+  "ef8492fe-1bc0-4e4a-b1bd-934661e4424e": {
+    "titulo": "prueba temporal con fecha especifica",
+    "fecha": "2025-09-18T06:04:00",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "9cb99b80-114c-484f-bbdc-f284022e2008"
+    ],
+    "created_at": "2025-10-27T06:04:41"
+  },
+  "8658dfe2-7864-472b-8d16-0f9a6473a15d": {
+    "titulo": "prueba no temporal",
+    "fecha": null,
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "23776380-393d-4986-a77d-71cc15652df5"
+    ],
+    "created_at": "2025-10-27T06:05:47"
+  },
+  "0e637b3e-f1cb-4ba2-901f-4c40a18511df": {
+    "titulo": "conversacion sin nada",
+    "fecha": "2025-10-27T06:07:32",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "994186ce-ba7a-40c6-9190-929a83d6f8ef"
+    ],
+    "created_at": "2025-10-27T06:07:32"
   }
 }

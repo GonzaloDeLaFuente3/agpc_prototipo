@@ -220,6 +220,24 @@
             for (const [id, conversacion] of Object.entries(conversacionesOriginales)) {
                 let incluir = true;
 
+                // Filtro por tipo temporal
+                if (filtroTipo === 'temporal' || filtroTipo === 'atemporal') {
+                    // Determinar si la conversación es temporal
+                    // Una conversación es temporal si tiene al menos un fragmento temporal
+                    const fragmentosIds = conversacion.fragmentos_ids || [];
+                    const tieneFragmentosTemporal = fragmentosIds.some(fragId => {
+                        const frag = contextosOriginales[fragId];
+                        return frag && frag.es_temporal;
+                    });
+
+                    if (filtroTipo === 'temporal' && !tieneFragmentosTemporal) {
+                        incluir = false;
+                    }
+                    if (filtroTipo === 'atemporal' && tieneFragmentosTemporal) {
+                        incluir = false;
+                    }
+                }
+
                 // Filtro por texto
                 if (filtroTexto && !conversacion.titulo.toLowerCase().includes(filtroTexto)) {
                     incluir = false;

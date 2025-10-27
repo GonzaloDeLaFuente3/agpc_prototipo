@@ -659,6 +659,10 @@ async function agregarConversacion() {
         return;
     }
     
+    // Log para debug
+    console.log('esAtemporal:', esAtemporal);
+    console.log('fecha:', fecha);
+    
     // Mostrar indicador de carga
     const btnGuardar = event.target;
     const textoOriginal = btnGuardar.textContent;
@@ -677,9 +681,20 @@ async function agregarConversacion() {
         if (participantes) {
             formData.append('participantes', participantes);
         }
-        
-        if (!esAtemporal && fecha) {
+
+        // LÓGICA DE 3 ESTADOS:
+        if (esAtemporal) {
+            // Estado 1: Explícitamente marcado como atemporal
+            console.log('Enviando: ATEMPORAL');
+            formData.append('fecha', 'ATEMPORAL');
+        } else if (fecha && fecha.trim() !== '') {
+            // Estado 2: Fecha específica proporcionada
+            console.log('Enviando fecha específica:', fecha);
             formData.append('fecha', fecha);
+        } else {
+            // Estado 3: Nada especificado → el backend usará fecha actual
+            console.log('Sin fecha ni marcado atemporal → backend usará fecha actual');
+            // No enviar nada - el backend usará fecha actual
         }
         
         // Agregar PDF si existe
@@ -704,28 +719,14 @@ async function agregarConversacion() {
         if (data.status === 'éxito') {
             let mensaje = `✅ ${data.mensaje}\n`;
             mensaje += `Total fragmentos: ${data.total_fragmentos}\n`;
-            mensaje += `💬 Fragmentos de mensajes: ${data.total_fragmentos_mensaje}`;
             
             if (data.total_fragmentos_pdf > 0) {
                 mensaje += `\n📄 Fragmentos del PDF: ${data.total_fragmentos_pdf}`;
             }
 
-            // AGREGAR TIEMPO AL MENSAJE
             mensaje += `\n⚡ Tiempo de procesamiento: ${tiempoSegundos}s`;
             
-            // Mostrar con color según velocidad
-            let tipoNotificacion = 'exito';
-            if (tiempoMs > 10000) {
-                tipoNotificacion = 'warning';
-                mensaje += ' (procesamiento lento)';
-            } else if (tiempoMs > 5000) {
-                tipoNotificacion = 'info';
-            }
-            
-            mostrarNotificacion(mensaje, tipoNotificacion, 8000);
-
-            // 📊 REGISTRAR EN MÉTRICAS (simulación manual ya que el backend ya lo hace)
-            document.getElementById('ultima-carga-tiempo').textContent = tiempoSegundos + ' s';
+            mostrarNotificacion(mensaje, 'exito', 8000);
             actualizarEstadisticas();
             
             // Limpiar formulario
@@ -735,6 +736,9 @@ async function agregarConversacion() {
             document.getElementById('fechaConversacion').value = '';
             document.getElementById('conversacionAtemporal').checked = false;
             document.getElementById('pdfFileConversacion').value = '';
+            
+            // Habilitar campo fecha
+            toggleFechaConversacion();
             
             // Ocultar formulario
             document.getElementById('formAgregarConversacion').classList.add('hidden');

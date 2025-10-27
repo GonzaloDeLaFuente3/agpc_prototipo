@@ -428,13 +428,28 @@ async def agregar_conversacion_con_pdf(
         
         # Procesar fecha
         fecha_procesada = None
+
         if fecha:
-            fecha_procesada = normalizar_timestamp_para_guardar(fecha)
-            if not fecha_procesada:
-                return {
-                    "status": "error",
-                    "mensaje": f"Formato de fecha inválido: {fecha}"
-                }
+            # CASO 1: Verificar si es atemporal explícito
+            if fecha == 'ATEMPORAL':
+                fecha_procesada = None
+                print(f"⚪ Conversación ATEMPORAL (sin fecha)")
+            
+            # CASO 2: Conversación con fecha específica
+            else:
+                fecha_procesada = normalizar_timestamp_para_guardar(fecha)
+                if not fecha_procesada:
+                    return {
+                        "status": "error",
+                        "mensaje": f"Formato de fecha inválido: {fecha}"
+                    }
+                print(f"📅 Conversación con fecha: {fecha_procesada}")
+
+        # CASO 3: No se especificó fecha Y no se marcó como atemporal
+        # → Usar fecha actual (comportamiento por defecto para conversaciones)
+        else:
+            fecha_procesada = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+            print(f"📅 Conversación sin fecha explícita - usando fecha actual: {fecha_procesada}")
         
         # Procesar PDF si existe
         attachments = []

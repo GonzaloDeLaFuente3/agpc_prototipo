@@ -132,16 +132,26 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     """
     # Normalizar fecha
     fecha_normalizada = None
-    if fecha:
+    
+    # Caso 1: Conversación explícitamente atemporal
+    if fecha == 'ATEMPORAL':
+        fecha_normalizada = None
+        print(f"⚪ Conversación ATEMPORAL - sin timestamp")
+    
+    # Caso 2: Conversación con fecha específica
+    elif fecha and fecha.strip():  # ✅ Verificar que no sea string vacío
         fecha_normalizada = normalizar_timestamp_para_guardar(fecha)
         if not fecha_normalizada:
-            # Si no se puede normalizar, usar timestamp actual
-            fecha_normalizada = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
-            print(f"⚠️ Fecha inválida '{fecha}', usando fecha actual: {fecha_normalizada}")
-    else:
-        fecha_normalizada = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+            # Si no se puede normalizar, rechazar (no usar fecha actual)
+            raise ValueError(f"Formato de fecha inválido: {fecha}")
+        print(f"✅ Fecha normalizada: {fecha_normalizada}")
     
-    print(f"✅ Fecha normalizada: {fecha_normalizada}")
+    # Caso 3: No se especificó fecha (None o vacío) - CONVERSACIÓN NO TEMPORAL
+    else:
+        fecha_normalizada = None
+        print(f"⚪ Conversación NO TEMPORAL - sin timestamp asignado")
+    
+    print(f"📋 Resultado final - Fecha: {fecha_normalizada}")
 
     # Preparar datos de conversación
     conversacion_data = {
