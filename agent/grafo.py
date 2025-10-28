@@ -1014,10 +1014,12 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
             "peso_efectivo": round(we, 3),
             "label": f"E:{max(0.001, ws):.3f}|T:{max(0.001, rt) if rt > 0 else 0:.3f}|W:{max(0.001, we):.3f}"
         })
+
+    edges_ordenadas = sorted(edges, key=lambda e: e['peso_efectivo'], reverse=True)
     
     return {
         "nodes": nodos,
-        "edges": edges,
+        "edges": edges_ordenadas,
         "meta": {
             "referencia_temporal": ref_dt.isoformat(),
             "momento_consulta": momento_consulta.isoformat(),

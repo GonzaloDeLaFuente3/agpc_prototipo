@@ -607,17 +607,22 @@ function abrirModalArbol(subgrafo) {
                     direction: "UD",
                     sortMethod: "directed",
                     nodeSpacing: 140,
-                    levelSeparation: 100,
-                    treeSpacing: 200
+                    levelSeparation: 225,
+                    treeSpacing: 200,
+                    shakeTowards: "leaves"
                 }
             },
-            physics: { enabled: false },
-            nodes: { borderWidth: 2 },
+            physics: { 
+                        enabled: false},
+            nodes: { borderWidth: 2,
+                    fixed: false
+            },
             edges: { smooth: { type: "cubicBezier", roundness: 0.4 } },
             interaction: { 
                 hover: true, 
                 zoomView: true, 
                 dragView: true,
+                dragNodes: true,
                 selectConnectedEdges: false
             }
         };
@@ -626,6 +631,22 @@ function abrirModalArbol(subgrafo) {
             nodes: new vis.DataSet(nodes), 
             edges: new vis.DataSet(edges) 
         }, options);
+
+        // ✅ NUEVO: Permitir movimiento libre de nodos
+        network.on("dragEnd", function(params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                const positions = network.getPositions([nodeId]);
+                
+                // Actualizar posición del nodo para que sea persistente
+                network.body.data.nodes.update({
+                    id: nodeId,
+                    x: positions[nodeId].x,
+                    y: positions[nodeId].y,
+                    fixed: { x: false, y: false }  // Mantener movible
+                });
+            }
+        });
 
         setTimeout(() => {
             network.fit({
