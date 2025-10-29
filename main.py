@@ -594,6 +594,7 @@ def obtener_estadisticas_actualizacion():
             "estadisticas": {
                 "total_nodos": stats["total_contextos"],
                 "total_relaciones": stats["total_relaciones"],
+                "relaciones_bidireccionales": stats["relaciones_bidireccionales"],
                 "contextos_temporales": stats.get("contextos_temporales", 0),
                 "contextos_atemporales": stats.get("contextos_atemporales", 0),
                 "tipos_contexto": stats.get("tipos_contexto", {}),

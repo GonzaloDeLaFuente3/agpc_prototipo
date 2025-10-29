@@ -499,8 +499,12 @@ async function obtenerEstadoPropagacion() {
                     <span class="font-bold text-blue-600">${estado.total_nodos}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>Aristas totales:</span>
+                    <span>Aristas totales (unidireccionales):</span>
                     <span class="font-bold text-blue-600">${estado.total_aristas}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Aristas bidireccionales:</span>
+                    <span class="font-bold text-green-600">${estado.aristas_bidireccionales || 0}</span>
                 </div>
                 <div class="flex justify-between">
                     <span>✅ Sistema listo:</span>
@@ -788,6 +792,8 @@ async function cargarEstadisticas() {
         
         if (res.data.status === 'success') {
             const stats = res.data.estadisticas;
+            console.log('📊 Stats recibidas:', stats);
+            console.log('📊 relaciones_bidireccionales:', stats.relaciones_bidireccionales);
             
             document.getElementById('estadisticas').innerHTML = `
                 <div class="space-y-2">
@@ -796,8 +802,12 @@ async function cargarEstadisticas() {
                         <span class="font-bold text-blue-600">${stats.total_nodos}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Total Relaciones:</span>
+                        <span>Total Relaciones (unidireccionales):</span>
                         <span class="font-bold text-green-600">${stats.total_relaciones}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Relaciones bidireccionales:</span>
+                        <span class="font-bold text-purple-600">${stats.relaciones_bidireccionales || 0}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Actualización:</span>

@@ -777,11 +777,32 @@ def obtener_todos() -> Dict:
     """Obtiene todos los contextos."""
     return metadatos_contextos
 
+def _calcular_aristas_bidireccionales() -> int:
+    """
+    Calcula la cantidad de aristas bidireccionales en el grafo.
+    Una arista bidireccional es cuando existe A→B y B→A.
+    """
+    aristas_bidireccionales = 0
+    aristas_procesadas = set()
+    
+    for nodo_a, nodo_b in grafo_contextos.edges():
+        # Crear clave ordenada para evitar contar duplicados
+        par = tuple(sorted([nodo_a, nodo_b]))
+        
+        if par not in aristas_procesadas:
+            aristas_procesadas.add(par)
+            # Verificar si existe la arista en ambas direcciones
+            if grafo_contextos.has_edge(nodo_b, nodo_a):
+                aristas_bidireccionales += 1
+    
+    return aristas_bidireccionales
+
 def obtener_estadisticas() -> Dict:
     """Obtiene estadísticas básicas del grafo incluyendo tipos de contexto."""
     stats = {
         "total_contextos": grafo_contextos.number_of_nodes(),
         "total_relaciones": grafo_contextos.number_of_edges(),
+        "relaciones_bidireccionales": _calcular_aristas_bidireccionales(),
     }
     
     # Contar temporales vs atemporales
@@ -797,6 +818,8 @@ def obtener_estadisticas() -> Dict:
         tipos_count[tipo] = tipos_count.get(tipo, 0) + 1
     
     stats["tipos_contexto"] = tipos_count
+
+    print(f"🔍 DEBUG: Nodos={stats['total_contextos']}, Aristas unidireccionales={stats['total_relaciones']}, Aristas bidireccionales={stats['relaciones_bidireccionales']}")  # DEBUG
     
     return stats
 
@@ -1353,6 +1376,7 @@ def obtener_estado_propagacion():
             "umbral_activacion": propagador.umbral_activacion if propagador else None,
             "total_nodos": total_nodos,
             "total_aristas": total_aristas,
+            "aristas_bidireccionales": _calcular_aristas_bidireccionales(),
             "grafo_disponible": total_nodos > 0
         }
     except Exception as e:

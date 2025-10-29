@@ -577,5 +577,162 @@
     "contextos_utilizados": 12,
     "usa_propagacion": true,
     "timestamp": "2025-10-27T18:26:25.763046"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 58,
+    "tiempo_ms": 6636.51,
+    "tiempo_segundos": 6.64,
+    "contextos_utilizados": 11,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-28T17:59:58.995820"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 39,
+    "tiempo_ms": 3673.94,
+    "tiempo_segundos": 3.67,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:02:50.801472"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 39,
+    "tiempo_ms": 5025.79,
+    "tiempo_segundos": 5.03,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:03:02.757866"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 75,
+    "tiempo_ms": 4811.97,
+    "tiempo_segundos": 4.81,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:04:46.719569"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 95,
+    "tiempo_ms": 4331.83,
+    "tiempo_segundos": 4.33,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:06:37.517544"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 126,
+    "tiempo_ms": 4496.26,
+    "tiempo_segundos": 4.5,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:07:18.043563"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 54,
+    "tiempo_ms": 19457.01,
+    "tiempo_segundos": 19.46,
+    "contextos_utilizados": 3,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:14:15.478200"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 94,
+    "tiempo_ms": 20921.01,
+    "tiempo_segundos": 20.92,
+    "contextos_utilizados": 2,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:14:56.064452"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 105,
+    "tiempo_ms": 3620.98,
+    "tiempo_segundos": 3.62,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:15:51.551404"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 105,
+    "tiempo_ms": 2814.54,
+    "tiempo_segundos": 2.81,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:16:02.114076"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 105,
+    "tiempo_ms": 8219.15,
+    "tiempo_segundos": 8.22,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:18:35.882563"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 105,
+    "tiempo_ms": 6202.86,
+    "tiempo_segundos": 6.2,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:18:59.389019"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 58,
+    "tiempo_ms": 17138.95,
+    "tiempo_segundos": 17.14,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:19:51.874748"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 101,
+    "tiempo_ms": 6620.03,
+    "tiempo_segundos": 6.62,
+    "contextos_utilizados": 5,
+    "usa_propagacion": false,
+    "timestamp": "2025-10-28T18:20:46.007385"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 44,
+    "tiempo_ms": 7190.75,
+    "tiempo_segundos": 7.19,
+    "contextos_utilizados": 13,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-28T18:27:01.336763"
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 1119.82,
+    "tiempo_segundos": 1.12,
+    "timestamp": "2025-10-28T18:47:00.843744",
+    "detalles": {
+      "titulo": "ramas git",
+      "total_fragmentos": 2,
+      "tiene_pdf": true
+    }
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 72,
+    "tiempo_ms": 7471.31,
+    "tiempo_segundos": 7.47,
+    "contextos_utilizados": 7,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-28T18:48:39.965749"
   }
 ]
