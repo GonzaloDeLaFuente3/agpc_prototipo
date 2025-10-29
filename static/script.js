@@ -1223,14 +1223,11 @@ function abrirPaginaGrafo() {
 async function borrarTodosDatos() {
     // Primera confirmación
     const confirmacion1 = confirm(
-        '⚠️ ADVERTENCIA CRÍTICA ⚠️\n\n' +
         'Esta acción ELIMINARÁ PERMANENTEMENTE:\n\n' +
-        '❌ Todos los contextos generados\n' +
-        '❌ Todas las conversaciones guardadas\n' +
-        '❌ Todos los documentos PDF procesados\n' +
-        '❌ Toda la estructura del grafo\n' +
-        '❌ Toda la base de datos\n' +
-        '❌ Todos los embeddings (ChromaDB)\n\n' +
+        '- Todos los contextos \n' +
+        '- Todas las conversaciones \n' +
+        '- Todos los documentos PDF \n' +
+        '- Toda la estructura del grafo\n' +
         '¿Estás completamente seguro de continuar?'
     );
     
@@ -1300,9 +1297,9 @@ async function actualizarEstadisticas() {
             
             // Colorear según velocidad
             elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
-            if (promedioMs < 2000) {
+            if (promedioMs < 25000) {
                 elemento.classList.add('text-green-600');
-            } else if (promedioMs < 5000) {
+            } else if (promedioMs < 90000) {
                 elemento.classList.add('text-orange-600');
             } else {
                 elemento.classList.add('text-red-600');
@@ -1341,14 +1338,14 @@ async function actualizarEstadisticas() {
 function formatearTiempoRespuesta(ms) {
     let colorClasses = 'bg-green-500'; // Por defecto verde
     
-    if (ms > 5000) {
+    if (ms > 90000) {
         colorClasses = 'bg-red-500';
-    } else if (ms > 2000) {
+    } else if (ms > 25000) {
         colorClasses = 'bg-orange-500';
     }
     
     const segundos = (ms / 1000).toFixed(2);
-    return `<span class="inline-block ${colorClasses} text-white px-2 py-1 rounded-full text-xs font-bold ml-2">⚡ ${segundos}s</span>`;
+    return `<span class="inline-block ${colorClasses} text-white px-2 py-1 rounded-full text-xs font-bold ml-2">Tiempo: ${segundos}s</span>`;
 }
 
 // Actualizar el display de última consulta
@@ -1358,9 +1355,9 @@ function actualizarUltimaConsulta(tiempoMs) {
     
     // Colorear según velocidad
     elemento.classList.remove('text-gray-800', 'text-green-600', 'text-orange-600', 'text-red-600');
-    if (tiempoMs < 2000) {
+    if (tiempoMs < 25000) {
         elemento.classList.add('text-green-600');
-    } else if (tiempoMs < 5000) {
+    } else if (tiempoMs < 90000) {
         elemento.classList.add('text-orange-600');
     } else {
         elemento.classList.add('text-red-600');
@@ -1381,10 +1378,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Limpiar solo las métricas de performance
 async function limpiarMetricas() {
     if (!confirm('¿Estás seguro de que deseas limpiar todas las métricas de performance?\n\n' +
-                 'Esto eliminará:\n' +
-                 '❌ Historial de tiempos de consultas\n' +
-                 '❌ Historial de tiempos de carga\n' +
-                 '❌ Todas las estadísticas acumuladas\n\n' +
                  'Los contextos y conversaciones NO se verán afectados.')) {
         return;
     }

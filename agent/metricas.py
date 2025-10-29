@@ -33,12 +33,9 @@ class MetricasPerformance:
     def registrar_carga_dataset(self, tipo: str, cantidad: int, tiempo_ms: float, detalles: Dict = None):
         """
         Registra métricas de carga de dataset
-        
-        Args:
             tipo: 'conversaciones' o 'pdf'
             cantidad: número de items cargados
             tiempo_ms: duración en milisegundos
-            detalles: información adicional (opcional)
         """
         metrica = {
             "tipo_operacion": "carga_dataset",
@@ -59,8 +56,6 @@ class MetricasPerformance:
                           contextos_utilizados: int, usa_propagacion: bool):
         """
         Registra métricas de consulta del usuario
-        
-        Args:
             pregunta: texto de la consulta
             tiempo_ms: duración total de procesamiento
             contextos_utilizados: número de contextos recuperados

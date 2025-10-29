@@ -734,5 +734,23 @@
     "contextos_utilizados": 7,
     "usa_propagacion": true,
     "timestamp": "2025-10-28T18:48:39.965749"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 8186.93,
+    "tiempo_segundos": 8.19,
+    "contextos_utilizados": 12,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-28T23:26:02.207203"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 10115.79,
+    "tiempo_segundos": 10.12,
+    "contextos_utilizados": 19,
+    "usa_propagacion": true,
+    "timestamp": "2025-10-28T23:36:27.708937"
   }
 ]
