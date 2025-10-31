@@ -244,7 +244,6 @@ def detectar_palabras_temporales_simples(texto: str) -> List[str]:
     texto_normalizado = texto.lower()
     
     # Remover signos de puntuación para detección más robusta
-    import re
     texto_limpio = re.sub(r'[¿?¡!.,;:]', ' ', texto_normalizado)
     texto_limpio = re.sub(r'\s+', ' ', texto_limpio).strip()
     

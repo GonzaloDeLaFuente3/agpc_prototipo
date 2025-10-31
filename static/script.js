@@ -271,7 +271,7 @@ async function buscarSemantico() {
 
         container.innerHTML = Object.entries(res.data).map(([id, info]) => {
             const icono = info.es_temporal ? "🕐" : "📋";
-            const timestamp = info.timestamp ? `<p class="text-xs text-gray-500 mt-1">⏰ ${new Date(info.timestamp).toLocaleString()}</p>` : "";
+            const timestamp = info.timestamp ? `<p class="text-xs text-gray-500 mt-1">${new Date(info.timestamp).toLocaleString()}</p>` : "";
             
             return `
                 <div class="p-3 bg-gray-100 rounded border-l-4 border-pink-600 shadow">
@@ -507,7 +507,7 @@ async function obtenerEstadoPropagacion() {
                     <span class="font-bold text-green-600">${estado.aristas_bidireccionales || 0}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>✅ Sistema listo:</span>
+                    <span>Sistema listo:</span>
                     <span class="font-bold ${estado.grafo_disponible ? 'text-green-600' : 'text-red-600'}">
                         ${estado.grafo_disponible ? 'SÍ' : 'NO'}
                     </span>
@@ -808,10 +808,6 @@ async function cargarEstadisticas() {
                     <div class="flex justify-between">
                         <span>Relaciones bidireccionales:</span>
                         <span class="font-bold text-purple-600">${stats.relaciones_bidireccionales || 0}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Actualización:</span>
-                        <span class="font-bold text-purple-600">INCREMENTAL</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Umbral:</span>

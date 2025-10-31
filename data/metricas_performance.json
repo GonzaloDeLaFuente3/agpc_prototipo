@@ -752,5 +752,18 @@
     "contextos_utilizados": 19,
     "usa_propagacion": true,
     "timestamp": "2025-10-28T23:36:27.708937"
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversacion_individual",
+    "cantidad_items": 1,
+    "tiempo_ms": 1199.06,
+    "tiempo_segundos": 1.2,
+    "timestamp": "2025-10-31T20:10:54.799692",
+    "detalles": {
+      "titulo": "reunion para presentacion de avance",
+      "total_fragmentos": 1,
+      "tiene_pdf": false
+    }
   }
 ]

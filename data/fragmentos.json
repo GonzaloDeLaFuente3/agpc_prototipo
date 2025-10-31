@@ -9678,5 +9678,32 @@
     "tipo_contexto": "documento",
     "es_fragmento": true,
     "es_pdf": true
+  },
+  "0c90f318-d9df-432f-9bff-2ae058e883ab": {
+    "fragmento_id": "0c90f318-d9df-432f-9bff-2ae058e883ab",
+    "conversacion_id": "94834b27-3338-41ee-836d-912a508b6a67",
+    "conversacion_titulo": "reunion para presentacion de avance",
+    "posicion_en_conversacion": 1,
+    "total_fragmentos_conversacion": 1,
+    "texto": "se reune para hacer un simulacro de la presentacion de avance para el trabajo final de agente de gestion probabilistica de contexto",
+    "palabras_clave": [
+      "simulacro",
+      "gestion",
+      "agente",
+      "contexto",
+      "presentacion",
+      "probabilistico",
+      "avance",
+      "reune",
+      "trabajo"
+    ],
+    "timestamp": "2025-10-31T20:10:53",
+    "timestamp_original_conversacion": "2025-10-31T20:10:53",
+    "participantes": [],
+    "metadata_conversacion": {},
+    "created_at": "2025-10-31T20:10:53",
+    "es_temporal": true,
+    "tipo_contexto": "accion",
+    "tiene_timestamp_especifico": false
   }
 }

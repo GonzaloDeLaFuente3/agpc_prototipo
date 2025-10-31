@@ -431,7 +431,7 @@ ${contexto.texto}</div>
                             </div>
                             
                             <p class="text-gray-600 text-sm mb-3 bg-gray-50 p-3 rounded">
-                                ${meta.texto.substring(0, 300)}${meta.texto.length > 300 ? '...' : ''}
+                                ${meta.texto}
                             </p>
                             
                             ${fecha ? `<p class="text-xs text-gray-500 mb-2">📅 ${fecha}</p>` : ''}

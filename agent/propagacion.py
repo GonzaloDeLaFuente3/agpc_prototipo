@@ -2,6 +2,8 @@ import networkx as nx
 from typing import Dict, List, Tuple, Set, Optional
 from collections import defaultdict, deque
 import math
+from agent.semantica import buscar_similares
+from agent.extractor import extraer_palabras_clave
 
 class PropagadorActivacion:
     """
@@ -100,7 +102,6 @@ class PropagadorActivacion:
         """
         # Si no se proporcionan nodos iniciales, usar búsqueda semántica
         if not nodos_iniciales:
-            from agent.semantica import buscar_similares
             try:
                 nodos_iniciales = buscar_similares(texto_consulta, k=5)
             except Exception:
@@ -303,8 +304,6 @@ def propagar_desde_consulta_integrado(pregunta: str, grafo, metadatos_contextos,
     Returns:
         Dict con contextos encontrados por propagación
     """
-    from agent.extractor import extraer_palabras_clave
-    
     # Crear propagador
     propagador = crear_propagador(grafo, metadatos_contextos)
     

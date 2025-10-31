@@ -1364,5 +1364,16 @@
       "ac407c7a-2031-4cfa-a9f7-dd47ae586a9d_pdf_0_0"
     ],
     "created_at": "2025-10-28T18:46:59"
+  },
+  "94834b27-3338-41ee-836d-912a508b6a67": {
+    "titulo": "reunion para presentacion de avance",
+    "fecha": "2025-10-31T20:10:53",
+    "participantes": [],
+    "metadata": {},
+    "total_fragmentos": 1,
+    "fragmentos_ids": [
+      "0c90f318-d9df-432f-9bff-2ae058e883ab"
+    ],
+    "created_at": "2025-10-31T20:10:53"
   }
 }

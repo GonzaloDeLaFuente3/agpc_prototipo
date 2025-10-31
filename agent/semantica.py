@@ -2,6 +2,7 @@
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from typing import List, Dict
+import traceback
 
 # Cliente y colección únicos
 client = chromadb.PersistentClient(path="./chroma_db")
@@ -87,7 +88,6 @@ def indexar_documentos_batch(ids: List[str], textos: List[str]):
             
     except Exception as e:
         print(f"❌ Error en indexado batch: {e}")
-        import traceback
         traceback.print_exc()
         
         # FALLBACK: Si el batch falla, intentar uno por uno
@@ -155,7 +155,6 @@ def calcular_similitudes_batch(texto_nuevo: str, nodos_existentes: List[str]) ->
         
     except Exception as e:
         print(f"❌ Error en similitud batch: {e}")
-        import traceback
         traceback.print_exc()
         
         # FALLBACK: Retornar similitudes vacías (se usará solo Jaccard)

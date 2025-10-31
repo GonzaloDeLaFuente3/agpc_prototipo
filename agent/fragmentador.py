@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import List, Dict, Tuple
 from agent.extractor import extraer_palabras_clave
 from agent.temporal_parser import detectar_timestamps_fragmento
+from agent.utils import normalizar_timestamp_para_guardar
 
 def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300) -> List[str]:
     """
@@ -157,7 +158,6 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
         
         # NORMALIZAR TIMESTAMP DEL FRAGMENTO
         if timestamp_fragmento:
-            from agent.utils import normalizar_timestamp_para_guardar
             timestamp_normalizado = normalizar_timestamp_para_guardar(timestamp_fragmento)
             timestamp_fragmento = timestamp_normalizado if timestamp_normalizado else timestamp_base_conversacion
             print(f"  ✅ Fragmento {i+1} - timestamp específico normalizado: {timestamp_fragmento}")

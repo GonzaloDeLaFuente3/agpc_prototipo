@@ -1252,7 +1252,6 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
         titulo = meta.get("titulo", "")
         texto_completo = f"{titulo} {texto}"
         
-        from agent.temporal_parser import extraer_referencias_del_texto
         referencias = extraer_referencias_del_texto(texto_completo)
         
         if referencias:

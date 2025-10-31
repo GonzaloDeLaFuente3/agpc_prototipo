@@ -22,6 +22,7 @@ import networkx as nx
 from agent.metricas import metricas_sistema
 import time
 import traceback
+from agent.semantica import coleccion
 
 # Inicialización
 grafo.cargar_desde_disco()
@@ -543,7 +544,6 @@ async def agregar_conversacion_con_pdf(
     
     except Exception as e:
         print(f"❌ Error al agregar conversación: {e}")
-        import traceback
         traceback.print_exc()
         return {"status": "error", "mensaje": str(e)}
 
@@ -923,7 +923,6 @@ async def borrar_todos_datos():
         
         # 5. Limpiar colección de ChromaDB (embeddings)
         try:
-            from agent.semantica import coleccion
             # Obtener todos los IDs y borrarlos
             todos_ids = coleccion.get()['ids']
             if todos_ids:
@@ -948,7 +947,6 @@ async def borrar_todos_datos():
         
     except Exception as e:
         print(f"Error al borrar datos: {str(e)}")
-        import traceback
         traceback.print_exc()
         return {
             "status": "error",
