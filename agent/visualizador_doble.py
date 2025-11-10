@@ -3,7 +3,6 @@ from typing import Dict, List, Set
 from collections import defaultdict
 import networkx as nx
 from datetime import datetime
-from agent.grafo import exportar_grafo_para_visualizacion
 
 class VisualizadorDobleNivel:
     """
@@ -198,6 +197,7 @@ Tipos: {tipos_str}"""
             # Vista micro filtrada por conversación específica
             return self._generar_vista_micro_filtrada(filtro_conversacion)
         else:
+            from agent.grafo import exportar_grafo_para_visualizacion
             # Vista micro completa (todos los fragmentos)
             grafo_base = exportar_grafo_para_visualizacion()
             

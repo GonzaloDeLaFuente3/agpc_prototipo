@@ -3,9 +3,10 @@ import requests
 import os
 from datetime import datetime
 from typing import Dict
+import google.generativeai as genai
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "AIzaSyDfgYQq3a0bAZ0pgDCkuy8xmmytv8FfvO8")
-API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key={GOOGLE_API_KEY}"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDcCbQs_swG7s41Q0cjmk_ESfyMjg4hfmU")
+genai.configure(api_key=GEMINI_API_KEY)
 
 def construir_prompt(pregunta: str, contextos: dict) -> str:
     """
@@ -136,66 +137,60 @@ def responder_con_ia(pregunta: str, contextos: dict) -> str:
     Returns:
         Respuesta generada por el LLM
     """
-    if not GOOGLE_API_KEY:
-        return "[ERROR] No se configuró GOOGLE_API_KEY"
+    if not GEMINI_API_KEY:
+        return "[ERROR] No se configuró GEMINI_API_KEY"
     
     if not contextos:
         return "No se encontraron contextos relevantes para responder tu pregunta."
     
     prompt = construir_prompt(pregunta, contextos)
     
-    # Configuración optimizada para respuestas concisas y precisas
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "temperature": 0.3,      # Más bajo = más determinista
-            "maxOutputTokens": 2048,  # Aumentado para respuestas completas
-            "topP": 0.95,
-            "topK": 40
-        }
-    }
-
+    # ✅ Usar SDK de Google en lugar de requests
     try:
-        response = requests.post(API_URL, json=payload, timeout=30)
+        model = genai.GenerativeModel('gemini-2.0-flash')
         
-        if response.status_code == 200:
-            data = response.json()
-            if "candidates" in data and data["candidates"]:
-                respuesta = data["candidates"][0]["content"]["parts"][0]["text"].strip()
-                
-                # Post-procesamiento: remover frases problemáticas comunes
-                frases_problematicas = [
-                    "la información provista no",
-                    "los fragmentos no mencionan",
-                    "no se proporciona información",
-                    "no hay información sobre"
-                ]
-                
-                # Si la respuesta contiene frases problemáticas, intentar regenerar
-                if any(frase in respuesta.lower() for frase in frases_problematicas):
-                    # Logging para debugging
-                    print(f"⚠️ Respuesta problemática detectada: {respuesta[:100]}")
-                    
-                    # Crear respuesta de fallback más útil
-                    if contextos:
-                        primer_contexto = list(contextos.values())[0]
-                        titulo = primer_contexto.get('titulo', 'contexto')
-                        timestamp = primer_contexto.get('timestamp')
-                        
-                        if timestamp:
-                            try:
-                                fecha = datetime.fromisoformat(timestamp.replace('Z', ''))
-                                fecha_str = fecha.strftime('%d/%m a las %H:%M')
-                                return f"Encontré información relacionada en '{titulo}' programado para el {fecha_str}."
-                            except:
-                                return f"Encontré información relacionada en '{titulo}'."
-                        else:
-                            return f"Encontré información relacionada en '{titulo}'."
-                
-                return respuesta
-            return "[ERROR] No se generó respuesta"
-        else:
-            return f"[ERROR API {response.status_code}] {response.text}"
+        # Configuración optimizada (igual que RAG estándar)
+        generation_config = {
+            'temperature': 0.3,
+            'top_p': 0.95,
+            'top_k': 40,
+            'max_output_tokens': 2048
+        }
+        
+        response = model.generate_content(
+            prompt,
+            generation_config=generation_config
+        )
+        
+        respuesta = response.text.strip()
+        
+        # Post-procesamiento: remover frases problemáticas comunes
+        frases_problematicas = [
+            "la información provista no",
+            "los fragmentos no mencionan",
+            "no se proporciona información",
+            "no hay información sobre"
+        ]
+        
+        if any(frase in respuesta.lower() for frase in frases_problematicas):
+            print(f"⚠️ Respuesta problemática detectada: {respuesta[:100]}")
             
+            if contextos:
+                primer_contexto = list(contextos.values())[0]
+                titulo = primer_contexto.get('titulo', 'contexto')
+                timestamp = primer_contexto.get('timestamp')
+                
+                if timestamp:
+                    try:
+                        fecha = datetime.fromisoformat(timestamp.replace('Z', ''))
+                        fecha_str = fecha.strftime('%d/%m a las %H:%M')
+                        return f"Encontré información relacionada en '{titulo}' programado para el {fecha_str}."
+                    except:
+                        return f"Encontré información relacionada en '{titulo}'."
+                else:
+                    return f"Encontré información relacionada en '{titulo}'."
+        
+        return respuesta
+        
     except Exception as e:
         return f"[ERROR] {str(e)}"
