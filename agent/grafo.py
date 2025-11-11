@@ -1463,24 +1463,40 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
             activacion_inicial = interseccion / union if union > 0 else 0.3
             activacion_inicial = max(0.3, min(1.0, activacion_inicial))
             print(f"🌱 PROPAGANDO desde {contexto_inicial[:8]}... con activación {activacion_inicial:.3f}")
+
             # Propagar desde este contexto
-            contextos_alcanzados = propagador.propagar_desde_nodo(
+            resultado_propagacion = propagador.propagar_desde_nodo(
                 contexto_inicial, activacion_inicial, max_pasos
             )
+
+            # Extraer activaciones y profundidades (retrocompatible)
+            if isinstance(resultado_propagacion, dict) and 'activaciones' in resultado_propagacion:
+                contextos_alcanzados = resultado_propagacion['activaciones']
+                profundidades_desde_origen = resultado_propagacion.get('profundidades', {})
+            else:
+                # Compatibilidad con versión anterior (si alguien usa propagador viejo)
+                contextos_alcanzados = resultado_propagacion
+                profundidades_desde_origen = {}
+
             print(f"📡 ALCANZADOS {len(contextos_alcanzados)} nodos desde {contexto_inicial[:8]}")
             
             # Acumular resultados (tomar máxima activación)
             for nodo_id, activacion in contextos_alcanzados.items():
+                # Obtener profundidad (default a max_pasos si no existe)
+                profundidad = profundidades_desde_origen.get(nodo_id, max_pasos)
+                
                 if nodo_id in todos_contextos_propagados:
                     if activacion > todos_contextos_propagados[nodo_id]['activacion']:
                         todos_contextos_propagados[nodo_id] = {
                             'activacion': activacion,
-                            'fuente_principal': contexto_inicial
+                            'fuente_principal': contexto_inicial,
+                            'profundidad': profundidad  
                         }
                 else:
                     todos_contextos_propagados[nodo_id] = {
                         'activacion': activacion,
-                        'fuente_principal': contexto_inicial
+                        'fuente_principal': contexto_inicial,
+                        'profundidad': profundidad  
                     }
         
         # Nodos encontrados solo por propagación
@@ -1527,7 +1543,8 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
             'total_nodos_alcanzados': len(todos_contextos_propagados),
             'pasos_propagacion': max_pasos,
             'activaciones': {nodo: info['activacion'] for nodo, info in todos_contextos_propagados.items()},
-            'fuentes_propagacion': {nodo: info['fuente_principal'] for nodo, info in todos_contextos_propagados.items()}
+            'fuentes_propagacion': {nodo: info['fuente_principal'] for nodo, info in todos_contextos_propagados.items()},
+            'profundidades': {nodo: info.get('profundidad', max_pasos) for nodo, info in todos_contextos_propagados.items()}  # NUEVO
         }
         
         # Respuesta enriquecida

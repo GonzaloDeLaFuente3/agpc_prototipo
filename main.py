@@ -131,7 +131,7 @@ def preguntar(pregunta: str):
                 "es_temporal": ctx.get("es_temporal", False),
                 "tipo_contexto": ctx.get("tipo_contexto", "general")
             }
-            
+
             # Agregar información temporal si existe
             if ctx.get("timestamp"):
                 fecha_ctx = parse_iso_datetime_safe(ctx["timestamp"])
@@ -278,6 +278,18 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
                 "es_temporal": ctx.get("es_temporal", False),
                 "tipo_contexto": ctx.get("tipo_contexto", "general")
             }
+
+            # NUEVO: Agregar información de profundidad si viene de propagación
+            if analisis_completo.get('propagacion'):
+                profundidades = analisis_completo['propagacion'].get('profundidades', {})
+                contextos_directos = analisis_completo['propagacion'].get('contextos_directos', [])
+                
+                if id_ctx in profundidades:
+                    info_ctx["profundidad_propagacion"] = profundidades[id_ctx]
+                    info_ctx["encontrado_por"] = "propagacion"
+                elif id_ctx in contextos_directos:
+                    info_ctx["profundidad_propagacion"] = 0
+                    info_ctx["encontrado_por"] = "busqueda_directa"
             
             # Marcar si fue encontrado por propagación
             encontrado_por = None
@@ -357,6 +369,67 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         usa_propagacion=usar_propagacion
     )
 
+    # ============ NUEVO: LOGGING DE MÉTRICAS DE PROFUNDIDAD ============
+    
+    # Solo mostrar si hay propagación activa
+    if usar_propagacion and info_propagacion.get('profundidades'):
+        print("\n" + "=" * 80)
+        print("📊 MÉTRICAS DE PROFUNDIDAD DE PROPAGACIÓN")
+        print("=" * 80)
+        
+        profundidades = info_propagacion['profundidades']
+        
+        # Calcular métricas
+        valores_profundidad = list(profundidades.values())
+        PP = sum(valores_profundidad) / len(valores_profundidad) if valores_profundidad else 0
+        
+        total_contextos = len(contextos_utilizados_info)
+        contextos_propagados = len(profundidades)
+        contextos_directos = total_contextos - contextos_propagados
+        CIR = (contextos_propagados / total_contextos * 100) if total_contextos > 0 else 0
+        
+        # Mostrar métricas principales
+        print(f"\n✅ Profundidad de Propagación (PP): {PP:.2f} saltos")
+        print(f"   └─ Promedio de saltos desde nodos semilla hasta nodos objetivo")
+        
+        print(f"\n✅ Contextos Indirectos Recuperados (CIR): {CIR:.1f}%")
+        print(f"   ├─ Por propagación: {contextos_propagados}")
+        print(f"   ├─ Por búsqueda directa: {contextos_directos}")
+        print(f"   └─ Total contextos: {total_contextos}")
+        
+        # Distribución de profundidades
+        from collections import Counter
+        distribucion = Counter(valores_profundidad)
+        print(f"\n📊 Distribución de profundidades:")
+        for profundidad in sorted(distribucion.keys()):
+            cantidad = distribucion[profundidad]
+            barra = "█" * cantidad
+            print(f"   {profundidad} saltos: {barra} ({cantidad} contextos)")
+        
+        # Detalle de contextos con profundidad
+        print(f"\n📋 DETALLE DE CONTEXTOS RECUPERADOS:")
+        print("-" * 80)
+        
+        for i, ctx_info in enumerate(contextos_utilizados_info, 1):
+            titulo = ctx_info['titulo'][:60]
+            profundidad = ctx_info.get('profundidad_propagacion', 'N/A')
+            encontrado_por = ctx_info.get('encontrado_por', 'desconocido')
+            
+            # Emoji según origen
+            if encontrado_por == 'busqueda_directa':
+                emoji = "🎯"
+                tipo_str = "DIRECTO"
+            else:
+                emoji = "🔄"
+                tipo_str = "PROPAGACIÓN"
+            
+            print(f"{i:2d}. {emoji} {titulo}")
+            print(f"    └─ Profundidad: {profundidad} saltos | Origen: {tipo_str}")
+        
+        print("\n" + "=" * 80 + "\n")
+    
+    # ============ FIN LOGGING ============
+    
     return {
         "respuesta": respuesta_completa,
         "contextos_utilizados": contextos_utilizados_info,

@@ -84,8 +84,26 @@ class PropagadorActivacion:
         # Remover el nodo inicial del resultado
         resultado = activaciones.copy()
         resultado.pop(nodo_inicial, None)
-        
-        return resultado
+
+        # Calcular profundidades (en qué paso se encontró cada nodo)
+        profundidades = {}
+        for nodo_id in resultado.keys():
+            # Buscar en qué paso apareció por primera vez con activación suficiente
+            for paso_num, activaciones_paso in enumerate(activaciones_por_paso):
+                if nodo_id in activaciones_paso and activaciones_paso[nodo_id] >= self.umbral_activacion:
+                    profundidades[nodo_id] = paso_num
+                    break
+            
+            # Si no se encontró (caso edge), asignar la profundidad máxima usada
+            if nodo_id not in profundidades:
+                profundidades[nodo_id] = max_pasos
+
+        # RETROCOMPATIBILIDAD: Retornar dict con dos claves
+        # Si se usa como antes (solo activaciones), sigue funcionando
+        return {
+            'activaciones': resultado,
+            'profundidades': profundidades
+        }
     
     def propagar_desde_consulta(self, palabras_clave: List[str], texto_consulta: str,
                                nodos_iniciales: List[str] = None, 

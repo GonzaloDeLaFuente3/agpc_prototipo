@@ -1,435 +1,7 @@
 {
-  "751e3442-807c-48a9-ab68-933be18289a6": {
-    "titulo": "Trabajo no registrado - Caso 2",
-    "fecha": "2023-01-26T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "818592dd-d78c-4f3a-84f0-fc031575dad4",
-      "f3776f97-1e28-4e6a-b694-7782daa72665",
-      "7f096ac5-521d-40ed-b609-4e59f8ddca0e",
-      "cfde5523-f76a-4a77-9dc6-8cc54addea53",
-      "c6cf6e39-8a52-478d-9fae-9813ee8f7b4e"
-    ],
-    "created_at": "2025-10-23T18:16:56"
-  },
-  "04888296-b88b-47dd-89c0-5771aaf6da13": {
-    "titulo": "Usucapión de inmueble por posesión - Caso 1",
-    "fecha": "2023-01-30T00:00:00",
-    "participantes": [
-      "Poseedor",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "118844a9-01e9-4c7b-a719-2fbbfc6ac137",
-      "02ab95df-a4b2-494e-b69c-f94d71d4acb1",
-      "1be6e39b-e6f8-4f36-9338-a751ded72aea",
-      "357fc34c-43ed-4d3d-b72a-ccdb6a7d8c5f",
-      "0708952b-c7ea-4b44-9c21-3b4e6361738c",
-      "bb01c759-4376-41f2-b8ad-98a55a7fc524"
-    ],
-    "created_at": "2025-10-23T18:16:57"
-  },
-  "29aeb364-43b9-4bc3-b7f9-18a8c1c3b945": {
-    "titulo": "Usucapión de inmueble por posesión - Caso 2",
-    "fecha": "2023-02-14T00:00:00",
-    "participantes": [
-      "Poseedor",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "c1f1bac1-9ec4-4a44-9952-24e634b90579",
-      "bddb93a3-d61d-43dd-a9d6-fda6416f5c1e",
-      "871bf6d5-8c5e-4643-a5f8-4aeb2afcfef5",
-      "36590fcb-db8b-4974-9ce2-83bdaaa96924",
-      "c641f372-4f25-4694-bc9f-3e52b581aaf8",
-      "4b3ffaf6-d3ae-413d-a8c7-85fff4a169a6"
-    ],
-    "created_at": "2025-10-23T18:16:57"
-  },
-  "ec43672d-7850-4c68-8a04-1e69f52cf656": {
-    "titulo": "Solicitud de excarcelación - Caso 1",
-    "fecha": "2023-02-19T00:00:00",
-    "participantes": [
-      "Familiar",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "829a0e74-2dc5-4fbe-8376-bd2e59eddd50",
-      "dfd75358-9b71-4205-93c3-6b815277bb77",
-      "e6c292e7-1286-411b-b80a-9cc7c64efd18",
-      "801e7c7e-fe8b-43f3-a83e-6995d6992e20",
-      "e520d8c1-6d2d-410a-8a32-350c35026df3",
-      "6b855c57-b347-4a88-9bb3-08fdf3838543"
-    ],
-    "created_at": "2025-10-23T18:16:57"
-  },
-  "98f99c0f-dd14-4074-a030-39ac0cb1b558": {
-    "titulo": "Disolución de sociedad - Caso 3",
-    "fecha": "2023-02-26T00:00:00",
-    "participantes": [
-      "Socio",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "0202dd3e-1d23-4bb3-a5ce-083b0582f204",
-      "2f7ed222-9fe4-4353-8c81-22b15a8f0670",
-      "25cf0535-200c-4ae3-9d4c-cdaac12fe134",
-      "92d308f9-3e98-4642-b651-56d0e435ad04",
-      "37c1fa95-4ea0-4b12-ae26-c8a9a7ce95eb"
-    ],
-    "created_at": "2025-10-23T18:16:58"
-  },
-  "e60f8340-2ddc-4e02-b10b-95bada271df9": {
-    "titulo": "Trabajo no registrado - Caso 1",
-    "fecha": "2023-03-11T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "e4468a0b-1356-4a07-8138-f5ccc3f7bdd6",
-      "051dc715-7682-4106-86ea-8a9293f3537a",
-      "0b64200f-5e4d-4d76-aaf6-3b45bb46f507",
-      "45c86df0-ef51-4c71-9fbd-462cf703cb4e",
-      "07cd6376-de3f-498f-80b9-36b567440fad"
-    ],
-    "created_at": "2025-10-23T18:16:58"
-  },
-  "41e869d1-ba8c-4523-a86c-b73b89a2dd9b": {
-    "titulo": "Reclamo de cuota alimentaria - Caso 1",
-    "fecha": "2023-03-13T00:00:00",
-    "participantes": [
-      "Madre",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 7,
-    "fragmentos_ids": [
-      "b08ca316-e136-466a-8bce-9e660a9ba60d",
-      "4f47f52f-b3a0-4390-9544-30740d67a32b",
-      "da09099e-d415-46e2-b6af-e3ffeda6a73b",
-      "ba002ef7-f001-45d0-bc38-36db4fb9e2a3",
-      "de6575a1-ef5b-42ab-9055-f3d9081a81a9",
-      "9aa5bcb4-028c-403b-b999-a1c1b952b874",
-      "4a677aa0-a078-4f55-a9c2-73b2a329628f"
-    ],
-    "created_at": "2025-10-23T18:16:58"
-  },
-  "66827c50-321f-4277-bebc-8cc827c4af97": {
-    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 1",
-    "fecha": "2023-03-26T00:00:00",
-    "participantes": [
-      "Víctima",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "89ec1c99-ffa9-42c5-9669-231e27226c96",
-      "91a27466-a702-4ae7-8f42-b3c6c00721c7",
-      "db1b4a59-618e-4776-b234-7585d3b69bd1",
-      "77c99ad2-37f3-47cf-80ed-322cc9202dfe",
-      "318aa237-404c-40bd-910d-a998b163e2a4",
-      "cda73e23-6faa-476e-b1ec-8c6c636f6969"
-    ],
-    "created_at": "2025-10-23T18:16:59"
-  },
-  "9568c98c-dbd9-4fb5-b1e1-e7b4f44b0cfd": {
-    "titulo": "Despido sin causa - Caso 4",
-    "fecha": "2023-04-19T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "9885af8d-f38d-4767-bbab-4fd538bd6e8d",
-      "bdb262b0-68f9-4a4f-a3eb-f53902405458",
-      "ead7b6d2-ca65-40d9-8a62-02bdf9019825",
-      "a867d907-4105-48a9-baf1-e9d6741d9c4c",
-      "34e04675-c995-4a4c-b6ab-50c06f68d3fe",
-      "2456e694-09df-4b2a-9302-9fd60fda83b3"
-    ],
-    "created_at": "2025-10-23T18:16:59"
-  },
-  "94560ab9-4fc3-4905-b30d-da4e09687ffa": {
-    "titulo": "Amparo por mora administrativa - Caso 1",
-    "fecha": "2023-04-19T00:00:00",
-    "participantes": [
-      "Ciudadano",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "80aa2e80-a5f5-4595-b185-1e20190e1383",
-      "b93d3fd2-a500-4b3c-9ccc-d0c02fe79459",
-      "291bbb83-950c-4035-b1aa-68028eb2875e",
-      "056c8a47-4aec-4af4-9730-d7ab6f6e4730",
-      "b3ef0362-927b-4dd2-b9a7-358916aa748f"
-    ],
-    "created_at": "2025-10-23T18:17:00"
-  },
-  "e45deb0a-e937-4113-833e-7832cfa887ba": {
-    "titulo": "Cheque rechazado - Caso 2",
-    "fecha": "2023-06-11T00:00:00",
-    "participantes": [
-      "Comerciante",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "6bab45f6-886a-416c-95d7-53ba4e255591",
-      "8731e2d6-a065-44fe-9f89-96beb378f872",
-      "6480d7a8-96ff-411a-bf47-ecfc6ecb7ee1",
-      "35406546-e920-4534-8ecc-9c8ecb61a30a",
-      "86322108-8937-4469-80f9-9e25013395dd"
-    ],
-    "created_at": "2025-10-23T18:17:00"
-  },
-  "152622b1-1e87-4e14-a540-4dc243ebf0a8": {
-    "titulo": "Recurso contra multa tributaria - Caso 1",
-    "fecha": "2023-06-23T00:00:00",
-    "participantes": [
-      "Contribuyente",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "99017c8a-711f-474c-b36a-0972c6373919",
-      "d349022a-52ee-4591-af6f-754ea4d40a6b",
-      "305869f6-5169-4761-8302-005ef369560b",
-      "8a75413e-c306-4bec-924f-6f8ca25dffc5",
-      "fb459418-137c-4812-8671-43935257d434"
-    ],
-    "created_at": "2025-10-23T18:17:00"
-  },
-  "54081582-7582-4438-83bd-7c65d07fbcec": {
-    "titulo": "Despido sin causa - Caso 3",
-    "fecha": "2023-07-02T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "73a0bd45-f9fb-42ee-b378-411799acd010",
-      "a0b4c79a-5c0c-41bf-ad7d-28ec975c64de",
-      "83c6cea1-d660-429f-b8e5-2224ac5eae13",
-      "6978f82a-973f-4e31-b4a7-c7009d303fc7",
-      "0dadc507-d93a-4e64-a54f-5439b50347b3",
-      "e967b31d-9bf5-4e28-9998-1e0e1ec22ec3"
-    ],
-    "created_at": "2025-10-23T18:17:01"
-  },
-  "45d08b22-a1bc-46ee-9a73-597cef5ee07f": {
-    "titulo": "Reclamo de cuota alimentaria - Caso 2",
-    "fecha": "2023-08-06T00:00:00",
-    "participantes": [
-      "Madre",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 7,
-    "fragmentos_ids": [
-      "bfd3cca6-6687-48d8-8b9c-8d40fb869d85",
-      "4d970fa4-bd8b-4ae9-bf18-89676f17c84a",
-      "26b4d94d-6dfe-4ea4-8967-6a852aef3ea5",
-      "d2bf6fe7-c77b-4fa6-9980-54a5572d6aeb",
-      "015a4b0a-1bee-4f48-9722-4788ef310708",
-      "be858873-730c-4266-8eeb-c09b22b890fc",
-      "3dfd6914-fb75-48cd-af8e-511c9a7d9ec7"
-    ],
-    "created_at": "2025-10-23T18:17:01"
-  },
-  "a33dc04f-bab6-4f9b-8394-8347e0709dbe": {
-    "titulo": "Incumplimiento de contrato comercial - Caso 3",
-    "fecha": "2023-08-16T00:00:00",
-    "participantes": [
-      "Empresa",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "b798e051-58c6-4026-8ff8-4e6b1b88ffc5",
-      "60787580-d45d-4367-b95c-d973a010998e",
-      "9fefaaa5-460c-4298-a1e2-9adf733384c1",
-      "2e18fb86-1b91-4d66-a337-06db5b5afc46"
-    ],
-    "created_at": "2025-10-23T18:17:01"
-  },
-  "5fac9efa-d3a7-40d6-a186-731136c09e48": {
-    "titulo": "Despido sin causa - Caso 1",
-    "fecha": "2023-08-21T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "9c1c3d69-0d89-4efb-ac5c-1e4ce3da8800",
-      "df45bf74-e241-4b9b-93c8-6776f9aac11b",
-      "c084417b-c70f-46b9-891a-6982976f6906",
-      "4c0e96c4-a757-48e7-890d-3a0dedb2929f",
-      "8c64c7d7-d5fa-4c7a-904b-99baaeb746a9",
-      "2e65ca52-b9b5-4641-a22b-e1778bce3a7c"
-    ],
-    "created_at": "2025-10-23T18:17:02"
-  },
-  "f7ef5548-e9d7-4761-a1eb-ce8df8354449": {
-    "titulo": "Desalojo por falta de pago - Caso 1",
-    "fecha": "2023-08-25T00:00:00",
-    "participantes": [
-      "Propietario",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "5e762208-c7ca-49d9-b3b4-3369a83e9276",
-      "aea9bcc3-933d-4d09-b0c4-33bc4572a623",
-      "656a7645-f579-45e8-ae4d-1441cd5947d2",
-      "b7e8a658-7040-4b9e-b2d5-39ea92bee7b4",
-      "e82d8e5f-61ea-4869-99a6-413325881b95"
-    ],
-    "created_at": "2025-10-23T18:17:02"
-  },
-  "bcd7d49e-4732-40a0-b845-bc045e266800": {
-    "titulo": "Defensa en causa por estafa - Caso 1",
-    "fecha": "2023-08-30T00:00:00",
-    "participantes": [
-      "Imputado",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "ec484a6d-b543-43b7-b001-62203ba3809c",
-      "f1b34865-f7e0-44d6-a0d4-64769bdd13f4",
-      "43955ba1-4bfa-44cd-9f33-f0d71829e805",
-      "d45f1e0d-01f4-4b4d-a76f-72e0bd234b07",
-      "b9a8caa6-714e-4fe9-8532-35be8fc0e02e"
-    ],
-    "created_at": "2025-10-23T18:17:03"
-  },
-  "aef09861-441b-45fe-b0de-2abcf256f435": {
-    "titulo": "Defensa en causa por estafa - Caso 2",
-    "fecha": "2023-09-08T00:00:00",
-    "participantes": [
-      "Imputado",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "eced2d1a-1274-4736-9319-fa24a30fe331",
-      "942cec84-c3df-481b-add5-b5be9a59b4ec",
-      "b9464742-aafe-4d8b-b421-f134ba075a5c",
-      "6e8537f6-3e41-4618-af37-f2d6ca54cde7",
-      "8a7175d4-c09f-4a54-8f62-d91939df811b"
-    ],
-    "created_at": "2025-10-23T18:17:03"
-  },
-  "d18af7a7-f60d-4b11-aec9-3f8228639940": {
-    "titulo": "Incumplimiento de régimen de visitas - Caso 2",
-    "fecha": "2023-09-18T00:00:00",
+  "dea99413-b257-48f4-bc65-0aff3a8514b3": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 6",
+    "fecha": "2023-01-03T00:00:00",
     "participantes": [
       "Padre",
       "Abogado"
@@ -441,43 +13,1863 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "e27a547e-6d80-4d64-b5b9-b054c28f26e2",
-      "285e40c4-5691-483e-a934-551fe231d7f1",
-      "a942ce4c-1452-4e1a-ba47-e291c7fa766b",
-      "835213dc-e18d-47f8-a22c-851c23664168",
-      "ca68c1ba-4ee7-4e98-b47b-8b182a6fe4a1",
-      "6ed7cac6-b0b4-41ea-a6f6-c7ee5ce79da8",
-      "d62cc134-3cb2-49c1-b5f0-da7c06bfb80c"
+      "8e13308f-354b-41bc-bb36-6da019020c32",
+      "ed8fec03-54a1-4b33-a4c6-d43e07a05a32",
+      "23179b82-e5bf-455b-bdd6-c366b14a7e7d",
+      "5dd7b3ff-e84f-4271-898d-c9513aae9ec0",
+      "e508126a-acfc-47c1-a2cd-a8484b3d16d8",
+      "f0670727-ef76-41bd-a73c-66ca38dcd524",
+      "eecbf06c-1759-49b2-8d36-9a30d184a4d4"
     ],
-    "created_at": "2025-10-23T18:17:03"
+    "created_at": "2025-11-10T18:21:26"
   },
-  "8e4cc60c-3c06-45ca-b7c0-b287e3d17100": {
-    "titulo": "Accidente de trabajo - Caso 1",
+  "cac95bda-f9b8-4bd3-9580-b8a7b4d5032b": {
+    "titulo": "Amparo por mora administrativa - Caso 7",
+    "fecha": "2023-01-03T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "6934d421-0521-4040-b37b-589b994885c2",
+      "d51b9383-f125-47ed-8aa6-aa9bdf6dd63e",
+      "09381af1-1ba0-4834-b938-cfab42a8c1e7",
+      "8eb24d9f-e8c5-4861-922a-7bc2935bf055",
+      "7ba19445-0167-4c3a-ad9e-313ab0f4e164"
+    ],
+    "created_at": "2025-11-10T18:21:27"
+  },
+  "40664bfb-0fc3-4234-88e8-d54a93cd749b": {
+    "titulo": "Defensa en ejecución fiscal - Caso 4",
+    "fecha": "2023-01-03T00:00:00",
+    "participantes": [
+      "Demandado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "2fb9190f-dd3c-4c4c-9643-2ede9081ebc3",
+      "895708f3-ddbd-408f-894c-46ba3bfebe39",
+      "7dcbdd92-307e-4145-90b4-d210677e8507",
+      "83a53365-7e51-40bb-a2df-072647a606d5",
+      "a4c06004-aa40-46a6-901d-eb3620e7be3b"
+    ],
+    "created_at": "2025-11-10T18:21:28"
+  },
+  "80a921f4-a754-47d8-bc9c-479ec4b197e9": {
+    "titulo": "Recurso contra multa tributaria - Caso 3",
+    "fecha": "2023-01-05T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "44b26205-3534-41e3-8148-3f9174b33234",
+      "40d3b861-25da-433e-b084-4cdcff9c4cec",
+      "a6810170-3aae-4cf0-9ba0-d47ec16646f7",
+      "dd8d4e3e-b3f9-428a-bc4d-5d54d1faf34f",
+      "ff3ddc57-c122-415a-8920-0109cb630769"
+    ],
+    "created_at": "2025-11-10T18:21:28"
+  },
+  "a2b804f6-e397-4bb3-9353-bbed31bb02bc": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 1",
+    "fecha": "2023-01-10T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "7d86db45-3c34-4ce4-bbc4-a8a0dd3083d4",
+      "35264982-4230-4978-a98e-1c48eec4a241",
+      "3cf357b4-55fa-4ab8-960f-9820fc740100",
+      "e715f556-ae55-45b1-a4e7-622c2e05fea6"
+    ],
+    "created_at": "2025-11-10T18:21:29"
+  },
+  "00f4593a-6336-4d10-9b94-f12b6ec45931": {
+    "titulo": "Reclamo de diferencias salariales - Caso 1",
+    "fecha": "2023-01-20T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "1ef04e9a-4b26-4722-a5ce-abe213615a44",
+      "7fe8fede-1ac0-4ba1-8c3b-4326cc3169dc",
+      "1aa59cd3-332f-4aa3-8247-cfea3974ac4c",
+      "71ef7d71-a579-405f-9f34-abe45b852a36",
+      "9e6fc791-fecc-4030-9432-37a88a734300",
+      "ca01426a-c1e3-4b41-bb71-ac63b0e332b7"
+    ],
+    "created_at": "2025-11-10T18:21:29"
+  },
+  "3b65500b-f17e-422e-a00c-1759143f65f3": {
+    "titulo": "Vicios ocultos en compraventa - Caso 5",
+    "fecha": "2023-02-02T00:00:00",
+    "participantes": [
+      "Comprador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "ec2bb97d-1955-4e98-81a3-caf6f245a168",
+      "a666bb1e-2d99-47a5-9875-a9fda2bc8c70",
+      "48e1fcc9-c7dc-4e79-905a-f4d90fae8ba9",
+      "c80209ec-eca7-45fa-9258-ad0ff67ea413",
+      "a7c28cd9-0334-4ac6-b10c-a143d8cf3f26",
+      "6baa56a5-b2a2-44c6-9d64-2507a63a22b4"
+    ],
+    "created_at": "2025-11-10T18:21:30"
+  },
+  "436228be-7764-4cfa-b259-830eb49aef32": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 2",
+    "fecha": "2023-02-03T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "1e1d4abf-3953-48ce-80d4-0e738c992f3a",
+      "ec7c01ed-f35e-44f1-8a41-1f8d9d140530",
+      "1a7f5a57-da7c-4b49-a42b-effa7ec20515",
+      "e3727e6e-1788-4ca5-9ac0-98058a8616ad"
+    ],
+    "created_at": "2025-11-10T18:21:31"
+  },
+  "2c484702-5e7b-447e-965f-52935d9d7503": {
+    "titulo": "Trabajo no registrado - Caso 5",
+    "fecha": "2023-02-10T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "4a3b9c84-f8c4-43d1-b247-4698833bbb62",
+      "a56300d7-70b7-4ebf-b2b3-8508ab1368bd",
+      "9b497309-b934-4d90-9398-16490e31e9b4",
+      "81d6a3d1-f58c-4931-ae20-a5ca5f7fc3d1",
+      "5c2e57db-59cb-477d-858d-6bd9ab002805"
+    ],
+    "created_at": "2025-11-10T18:21:31"
+  },
+  "6f8aac3e-d90b-4d54-9084-79625be65ee3": {
+    "titulo": "Acoso laboral y hostigamiento - Caso 4",
+    "fecha": "2023-02-12T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "7c083fa0-3b03-48a6-8f0b-4c2a784126c1",
+      "b954e69d-d53a-4f44-a264-1d987e9ec340",
+      "1bf2fac1-e29b-4118-a5ed-c98d7ba68abc",
+      "f8681fb2-0819-42c7-9fbc-11deee9fb827",
+      "79b8d31a-0269-43d2-a9bb-2c8f31e4f2f1"
+    ],
+    "created_at": "2025-11-10T18:21:32"
+  },
+  "f0c2c882-ea35-493e-a5c1-d4e06327f18f": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 7",
+    "fecha": "2023-02-12T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "db43d91d-d338-4153-a9cb-659e34b3679d",
+      "6d3f7451-d8e3-463c-9c8f-a24c6ab580ef",
+      "269e910d-a3c4-443d-9aa2-bab729aed6cb",
+      "20fd3fbe-0152-4276-a7c1-34974bb6c605"
+    ],
+    "created_at": "2025-11-10T18:21:32"
+  },
+  "f916853a-c0a3-4b88-8535-4b201da05d86": {
+    "titulo": "Pedido de quiebra - Caso 3",
+    "fecha": "2023-02-13T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "9915eb73-baed-40a0-95e0-4d3b8e4ffb05",
+      "6b8d48cc-b492-452d-9e58-d10a290ab477",
+      "6d798f04-19fb-4a7e-95d0-ae7df2eb882a",
+      "fb1fbb94-adfa-4375-a792-8f322b92f129"
+    ],
+    "created_at": "2025-11-10T18:21:33"
+  },
+  "ac44d7ac-db23-45e0-9108-bad16cf91e9d": {
+    "titulo": "Disolución de sociedad - Caso 8",
+    "fecha": "2023-02-19T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "1ea3dfdd-2078-4aa0-a199-2586fe71aa1e",
+      "097621a5-78e0-4f17-8f4d-80ae3dddc338",
+      "5f996f1e-c0bd-4d88-baf6-3bf402908bac",
+      "eb5813ab-a506-496e-a509-306147e3ea73",
+      "05e46a4e-06e2-4df1-bbf5-b60e832bb7b8"
+    ],
+    "created_at": "2025-11-10T18:21:34"
+  },
+  "26a03b50-36bd-4be5-8e5c-934529887802": {
+    "titulo": "Desalojo por falta de pago - Caso 1",
+    "fecha": "2023-02-24T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "9bee43e8-cc21-4459-8230-152f9a31726b",
+      "16edfa69-3b6d-46e6-8a86-8d6ccd0d4dc0",
+      "7b9a304a-5e6f-4232-a489-f83625750679",
+      "e88ba9ac-1f5d-483d-b11d-692efc6fc404",
+      "a9cd2c6a-c887-4a14-91d8-e3b965fd3f5b"
+    ],
+    "created_at": "2025-11-10T18:21:34"
+  },
+  "786bd38b-bc05-4473-b7cf-f10fa13da93b": {
+    "titulo": "Recurso contra multa tributaria - Caso 6",
+    "fecha": "2023-02-28T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "59162b0d-bc73-4892-98eb-ec7b5dbf3f61",
+      "abfe1693-e608-4602-be83-3d149c90c31a",
+      "099b9966-dbdb-4223-bf7e-823f5fecb2ee",
+      "e93e00cb-b9da-455c-8cf6-2a6fd2be2acf",
+      "2842f416-032a-4a63-b340-29b94cb541dd"
+    ],
+    "created_at": "2025-11-10T18:21:35"
+  },
+  "23587c0e-34ea-428d-a5db-dca6089a56d2": {
+    "titulo": "Desalojo por falta de pago - Caso 7",
+    "fecha": "2023-03-01T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "b4543555-6eb1-4a18-bcc5-22f70567e3a0",
+      "c5e2ea3c-92a9-4720-9222-c85973fb70fd",
+      "100d75ab-6c82-4828-be63-192ff470e7c8",
+      "fd99a0b1-8b8c-4b0a-ba70-c12113a1c697",
+      "83f2c5d1-dcfc-4e53-b1b1-9ca734f3f7ad"
+    ],
+    "created_at": "2025-11-10T18:21:36"
+  },
+  "f008662a-66ad-45b6-a824-05d5c2002520": {
+    "titulo": "Conflicto por uso de marca - Caso 3",
+    "fecha": "2023-03-04T00:00:00",
+    "participantes": [
+      "Empresario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "86f352d8-cc0b-43c3-aef9-5e255a33a42f",
+      "90058d06-ed2c-4d4d-8705-ad34d2c34f54",
+      "30e49ab7-a168-44a4-b9bb-b1f342a8c37b",
+      "790b8e15-76d8-4093-ab7f-57c457fadc08",
+      "0d3aa74c-0369-4c13-ae7c-df69bb0e5bfe"
+    ],
+    "created_at": "2025-11-10T18:21:36"
+  },
+  "e0b34111-f81a-4b94-bc12-62df8380b1a3": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 4",
+    "fecha": "2023-03-05T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "e0799b68-ae56-4646-9c9e-04ef693a8f1b",
+      "00473ed2-b174-4b8d-9450-4cea0eeed0ae",
+      "ea98876d-3c4e-4f21-aadf-7b0ce8b0db6c",
+      "639edaf9-3947-44cc-9b35-9d5a531fcb92"
+    ],
+    "created_at": "2025-11-10T18:21:37"
+  },
+  "462c6188-3ec3-4bf4-b159-39b7e6ad4fb5": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 6",
+    "fecha": "2023-03-09T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "50874268-f7c2-4ccb-bd39-2b3dabe1d0ac",
+      "fc1f6ad0-0290-4f4d-b597-46a776694739",
+      "931aa111-afb3-43d8-b104-fe8ba4ee83e0",
+      "f35942c5-5d04-4e45-8cab-18b9d3297c40",
+      "249e3011-28bc-4518-a1b3-d16bca488b19"
+    ],
+    "created_at": "2025-11-10T18:21:38"
+  },
+  "b33f1111-8fef-42c0-97d3-da84b73ec07d": {
+    "titulo": "Defensa en causa por lesiones - Caso 1",
+    "fecha": "2023-03-10T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "e850ca3e-0f8e-428c-8259-66947f559a77",
+      "cc851278-fa33-4188-971b-a3c6955ff64b",
+      "ab8e41e1-7bc9-4452-b88d-2e4b2da327cb",
+      "8b4035fd-8e39-46fd-8942-2b0146319474",
+      "260b259d-854a-47d2-ab5f-b79af42e7401"
+    ],
+    "created_at": "2025-11-10T18:21:38"
+  },
+  "8d199117-8da7-47c0-9444-98c6079affcf": {
+    "titulo": "Desalojo por falta de pago - Caso 10",
+    "fecha": "2023-03-17T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "6a589461-d871-498d-a3ff-4e8a4e50175b",
+      "d784e03a-7add-468a-8806-314a5021e02b",
+      "55b48778-1450-48e0-b734-c5475dd88c92",
+      "d01246fe-feb8-4fde-8d75-3a0f528da428",
+      "abb59075-4883-430c-a7fd-e5b3fc955781"
+    ],
+    "created_at": "2025-11-10T18:21:39"
+  },
+  "0a9b1cfe-8a34-4124-be3a-517f58afcae9": {
+    "titulo": "Usucapión de inmueble por posesión - Caso 1",
+    "fecha": "2023-03-18T00:00:00",
+    "participantes": [
+      "Poseedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "9d1962dc-c17d-4b77-bcbd-339d411fb324",
+      "82651427-5e7b-49c6-86f0-f128d1744add",
+      "ba0c0732-992a-43d3-b2f3-4dd78270158d",
+      "2f82dcab-51ad-443a-a6f3-fbbf76e132af",
+      "efee111e-669e-4ab3-81f7-8693c33b9136",
+      "91eccd4d-117a-471d-bacc-859a6da769bc"
+    ],
+    "created_at": "2025-11-10T18:21:40"
+  },
+  "53f9290d-bdf9-48d8-8d02-83e6c63a2124": {
+    "titulo": "Reclamo de cuota alimentaria - Caso 4",
+    "fecha": "2023-03-19T00:00:00",
+    "participantes": [
+      "Madre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "5559917c-fcbe-4714-91fc-ff8198b26c04",
+      "54ab29e9-33b8-4174-84be-c96fc43d8e6e",
+      "ec8b708f-e7f4-4e99-9a3e-1db87a2e02d9",
+      "f441b98b-e3ff-4ae2-9536-aead140a20e1",
+      "4b2094dd-f451-458e-bb4f-4be95d281034",
+      "de374600-4046-49b3-a8d3-6d7fcd81fa8f",
+      "a4df195c-15e5-4543-a307-48ba43013f8b"
+    ],
+    "created_at": "2025-11-10T18:21:41"
+  },
+  "c02d965f-cad6-4727-9d18-aee7484e7d99": {
+    "titulo": "Defensa en causa por robo - Caso 1",
+    "fecha": "2023-03-21T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "df23787e-4b44-4e26-805a-4ef535cb3ec2",
+      "28d4031c-b4f6-4e57-84d0-163892fe7810",
+      "5837c176-df9d-4eba-bf55-0bc7445d25a0",
+      "ffeb4143-139d-48e3-9331-59794ecb455f"
+    ],
+    "created_at": "2025-11-10T18:21:41"
+  },
+  "12e72359-bd2a-49fc-acb1-880247a94113": {
+    "titulo": "Defensa en causa por estafa - Caso 5",
+    "fecha": "2023-03-23T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "bfccf9ec-e3aa-4bb9-ae88-6360e49e4506",
+      "564bb422-5e49-4153-b3da-05889775d35c",
+      "f9008232-af0e-4c32-b221-88a5617eb262",
+      "9618cbb3-a210-4229-89bd-c494a13ed6fe",
+      "7f4e54b6-9d4d-4cf1-a7f0-4986c94567ee"
+    ],
+    "created_at": "2025-11-10T18:21:42"
+  },
+  "6f006442-5073-4bb5-8dc2-3f9a46ffef6e": {
+    "titulo": "Suspensiones abusivas - Caso 1",
+    "fecha": "2023-03-24T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "506a7a6a-fade-4ecb-9fb8-5398f50a7f25",
+      "06c28770-688d-4303-86d9-d581a00a3bd0",
+      "916bafd6-dde4-4d50-b68d-5f4de62b7410",
+      "80e36c38-c045-412e-a0c2-1cd4f9e17157"
+    ],
+    "created_at": "2025-11-10T18:21:42"
+  },
+  "6b47a689-8ec6-4a7e-a13f-bdfcc78fa43e": {
+    "titulo": "Accidente de trabajo - Caso 3",
+    "fecha": "2023-03-28T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "4c6747a3-1317-4cca-9232-f50b6789a0eb",
+      "210e8abb-676a-42eb-aad7-51703d81c2ba",
+      "436d819a-0972-4cd5-aada-499a5a5be87f",
+      "a3301f38-7bb3-45f2-8cfb-3225c36403dc",
+      "d80b8664-3198-440b-b191-d7495d8632b1"
+    ],
+    "created_at": "2025-11-10T18:21:43"
+  },
+  "6cc2b5dd-c228-4137-9b8d-778495991513": {
+    "titulo": "Trabajo no registrado - Caso 4",
+    "fecha": "2023-03-28T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "aeeb4a3d-0434-4d17-a9ff-8bb4b95d029b",
+      "75edb834-2c2e-4eb8-a518-33f3a283cb48",
+      "8b0b75cd-a480-4bc1-b570-76791728bee7",
+      "489a5e1c-6695-4985-b924-c5cc9916fc37",
+      "bcbb2b41-dad4-441d-a01c-053aff08cfbe"
+    ],
+    "created_at": "2025-11-10T18:21:43"
+  },
+  "8f2f3a81-b431-43fb-b57c-604ae961ce6b": {
+    "titulo": "Cheque rechazado - Caso 3",
+    "fecha": "2023-03-30T00:00:00",
+    "participantes": [
+      "Comerciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "90a421f4-1a27-44ed-a6f7-e665f80670e9",
+      "26d7f76c-2fb6-47bf-b066-47913cbc5ba5",
+      "c9eae8f1-befa-4547-8bb5-8274bf39c794",
+      "67a7dde2-149f-4cd6-b331-48767c1a1cc4",
+      "4f5e5f76-5331-40f5-b21b-242ed5e20d4b"
+    ],
+    "created_at": "2025-11-10T18:21:44"
+  },
+  "a3c60798-716d-41a7-b2a3-69098f503e72": {
+    "titulo": "Trabajo no registrado - Caso 1",
+    "fecha": "2023-04-03T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "200d4ce4-2245-44aa-9d5c-4086047902d2",
+      "3eec546d-eeea-4a43-83a3-8d482f1ef88b",
+      "b6a8ad89-33b8-4e15-a06b-6a775cf9084a",
+      "ea83b062-0786-421f-8a96-d847f8a3035d",
+      "dfbdd4f0-e2b4-4741-bae3-87d392ff58be"
+    ],
+    "created_at": "2025-11-10T18:21:44"
+  },
+  "001c4bc2-2bba-43d5-a9ac-58bd6427e99b": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 3",
+    "fecha": "2023-04-03T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "fbd2161c-41ac-4fdf-9fe3-f10f4dd07315",
+      "f73f076a-6a28-4c3e-8850-2a32e7536c5c",
+      "20509bd7-4484-487d-b72b-8eb457d9e3b4",
+      "79877b55-ce49-4579-9b26-d05cdaf4c33e"
+    ],
+    "created_at": "2025-11-10T18:21:45"
+  },
+  "52f5ed35-37e6-45b9-becd-067cc2eccb9a": {
+    "titulo": "Recurso de apelación contra sentencia - Caso 3",
+    "fecha": "2023-04-05T00:00:00",
+    "participantes": [
+      "Condenado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "0c567ff0-5570-4cbf-9ebe-7fc5445e401e",
+      "cc379947-a0d6-436d-b9ca-f74a76547233",
+      "e95f529a-109b-422b-912d-1eee8acffd32",
+      "8ce07591-5733-45f7-8f05-bf742ced1488",
+      "00fa9a56-692b-4740-b1ed-e8cbcb178fa2"
+    ],
+    "created_at": "2025-11-10T18:21:45"
+  },
+  "251a9746-442d-4a0b-883f-b1354f13bd97": {
+    "titulo": "Suspensiones abusivas - Caso 3",
+    "fecha": "2023-04-07T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "0ec2e6bc-7ba8-4d29-8d46-3c2d8523c2fb",
+      "f9643df1-d480-42f9-8b5c-08858d17f4d6",
+      "c3abf1a0-15cd-40f7-9e9d-9d648a4d3c75",
+      "dc30dd47-1ea7-44de-96ca-da539ab2dd1e"
+    ],
+    "created_at": "2025-11-10T18:21:47"
+  },
+  "8b3f87a3-48a9-4c15-bab7-958d0b564ce0": {
+    "titulo": "Defensa en ejecución fiscal - Caso 3",
+    "fecha": "2023-04-09T00:00:00",
+    "participantes": [
+      "Demandado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "620eac67-ad8e-4fc4-8a0e-b3ab68e88fd1",
+      "184ad8c1-59c7-43f6-8286-3d85c97c0350",
+      "2967c5fa-f4b0-4ac0-8b5f-0fbb2aa29ec8",
+      "be4a6a80-f296-4610-acc9-880d479e2073",
+      "c76c253f-7727-47fe-97a0-168c5caaec58"
+    ],
+    "created_at": "2025-11-10T18:21:48"
+  },
+  "b0477723-1a7e-4980-8d14-bf33ba3db1c8": {
+    "titulo": "Defensa en causa por estafa - Caso 3",
+    "fecha": "2023-04-14T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "5f141d80-542d-462e-9904-86e04dd0556f",
+      "97374883-2e03-499b-bd35-72f4eeb7ff54",
+      "7d210407-1edc-41e7-a3d4-03373f772ff0",
+      "c7dcbfd8-f902-4abd-b7cc-aa8dc4807f97",
+      "ed948760-0242-41e2-9325-9e6e85e07938"
+    ],
+    "created_at": "2025-11-10T18:21:48"
+  },
+  "305074cb-aa87-4c3a-b9fd-c47164dd7b7b": {
+    "titulo": "Accidente de trabajo - Caso 8",
+    "fecha": "2023-04-23T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "fa2ead31-f2ca-49d8-ac0d-3c8ad37ed4c5",
+      "875d9822-d137-40f4-abad-8790b5e09329",
+      "e958347d-d892-4905-b8fc-9f636d1ea4e4",
+      "1abdac95-4769-40d1-bda2-506d24d7a6ab",
+      "f29cafe4-7c22-4861-8439-51c90e267fc6"
+    ],
+    "created_at": "2025-11-10T18:21:49"
+  },
+  "ba5bb110-9d1e-42d0-83c0-621dde5229d0": {
+    "titulo": "Reclamo de diferencias salariales - Caso 2",
+    "fecha": "2023-04-28T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "67a3eeae-67dd-4fa6-9193-822cf49f9b0a",
+      "d272b4a0-f340-481b-bcfb-1a02358c4e5b",
+      "eb5642ad-eb8d-4469-948f-532206b55dad",
+      "90ae22d4-0abf-499a-b113-094d3de54441",
+      "0925d352-4913-4adb-bd3b-b40e2d5b82d6",
+      "bcbb1341-4bce-4f74-8914-9463b0096d89"
+    ],
+    "created_at": "2025-11-10T18:21:50"
+  },
+  "448314a4-d636-445c-8618-80d351a14e08": {
+    "titulo": "Reclamo de horas extras impagas - Caso 1",
+    "fecha": "2023-05-01T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "07ae0305-0d74-4a50-ab88-feca2fceddd3",
+      "f73dc4b7-7ed1-4d9c-8e08-be74fc8307ba",
+      "7027a8a1-b3a4-4f24-b989-ddb51dd64f2d",
+      "40fd65cd-fbb7-4e61-aa64-72fb4dc38efd",
+      "596c72c7-2fee-488a-9cb6-06df05ba8433"
+    ],
+    "created_at": "2025-11-10T18:21:50"
+  },
+  "5c76a5c3-c7ba-4b96-a7f0-1fc87a761803": {
+    "titulo": "Divorcio contencioso con bienes - Caso 5",
+    "fecha": "2023-05-10T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "bb1df50f-0560-43a8-b145-877a82a3b5ed",
+      "3343dd48-df99-40fb-ad6b-5f97ae33ee79",
+      "43050398-59c6-4fb1-83d2-bd0e15151181",
+      "b5a55fb0-8416-4975-9328-87335cb7896f",
+      "331b3845-a4ac-4985-9115-5186ca5b718c",
+      "5d20e26c-f99a-490b-8020-200f90555744",
+      "b03e7434-34ad-40e8-892d-5a96e9ddf032",
+      "15c0079e-652e-4c90-99ed-55da15b0f4ec"
+    ],
+    "created_at": "2025-11-10T18:21:51"
+  },
+  "853714ea-3e4a-4bee-9d2f-d02962008563": {
+    "titulo": "Divorcio contencioso con bienes - Caso 3",
+    "fecha": "2023-05-16T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "48c5a3ed-d0ee-4e9c-8c12-1cdca2bb7614",
+      "939ed370-b5b8-4be7-9000-7d4f2ef40662",
+      "76bf143e-685b-4e2a-a79a-a215d6684d74",
+      "14a57186-d618-4133-bcab-a3fa0ab2f03d",
+      "e60b9bf5-e9fb-49ab-86ef-f3c8840f2c12",
+      "3639878c-8dfc-4dad-bcac-0b1b3c825857",
+      "92eba40f-bca0-46c3-8ac2-5e9428dd2400",
+      "58acf37d-3c76-4b60-87fc-0ad4be690b3d"
+    ],
+    "created_at": "2025-11-10T18:21:51"
+  },
+  "1125f6d4-c7a4-4fef-93dc-d682656d4a4f": {
+    "titulo": "Despido sin causa - Caso 10",
+    "fecha": "2023-05-16T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "bf45ed81-e508-406e-a6b0-2f69c2285a78",
+      "342fc845-08c4-46d3-a1ba-a5bcc110e061",
+      "74423367-583a-49fb-a02b-0a71db5235e0",
+      "4a4bab53-5795-4001-b1a3-70d8b5bcc601",
+      "f5a9340f-63f2-46a0-8f7d-df9a69e102d8",
+      "b0ff1735-5b85-4379-9807-821c88ba7e7a"
+    ],
+    "created_at": "2025-11-10T18:21:52"
+  },
+  "c687359d-a284-40fb-8859-db021bb62813": {
+    "titulo": "Pedido de quiebra - Caso 7",
+    "fecha": "2023-05-16T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "55014dc0-fbbc-4ac4-bf3b-c6c5ae6adb9a",
+      "8416c38e-6949-4802-86d6-8a81c492118f",
+      "6bc324af-952b-4d79-a820-47438d4b67de",
+      "a4c19324-3214-44b3-bb7a-3e096c90d7e7"
+    ],
+    "created_at": "2025-11-10T18:21:53"
+  },
+  "8439a465-ef1c-441a-aa6d-f6a5f06387e8": {
+    "titulo": "Pedido de quiebra - Caso 5",
+    "fecha": "2023-05-19T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "ff008391-22e0-4c74-8b1b-4b642a31f5fe",
+      "a4c4ef0d-f285-452a-97c2-59e6727b3ec0",
+      "9e331a32-a6a1-48c4-bef8-78c08a0aa50f",
+      "357d0008-6f07-4131-9734-19fa01eaeaf2"
+    ],
+    "created_at": "2025-11-10T18:21:53"
+  },
+  "8da62741-c326-4f54-bc35-51c84c8ffad5": {
+    "titulo": "Divorcio contencioso con bienes - Caso 8",
+    "fecha": "2023-05-20T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "447d9b5d-c816-4903-b962-a3f60ed99a23",
+      "e3f60c6a-6dac-494b-b2d6-c47ab0b57a4a",
+      "ad6348c1-e497-489f-a0ed-dc71604012e1",
+      "74aa73f7-a365-45ee-928c-93c3d058cc13",
+      "659084e5-a808-4778-9960-d6d9417b7a4e",
+      "867f827a-701b-436c-9768-8bfa1a4e63d1",
+      "2d631696-fb5d-4f70-82b5-c3cd7e321381",
+      "0706565d-a8f3-4c8e-ba77-91c7cc778603"
+    ],
+    "created_at": "2025-11-10T18:21:53"
+  },
+  "034fb7d0-b768-4502-9959-a7476b4aabe3": {
+    "titulo": "Reclamo de cuota alimentaria - Caso 2",
+    "fecha": "2023-05-23T00:00:00",
+    "participantes": [
+      "Madre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "3af3a009-c49b-44f1-bb61-92eb0abdb8b9",
+      "9d31716a-47b5-4a97-86ea-50041c704aaa",
+      "728dad59-6eed-4d9d-8aed-395504cf6d5f",
+      "9d1e7232-c618-4a17-95fa-b3b68233af29",
+      "562ae606-a34b-4d83-8fda-ee82962dd90b",
+      "cfa1355e-879c-48cb-a98e-9cf2df5713d0",
+      "8ff5e4bb-1af2-4a20-a59b-686fef624289"
+    ],
+    "created_at": "2025-11-10T18:21:54"
+  },
+  "e06ae630-74c5-48a7-88bc-465246f0b94a": {
+    "titulo": "Discriminación por maternidad - Caso 2",
+    "fecha": "2023-06-03T00:00:00",
+    "participantes": [
+      "Trabajadora",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "5b34b911-3cf5-4b93-bc6b-353cd920d2e5",
+      "6484271e-6c66-4a5e-96a0-ccce0aa1ddaa",
+      "168286a7-69b8-47ae-97d7-d8534215953f",
+      "dad1a874-8c66-4f6a-9a76-ca742fd14f49",
+      "cd433e64-1d3f-4111-9cd1-c98a92565818"
+    ],
+    "created_at": "2025-11-10T18:21:54"
+  },
+  "5a9226bf-9ba4-4819-a804-a7cea0dfbecc": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 2",
+    "fecha": "2023-06-03T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "e245598c-65c7-4fd8-8db0-52aa7cc66c2a",
+      "e91b530e-0b38-484a-a746-e71363a92236",
+      "160222b4-612e-4305-b2a8-068a8ea615a1",
+      "fb18cd84-4750-4e0d-b26e-039acebe13b3"
+    ],
+    "created_at": "2025-11-10T18:21:55"
+  },
+  "98444f91-c848-4313-8d49-b6f5a088a096": {
+    "titulo": "Concurso preventivo - Caso 1",
+    "fecha": "2023-06-04T00:00:00",
+    "participantes": [
+      "Empresario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "344d5f5d-1d20-4d49-a254-92fa1d461b84",
+      "f99b81cf-11df-4efb-a34d-0332e47537f0",
+      "3c9f760f-42a3-437b-a2e1-52185606c632",
+      "d564392f-8442-4a4e-8336-dbdfae108589",
+      "a125b2a9-daa1-49f1-ae54-5b86ddc3f08f"
+    ],
+    "created_at": "2025-11-10T18:21:55"
+  },
+  "ef7e2ce0-bad2-47f0-9e70-a6abcd1346e3": {
+    "titulo": "Desalojo por falta de pago - Caso 2",
+    "fecha": "2023-06-08T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "0c6aa9a7-31bf-4129-8886-3a31e37220a4",
+      "6f24b536-a43e-48bb-929d-c7e4b56e106f",
+      "74a636c8-ff17-4da4-bd55-f9b0e5fee448",
+      "9943c770-4dfc-4f99-863f-aab30ed75811",
+      "2998f440-5058-4bf0-933d-98d82253761d"
+    ],
+    "created_at": "2025-11-10T18:21:56"
+  },
+  "d43e87f8-30eb-42c8-abf7-6a39bfc63776": {
+    "titulo": "Solicitud de excarcelación - Caso 5",
+    "fecha": "2023-06-16T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "5541c168-9c29-4e07-bda4-c5866f867d4f",
+      "55d588fe-dd52-4c0e-84b5-0c5cb560bde6",
+      "c0d6af27-5f0e-4e42-b972-800567604699",
+      "0fafda76-35fc-4ecf-9e1f-892d9e79b900",
+      "3c3034c3-22f8-4255-80f8-4ab844ca21dc",
+      "3fa6f57c-0a3a-4d15-84c7-4072533f268a"
+    ],
+    "created_at": "2025-11-10T18:21:56"
+  },
+  "124750b3-5b17-46b1-a924-dcdf4721908a": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 1",
+    "fecha": "2023-06-18T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "c5e4e5e5-8336-4673-b7e0-06456527aa7f",
+      "31ddf309-7865-44d7-a28b-56d946af4fc1",
+      "4b388d3b-0ac5-4059-869b-11e096d7f887",
+      "e87c6c95-c672-4fdc-8248-e4b6be27997d"
+    ],
+    "created_at": "2025-11-10T18:21:57"
+  },
+  "b5c6d950-38d1-4dcc-9bc5-ce15dccf16ff": {
+    "titulo": "Amparo por mora administrativa - Caso 6",
+    "fecha": "2023-06-20T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c697322f-8e1b-4aec-a02d-1cceec3bd44e",
+      "667cd94c-60e7-41e0-940f-5e7e0c341ab7",
+      "8eb9d144-fd69-4ab0-8868-b94d6a156af3",
+      "1c4db917-2721-46f6-ba73-d1f54f20eaa2",
+      "048f2b18-408b-489b-b6ef-6d365a573f44"
+    ],
+    "created_at": "2025-11-10T18:21:57"
+  },
+  "7c43ecfd-d46c-478d-9af7-7fc6fdf4e595": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 1",
+    "fecha": "2023-06-28T00:00:00",
+    "participantes": [
+      "Padre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "85a39415-644c-47f4-a44f-ca780cdbfc2f",
+      "d389ad44-8fe3-430a-a53f-7bba44f6a45a",
+      "1ab49d4e-f9be-43a4-9553-30b8fd7cf8f3",
+      "687657b7-9a6b-41a2-85be-9881ab0c871a",
+      "760b62a8-2159-46f9-9fbb-c541769363a0",
+      "fa5f9cd9-4d8d-4f7d-8300-7e6e5b543d6a",
+      "d293c61c-1d30-4be0-9079-fad8f172a215"
+    ],
+    "created_at": "2025-11-10T18:21:57"
+  },
+  "0d2f8da6-ca97-4b14-a0f9-0b52945c685e": {
+    "titulo": "Usucapión de inmueble por posesión - Caso 3",
+    "fecha": "2023-06-28T00:00:00",
+    "participantes": [
+      "Poseedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "65ac5635-51c7-49d1-85c6-dda4a6b01d79",
+      "93bf80e5-2145-4f12-b8e9-aa61ec44aea4",
+      "d269f941-47f2-4d23-8f27-518366fe930b",
+      "3fc2362d-3540-493c-b98c-bd2490d32353",
+      "f705d85a-6513-4211-936b-f94f696ccc51",
+      "9cfbdf82-bc3d-49a3-bb70-c1a39651c5d6"
+    ],
+    "created_at": "2025-11-10T18:21:58"
+  },
+  "bb86c888-0cd9-4ad6-a5fe-5ade445661af": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 3",
+    "fecha": "2023-07-05T00:00:00",
+    "participantes": [
+      "Padre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "4796eb82-29c6-4a21-9106-437a2fba7000",
+      "88c6ad87-a579-458e-8348-03940557fd0d",
+      "b9922203-31c0-4350-9c10-1edd90a5fba9",
+      "8606b851-8826-4e68-b183-2b3d9ec7d3fd",
+      "b021ffe7-7fb7-4546-8696-4fe93aaa5000",
+      "964f58c0-1a7b-49e9-b3a0-2ce637c3518a",
+      "c81ac226-951f-4c1a-bb19-2f005e99ca11"
+    ],
+    "created_at": "2025-11-10T18:21:58"
+  },
+  "a14e2172-78df-4326-8f99-47b63a973281": {
+    "titulo": "Amparo por mora administrativa - Caso 2",
+    "fecha": "2023-07-06T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "933967af-64e6-4b37-9a31-6d87348b7dc4",
+      "b4a76894-3ff8-4d44-9e90-ff059a1e0847",
+      "eb54f24f-02ab-407f-90a9-7cc94881b802",
+      "5b52b625-b399-445b-9c9d-e75c17dddc7a",
+      "bb7e4ea7-dfb8-4d13-9cbc-5f3d4d85014d"
+    ],
+    "created_at": "2025-11-10T18:21:59"
+  },
+  "ec71d6b0-a420-48d8-a6e6-222f5697bac2": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 7",
+    "fecha": "2023-07-08T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "c136a80c-d5bb-407e-9e00-c603bb0a59a7",
+      "4a03d8ad-8282-4ce9-b0dd-24b73a700e1b",
+      "e2440d95-8453-4571-a96b-3c76c85b1ad5",
+      "10714719-863d-4b04-bb57-7f192a036f09"
+    ],
+    "created_at": "2025-11-10T18:21:59"
+  },
+  "ccd8bcd8-dd89-4d67-9286-b1ea88383e4b": {
+    "titulo": "Reclamo de cuota alimentaria - Caso 3",
+    "fecha": "2023-07-10T00:00:00",
+    "participantes": [
+      "Madre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "98d5f5a5-eb8c-47cf-bb38-9900fc15fdc7",
+      "03d85cce-ce10-4621-b688-61aa8c34900f",
+      "569bdd8f-4737-4cd7-b16c-a05cc70516df",
+      "983b5d92-6c02-4857-b00d-8bf8a27b02a4",
+      "6329dfdc-34d2-45a8-b83f-b2df29d35777",
+      "6cd05c56-cb2a-4da2-b21e-06feefc45760",
+      "ee764656-2759-4b01-9af1-009d9c91de66"
+    ],
+    "created_at": "2025-11-10T18:22:00"
+  },
+  "f7d7aa99-5ecf-4d57-9a56-b90c60306002": {
+    "titulo": "Defensa en causa por lesiones - Caso 6",
+    "fecha": "2023-07-12T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "5073d332-34b0-4d67-a785-ffb3f562f9cd",
+      "3386189b-b7b5-4833-8ebd-742ae050a2e5",
+      "74800374-918d-40e2-9f7a-5ff3e63b28ec",
+      "f394e274-3187-48f8-8f78-17fbfb7dd66a",
+      "4d206f5b-3c49-4503-8399-bf0d0094b07a"
+    ],
+    "created_at": "2025-11-10T18:22:00"
+  },
+  "8eb1d153-9a48-4a72-8dd0-f76f0ee8e9d7": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 4",
+    "fecha": "2023-07-15T00:00:00",
+    "participantes": [
+      "Padre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "a1f5cc9d-8f48-41be-b9e9-6bed0b74b99c",
+      "e78aff2f-0662-4550-8e92-ecb9032e4f2e",
+      "2ec911b0-1fd4-48a6-ba1b-2c05bbdd41d0",
+      "656faab7-8d6a-40f9-810b-201a70ee68d8",
+      "f10e09df-d1ca-4bcc-8fb0-547f63ab3d5d",
+      "fb803f79-7f72-4852-a64f-b795949d236b",
+      "69957e96-b590-418e-949b-81b3e7549953"
+    ],
+    "created_at": "2025-11-10T18:22:01"
+  },
+  "2bb1b509-18f7-4af7-9957-197e582c77ae": {
+    "titulo": "Conflicto por uso de marca - Caso 2",
+    "fecha": "2023-07-18T00:00:00",
+    "participantes": [
+      "Empresario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "5d0ba04c-77db-44fe-9614-3ae245090b50",
+      "b7fa4569-1ee7-42e8-b42c-e581a0136067",
+      "7791e2c5-3652-4ef1-90e9-24cb14b0803b",
+      "1c10434f-00ee-4b84-8a26-d09ac3197534",
+      "841bb4ad-96a0-429b-bfd7-d5a66b9a58e5"
+    ],
+    "created_at": "2025-11-10T18:22:02"
+  },
+  "8d831b7d-1fa1-4a47-8b4a-4ee923e30844": {
+    "titulo": "Impugnación de testamento - Caso 3",
+    "fecha": "2023-07-29T00:00:00",
+    "participantes": [
+      "Heredero",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "b5a1d947-25ae-4519-bcf3-9e7e820f6059",
+      "727db3aa-d529-44ad-acf3-f862a95d70b0",
+      "338f668a-005d-467f-9996-6110426113fc",
+      "28bcbb27-7570-40e7-a292-ddf63bf47392"
+    ],
+    "created_at": "2025-11-10T18:22:02"
+  },
+  "d97f145c-ec10-4a47-a3bf-fac73e39838f": {
+    "titulo": "Amparo por mora administrativa - Caso 3",
+    "fecha": "2023-08-01T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "fca33748-da16-4e69-8260-5299e0c31816",
+      "bc38c44e-e6ad-4e1b-8041-beabac42f5b3",
+      "15524525-d163-45ab-8c66-066e7f4859bf",
+      "47074b65-8466-4f9a-abeb-dc51d838eb39",
+      "d592167f-d109-4ffe-b0e8-f1a4c7f5398a"
+    ],
+    "created_at": "2025-11-10T18:22:02"
+  },
+  "57eac20e-b706-4dd4-a80b-e93f2901f38d": {
+    "titulo": "Accidente de trabajo - Caso 7",
+    "fecha": "2023-08-02T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "927d52a9-a215-4cbd-a68d-9b0245d2d94a",
+      "f456844c-952e-4f5c-a883-a2f22ca91627",
+      "8fa4b762-1bf7-4bca-9e5f-2a8c05098643",
+      "807892c2-db37-4456-84eb-394119addf04",
+      "1aed4282-0441-4410-baba-15e393241558"
+    ],
+    "created_at": "2025-11-10T18:22:03"
+  },
+  "633e3c9f-9ffa-49e4-a2ff-8f9cbfa5d472": {
+    "titulo": "Pedido de quiebra - Caso 6",
+    "fecha": "2023-08-03T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "6df1c091-98c6-44a0-be14-be8f8278d485",
+      "cfc88761-c87c-4c09-9bce-fbf59eb8622d",
+      "48419fcc-550a-4740-b586-aa63338369ce",
+      "beabd8b9-24bd-41b3-b996-fb71375dea11"
+    ],
+    "created_at": "2025-11-10T18:22:03"
+  },
+  "264f8103-cbb1-4146-adbf-ef07b39b50d8": {
+    "titulo": "Pedido de quiebra - Caso 2",
+    "fecha": "2023-08-10T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "1b3860bc-14e9-44d2-9b3a-d3553c899074",
+      "9f2d2d62-44a7-4f14-b395-ca0f7a674dc9",
+      "774d9f55-d76c-421f-a0d2-9e3e8b2e21c9",
+      "93939a94-19d1-4ce7-80f4-9d50d9423b61"
+    ],
+    "created_at": "2025-11-10T18:22:04"
+  },
+  "ca8c458f-c52b-4a81-956c-5129939b0011": {
+    "titulo": "Discriminación por maternidad - Caso 1",
+    "fecha": "2023-08-14T00:00:00",
+    "participantes": [
+      "Trabajadora",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "db31eb22-23da-4169-9a62-9500bab70370",
+      "019d1267-736b-4b62-88b2-4651bbcdfc03",
+      "991be8d5-98dd-4044-85c1-8b0e78629d7b",
+      "56a084e9-2448-4639-b704-dba56c4f2fde",
+      "5e377313-938f-43ec-afa3-b5370d97dbef"
+    ],
+    "created_at": "2025-11-10T18:22:04"
+  },
+  "6a8c72fe-a523-4ffe-bda6-cdf150d35351": {
+    "titulo": "Defensa en ejecución fiscal - Caso 2",
+    "fecha": "2023-08-15T00:00:00",
+    "participantes": [
+      "Demandado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "2714e8eb-dae4-4ef4-99db-9dad4a8f58bc",
+      "c35688a2-37cd-4693-8493-aa52500c7fa6",
+      "1b6ed156-0275-482f-b087-b9277835d057",
+      "d47a2ebc-34ee-4ed5-a65f-47ac460be186",
+      "a9648d74-7cc5-40eb-a356-48736f47629b"
+    ],
+    "created_at": "2025-11-10T18:22:04"
+  },
+  "a0ccc042-2748-4ef1-a52f-6d3375d04c76": {
+    "titulo": "Divorcio contencioso con bienes - Caso 4",
+    "fecha": "2023-08-18T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "b01417f1-217e-46f5-bc53-130d459588ff",
+      "f9fe61d9-b176-4ebe-88e5-f1aae36b4875",
+      "2fb1b78e-0056-41c3-9626-9de7230da718",
+      "7172be9c-0b1f-414a-8658-9cb7859318eb",
+      "da4d2762-6eba-47e1-aba0-c7f33b23b7ab",
+      "cce9db66-3838-4e73-bb61-308fb1a56043",
+      "d45ede6a-c247-4963-98ee-6b792311f18b",
+      "daedaaa6-b588-4f42-88d6-85b464e25719"
+    ],
+    "created_at": "2025-11-10T18:22:05"
+  },
+  "a2d2ecdc-cd96-4e16-bfdc-70daa809f955": {
+    "titulo": "Acoso laboral y hostigamiento - Caso 2",
+    "fecha": "2023-08-20T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "642b1f88-9a1a-4a4a-98e2-09e51b57c0d5",
+      "c4cbc073-ae79-405b-a629-5616cbb7dcee",
+      "45d35843-4b48-4697-899a-faba0839a2c4",
+      "f76ffbf9-a296-457e-b831-e1e9150cce06",
+      "ba023e5d-aa4b-4f9b-ab07-c4a1fd217b11"
+    ],
+    "created_at": "2025-11-10T18:22:06"
+  },
+  "4f0de5b7-e9e7-439b-bed8-fe08c947a923": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 6",
+    "fecha": "2023-08-20T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "37641caf-b92b-4fb6-b813-ceec00648479",
+      "19c2c1cc-110b-455a-a143-0463db6efa2e",
+      "ee539eb7-2d56-435f-b510-8b284b2d61f4",
+      "f9f8ecd9-603e-434a-b800-6f858a0cdff7"
+    ],
+    "created_at": "2025-11-10T18:22:06"
+  },
+  "10d32d7f-e2ad-4ce7-9fa8-009599e5d7dc": {
+    "titulo": "Denuncia por violencia de género - Caso 1",
+    "fecha": "2023-08-27T00:00:00",
+    "participantes": [
+      "Denunciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "ecff331e-f46e-404b-8449-a5306cc01357",
+      "9d631fcb-48dc-4f69-9cf5-94e3508969ea",
+      "a39127f8-3c42-4253-93ff-66b108cf4123",
+      "7a8cc6c3-2e1f-4b2f-a89a-5b22fae69268",
+      "99b54aeb-ef09-4e43-9364-47447797cee9"
+    ],
+    "created_at": "2025-11-10T18:22:06"
+  },
+  "c6bc33be-af49-4ec1-a635-d8cd72596e44": {
+    "titulo": "Accidente de trabajo - Caso 4",
+    "fecha": "2023-08-29T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "2c6e0685-ae7f-46ad-ac6d-31502a9df262",
+      "a7074bdd-6e29-493c-86d5-6fab52a4cb91",
+      "2ebb1ada-37e2-409e-82e2-0de58053c215",
+      "b2600a2d-c2fa-4607-92d6-1c0aa5158e35",
+      "ff8517e4-f435-4344-9324-e65fcf13f2ee"
+    ],
+    "created_at": "2025-11-10T18:22:07"
+  },
+  "bc4dc663-c698-46b5-ab05-2b9f138cb0af": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 7",
+    "fecha": "2023-08-30T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "3819eaf8-ca21-446b-a126-80dfdedec913",
+      "2841f0aa-51b9-4017-a009-165ac88a5290",
+      "4bd1a7f8-2d23-48ae-8d23-5225b9083223",
+      "33eeee07-bdab-4440-947e-f7e481cdc60f",
+      "9c9a58c7-8520-4e2d-9f9f-39f1e2080aac"
+    ],
+    "created_at": "2025-11-10T18:22:07"
+  },
+  "1981ac38-4872-43f5-8383-97a983eab8a5": {
+    "titulo": "Accidente de trabajo - Caso 2",
+    "fecha": "2023-09-01T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "111af8f4-bde3-4eb0-93b7-0efdc8a2254b",
+      "891c668d-73f4-4449-9e5d-75f9e5342d54",
+      "aca31aec-0f3b-476f-a254-185e32e5858a",
+      "a0af8065-0d7a-496c-a9a9-11769f464edc",
+      "d3ca58be-dbef-4cb8-99bd-e5b8be339d4b"
+    ],
+    "created_at": "2025-11-10T18:22:08"
+  },
+  "38302560-4bf5-42a0-9fa2-50fa49b5146a": {
+    "titulo": "Defensa en causa por lesiones - Caso 5",
+    "fecha": "2023-09-02T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "d23a44c5-e1f4-4cdd-81be-d565d5a1bdc0",
+      "616fe813-a665-489c-a400-f10b6691d4ca",
+      "9e8658d9-7619-4341-86c1-a9acbdf8078d",
+      "cbb6369a-fa78-41e7-ba19-0b7f31795ff6",
+      "95aa9349-09d8-495a-a9c5-19ee041ee2dc"
+    ],
+    "created_at": "2025-11-10T18:22:08"
+  },
+  "aa35c073-72a1-46a4-a95b-c9d8c4621cdf": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 8",
+    "fecha": "2023-09-07T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "b2cdbe82-f06d-4682-a906-61bdcb91239f",
+      "464b7383-ef9c-4e74-892e-a40c4ce60394",
+      "e73646bf-a6e1-4bb2-aa5d-5ab8365b6dfe",
+      "fa52dd69-f192-4965-94b5-a2d2089955bc",
+      "f180d0fc-c70d-46d2-a350-470639ff3282",
+      "f345862d-d431-4e6d-ba46-003fce3ae7e9"
+    ],
+    "created_at": "2025-11-10T18:22:09"
+  },
+  "be63e937-e0ba-4c12-a44f-fb6f801103b1": {
+    "titulo": "Recurso de apelación contra sentencia - Caso 1",
+    "fecha": "2023-09-09T00:00:00",
+    "participantes": [
+      "Condenado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "20684cfb-3cf9-4a61-8455-373d46753a2b",
+      "32bbd305-f870-4b8a-9e80-f4df6f990fdf",
+      "3e7df8ea-c6af-4d5a-a70c-8c461cd3deaf",
+      "4fa7af44-7f3d-4e9c-9631-7b22dbba95c6",
+      "2af3335a-8153-42d1-935e-60b97de17065"
+    ],
+    "created_at": "2025-11-10T18:22:10"
+  },
+  "83f0b86e-0d33-42a0-a897-cc664c0676f5": {
+    "titulo": "Mala praxis médica - Caso 2",
+    "fecha": "2023-09-12T00:00:00",
+    "participantes": [
+      "Paciente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "bba11e13-685a-4b1d-8cef-13441d2db393",
+      "24da9450-d953-4b1c-8369-782e5ac08b00",
+      "bfc01479-9a3f-4571-807d-aa60bc788aa6",
+      "7b554e3d-d0fe-4b6b-a855-48fa5a076a04",
+      "636773f7-bb60-48ea-b82c-406ef3eb2874",
+      "17d4397a-cad4-4037-b78a-24b01f652dd5"
+    ],
+    "created_at": "2025-11-10T18:22:10"
+  },
+  "37b461bb-0bc4-459c-8276-04e3458a6160": {
+    "titulo": "Conflicto por uso de marca - Caso 1",
+    "fecha": "2023-09-13T00:00:00",
+    "participantes": [
+      "Empresario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "59d7ef19-2259-4eca-aec2-6d540874307d",
+      "4661a440-654d-470f-a4d5-741a96107839",
+      "bfe18b97-5c0a-4a1f-a4c1-19f44e6d96b4",
+      "e6480f5d-7af4-4fb8-ada7-cf3ba3c6b310",
+      "7382e773-d8c3-4310-9cf9-b3a4b1abc62b"
+    ],
+    "created_at": "2025-11-10T18:22:11"
+  },
+  "1bab8114-f89e-40d4-b44e-31d7f0ac5ad3": {
+    "titulo": "Defensa en causa por estafa - Caso 4",
+    "fecha": "2023-09-22T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "7a69d5ee-bc28-478b-bf04-5ce310afa5ca",
+      "02c9a9cc-dcd3-4c64-b8d1-6a32697153bd",
+      "7f2537cc-0a15-4e7c-bbb5-e01bd9fa0c73",
+      "321e889c-414c-49d3-ab6a-ae3cd0567b3e",
+      "65499120-2653-4bfc-808f-b576fdafd6f4"
+    ],
+    "created_at": "2025-11-10T18:22:11"
+  },
+  "e25482f7-d2df-43ca-9c4f-19f914683de5": {
+    "titulo": "Pedido de quiebra - Caso 4",
+    "fecha": "2023-09-24T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "e82229bc-dbcb-4b8b-93ed-b88ede1a81af",
+      "b49f0ced-e498-4a02-aa11-d20102787062",
+      "052d6f8f-7946-40e8-aa78-d0c76e82e94a",
+      "9b81e70f-061b-40ec-9742-b39e4bcd2d10"
+    ],
+    "created_at": "2025-11-10T18:22:12"
+  },
+  "c4417c07-85f7-4271-bb66-f09cc1ddf58b": {
+    "titulo": "Despido sin causa - Caso 9",
+    "fecha": "2023-09-26T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "bce86271-a79b-4f8d-ab88-d047c551a22d",
+      "c65069fd-7640-465d-91c7-806354ccb5b4",
+      "741913ae-771e-41f2-bb81-3e2a315391bd",
+      "77b45b1a-17d6-4f96-97f4-ba6fe22205b7",
+      "42143633-a67f-4069-83bc-5fa69b558de5",
+      "4909a6d6-c3f4-4bfa-9982-6e6ad8ff55fb"
+    ],
+    "created_at": "2025-11-10T18:22:12"
+  },
+  "1eadaf0f-9fc7-44fc-a646-e7aa5840057d": {
+    "titulo": "Reclamo de diferencias salariales - Caso 4",
     "fecha": "2023-09-27T00:00:00",
     "participantes": [
       "Trabajador",
       "Abogado"
     ],
     "metadata": {
-      "tipo": "reunion",
+      "tipo": "general",
       "participantes_detectados": 2,
       "origen": "json"
     },
-    "total_fragmentos": 5,
+    "total_fragmentos": 6,
     "fragmentos_ids": [
-      "acb4528f-dff0-4989-a796-bc1bad658481",
-      "1dae24fd-4142-47f1-bc45-8ceaafb0bb14",
-      "deba226f-bd60-420f-9bbf-dbff5ab73c25",
-      "943224e0-2097-4029-8a46-47e1a0c1ff02",
-      "044b2cdc-03fe-46ae-8e4d-fa6dc2cc1412"
+      "68b3dcb5-ac7d-40ca-91b8-92252ccdc936",
+      "5a7e6918-93f1-4f49-86d4-d59593c5bbfe",
+      "b54b185f-f0a9-4953-bed9-300d9edfa159",
+      "7a0767f0-138f-4707-a700-300382475b73",
+      "369a3cef-45a4-4685-a47d-0261d6312705",
+      "f1227ddf-fd7e-4d69-89b5-636f2667719f"
     ],
-    "created_at": "2025-10-23T18:17:04"
+    "created_at": "2025-11-10T18:22:12"
   },
-  "a4d4bf2b-c0aa-4fa9-9111-80d620852e0d": {
-    "titulo": "Divorcio contencioso con bienes - Caso 2",
-    "fecha": "2023-10-02T00:00:00",
+  "c6b4cdcd-8ef3-4fc9-8bf7-c4cdd069c31b": {
+    "titulo": "Desalojo por falta de pago - Caso 6",
+    "fecha": "2023-10-05T00:00:00",
     "participantes": [
-      "Cliente",
+      "Propietario",
       "Abogado"
     ],
     "metadata": {
@@ -485,24 +1877,43 @@
       "participantes_detectados": 2,
       "origen": "json"
     },
-    "total_fragmentos": 8,
+    "total_fragmentos": 5,
     "fragmentos_ids": [
-      "c4cdf041-ca80-4d24-bf84-dd1229078520",
-      "d3751ee7-309a-45cd-9348-4ff5dc2dfc2b",
-      "8e7dc94b-9039-4615-9dbd-3b371d1ec8aa",
-      "672b46c6-ffdf-4e72-85d9-8f8b3c6bbf39",
-      "94c2b967-a13f-492d-8c46-69f0c7201104",
-      "700c74bd-00ea-46d7-a048-bb918f8384d6",
-      "083c822c-3cd6-49f8-8f17-e8f6dca07010",
-      "136b3b62-1794-4e06-8f48-90908aaa60a6"
+      "79fae4be-40a8-49d4-955a-170577af4dfb",
+      "698e99b0-7d28-44b8-b754-973a832df145",
+      "dc99196d-deeb-4d02-8ade-083f4e16c581",
+      "510ea007-d0a3-4ace-b845-04e47ed20b8a",
+      "e23835de-6976-4855-946c-0866d13ffc78"
     ],
-    "created_at": "2025-10-23T18:17:04"
+    "created_at": "2025-11-10T18:22:13"
   },
-  "40130269-0cca-49a3-afe2-e14929cc259f": {
-    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 3",
-    "fecha": "2023-10-03T00:00:00",
+  "307d1adc-2636-4b3c-8b51-46263e9dd9fa": {
+    "titulo": "Amparo por cobertura médica - Caso 5",
+    "fecha": "2023-10-10T00:00:00",
     "participantes": [
-      "Víctima",
+      "Paciente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "1949701a-20d4-4882-82af-743a033342f6",
+      "a884a6ba-d569-40c3-a0ba-4bc510bc1c03",
+      "b504a667-6a34-4d3b-aa2b-f25ffd1007e9",
+      "7f692208-4af1-4270-911d-1313b272e84d",
+      "39b6b782-aef2-4ea5-8d37-219a78c34735"
+    ],
+    "created_at": "2025-11-10T18:22:13"
+  },
+  "fcfbe82f-0948-4d9a-8653-422a191a664f": {
+    "titulo": "Despido sin causa - Caso 4",
+    "fecha": "2023-10-11T00:00:00",
+    "participantes": [
+      "Trabajador",
       "Abogado"
     ],
     "metadata": {
@@ -512,171 +1923,18 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "82098648-ea86-408a-9b3b-a333e2b4d693",
-      "8b68a422-92a1-403b-ae0d-f69cb89705fa",
-      "cc7c650a-f9d4-47e0-b0f4-32ef133ed36b",
-      "a53a2d9c-4ffe-423f-989c-b7f2cac6b1bf",
-      "d78e5e87-587f-4a94-8ea0-ef320491fa51",
-      "5fce289d-e8ea-4eec-90a0-1b619c6b0ced"
+      "a4f9bb27-d4c4-4419-84e6-c9391398f704",
+      "c1b2eaa4-dc2b-42c6-93e4-58b92fe98ea1",
+      "96c07d2d-70a7-42d7-93e0-186c26fcaed0",
+      "2f84292a-cbd8-4169-a92d-817feeb0f0fb",
+      "5a667363-2ad8-4ced-8451-8a9faeafe7ca",
+      "123bddce-c33f-4aec-af7c-65d551494ec5"
     ],
-    "created_at": "2025-10-23T18:17:05"
+    "created_at": "2025-11-10T18:22:14"
   },
-  "19d0d5da-5e74-4fb7-8989-3787f5d8112d": {
-    "titulo": "Defensa en causa por lesiones - Caso 2",
-    "fecha": "2023-10-04T00:00:00",
-    "participantes": [
-      "Imputado",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "76eb2bad-d64e-4478-911d-4367f8e53c2e",
-      "c98b65c2-29aa-4f34-be7f-bdafcf727110",
-      "7dd8879e-025c-46fe-8da5-c04afdadfb62",
-      "39a980fa-9d6e-4651-8837-ef88e8178b6e",
-      "8d0fc301-4f72-403d-ba86-7415e481a8cf"
-    ],
-    "created_at": "2025-10-23T18:17:05"
-  },
-  "efa13c6d-7183-4951-a413-a78e139e4922": {
-    "titulo": "Acoso laboral y hostigamiento - Caso 2",
-    "fecha": "2023-11-20T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "8e06d68a-20e0-491c-93f0-87f81f728174",
-      "a046bb5e-4d21-4f7c-a56b-3c4f1241a396",
-      "dc5bb563-c6d6-413d-b832-24352b431361",
-      "bad843aa-99f1-44ea-b3b0-3b0d060ee179",
-      "96bb45c2-adaf-4681-a71a-89f8886518ae"
-    ],
-    "created_at": "2025-10-23T18:17:05"
-  },
-  "544df75f-5a84-41b7-ace5-a63de9b83b01": {
-    "titulo": "Disolución de sociedad - Caso 2",
-    "fecha": "2023-12-06T00:00:00",
-    "participantes": [
-      "Socio",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "3cc5395a-c3c0-4f87-9e9a-0e50ef2d13b4",
-      "ef604b1e-bc1d-4584-889f-a562a8fac00f",
-      "ca43d75a-2197-4e20-99ea-15c04898cb19",
-      "127cc352-15e7-40ec-97b0-7b7b87e44a74",
-      "d9e0c8cf-23a2-4c80-978f-cf7cfab835db"
-    ],
-    "created_at": "2025-10-23T18:17:06"
-  },
-  "36ac6b9c-c917-4a7d-a344-e972c09a34a1": {
-    "titulo": "Accidente de trabajo - Caso 2",
-    "fecha": "2023-12-15T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "reunion",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "f8bf3552-77a9-4bd9-a595-04e0d1213c15",
-      "1da7a7f8-c735-4ddb-986a-913a41900ba5",
-      "3fd8f0a9-7c73-4b0e-a11e-bec6c5bef8e7",
-      "b5dd4ec1-e2a0-4640-ae32-bd5cfe43adcf",
-      "bfb0a690-c57e-4005-bfb4-4df79147233b"
-    ],
-    "created_at": "2025-10-23T18:17:06"
-  },
-  "8152a3e2-cb41-4e1b-8b04-f1c9ecc8fe04": {
-    "titulo": "Pedido de quiebra - Caso 2",
-    "fecha": "2023-12-28T00:00:00",
-    "participantes": [
-      "Acreedor",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "eb74a1c5-c1d0-4e13-bdb8-1b303c095800",
-      "37d6a3e6-bf95-44bd-b970-d239d75a6af5",
-      "41e89592-0895-4a1c-b7be-faaa54999285",
-      "a3f3aa33-fa9c-4911-addf-3de52d890214"
-    ],
-    "created_at": "2025-10-23T18:17:07"
-  },
-  "aa7cb49d-cd81-4d7f-a3a9-94a0c66eca22": {
-    "titulo": "Accidente de trabajo - Caso 3",
-    "fecha": "2023-12-31T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "reunion",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "880bf58c-9846-4a64-ae8a-33e4a8550ff3",
-      "452f31e5-b952-4e97-ab0e-440378b25b12",
-      "a2b789b5-8003-45e7-8231-4a88a7c46e3c",
-      "3e5beb19-131b-4bc1-953e-c52b2f6fc030",
-      "e1a350d7-e08c-4efd-ab28-52fdcc192524"
-    ],
-    "created_at": "2025-10-23T18:17:07"
-  },
-  "7698f08a-dcfd-46e3-bc12-632611e69766": {
-    "titulo": "Trabajo no registrado - Caso 3",
-    "fecha": "2024-01-01T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "eb5f3693-a369-4652-b506-415bfebe91dd",
-      "8fdc3e24-0129-4c32-93dc-bd660d04209f",
-      "9ed98745-dfd8-4127-b3be-ef084bfc60b6",
-      "9ed0b4d4-77b3-40b2-a7ac-3eb08036e9ed",
-      "43f4da92-17b9-45cb-bfca-9455dcd802fe"
-    ],
-    "created_at": "2025-10-23T18:17:07"
-  },
-  "1c6dd7a4-967e-4d2a-9829-a7860c97dfa1": {
-    "titulo": "Incumplimiento de régimen de visitas - Caso 1",
-    "fecha": "2024-01-14T00:00:00",
+  "658f1ea5-7960-4f95-ba9a-1843c1d5fbd3": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 2",
+    "fecha": "2023-10-12T00:00:00",
     "participantes": [
       "Padre",
       "Abogado"
@@ -688,63 +1946,19 @@
     },
     "total_fragmentos": 7,
     "fragmentos_ids": [
-      "a20e1d0b-86f7-4df9-99ae-f63371c305fb",
-      "5aeeeb9b-ba01-4427-8165-60a4a5a558d4",
-      "9aabab60-db75-41c1-b201-8386d75b7b78",
-      "33236397-9ced-4bff-a017-45597f6b4a78",
-      "c781f9b3-1fcb-425d-8475-d7c704a452b4",
-      "f8ed1766-4bad-4335-a74b-1dea79addfb7",
-      "74d8c23f-2e5f-47b6-9aa0-c086746c9db7"
+      "9f5f5947-e80e-4717-935c-015f03b5cae4",
+      "de1cff1c-c533-46b9-b116-9df4a4a0fde5",
+      "958051b0-efcb-4cd7-a9d9-5927caf0f02c",
+      "25482741-c516-434e-b8bb-0fb800177083",
+      "5ebadea2-8841-4834-8f09-6837e70f35e4",
+      "1d64ef33-fb76-4ea1-8de6-9f183c109f9f",
+      "ba5f7944-1bed-40d5-8b30-6e7aefaf4bc6"
     ],
-    "created_at": "2025-10-23T18:17:08"
+    "created_at": "2025-11-10T18:22:14"
   },
-  "52b95ce0-2b14-431c-9733-2bf8aaeb3dbf": {
-    "titulo": "Incumplimiento de contrato comercial - Caso 1",
-    "fecha": "2024-01-25T00:00:00",
-    "participantes": [
-      "Empresa",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "5a1f2276-09fb-46e0-a047-2236be5debde",
-      "ef7d4f75-beed-4844-b16a-73176b91805c",
-      "80313480-5077-476a-9283-e3e877ee6c24",
-      "e473207a-17f7-4c38-ad4f-f181aebaca5d"
-    ],
-    "created_at": "2025-10-23T18:17:08"
-  },
-  "c728f96c-bd14-4705-b25f-ac778d371c4f": {
-    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 2",
-    "fecha": "2024-02-10T00:00:00",
-    "participantes": [
-      "Víctima",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "e2457275-1faa-4c7c-92f5-8b8a9ca8673d",
-      "fea33699-7f30-4d83-8847-2de270694ad3",
-      "ffc5ab99-5a7a-4068-9223-5b45316c1212",
-      "0e513115-bb14-4dc2-bfee-fa4647e32e9e",
-      "6542eb59-754d-4b13-b20a-add622f57ac3",
-      "233d1466-b5b5-4baf-ad5c-f626481da417"
-    ],
-    "created_at": "2025-10-23T18:17:08"
-  },
-  "1160a786-17dd-49b5-9caa-9506e8950130": {
-    "titulo": "Desalojo por falta de pago - Caso 3",
-    "fecha": "2024-02-13T00:00:00",
+  "c85a70de-41d1-4f0a-baa1-3faad88af7dd": {
+    "titulo": "Desalojo por falta de pago - Caso 4",
+    "fecha": "2023-10-13T00:00:00",
     "participantes": [
       "Propietario",
       "Abogado"
@@ -756,40 +1970,17 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "b16a3f8f-4796-40b0-b841-64dd585fe7e1",
-      "053b39c3-9f65-4c4a-a14a-14951c8b67bb",
-      "8bbd67c1-8b9e-44fb-b08d-8d47f1097fef",
-      "2c091b00-d40b-4129-9ac1-1bbc1626ab46",
-      "09b30733-b9bc-478b-b9da-5818749e9b53"
+      "b880a681-70dd-4761-bd82-25e269a3e6b4",
+      "11c675f7-b088-40da-94de-514f916adfed",
+      "f42bf02d-1cac-485b-94b8-ebd10e8d17a6",
+      "d8a86649-4bc4-41ad-ac69-c6c46e7fb662",
+      "7e6d1ce8-7a4a-4880-951a-f0663802fde0"
     ],
-    "created_at": "2025-10-23T18:17:09"
+    "created_at": "2025-11-10T18:22:15"
   },
-  "afd39318-4d1c-410e-910e-258395c618ed": {
-    "titulo": "Despido sin causa - Caso 2",
-    "fecha": "2024-04-12T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 6,
-    "fragmentos_ids": [
-      "3952658d-43b3-4a7d-812c-c86a4143670c",
-      "207ea3dc-c56c-4d04-b150-ac92dcc7fd3f",
-      "7c519f96-3a1e-413b-b580-62ae1ab7fcf7",
-      "d2e7325b-74ca-49f4-b2fd-36045abc09b7",
-      "6489dffe-8131-4204-9ab1-aeb98bdcf25e",
-      "bb6287b0-4e2f-4e95-b6de-7da70bef244b"
-    ],
-    "created_at": "2025-10-23T18:17:09"
-  },
-  "1317ca1e-0311-4c82-b481-5739cb2faeea": {
-    "titulo": "Incumplimiento de contrato comercial - Caso 2",
-    "fecha": "2024-04-19T00:00:00",
+  "3a501f8e-82cb-45be-88af-bf19b4b2fb22": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 4",
+    "fecha": "2023-10-28T00:00:00",
     "participantes": [
       "Empresa",
       "Abogado"
@@ -801,18 +1992,18 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "5b0a3586-2765-4549-855d-a3890a1b59c7",
-      "4e37e32d-e15d-4669-802e-35b85488358d",
-      "2ba49425-d81b-4e95-8eb0-9b929123574f",
-      "5dcfdc10-ed92-4c4c-9323-1e70eddc0d31"
+      "90e102ab-8234-48c6-839d-f8bf7bc8a9a5",
+      "593671e1-8a20-4e6c-9036-9133926c15bb",
+      "29a5ba4b-e464-4ef8-8f9c-5fb564eba183",
+      "2bc903eb-230b-4264-904b-8341939b075e"
     ],
-    "created_at": "2025-10-23T18:17:09"
+    "created_at": "2025-11-10T18:22:15"
   },
-  "f972ec34-f8a0-43a9-86a5-56959072fbf4": {
-    "titulo": "Habeas corpus por detención arbitraria - Caso 1",
-    "fecha": "2024-04-26T00:00:00",
+  "c316f8c2-d10e-4284-b6b7-24c6c9aaef89": {
+    "titulo": "Mala praxis médica - Caso 1",
+    "fecha": "2023-10-30T00:00:00",
     "participantes": [
-      "Familiar",
+      "Paciente",
       "Abogado"
     ],
     "metadata": {
@@ -820,40 +2011,20 @@
       "participantes_detectados": 2,
       "origen": "json"
     },
-    "total_fragmentos": 5,
+    "total_fragmentos": 6,
     "fragmentos_ids": [
-      "58953ce6-1a6e-4e05-8a10-f1bc38e07461",
-      "45b2f71e-a9e8-4517-84b4-fc7da492ea87",
-      "51d19e91-5bd0-46c5-a3b0-28176c21de1d",
-      "34a1c6cc-f96a-45c7-9917-bfc8967de052",
-      "5b183729-7346-48de-ae35-82bc814a61ad"
+      "d683a760-b522-4342-99e8-abd13a31a363",
+      "f29ddf73-6b0a-4cc7-a71a-b06d3010979b",
+      "884406c5-718b-41c9-9b32-05f7b0d83837",
+      "e10a9b7e-403a-4f25-a824-7d8a6f1c0c8e",
+      "512e3d8b-0d08-4f19-8018-18a445497b98",
+      "bdfb5bbe-513e-4d58-95c3-71eb2ff8df28"
     ],
-    "created_at": "2025-10-23T18:17:10"
+    "created_at": "2025-11-10T18:22:16"
   },
-  "57dc500d-4978-49b4-af3b-39bc0882212d": {
-    "titulo": "Pedido de quiebra - Caso 1",
-    "fecha": "2024-06-14T00:00:00",
-    "participantes": [
-      "Acreedor",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 4,
-    "fragmentos_ids": [
-      "c9672f9a-7833-469b-83d0-20723b7d2b16",
-      "7013d247-d9d4-470b-8995-e7139d432edf",
-      "58e308d8-b3fd-48b8-80dd-00c66cbfb629",
-      "17075a45-36eb-456f-b6fa-4ce79188356b"
-    ],
-    "created_at": "2025-10-23T18:17:10"
-  },
-  "5a5fd0c6-898a-42e5-af29-ed338d6d7f14": {
-    "titulo": "Defensa en causa por lesiones - Caso 1",
-    "fecha": "2024-06-16T00:00:00",
+  "c54cea3f-ab52-4816-a823-293eb49cc2aa": {
+    "titulo": "Defensa en causa por lesiones - Caso 2",
+    "fecha": "2023-11-07T00:00:00",
     "participantes": [
       "Imputado",
       "Abogado"
@@ -865,19 +2036,40 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "7be1473a-61b1-4a65-86aa-3789c59a15dc",
-      "0ab6c92d-15bc-49e6-939e-c417a1d7f15d",
-      "ecba7347-adeb-4cff-9b39-5898f6d84244",
-      "79d4010c-c682-43a3-9208-01d8515c6cfa",
-      "90399796-5630-4df7-bd78-88139e3fc4d6"
+      "e14bc250-d28a-4830-8d4b-d25397aef14e",
+      "ba768b03-4d28-4a9d-b18d-84face4d3394",
+      "c02894c6-2abd-4bfb-a312-ccacd9ac0b5d",
+      "f777cac2-d5c3-40ae-9664-da4291f37908",
+      "128809b7-c761-4cb7-a65a-2f790f72067b"
     ],
-    "created_at": "2025-10-23T18:17:10"
+    "created_at": "2025-11-10T18:22:16"
   },
-  "42af844f-e003-43d9-8297-ce32908bd0af": {
-    "titulo": "Amparo por mora administrativa - Caso 2",
-    "fecha": "2024-06-19T00:00:00",
+  "922502ca-c4b1-4e21-b7aa-0798e6fe8151": {
+    "titulo": "Habeas data - Rectificación de datos - Caso 2",
+    "fecha": "2023-11-07T00:00:00",
     "participantes": [
-      "Ciudadano",
+      "Afectado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "b739ebd8-e7d9-48fc-96d4-d6671b2dbdda",
+      "b56702c4-92c0-462a-bb25-a087b85333c9",
+      "298e9189-c0ab-4b16-ae3b-013b769bfe92",
+      "d7dd4ecc-9152-4e78-987e-595493a998bb"
+    ],
+    "created_at": "2025-11-10T18:22:17"
+  },
+  "a0f59f4a-f90e-4db3-b238-e112e8e96351": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 4",
+    "fecha": "2023-11-09T00:00:00",
+    "participantes": [
+      "Familiar",
       "Abogado"
     ],
     "metadata": {
@@ -887,17 +2079,106 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "ea9b28d4-7486-49c0-bf55-f22be0c0c8d1",
-      "0c121439-20ff-4d5c-b1c7-7cb172a2df62",
-      "3fe008fd-635d-4ffb-9915-d0e01a1ad036",
-      "f5fd6b43-cdb0-47e6-a41a-9ec2c38744bb",
-      "e51e6eea-47d2-4e56-bbc9-b030c69a2d17"
+      "1df3ca54-951a-46db-a671-b415053597ef",
+      "fd603462-7424-4d96-8593-36cb06ee5d1d",
+      "3e6f5f42-415d-4776-8691-edb289a873e6",
+      "4f7a4364-1dea-4c5d-9fa5-a8891151a110",
+      "b64db11a-d80c-49c0-9798-d238370670ac"
     ],
-    "created_at": "2025-10-23T18:17:11"
+    "created_at": "2025-11-10T18:22:17"
   },
-  "16d9261e-bd98-4886-9acc-4b05b81ca244": {
+  "5cb6cae6-ff02-485d-ae72-254d491ebdf2": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 7",
+    "fecha": "2023-11-12T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "10d1a822-04af-45cf-9693-0bc5668a355a",
+      "72dd1344-1bf2-4bb6-8d6e-7261b157513f",
+      "2c8fb65a-d37d-4785-8ad1-f6b63362d763",
+      "ce0a9138-ea24-4e5d-8ac2-baf1859e69db",
+      "29266018-b078-4041-b549-cf337bd73bc4",
+      "b830bd39-ce8f-43ab-b75e-facbb20f05c4"
+    ],
+    "created_at": "2025-11-10T18:22:18"
+  },
+  "69f6046d-562e-4003-81cd-262632c44c2a": {
+    "titulo": "Defensa en causa por robo - Caso 2",
+    "fecha": "2023-11-14T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "9310ab36-c54c-481a-a2d4-eeecd619112e",
+      "ad0fd54a-6c7b-48a3-befb-853483be8c78",
+      "537087f4-3f84-46af-bf25-257c85525860",
+      "57325c7e-036e-4a51-8f6b-0a1cf808b6b3"
+    ],
+    "created_at": "2025-11-10T18:22:18"
+  },
+  "3b573523-d450-4f65-8d1d-c43132944264": {
+    "titulo": "Amparo por cobertura médica - Caso 2",
+    "fecha": "2023-11-16T00:00:00",
+    "participantes": [
+      "Paciente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "029133c4-f529-43b2-8746-60ea9b848afb",
+      "7031987c-c4f8-42fc-89d7-02d3a5622822",
+      "aaa59336-0593-452c-9c5a-f7ef95fd5b6d",
+      "c2375750-4955-482e-9dc4-ad597491f942",
+      "53f2da8e-7c9d-40cd-bf88-619250505053"
+    ],
+    "created_at": "2025-11-10T18:22:19"
+  },
+  "c74b7b78-4399-468b-a3a6-49d9fee847b8": {
+    "titulo": "Despido sin causa - Caso 2",
+    "fecha": "2023-11-23T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "1dc812d5-06cc-40cb-a508-9663564c1ae9",
+      "61eb735a-f2e9-481a-82de-0aed1559ec35",
+      "60454595-d713-48f4-96c0-b231bed022da",
+      "3b200532-18e0-4673-8c21-f40edf7b07d9",
+      "4e75fee5-2a92-4397-9454-603ae2c42d5c",
+      "9d3500a7-25ad-4066-ae0c-e5942f62894e"
+    ],
+    "created_at": "2025-11-10T18:22:19"
+  },
+  "8b201730-e8b7-44e7-8334-a53723c92880": {
     "titulo": "Cheque rechazado - Caso 1",
-    "fecha": "2024-06-30T00:00:00",
+    "fecha": "2023-11-27T00:00:00",
     "participantes": [
       "Comerciante",
       "Abogado"
@@ -909,17 +2190,39 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "78e51e2a-e555-4bed-a834-865e3fce15de",
-      "27b7e62c-3a85-4170-a868-a1ab735e86c5",
-      "ae798a98-8c7e-4ab9-a743-543f1c0ac40d",
-      "c0bc7418-c9f4-44a3-a2c7-c12bab945fb1",
-      "04a00486-87c3-4304-be72-e08987ce9556"
+      "28450f73-7082-4961-87bb-ae05eeb0d479",
+      "b3be562b-b607-4f68-b055-2893c4424e37",
+      "633a26a7-e6ff-4fe0-aa8a-a9e1bd2e403e",
+      "9616aebd-5cf0-4db8-be49-7dafc205aca3",
+      "00473500-de04-4d72-8fe1-f1996a58a05f"
     ],
-    "created_at": "2025-10-23T18:17:11"
+    "created_at": "2025-11-10T18:22:20"
   },
-  "d38b1dc9-a271-495b-a447-e128951862e8": {
-    "titulo": "Desalojo por falta de pago - Caso 2",
-    "fecha": "2024-08-06T00:00:00",
+  "bc9d78ce-5848-400f-abba-b863c7f589f1": {
+    "titulo": "Recurso de apelación contra sentencia - Caso 4",
+    "fecha": "2023-12-06T00:00:00",
+    "participantes": [
+      "Condenado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "a6226178-0437-4df0-8d4d-28dd223e6e3f",
+      "2d3ce4c6-851d-45db-aba8-d0531f414a87",
+      "45ca2969-6075-4df7-8e0b-a3518f6e74af",
+      "2d1e9e4f-4dea-48ea-8bfb-6c009c6f1104",
+      "1484327c-8406-474c-95f2-6733206e02ba"
+    ],
+    "created_at": "2025-11-10T18:22:20"
+  },
+  "203936e3-12d1-4354-9e8c-b04734045b06": {
+    "titulo": "Desalojo por falta de pago - Caso 9",
+    "fecha": "2023-12-10T00:00:00",
     "participantes": [
       "Propietario",
       "Abogado"
@@ -931,17 +2234,39 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "f2b58a7e-82f7-411f-aa0c-1c98e16aa258",
-      "18ef3157-beab-467e-be19-a0ad6096e57f",
-      "cad76757-6b67-4338-931a-a233afbd9f5d",
-      "a66ff616-d033-4b73-bcb6-bcb781c3c949",
-      "c0ad9f5e-d270-47f4-b657-d44907ba0e2f"
+      "ddf0f4b9-a130-4e0d-9b9c-c3077bdc7e3d",
+      "c72ad7f3-c61a-4f5d-8db8-b2997e406bd2",
+      "89193a44-92fd-4ebc-86c4-b562f6a6649f",
+      "56a29a57-3bcf-4b74-bd27-02aecf3903fa",
+      "ca3495c9-f439-4901-976a-d588e0c56453"
     ],
-    "created_at": "2025-10-23T18:17:12"
+    "created_at": "2025-11-10T18:22:21"
   },
-  "e704499c-de30-4113-a5f7-7aa3e7d0bcf1": {
+  "be409c3a-bb34-4ebe-b60c-2df3a3935d12": {
+    "titulo": "Defensa en ejecución fiscal - Caso 1",
+    "fecha": "2023-12-12T00:00:00",
+    "participantes": [
+      "Demandado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "6ea84734-c420-4010-ae9d-eec7a2445f59",
+      "971a4359-4b8c-417a-ad47-6c27d76ac55e",
+      "dfae78f6-4465-4532-b410-669251645512",
+      "984918d8-d028-4b58-8fb6-742692fa5cbf",
+      "3ed35e8a-264c-4015-9840-108be21a5e95"
+    ],
+    "created_at": "2025-11-10T18:22:21"
+  },
+  "9ee51141-47e5-486b-9fe2-b9dabf0bde66": {
     "titulo": "Recurso de apelación contra sentencia - Caso 2",
-    "fecha": "2024-08-16T00:00:00",
+    "fecha": "2023-12-17T00:00:00",
     "participantes": [
       "Condenado",
       "Abogado"
@@ -953,17 +2278,39 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "a0178461-2204-449c-9e79-7f9e1136d8de",
-      "83e9e4f4-e3b8-4224-90c4-f46569ee3585",
-      "111c4a6a-8c41-456f-aa05-62cd09c44fa8",
-      "136fbb8f-54c5-4b3b-a5ae-ca70e7ce756a",
-      "6446b593-4d64-4ef5-8438-c6302bc1cbed"
+      "c05be5b7-b26a-4b92-ba3a-a4c140a5de31",
+      "bb6c332b-6c37-45bd-9130-d7e0306bdb2e",
+      "21986190-c184-4e7d-bfd6-26d41dd25c6f",
+      "b075668f-0dc4-4f6c-bd36-3317eaa41707",
+      "414496cd-53b1-4673-9910-1491f4014af1"
     ],
-    "created_at": "2025-10-23T18:17:12"
+    "created_at": "2025-11-10T18:22:22"
   },
-  "186c2857-e507-448c-88a9-0aa11b359060": {
-    "titulo": "Divorcio contencioso con bienes - Caso 3",
-    "fecha": "2024-09-02T00:00:00",
+  "95748e0c-f2fa-43d8-ae76-e3989f435a28": {
+    "titulo": "Cheque rechazado - Caso 4",
+    "fecha": "2023-12-19T00:00:00",
+    "participantes": [
+      "Comerciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c808add1-4c56-4d16-9478-861fa795dd4c",
+      "32113c34-bae8-4927-b09b-ec2a1c4f5a63",
+      "4f596e13-af87-45cd-8cf4-21c057260ff3",
+      "6100078b-86aa-471f-bd92-afafea8ec22f",
+      "f51b4238-334f-4bb5-9a39-1236c1ea4b63"
+    ],
+    "created_at": "2025-11-10T18:22:22"
+  },
+  "1fd3d257-c7d2-4906-841d-4523de428fec": {
+    "titulo": "Divorcio contencioso con bienes - Caso 2",
+    "fecha": "2023-12-26T00:00:00",
     "participantes": [
       "Cliente",
       "Abogado"
@@ -975,22 +2322,22 @@
     },
     "total_fragmentos": 8,
     "fragmentos_ids": [
-      "2f5e7e62-fc0e-40e3-b588-c239c095ffb0",
-      "b0d278e6-a895-4436-9ee8-72ffad87221e",
-      "fa651a80-148c-4682-8abb-56c2f60a240d",
-      "1dacbef8-412e-435e-8677-b90b94c68fbb",
-      "13847426-5820-4e60-a1f7-1923b025b00d",
-      "d3b11e06-cfa8-4560-9b5d-4e758376038a",
-      "1236dc17-f40a-41cf-9be1-b0093cb696c0",
-      "857b409b-a08f-4052-a0b2-2cf66213c11e"
+      "2d06ee92-2380-416a-a6b6-29a594b28959",
+      "5738af36-ce18-4742-a0f8-3ef06101a486",
+      "36a58a49-516b-4e5a-822b-5103c0ec0566",
+      "97be3194-2e6a-429c-a4bf-dc64aec82103",
+      "874672f4-d5a9-4835-b3cb-9038a05020fe",
+      "84880f2f-0e3d-4c68-84ee-5e58336d1b0e",
+      "56dbcb7f-fe9a-4252-84a5-72347b6a3c17",
+      "181f09d6-9cd0-445a-8982-25bdd0b1edc6"
     ],
-    "created_at": "2025-10-23T18:17:13"
+    "created_at": "2025-11-10T18:22:23"
   },
-  "32e2764a-187c-4c5b-8afc-6945ad8b5684": {
-    "titulo": "Divorcio contencioso con bienes - Caso 1",
-    "fecha": "2024-09-04T00:00:00",
+  "f183f18c-8a0e-43e4-9a2d-1f41fc5dddc3": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 5",
+    "fecha": "2023-12-29T00:00:00",
     "participantes": [
-      "Cliente",
+      "Víctima",
       "Abogado"
     ],
     "metadata": {
@@ -998,24 +2345,22 @@
       "participantes_detectados": 2,
       "origen": "json"
     },
-    "total_fragmentos": 8,
+    "total_fragmentos": 6,
     "fragmentos_ids": [
-      "86a3f75b-842b-46c6-bdde-a97038123223",
-      "08b7923a-212a-4d4b-a1cf-85b10dfcb739",
-      "41d6c457-160b-4655-a73f-bd728cc2386d",
-      "51ef2abb-d99e-41a3-83c6-ee3d2a982017",
-      "93b7658e-b21a-43f2-8e0f-e574ed7135b1",
-      "7e8e9037-d397-4dda-aaa0-6fc28a660910",
-      "f96849f4-b5b7-4ae9-ac13-15a7ae05c734",
-      "d051d436-a7c4-42bd-8c72-6235e3ae9465"
+      "176ec28b-2d8a-4a98-bb13-75a4856fe62a",
+      "d054d938-80e9-41cb-bd93-88d9c92fbda3",
+      "ad719236-cea1-43f6-8983-3e68ed0b8dae",
+      "a30f3324-3661-4194-875d-c9776f8f1d9d",
+      "4873fa33-3bb9-4aa5-a167-b5dfd436c7ff",
+      "bc836aa5-9b27-489f-8a89-7eaed1bb95c4"
     ],
-    "created_at": "2025-10-23T18:17:14"
+    "created_at": "2025-11-10T18:22:23"
   },
-  "391cb879-c97b-48bf-b229-d6f0361bf871": {
-    "titulo": "Recurso de apelación contra sentencia - Caso 1",
-    "fecha": "2024-09-04T00:00:00",
+  "ec8920f1-f42a-487d-9b3a-ae75200df416": {
+    "titulo": "Incumplimiento de régimen de visitas - Caso 5",
+    "fecha": "2024-01-03T00:00:00",
     "participantes": [
-      "Condenado",
+      "Padre",
       "Abogado"
     ],
     "metadata": {
@@ -1023,41 +2368,21 @@
       "participantes_detectados": 2,
       "origen": "json"
     },
-    "total_fragmentos": 5,
+    "total_fragmentos": 7,
     "fragmentos_ids": [
-      "444ada43-f777-46ac-9bc8-e8044a2a4f54",
-      "5191e3f5-a13c-4980-b096-900aa527f33e",
-      "0d19c062-a76e-4813-9c3d-da8fc5d6bfd2",
-      "7b53785b-bbe2-4cf2-87b3-9dc9c36f6ae3",
-      "4f958387-eda8-4713-843f-c67e92cee39c"
+      "88a46a5c-7956-4ce2-83cd-a93bfd6024b9",
+      "49fa2347-a20c-40f3-b6e5-953206b6e420",
+      "2a77afa0-7dae-4435-8a2e-a53698d2b665",
+      "dd1a8e60-957d-4561-8a91-fc87e581993e",
+      "60e1c926-a505-461f-b348-7b7b0b880ce2",
+      "4793af79-5f81-4859-a5ae-083db48b39f1",
+      "fe8e79e4-51c1-4037-b854-0e41527c5487"
     ],
-    "created_at": "2025-10-23T18:17:14"
+    "created_at": "2025-11-10T18:22:24"
   },
-  "783868f7-730f-4279-b65c-7e95fd2eba6f": {
-    "titulo": "Acoso laboral y hostigamiento - Caso 1",
-    "fecha": "2024-10-06T00:00:00",
-    "participantes": [
-      "Trabajador",
-      "Abogado"
-    ],
-    "metadata": {
-      "tipo": "general",
-      "participantes_detectados": 2,
-      "origen": "json"
-    },
-    "total_fragmentos": 5,
-    "fragmentos_ids": [
-      "defdba66-29d7-4237-a215-0cb8b5cf888f",
-      "c9f84a7c-af34-454a-bed6-dec85b07896e",
-      "70628b5a-ff51-4837-ab9d-f1ec6da4f752",
-      "6ca31930-2186-424d-883a-a5a0af4304c4",
-      "b686aebb-c881-4ced-ab63-fb040b3291c2"
-    ],
-    "created_at": "2025-10-23T18:17:15"
-  },
-  "867695a5-0ef9-43e3-885e-1ff29492ee8e": {
-    "titulo": "Disolución de sociedad - Caso 1",
-    "fecha": "2024-10-07T00:00:00",
+  "6def5e3c-d4ef-452a-abd3-05202d3d303b": {
+    "titulo": "Disolución de sociedad - Caso 9",
+    "fecha": "2024-01-04T00:00:00",
     "participantes": [
       "Socio",
       "Abogado"
@@ -1069,17 +2394,215 @@
     },
     "total_fragmentos": 5,
     "fragmentos_ids": [
-      "63b377ca-fc3d-4db3-8dec-56d5ffe6e667",
-      "bae984b2-3acc-418d-9888-6a26c5273b11",
-      "e0dd62c9-dc42-45a1-ad5a-766d618453a7",
-      "f7d9d943-4dfb-4514-8102-51c1eae6925f",
-      "0a2b285f-fa4d-4673-b3c0-7e944b43695e"
+      "74b3d4e4-cada-4e59-8d3c-91083cc2b505",
+      "e6c83d13-f2cc-45e4-9b56-b593b65042cf",
+      "ad54ab82-8078-48ef-8638-7065293f9b65",
+      "d8c9cd25-b5dd-4e1d-ab32-8db282dad7f9",
+      "238645c6-6cdc-46d0-85e3-6e8911c9a7da"
     ],
-    "created_at": "2025-10-23T18:17:15"
+    "created_at": "2025-11-10T18:22:24"
   },
-  "80701c4d-7126-41a7-b57c-56bb5e62846c": {
-    "titulo": "Impugnación determinación de oficio AFIP - Caso 1",
-    "fecha": "2024-10-29T00:00:00",
+  "172a68b8-a6e0-495a-8b43-61b00d3ec26b": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 8",
+    "fecha": "2024-01-04T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "13f3c71a-3716-4129-b53a-128039f817ce",
+      "b567b943-668b-4a27-89c6-57270edec000",
+      "5a1f542c-9d0e-4a47-8e70-cba84787b6d7",
+      "f6e7b2b8-655b-48e7-a6c9-db48547aee5f"
+    ],
+    "created_at": "2025-11-10T18:22:25"
+  },
+  "2d98a16e-618d-48cc-ae40-79ef671f6659": {
+    "titulo": "Denuncia por violencia de género - Caso 3",
+    "fecha": "2024-01-08T00:00:00",
+    "participantes": [
+      "Denunciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "05ffe6d6-bfec-42dd-985b-a54ec8a3d50c",
+      "2654ab6f-dfd3-488f-8d60-cc00a79d0e02",
+      "b9af26d4-e4f2-4683-98e4-1cb7216c9cef",
+      "e8f9580c-e1b5-46c8-aa29-9751af63aa5e",
+      "d315a2c6-a261-4052-baca-986f9663b1e4"
+    ],
+    "created_at": "2025-11-10T18:22:25"
+  },
+  "d03b7415-c9f4-4634-a4b7-235eb162b505": {
+    "titulo": "Accidente de trabajo - Caso 5",
+    "fecha": "2024-01-11T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "7d72d74d-fac3-4ab5-a666-e0705d1fc396",
+      "e908ae2a-1cc7-499c-a914-51b22722edaf",
+      "b828d0db-781a-4a9c-9f69-edd5ad879996",
+      "6741f285-eec5-4ef8-8c21-79bebfd46884",
+      "cec300b9-e8f2-47a0-a43f-5854e83d9487"
+    ],
+    "created_at": "2025-11-10T18:22:26"
+  },
+  "8b148521-2f3e-4465-95bf-a9c01370cf92": {
+    "titulo": "Defensa en causa por estafa - Caso 8",
+    "fecha": "2024-01-16T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "adbd40b2-35ae-462e-a3ec-46962bf1a639",
+      "b4d2379c-ed97-47c8-8c43-7fd561b5279d",
+      "a34d50c8-4491-437d-bc06-f5a67ee576ff",
+      "244c5c24-4cb0-432d-81b7-06c341004e3a",
+      "9909cb4f-81da-4a9a-9f4b-ca05655673ba"
+    ],
+    "created_at": "2025-11-10T18:22:26"
+  },
+  "0963d029-a7f2-405c-9d46-b876d2f1574b": {
+    "titulo": "Acoso laboral y hostigamiento - Caso 3",
+    "fecha": "2024-01-17T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "458c2402-a041-4044-9b6f-14949a578868",
+      "527b2366-988a-41ac-9439-e3e59db65d5d",
+      "0caa8086-cefa-4c90-a511-1085018538a6",
+      "0be7b382-4520-43ab-bdbb-dc4cc865f723",
+      "4579960b-0fc7-4705-ae94-476ae407ffb6"
+    ],
+    "created_at": "2025-11-10T18:22:27"
+  },
+  "51887d6e-b125-4889-bb4f-b2a0642845b4": {
+    "titulo": "Amparo por mora administrativa - Caso 1",
+    "fecha": "2024-01-23T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "fa6f6314-2580-4c12-af55-b2f9c5e63ddf",
+      "8941abfc-e8cf-416d-bd8d-ae01c2416b3b",
+      "409a1c40-e3f1-40c1-bd1b-f47d3091d729",
+      "06650d67-eb8f-449a-8a3a-35b503cbb899",
+      "47b1ea1f-5acd-4235-bdde-a31c4f8c3618"
+    ],
+    "created_at": "2025-11-10T18:22:27"
+  },
+  "2cbd38ee-58a6-4f44-be44-4013ca5c0fdd": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 1",
+    "fecha": "2024-01-26T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "75473581-138e-48e5-b17f-32a8609b9d01",
+      "64937de6-7cf8-4e7f-b840-2b556d13c4a4",
+      "632af78f-8fed-4004-9a23-563f11adf2df",
+      "fd508e4b-0b62-466c-8b61-afcf88c1edd1",
+      "e68b8da7-92bf-483f-8e18-9ba1230630f6",
+      "24db0d34-e578-4db6-9601-7b28f1f021d0"
+    ],
+    "created_at": "2025-11-10T18:22:28"
+  },
+  "d9327b99-6fa7-4281-8f4c-d89f65760cbd": {
+    "titulo": "Acoso laboral y hostigamiento - Caso 1",
+    "fecha": "2024-01-26T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "3d43dca1-ef11-4f3d-8f16-1cbe6a11ead6",
+      "7b7f55d4-a11c-477f-a81f-d4549225de5e",
+      "36e74cdd-ea83-4b42-9646-a775a2a9a1a3",
+      "69ab3a1c-2cec-47bc-9ac9-cc20624c5668",
+      "fa2a28da-cd34-4c31-8c19-4ce0044e3784"
+    ],
+    "created_at": "2025-11-10T18:22:28"
+  },
+  "05edb088-1b4b-45dd-b16e-994cb6a60dbd": {
+    "titulo": "Disolución de sociedad - Caso 6",
+    "fecha": "2024-01-28T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c79890c1-9e6d-45a4-aba8-7affe9980b75",
+      "1e131117-d4cf-44be-8478-b3283d7b9d1d",
+      "f53d1e46-9076-4760-9637-176ec2ddb0b0",
+      "4027daa5-19ae-4b29-9c9a-6bf24bfb2ade",
+      "1df0ca5c-9ef9-4f0f-b656-360aba77d9ec"
+    ],
+    "created_at": "2025-11-10T18:22:29"
+  },
+  "9312507f-040d-499c-9962-2f2e63ee1ab8": {
+    "titulo": "Solicitud de plan de facilidades - Caso 2",
+    "fecha": "2024-01-30T00:00:00",
     "participantes": [
       "Contribuyente",
       "Abogado"
@@ -1091,16 +2614,723 @@
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "107987b8-2393-4aed-9965-eb6a89733492",
-      "ebb8ec1e-cea7-4479-8bce-87ff901c63d2",
-      "a1e5639c-5984-4368-8302-bf920b9409a9",
-      "ba32f65b-2b1b-4b04-809f-ca64924aeaab"
+      "37579c7b-d6f9-49e3-978b-acb8a0581400",
+      "9c36548e-b624-403f-92bc-affd55213014",
+      "f68f21e9-05ed-44f6-a473-f2af2e1a27a2",
+      "8c7b364f-ae94-40d2-b33b-5fddfbdf4030"
     ],
-    "created_at": "2025-10-23T18:17:16"
+    "created_at": "2025-11-10T18:22:29"
   },
-  "f26cb254-aa21-4379-b64f-2ca2d9ec64db": {
-    "titulo": "Solicitud de excarcelación - Caso 2",
-    "fecha": "2024-11-09T00:00:00",
+  "5fb6ea4f-1cf2-470c-bfba-c83b25602d4e": {
+    "titulo": "Disolución de sociedad - Caso 4",
+    "fecha": "2024-02-05T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "6078a541-2098-4112-9242-7a2f99f1126f",
+      "13399326-7d2c-48fc-bfed-4b1db5f55bcb",
+      "e0496c93-6ee8-4694-b329-b3d0d479c020",
+      "d7f6efdb-1fad-409d-9dea-c953d15afa29",
+      "687e9c57-c15e-47ae-b119-87a916772c40"
+    ],
+    "created_at": "2025-11-10T18:22:30"
+  },
+  "a3f946eb-edd7-4b62-b936-2259cd1a381e": {
+    "titulo": "Desalojo por falta de pago - Caso 8",
+    "fecha": "2024-02-12T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "d05d6c10-dbf9-4e03-ad08-3e8204b3b710",
+      "b0014b2f-2f1d-44db-846e-4ff1782cf17f",
+      "4b0d857c-3268-4892-8f5b-76bb9010de95",
+      "9177a2e9-6d04-44ca-a547-1903ac429c5f",
+      "d5cdb58e-f408-4b49-b169-2d2e42636c42"
+    ],
+    "created_at": "2025-11-10T18:22:31"
+  },
+  "013b6d95-d68a-41dc-b8ee-e7bf4836813b": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 3",
+    "fecha": "2024-03-03T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "e043d41d-6437-48f0-956d-8e31b4490dc0",
+      "abde750c-6b7c-4c2e-bbd4-9f01277eeeca",
+      "83ee736c-74e5-4c05-9b79-ccb3b58a5db0",
+      "58825b72-b4b2-4114-bdc2-c4c9e35e0460",
+      "08c057d2-a322-4078-a607-cbd5aaed5221"
+    ],
+    "created_at": "2025-11-10T18:22:31"
+  },
+  "e16d8632-eacc-437f-ac44-4f233abd1b6a": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 5",
+    "fecha": "2024-03-04T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "d004b97d-880a-4e92-a512-d5088f993f57",
+      "8ba1c273-c521-43b2-9595-edb9d99e3c32",
+      "0f5ce585-bd05-4826-8c17-9eef1b647b8d",
+      "1cd66cf4-bc1a-472c-9d9e-e89759b4b550"
+    ],
+    "created_at": "2025-11-10T18:22:32"
+  },
+  "a9b0ca32-1de6-4df5-bbab-790ed4973b42": {
+    "titulo": "Cheque rechazado - Caso 2",
+    "fecha": "2024-03-07T00:00:00",
+    "participantes": [
+      "Comerciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c1a29fac-e69e-4fe8-8733-54acb94cd422",
+      "3bb6b94c-2350-4bad-9a7c-3afcf22a2896",
+      "5a71c4ef-0927-4a87-be15-d45845625875",
+      "d24a0d3f-eacf-4f8d-b8d2-687802050810",
+      "e0c39e2d-71b4-483b-9db5-77af28f57610"
+    ],
+    "created_at": "2025-11-10T18:22:32"
+  },
+  "dc82db0f-15c2-48fc-97f5-fb6ba9f24c4e": {
+    "titulo": "Amparo por cobertura médica - Caso 4",
+    "fecha": "2024-03-07T00:00:00",
+    "participantes": [
+      "Paciente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "741f62cb-3c24-451f-b3ba-d1783e12503a",
+      "1a0f7dc4-27f1-4ca7-ab3f-e8697d19c12f",
+      "679d1fef-977f-46a4-8d02-2964695dbf07",
+      "c230c283-208d-42d1-9853-c45138a77c3e",
+      "6ee1897a-2c1c-4312-91a2-e54331b3d269"
+    ],
+    "created_at": "2025-11-10T18:22:33"
+  },
+  "40fc595f-661e-4dad-b7ec-fd05f501617d": {
+    "titulo": "Recurso de apelación contra sentencia - Caso 5",
+    "fecha": "2024-03-10T00:00:00",
+    "participantes": [
+      "Condenado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "99e6ae32-1294-42c5-850f-7836b5ef3f53",
+      "67fa2c0f-39e2-4326-a954-0ee3deb5f311",
+      "4c5c947e-43c2-48b3-aa51-000e02321e37",
+      "b9f82228-2484-47a0-b158-a62a7339667c",
+      "c987a221-2c92-4664-b70c-458e9394ebe2"
+    ],
+    "created_at": "2025-11-10T18:22:33"
+  },
+  "36e5bd2d-e45f-4be2-bf24-4d3986a487ec": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 4",
+    "fecha": "2024-03-18T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "33696c3d-9abb-4e83-b73b-9ba64be280cc",
+      "b0c7f61d-52c9-4582-a37f-2d2dea04bad9",
+      "41249a3e-e352-4c82-bf5c-4ac06255fa7a",
+      "7d5e522c-c5ed-4187-b0ba-0e8cb0116985",
+      "cea51f23-f07a-470c-9b4d-a12bb0d24bfc",
+      "3f81c996-9828-4b7c-bb29-c878e6a099be"
+    ],
+    "created_at": "2025-11-10T18:22:33"
+  },
+  "a9eeec82-dc91-4916-b234-3db81e5a2c27": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 3",
+    "fecha": "2024-03-23T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "629766d0-ea5b-4e2c-9cfb-453415356d63",
+      "55cb9583-8a1b-45db-907e-a81ed49c96f8",
+      "601a2849-2aba-4932-9e3d-c615d38cd990",
+      "62f166b1-91d6-41f8-a6f4-696a4907b0b5",
+      "cd764b10-4ab0-4667-b2e7-2bacec9ff48b",
+      "ae40ca8a-066f-4618-8d88-6f4f6003d4d3"
+    ],
+    "created_at": "2025-11-10T18:22:34"
+  },
+  "bdcd8686-4f5d-43a6-a662-e6d06bb016e1": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 2",
+    "fecha": "2024-03-24T00:00:00",
+    "participantes": [
+      "Víctima",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "620afc37-2aea-48f8-befd-1047e613e691",
+      "2656d88c-d8a9-4765-884d-658c7d698b76",
+      "768e23a8-1739-461a-875e-3262fcbbc60a",
+      "7599554d-4507-46ec-ad3f-ccb6161db1a4",
+      "781b95be-ac31-4caf-8f3a-a0f35efc1aba",
+      "5453b112-df81-4bad-8e18-b9016d6d6948"
+    ],
+    "created_at": "2025-11-10T18:22:35"
+  },
+  "1a49d322-0d54-4e9c-8c82-3c68a07719e9": {
+    "titulo": "Concurso preventivo - Caso 2",
+    "fecha": "2024-03-27T00:00:00",
+    "participantes": [
+      "Empresario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "873ebb3a-3d28-40d0-8e8b-a28c3d752c7d",
+      "e0574210-88c1-4d56-a83e-424eca6a499f",
+      "33ff45bd-a0fb-4c37-a63d-3db384ce5620",
+      "ced7502c-6c67-4186-96fb-97a965f48725",
+      "bed67f23-9798-4b07-bc92-4e3a475eeb3a"
+    ],
+    "created_at": "2025-11-10T18:22:35"
+  },
+  "6c323b51-f16d-4e36-bcb5-ab10725987de": {
+    "titulo": "Despido sin causa - Caso 3",
+    "fecha": "2024-03-28T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "a2e5ae72-9e80-4fc3-9908-77964958d05d",
+      "19dad650-42ab-4a4d-a9d7-aed2ffe08028",
+      "6412ffd8-ffb9-4a19-976c-62943e3362ac",
+      "3f80a4a2-6810-4423-b539-b4f5f11dd8c3",
+      "f41b713c-e3ed-4091-9cde-02ed483ac3ce",
+      "0e275258-5c25-45eb-85be-9af93536d217"
+    ],
+    "created_at": "2025-11-10T18:22:36"
+  },
+  "ed5c0072-7cc4-4b94-b45a-4a3c89a7c077": {
+    "titulo": "Suspensiones abusivas - Caso 2",
+    "fecha": "2024-03-28T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "f3c5ffe7-865a-4c42-8088-2cd5895b4172",
+      "7d0dc579-94b6-4f72-a345-8a31fa625047",
+      "427a9bf4-6a30-4e6b-9b51-c5c15d0e7ddc",
+      "6871a802-ee95-4c64-8e84-a26282ea7318"
+    ],
+    "created_at": "2025-11-10T18:22:36"
+  },
+  "b7d5b23d-1ce7-4ee6-9130-680cce28e767": {
+    "titulo": "Trabajo no registrado - Caso 2",
+    "fecha": "2024-03-30T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "832b792f-089d-4148-bb88-3b08fa1c1526",
+      "a75c29ec-c64d-4fea-a0a2-c3f60bcad116",
+      "ad04d0b2-3903-4745-9f08-a20270117e5b",
+      "ae52afdc-84b9-44c1-ac68-863a8f8cc421",
+      "f7b80ba0-b29d-4efb-964b-4474f315bb49"
+    ],
+    "created_at": "2025-11-10T18:22:37"
+  },
+  "66450011-b17f-4fbe-bc31-277476676842": {
+    "titulo": "Despido sin causa - Caso 8",
+    "fecha": "2024-04-01T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "951c7315-90dd-4e5a-9823-40204607d9ca",
+      "68c1298e-cc40-4c4f-a0f4-43f4f55b2ead",
+      "77243e18-0a41-4ece-b857-9c1955df97bf",
+      "ae10ddcf-5273-448c-9c03-6359d887c7de",
+      "329b98b3-f19a-4e3c-9fe4-aa048db57253",
+      "033bc51e-ac07-4fa8-890d-0b7d872473e2"
+    ],
+    "created_at": "2025-11-10T18:22:37"
+  },
+  "762a0369-263a-46d1-9e6b-f46c4f3ec4be": {
+    "titulo": "Disolución de sociedad - Caso 1",
+    "fecha": "2024-04-02T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "92af32d3-3b64-4a8a-b48c-df8b23d2646d",
+      "d67a273b-79ee-46e7-ab5e-fd43a5ef5238",
+      "1557ecc2-bf5a-4f5e-9257-920cc0409a2c",
+      "2c334f5a-7b49-435a-ada9-1966add79f9c",
+      "45a1da9c-da96-46b1-b510-2e2facaf3ef9"
+    ],
+    "created_at": "2025-11-10T18:22:38"
+  },
+  "2fb85398-7527-4292-9ae0-a1bb1a4079bb": {
+    "titulo": "Vicios ocultos en compraventa - Caso 2",
+    "fecha": "2024-04-03T00:00:00",
+    "participantes": [
+      "Comprador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "86aa9b16-b953-4460-8740-db58eb45c500",
+      "97473ee7-3bee-4b5d-9178-5338ad78612d",
+      "a51d5ef0-f976-498e-9ce4-7fc372a2c75c",
+      "dc56debb-fc10-4665-bfca-5bcb86f7161a",
+      "8c0380ec-e5fc-4cb6-9a0a-b3b17db10fcb",
+      "72811576-e557-474b-8f68-d7b2c51f5182"
+    ],
+    "created_at": "2025-11-10T18:22:38"
+  },
+  "04a7daa6-5f24-4405-9649-60bb8f672b14": {
+    "titulo": "Desalojo por falta de pago - Caso 3",
+    "fecha": "2024-04-16T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "9a4a42b0-b3dd-4494-8951-1a9c63b79e75",
+      "960076df-1504-4756-bbe4-a2536728c7f7",
+      "5ff8fea5-37a5-41be-8acb-bea6402c8ac2",
+      "eecac1eb-4ab5-4c3a-a4b2-06fd5af2f3c8",
+      "0758b670-c380-4a03-85ef-0abe881a8bad"
+    ],
+    "created_at": "2025-11-10T18:22:39"
+  },
+  "0af4b654-d3b6-4a4a-a6b2-a060c360bf6d": {
+    "titulo": "Defensa en causa por estafa - Caso 6",
+    "fecha": "2024-04-16T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "1132f0c2-bdc6-4f0c-ab0a-033ef9a8f3d6",
+      "f9cce9be-3707-4544-816b-f3f48b0b7173",
+      "cadf2b7f-2e17-411c-a188-2630c46ec942",
+      "a2906736-1323-460f-ab41-1fe9424cab2a",
+      "904efa0b-6359-4ead-bd59-95dece676f58"
+    ],
+    "created_at": "2025-11-10T18:22:39"
+  },
+  "26ae6935-c477-48fd-88c3-88858cd0826f": {
+    "titulo": "Trabajo no registrado - Caso 3",
+    "fecha": "2024-04-17T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "195f6438-7f95-449d-b457-6c369fa3d180",
+      "6d744e97-2637-444b-9e35-51842e163cd0",
+      "295791d3-8397-4917-a930-1105e44ef4de",
+      "9e1daf5d-fc50-4b01-a675-52a8615f35b8",
+      "a5bf72eb-3963-4360-99fe-262cea045d48"
+    ],
+    "created_at": "2025-11-10T18:22:40"
+  },
+  "5c52cd76-e5c6-40f1-93e0-0702ebe77d9e": {
+    "titulo": "Vicios ocultos en compraventa - Caso 3",
+    "fecha": "2024-04-26T00:00:00",
+    "participantes": [
+      "Comprador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "e6ca10c5-cc9b-41db-8700-4b099500d921",
+      "e4850d22-d5c9-4a5a-b64f-3d89ddb7a414",
+      "902379a9-3d66-4cdb-874d-facfce1d548d",
+      "92f48d6a-b58d-4ca9-8725-2a7c806c5d8b",
+      "87d97c96-662d-4057-a866-11dd131074c3",
+      "088bd92b-5b63-45c4-87f8-ce5edf03bca6"
+    ],
+    "created_at": "2025-11-10T18:22:41"
+  },
+  "91338d55-3772-4685-9fa2-0b3283f476fa": {
+    "titulo": "Despido sin causa - Caso 1",
+    "fecha": "2024-04-29T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "16b8fb7f-2040-4635-8d6f-4f9c73b412f4",
+      "e4da84bf-1220-4455-b806-78f59418822b",
+      "647f606e-124c-4fa6-8d8c-c6580312d127",
+      "aa43216e-9744-4dc1-8ed1-09e1a563b1bc",
+      "5791a1d6-1293-4da2-87c3-a21d9d62f6d7",
+      "c6461749-1ffa-467a-af1d-fcf56be11dfc"
+    ],
+    "created_at": "2025-11-10T18:22:41"
+  },
+  "2aa2f2ab-5710-40e4-8db5-e4ada67f036f": {
+    "titulo": "Pedido de quiebra - Caso 1",
+    "fecha": "2024-04-30T00:00:00",
+    "participantes": [
+      "Acreedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "317d2036-e480-4ace-b3a5-aefd2f27f6f3",
+      "c66ca4cb-02b2-4cb6-ad6f-236fcc8fea50",
+      "51f4d6c0-62b6-463c-b296-8b256c204154",
+      "1abb1ac7-caee-417c-93c0-2eb748c8e99e"
+    ],
+    "created_at": "2025-11-10T18:22:42"
+  },
+  "cc94dc15-22c7-4182-8760-3061a6847356": {
+    "titulo": "Divorcio contencioso con bienes - Caso 6",
+    "fecha": "2024-05-01T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "08672fba-33a6-47ce-b129-04684bbd7406",
+      "46737fe2-e6c0-49c1-b835-d1df99b96e59",
+      "ce8331db-ad04-4597-889a-b0f5ea391a59",
+      "776ed6d2-a2a5-4007-9cbb-78ee09e508b5",
+      "6c339ee3-b07e-4a22-b41e-6d5fc60e1046",
+      "30d30718-2162-4b15-b1ee-660757263bd7",
+      "2b781730-faed-4fbf-823e-e152530f3ad7",
+      "2fed197d-22ce-4d4b-800e-b7629f6712b7"
+    ],
+    "created_at": "2025-11-10T18:22:42"
+  },
+  "4bbfc0f5-4013-4775-a6f0-f158cbe466b2": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 8",
+    "fecha": "2024-05-02T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "9473c0e7-bf56-44f5-b4fc-d5bb62d6a17a",
+      "3848e37a-ab3f-4c79-86bb-59d8d62fe8a2",
+      "b5fd6bf1-577f-4fb9-bf2f-0a7a53214b8a",
+      "3037d0ac-74f0-4ae9-9443-fa2096ada5bf"
+    ],
+    "created_at": "2025-11-10T18:22:43"
+  },
+  "a017f60a-b9a7-4bff-9150-31dd10fbb403": {
+    "titulo": "Acción de inconstitucionalidad - Caso 3",
+    "fecha": "2024-05-05T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "12150439-a0dd-4326-acd1-cf4bd033fe6e",
+      "b4c90274-021e-41c4-ac35-30b576745d6a",
+      "cf6478c3-853d-4f98-adc0-7cc2e8532675",
+      "c4acad82-ca2f-45d4-bff3-92044e5d528c"
+    ],
+    "created_at": "2025-11-10T18:22:43"
+  },
+  "4d41d4af-0acf-4e68-8f3c-adf22eba91e6": {
+    "titulo": "Impugnación determinación de oficio AFIP - Caso 6",
+    "fecha": "2024-05-14T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "16b8f3a5-593d-4179-9603-9b8a7dbc6e37",
+      "be0c6f0b-acd1-45ed-a88c-86112ebe742a",
+      "a4def395-47f3-4c32-93f3-cc48dc22c5b7",
+      "eeb0207b-c4ff-46a4-ba1c-48fb0561de9c"
+    ],
+    "created_at": "2025-11-10T18:22:44"
+  },
+  "d4d1007d-70ae-4508-81ad-a425b3b5c719": {
+    "titulo": "Disolución de sociedad - Caso 2",
+    "fecha": "2024-05-16T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "d45f0cbb-f844-45ab-99bf-5a66551a1443",
+      "c29ebb4e-54e9-44f9-a3d6-21b8c2fef6b8",
+      "1683ad4c-e141-4ff3-9bd0-06fb9e4d627f",
+      "eb2049d7-fafe-4ffd-a5fd-f8aaf98c39bb",
+      "48e4eada-6b1e-49d5-a72f-139dd8c27378"
+    ],
+    "created_at": "2025-11-10T18:22:44"
+  },
+  "63f0a48b-a19f-4971-af57-1b43e23af7f7": {
+    "titulo": "Recurso contra multa tributaria - Caso 4",
+    "fecha": "2024-05-20T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "6d440444-d543-4799-95bb-4c07457d9f69",
+      "ed249029-7d64-4c35-9447-6c88f64b4d25",
+      "53657f02-fa8f-4f0c-b34f-ee3e6f96bdb3",
+      "0b229c29-4b05-4f06-8163-3fb596b559ee",
+      "3a1355b9-ab68-4390-a3a2-a3514602c423"
+    ],
+    "created_at": "2025-11-10T18:22:45"
+  },
+  "ae88934e-1bd2-4102-a9c6-e3b4df09e7b3": {
+    "titulo": "Acción de inconstitucionalidad - Caso 2",
+    "fecha": "2024-05-22T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "8bc6fc17-4909-4b6a-aca4-1bc3ae92a36e",
+      "aab50a5f-925f-4fdb-a291-f0eb30415da1",
+      "7a858ca4-ea78-40e0-9524-58cef12ef6b5",
+      "8946aa69-a3ce-48d3-840e-f820d64501e7"
+    ],
+    "created_at": "2025-11-10T18:22:45"
+  },
+  "8828bb84-5652-41aa-ae94-270fca9e988c": {
+    "titulo": "Impugnación de testamento - Caso 1",
+    "fecha": "2024-05-24T00:00:00",
+    "participantes": [
+      "Heredero",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "beb56b9d-eae2-46dd-8dd7-549f0f86d42e",
+      "8362d4fe-8c5b-41aa-a156-d335f7f1c3fd",
+      "532c89b5-0ab1-4007-949f-16735b5b8f8e",
+      "4ffa1257-3380-4ce2-a07a-05a6ce5a6f2c"
+    ],
+    "created_at": "2025-11-10T18:22:46"
+  },
+  "4963c8be-ceed-4fa6-b6cf-bde46b4c3215": {
+    "titulo": "Desalojo por falta de pago - Caso 5",
+    "fecha": "2024-05-31T00:00:00",
+    "participantes": [
+      "Propietario",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "30892688-2d45-4392-bdcb-f2381b149a68",
+      "3dabc820-d48b-43e8-800c-868fba319cf8",
+      "94a66e0f-6349-40bb-9b23-47a83054e1cd",
+      "80abb196-ad5f-4f36-8e96-1429a95b634f",
+      "5985e7de-e245-4b18-94b0-4efa59b4f641"
+    ],
+    "created_at": "2025-11-10T18:22:46"
+  },
+  "cb0a27da-e74e-4738-919e-936e2a80b17c": {
+    "titulo": "Solicitud de excarcelación - Caso 3",
+    "fecha": "2024-06-02T00:00:00",
     "participantes": [
       "Familiar",
       "Abogado"
@@ -1112,268 +3342,1106 @@
     },
     "total_fragmentos": 6,
     "fragmentos_ids": [
-      "406a7d44-dfdd-430b-8e72-1fcbc8ec81c0",
-      "87d30560-1095-451e-90e1-5bf2be01afff",
-      "967b2d94-2f27-4b9a-b1ae-f39bb53f4c04",
-      "c99d717b-1f35-43e8-b46a-e556d0492921",
-      "d17f0a76-6440-4581-8f5e-559909bdb780",
-      "58022615-1c00-40e9-9e46-cb024a95673c"
+      "40d24e25-f9d4-41c3-90fd-33827880acc5",
+      "4af3cd8c-0d8d-428b-a2ec-95ff5eab5316",
+      "125a4d41-6606-420e-804a-67ac66bad7fe",
+      "685af2fd-2c16-4812-9cd7-32112b631980",
+      "50e7e646-204d-4f9a-a319-3f24b4d2cc87",
+      "c91cc3b6-bc23-4261-85b8-7f3211fc9d0a"
     ],
-    "created_at": "2025-10-23T18:17:16"
+    "created_at": "2025-11-10T18:22:47"
   },
-  "c0615c82-920a-4ec9-9bb6-97dcb3598af7": {
-    "titulo": "Conversacion 1",
-    "fecha": "2025-10-23T18:49:57",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "175bbbd1-524e-494a-9359-97b0c79137e7"
-    ],
-    "created_at": "2025-10-23T18:49:57"
-  },
-  "5363129c-c20f-464d-b734-e00e6509ddb9": {
-    "titulo": "conversacion 2",
-    "fecha": "2025-10-23T18:50:30",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "2f7283ef-6a44-49e2-8dd8-8be44cdc1b63"
-    ],
-    "created_at": "2025-10-23T18:50:30"
-  },
-  "9c954af4-441a-4dd2-97b4-0a2415fcf415": {
-    "titulo": "Reunión de planificación semanal",
-    "fecha": "2025-10-23T18:51:19",
+  "37ee75f7-93fc-432f-9f06-845dae9813ee": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 5",
+    "fecha": "2024-06-05T00:00:00",
     "participantes": [
-      "Carla",
-      "Julián",
-      "Lucía"
+      "Familiar",
+      "Abogado"
     ],
     "metadata": {
       "tipo": "general",
-      "participantes_detectados": 3,
-      "origen": "texto_plano"
+      "participantes_detectados": 2,
+      "origen": "json"
     },
-    "total_fragmentos": 2,
+    "total_fragmentos": 5,
     "fragmentos_ids": [
-      "db34c209-d214-4f87-a857-1edaee44d46e",
-      "97490c4f-f3a9-44f0-88e1-c2f8cf2ddca1"
+      "2f4b5135-d434-4407-b0eb-673b6d7d60dc",
+      "f1e302ae-9eca-49cf-b93a-bcd92ac58b21",
+      "4a29dbce-e0de-4b03-b429-bcc734c15897",
+      "e3b306b9-e1da-4f8d-bb1f-929af75935fc",
+      "a6eabe45-71f7-45c3-9bd8-9737d1db5f4a"
     ],
-    "created_at": "2025-10-23T18:51:19"
+    "created_at": "2025-11-10T18:22:47"
   },
-  "5be468aa-a240-48f7-9d99-150c5edd650f": {
-    "titulo": "Análisis de resultados del sprint",
-    "fecha": "2025-10-23T18:51:20",
+  "8a8a665b-d739-44ac-9afd-b157ff596137": {
+    "titulo": "Accidente de tránsito - Reclamo de daños - Caso 6",
+    "fecha": "2024-06-06T00:00:00",
     "participantes": [
-      "Marta",
-      "Diego",
-      "Pablo"
+      "Víctima",
+      "Abogado"
     ],
     "metadata": {
-      "tipo": "planning",
-      "participantes_detectados": 3,
-      "origen": "texto_plano"
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "5daefe34-3b8a-4d72-95fa-a04493f1f5b2",
+      "1fe68a1a-dae6-401e-b91a-7a6fe4c650ee",
+      "80e2ecec-3989-4a1b-8749-f37924d44514",
+      "ffda6711-9802-4865-aab6-132607c8d139",
+      "1353ea6d-1f57-40a8-a5c5-0a58322ff116",
+      "306b35a3-8b5b-47ec-820e-4d5b7756566d"
+    ],
+    "created_at": "2025-11-10T18:22:48"
+  },
+  "37943b79-c0ce-4ee4-9c49-c3c6cd373cbc": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 1",
+    "fecha": "2024-06-11T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "657ec05d-32a2-44b0-9c2b-948dbbe793c9",
+      "78881496-944c-4262-8ec9-45464e580e12",
+      "c38f6c9d-9001-40c1-a51a-90ded5b5b2b1",
+      "ad3c085c-ef7f-4da7-a98f-330dca76830a",
+      "e5ffd61b-5ac8-4736-8f51-e989fb9bb692"
+    ],
+    "created_at": "2025-11-10T18:22:49"
+  },
+  "11fc65a7-09ca-43c3-86c2-be72ed94d210": {
+    "titulo": "Habeas data - Rectificación de datos - Caso 1",
+    "fecha": "2024-06-11T00:00:00",
+    "participantes": [
+      "Afectado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
     },
     "total_fragmentos": 4,
     "fragmentos_ids": [
-      "eab9f949-ff8d-4288-9ec8-6854bfd8d764",
-      "550ad553-d9c2-40d4-b6ad-2ccdc3c36ebf",
-      "fe35c184-85d4-4508-84cb-8d2565ed7411",
-      "13d97c7d-4477-4f48-aa15-6d7a8d775d9c"
+      "9d52084e-cf23-406a-8a2a-bc4df2f15cc0",
+      "50b5b8eb-dbb6-4264-9d9c-c7a103511524",
+      "2a2e0815-5787-4b3c-8ad4-5bb7db9a943d",
+      "33c3517e-8700-4f10-ac95-2d8d15bc510c"
     ],
-    "created_at": "2025-10-23T18:51:20"
+    "created_at": "2025-11-10T18:22:49"
   },
-  "3c8f5f3e-6ae9-4f84-a1d1-560e9af80c69": {
-    "titulo": "Brainstorm para nueva funcionalidad",
-    "fecha": "2025-10-23T18:51:20",
+  "c44cc583-23c8-49ef-a421-4558e15c7873": {
+    "titulo": "Amparo por cobertura médica - Caso 3",
+    "fecha": "2024-06-12T00:00:00",
     "participantes": [
-      "Tomás",
-      "Sofía",
-      "Laura"
+      "Paciente",
+      "Abogado"
     ],
     "metadata": {
-      "tipo": "brainstorm",
-      "participantes_detectados": 3,
-      "origen": "texto_plano"
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
     },
-    "total_fragmentos": 3,
+    "total_fragmentos": 5,
     "fragmentos_ids": [
-      "b101556a-b4b3-4076-949e-ddbf50210f69",
-      "c327bf9a-4781-4def-93f3-fd45b3f1b812",
-      "754a4cc9-be6d-4cc8-83aa-3fa5078a8883"
+      "1f7e27da-425f-43b9-b2ed-f89723b4f380",
+      "b7051f30-3dab-4be4-a68d-68a54cba5b00",
+      "fad9280d-166f-40d6-8c98-3928a0a39847",
+      "499b5345-782d-4f87-80e0-744aef0b0b7c",
+      "f0272b76-5284-45ba-9ff6-07704a6100e3"
     ],
-    "created_at": "2025-10-23T18:51:20"
+    "created_at": "2025-11-10T18:22:50"
   },
-  "0cc9e6e7-2ffd-4734-a2fe-8de4ab392077": {
-    "titulo": "Conversacion No temporal",
-    "fecha": "2025-10-24T19:29:09",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "125b4581-a1c5-47c8-8c5e-c802483290fe"
+  "257559e2-6b4e-402c-b863-91fdbca84875": {
+    "titulo": "Disolución de sociedad - Caso 7",
+    "fecha": "2024-06-17T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T19:29:10"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "a5aec722-bfab-47b7-83aa-51f32a887fa0",
+      "f6c4fbda-2c83-4390-bb33-46b169bcf49e",
+      "6253ae14-0749-4b11-b346-999a1c45af6f",
+      "a6f42baa-228e-413f-9fd8-c5699887c712",
+      "1fc90ade-053e-41e6-851e-887acac392f2"
+    ],
+    "created_at": "2025-11-10T18:22:50"
   },
-  "5fb00804-10c1-4598-ac82-208547941a0e": {
-    "titulo": "Prueba no temporal",
-    "fecha": "2025-10-24T20:54:51",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "2daebc1b-944d-43fe-9f02-98d6b6028f14"
+  "f6cb828a-33d7-40e2-81b6-59d2bc938b48": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 5",
+    "fecha": "2024-06-18T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T20:54:51"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "f6694dca-1a11-4734-b5da-a3af7b26e1e1",
+      "39c368d9-6a05-4fc6-b63d-681ecf601810",
+      "7650f6e8-4bfe-43c9-b2c4-079c0afdb92d",
+      "731aa88d-c1ee-4880-b873-198ebd8b05bf"
+    ],
+    "created_at": "2025-11-10T18:22:50"
   },
-  "63719e8b-8ec7-44de-b04d-b8ca8580bcb2": {
-    "titulo": "prueba 2",
-    "fecha": "2025-10-24T20:56:01",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "772cf62c-44e3-4e61-b631-60725e0a209a"
+  "89ea1339-b047-46d0-b96b-8a25c71a3e7b": {
+    "titulo": "Habeas corpus por detención arbitraria - Caso 2",
+    "fecha": "2024-06-21T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T20:56:01"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "84be2e4d-60bf-4597-83db-40a9ebfe3083",
+      "16b1ebe7-3fc0-4d64-9ab0-4ca1d0b1e90d",
+      "7e47bbbf-8d87-4e93-b1e0-ded090fd9dd5",
+      "aa6aeac2-6927-4264-91e9-33ecbe42506b",
+      "0092911a-f619-4c16-92bd-441cf1f12f5c"
+    ],
+    "created_at": "2025-11-10T18:22:51"
   },
-  "7c08fcea-6663-4a45-a918-3056a00d4326": {
-    "titulo": "nueva prueba no temporal",
-    "fecha": "2025-10-24T21:17:46",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "89d14bf9-0fba-4c8e-bcc4-8f7e949ab7a5"
+  "83e6d0fa-6988-4dd2-a263-214865965f96": {
+    "titulo": "Despido sin causa - Caso 7",
+    "fecha": "2024-06-22T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T21:17:46"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "ef230618-02b4-4385-920e-ebcaf1b0f106",
+      "852aee2f-a6d3-434d-a6c9-7ea7369febbf",
+      "f7b8e732-7c34-4ec1-a404-328cf2b8d9be",
+      "c83a5a26-df7f-41de-8275-cb06c1450a9d",
+      "0a8586b2-0722-4498-8b5d-fdd20809b694",
+      "bdb576c6-bc2b-47cf-bfbf-35b200dd1b00"
+    ],
+    "created_at": "2025-11-10T18:22:51"
   },
-  "8b65c524-8d5c-4c40-8f45-405ae7a5220a": {
-    "titulo": "nuevamente prueba no temporal",
-    "fecha": "2025-10-24T21:20:52",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 3,
-    "fragmentos_ids": [
-      "03ba0629-afe3-4a53-a8aa-7c9b95b0be40",
-      "5d4674f7-2271-4073-b20f-c9783761606f",
-      "0ae4a2ef-1923-4660-a405-f37e06c2c4d3"
+  "8446261d-8e36-48eb-927e-eded6fae6e49": {
+    "titulo": "Reclamo de diferencias salariales - Caso 3",
+    "fecha": "2024-06-23T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T21:20:52"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "b8553461-800c-446d-815f-e90eb3a5bf16",
+      "00f5d2a6-a673-4f19-8182-54e45471a39c",
+      "98c98a41-54ec-44e6-8c25-4146d08595f7",
+      "8dca6387-e127-4e54-b41f-744c2dbe2e58",
+      "17c3177c-a086-43a0-a1e6-3bee8ac67287",
+      "27da881e-ebed-4697-946c-349fbebe202a"
+    ],
+    "created_at": "2025-11-10T18:22:52"
   },
-  "e21d2208-8ca6-415e-908b-07185f10c51c": {
-    "titulo": "prueba x",
-    "fecha": "2025-10-24T21:37:23",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 3,
-    "fragmentos_ids": [
-      "b37bacc4-88cd-4630-a672-3d65a33717b5",
-      "842886ea-5aac-44b3-8d43-407d12a6d291",
-      "5195e6a2-5487-46b4-a2ad-f4555d9598df"
+  "c90b9aca-9234-4be1-a4c6-fd1310be53f3": {
+    "titulo": "Vicios ocultos en compraventa - Caso 1",
+    "fecha": "2024-06-28T00:00:00",
+    "participantes": [
+      "Comprador",
+      "Abogado"
     ],
-    "created_at": "2025-10-24T21:37:23"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "e23242a3-e3d4-4c03-b4d7-8263a84a3bd9",
+      "adb97e29-7aa1-44b0-97d6-7ea4851b0f00",
+      "9bef2422-c912-4947-825b-d1c0c7d2213a",
+      "75ba15b2-f1f6-4bf2-a450-e96721e3c878",
+      "b827d9d6-d2f5-47b8-a749-319888a8b35f",
+      "0172ef01-a773-46d9-af01-b809b1586ccc"
+    ],
+    "created_at": "2025-11-10T18:22:53"
   },
-  "47794e8a-b7ef-46b9-a8cf-01351af20c76": {
-    "titulo": "prueba conversacion no temporal",
-    "fecha": null,
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "86280f22-9a59-4291-b20d-ea965e0f18ba"
+  "e9004337-66ee-4bb2-8ef3-22536297f4a6": {
+    "titulo": "Solicitud de plan de facilidades - Caso 1",
+    "fecha": "2024-06-29T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
     ],
-    "created_at": "2025-10-25T16:23:41"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "3b0237d5-2481-4cbc-9ec8-9016f28afa4b",
+      "e6662069-8f11-4fab-8636-afc19d938d7a",
+      "2b3d1f37-706a-4a39-9510-410d0c345ab9",
+      "f02451f9-dab7-4eb7-82e2-e55b56978f72"
+    ],
+    "created_at": "2025-11-10T18:22:53"
   },
-  "8698c5b5-5694-4e50-90e1-99261c16be42": {
-    "titulo": "conversacion temporal con fecha",
-    "fecha": "2025-10-16T16:24:00",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "61fbd0c8-1b33-4e9c-85d5-14a452e667e4"
+  "ae3fc555-4a4a-4ae2-8499-2015763627dd": {
+    "titulo": "Trabajo no registrado - Caso 7",
+    "fecha": "2024-07-04T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
     ],
-    "created_at": "2025-10-25T16:24:49"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "123ea837-8f28-41cb-8257-bc3c577b4b2b",
+      "068e351b-1d1b-491a-892a-ac7cc17ae94b",
+      "2c896619-5095-46ae-82a6-3a5130bb72fc",
+      "127f4363-96ec-439c-a5f8-c94aae40c673",
+      "1c7639ec-f159-4959-87ba-0fb747e866ba"
+    ],
+    "created_at": "2025-11-10T18:22:54"
   },
-  "e01d2557-2067-47c4-87b1-fe4b6b5e5868": {
-    "titulo": "conversacion sin fehca",
-    "fecha": null,
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "16d20bcb-6b6e-406b-a4ec-c90eeb851c6a"
+  "1eec8bf4-ae8e-4187-b502-0a1fdbc5e1ee": {
+    "titulo": "Solicitud de excarcelación - Caso 4",
+    "fecha": "2024-07-12T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
     ],
-    "created_at": "2025-10-25T16:29:04"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "9496d1aa-02a2-4759-b1f8-7f10a3191e2b",
+      "a827c0ac-0196-4565-809a-cfa4e0cad1e7",
+      "9bb8eb5f-19d2-4c4e-8241-5d23796cf08a",
+      "81120041-451c-4709-b778-f80f234c67e4",
+      "0e394814-2502-4a76-9b4e-d3e571a25357",
+      "1f27dddd-6b36-40fd-83ba-6c72e29e4d3e"
+    ],
+    "created_at": "2025-11-10T18:22:54"
   },
-  "492bfc74-d103-4bba-ac58-f571a054773d": {
-    "titulo": "Reunión de proyecto",
-    "fecha": null,
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "2708b9e3-0c68-4dcb-8ae1-2883a2b5fadf"
+  "1631f9b7-5bc9-4a23-9495-6a0a69cb83c1": {
+    "titulo": "Usucapión de inmueble por posesión - Caso 4",
+    "fecha": "2024-07-14T00:00:00",
+    "participantes": [
+      "Poseedor",
+      "Abogado"
     ],
-    "created_at": "2025-10-25T16:34:14"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "b93e72e3-733b-4aca-9566-ad70d15a5e3a",
+      "43e60cd2-e5be-4757-abd9-e571a38ee449",
+      "e918e98d-a1ed-4a35-b9ea-b523bc1cf889",
+      "0a39a4f5-a1cf-48d5-b994-5d029e476849",
+      "694b6090-a004-4f7c-80f0-f8783c94b76f",
+      "05eb8220-176a-4796-a003-2b6b4c644987"
+    ],
+    "created_at": "2025-11-10T18:22:56"
   },
-  "ef8492fe-1bc0-4e4a-b1bd-934661e4424e": {
-    "titulo": "prueba temporal con fecha especifica",
-    "fecha": "2025-09-18T06:04:00",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "9cb99b80-114c-484f-bbdc-f284022e2008"
+  "7bc3fcec-f292-455f-9e34-96e269e9dbef": {
+    "titulo": "Recurso contra multa tributaria - Caso 1",
+    "fecha": "2024-07-15T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
     ],
-    "created_at": "2025-10-27T06:04:41"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "9ab054e6-df93-4f3d-852f-ee52dd7eb2ee",
+      "f439e464-79f5-4918-9c74-018ea3d18028",
+      "ff5e30cf-8596-441f-9eb5-a3cda7823fd5",
+      "5148ade3-70bc-43fc-b1c5-2c95eb969b6d",
+      "131ef1c5-5321-4988-92ae-4fba98591696"
+    ],
+    "created_at": "2025-11-10T18:22:56"
   },
-  "8658dfe2-7864-472b-8d16-0f9a6473a15d": {
-    "titulo": "prueba no temporal",
-    "fecha": null,
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "23776380-393d-4986-a77d-71cc15652df5"
+  "55d970c2-5412-4635-a937-502e47b5133c": {
+    "titulo": "Defensa en causa por estafa - Caso 1",
+    "fecha": "2024-07-16T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
     ],
-    "created_at": "2025-10-27T06:05:47"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "b6c60e3e-8f86-4665-ba53-1cac67a521d8",
+      "247a69be-31c6-4d1b-9056-524782cc330c",
+      "fee30fe8-3ea6-4a04-ace6-8da2b3e6bab8",
+      "07db1ecd-7708-4ffe-b4e2-27253ac82861",
+      "ae60322b-7e02-42e1-b94b-f877d0d52468"
+    ],
+    "created_at": "2025-11-10T18:22:57"
   },
-  "0e637b3e-f1cb-4ba2-901f-4c40a18511df": {
-    "titulo": "conversacion sin nada",
-    "fecha": "2025-10-27T06:07:32",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "994186ce-ba7a-40c6-9190-929a83d6f8ef"
+  "99469a70-71a9-4f57-9d49-5915549929ca": {
+    "titulo": "Amparo por mora administrativa - Caso 8",
+    "fecha": "2024-07-16T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
     ],
-    "created_at": "2025-10-27T06:07:32"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c7303cdb-be76-4de1-b3b3-a0d5b315cb3a",
+      "9ad159d5-3b7f-4994-934f-cb09bb92e574",
+      "e701b899-0806-461c-ae74-f18556ad85cc",
+      "5c1181f9-97d6-4fa7-a77d-f2d3b73fc6de",
+      "918c0255-85ed-4de4-9aa5-f91011c974da"
+    ],
+    "created_at": "2025-11-10T18:22:57"
   },
-  "ac407c7a-2031-4cfa-a9f7-dd47ae586a9d": {
-    "titulo": "ramas git",
-    "fecha": "2025-10-28T18:46:59",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 2,
-    "fragmentos_ids": [
-      "97e97809-002b-4fdb-b7ee-fe62071141ff",
-      "ac407c7a-2031-4cfa-a9f7-dd47ae586a9d_pdf_0_0"
+  "c312b4ed-b803-4cc8-aa9a-a939278e8c6e": {
+    "titulo": "Disolución de sociedad - Caso 5",
+    "fecha": "2024-07-24T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
     ],
-    "created_at": "2025-10-28T18:46:59"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "072a5d36-beb6-4015-94c6-0458cf530eec",
+      "73110441-67e1-4d88-874c-37ed45012f31",
+      "e55ec514-a6bf-47bf-aa61-984035f117c9",
+      "ee912008-d094-49f0-ac90-4b21ace610e8",
+      "39c51af2-0948-47fc-863b-bd2916cc36e5"
+    ],
+    "created_at": "2025-11-10T18:22:58"
   },
-  "94834b27-3338-41ee-836d-912a508b6a67": {
-    "titulo": "reunion para presentacion de avance",
-    "fecha": "2025-10-31T20:10:53",
-    "participantes": [],
-    "metadata": {},
-    "total_fragmentos": 1,
-    "fragmentos_ids": [
-      "0c90f318-d9df-432f-9bff-2ae058e883ab"
+  "46882c38-c4d2-4313-9df3-e4f7d84677e6": {
+    "titulo": "Vicios ocultos en compraventa - Caso 4",
+    "fecha": "2024-07-30T00:00:00",
+    "participantes": [
+      "Comprador",
+      "Abogado"
     ],
-    "created_at": "2025-10-31T20:10:53"
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "7672309a-2214-4d5c-9bb5-93f83140c7e9",
+      "eccec3e6-685c-4788-ba80-4ca746d0eef4",
+      "4237dbea-14f7-461d-bea7-a490355a4f93",
+      "21bba266-4d02-484d-98cb-5f90acf8654c",
+      "4f675c18-40e9-41a7-b514-fc005432aafd",
+      "a241f5a9-f360-4bb5-a524-749089899967"
+    ],
+    "created_at": "2025-11-10T18:22:58"
+  },
+  "70f6f351-7053-4319-accd-2e6af9115cdc": {
+    "titulo": "Denuncia por violencia de género - Caso 2",
+    "fecha": "2024-07-30T00:00:00",
+    "participantes": [
+      "Denunciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "03e55c76-33b0-4972-83c2-cf05f2898d0e",
+      "5b8c033f-8486-4ff1-a26d-1583b45927cb",
+      "c206f1f6-c8b6-4a0d-8a56-234d49149ede",
+      "1e16a472-6425-4188-9fed-a3e2f5374d3e",
+      "1f26ae4e-7469-4457-8279-0ffb5e458943"
+    ],
+    "created_at": "2025-11-10T18:22:59"
+  },
+  "ce424535-17ff-4cfe-b259-932558d783b7": {
+    "titulo": "Disolución de sociedad - Caso 10",
+    "fecha": "2024-07-31T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "e8715bb9-69f4-40a3-a856-305c7f1a7d4c",
+      "1746ce6e-466d-4c8c-bb61-a2ee64745f5b",
+      "afb4139c-8622-4a2b-9b5e-02c40cfde686",
+      "345a4f06-b5d3-48df-aac1-70fa0522b7c7",
+      "f6621d11-b82e-41d4-91b3-d69a4da20978"
+    ],
+    "created_at": "2025-11-10T18:23:00"
+  },
+  "de2ac868-2e51-452d-9ca9-d679f51f5db7": {
+    "titulo": "Defensa en causa por estafa - Caso 7",
+    "fecha": "2024-08-03T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "cbd15d1e-9b81-4b50-ad62-1f157469f24b",
+      "4559f50e-58ce-4f66-8869-33e2432435e5",
+      "8a5da9ad-041d-4a43-aeaf-300285bde1d1",
+      "58fa86ae-322f-487b-8ef0-9a94793d696a",
+      "1117833e-c182-40fd-97c9-b491a55719a5"
+    ],
+    "created_at": "2025-11-10T18:23:00"
+  },
+  "c3af580c-652c-4cb6-8aec-6fbe667e00da": {
+    "titulo": "Acoso laboral y hostigamiento - Caso 5",
+    "fecha": "2024-08-05T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "41654724-c741-4867-9a94-afd3b3682590",
+      "8c7a1a46-3ed3-4bab-af16-f828e7a1e4c8",
+      "74cdefd3-26e2-45e3-be60-3caaebd67519",
+      "b99ffd30-81d0-4cae-9f26-c067d10ea0b1",
+      "2e560490-355b-4ba5-950c-b71dc4ab7b26"
+    ],
+    "created_at": "2025-11-10T18:23:01"
+  },
+  "1d3a5086-96c9-4529-8ec2-55edb2a15881": {
+    "titulo": "Usucapión de inmueble por posesión - Caso 2",
+    "fecha": "2024-08-06T00:00:00",
+    "participantes": [
+      "Poseedor",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "c0ba7ce6-e563-44c1-b516-5f2a0f5c7dae",
+      "a7c01921-d122-4c8a-92da-187705b143d2",
+      "17463d8f-f043-46f4-ad4b-3dc9ca03e4f7",
+      "dfbb7863-3c4c-476a-9fe0-2d66e18dbc2b",
+      "deace798-157c-4314-9a62-389373e6f695",
+      "fcefa37f-9da8-4877-9f92-3aac6a39eade"
+    ],
+    "created_at": "2025-11-10T18:23:01"
+  },
+  "e17f8697-4b91-4821-9377-00319a9bc003": {
+    "titulo": "Despido sin causa - Caso 6",
+    "fecha": "2024-08-11T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "0c18d47b-938b-42e0-9bdf-eb871c643fa4",
+      "b8547946-fb69-4d3c-a800-d1bedf9945e3",
+      "955dcce1-0606-4d0c-9f71-c4348b76e39e",
+      "37e42d8e-b893-478e-bbb4-aa3be878295e",
+      "65b50b0e-2b2a-4686-9f55-704046276b9c",
+      "9b20e619-8413-4b92-adce-7c5fcdafdd47"
+    ],
+    "created_at": "2025-11-10T18:23:02"
+  },
+  "15bd1547-06f4-40d8-8551-0babbeaf24a0": {
+    "titulo": "Solicitud de excarcelación - Caso 6",
+    "fecha": "2024-08-19T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "d603f079-af25-4ee2-afa8-db7577fa5799",
+      "6d91f06b-adb3-4de4-af95-d3eb6288577f",
+      "dfb60c0f-2b50-469f-a748-1031b7ab6471",
+      "c06736d5-30bc-4011-af1a-7fe07838615e",
+      "fc180360-86b0-4b93-954d-5ccf245176f1",
+      "fd24cea5-0a26-478b-88c3-9fcdeb83697a"
+    ],
+    "created_at": "2025-11-10T18:23:02"
+  },
+  "dfa7f132-5149-4c35-abdf-c192e4542040": {
+    "titulo": "Defensa en causa por lesiones - Caso 4",
+    "fecha": "2024-08-20T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "ce958536-bc6b-4e0b-9078-e2877c45b292",
+      "e8b7416e-442e-4e57-ab66-f44afbde5451",
+      "2a70d32c-b12f-41e6-bad2-4a583f05e396",
+      "cc48d872-6326-4067-970b-b776a558eac9",
+      "3cdc7d96-ca5a-443a-ad47-c4408c7484fa"
+    ],
+    "created_at": "2025-11-10T18:23:03"
+  },
+  "efe41a06-6425-446d-844c-cf5254c9a28c": {
+    "titulo": "Despido sin causa - Caso 5",
+    "fecha": "2024-08-23T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "683d0ec5-0306-48b1-b8fc-b6c7f3e7b3ea",
+      "763bdf10-9a8f-4dd2-9eac-4bb3bea928fc",
+      "8d025574-fb87-47b2-9253-4db78ce895da",
+      "b449d324-0171-4c10-b372-797ba7d0d062",
+      "a255aa53-bfca-459c-9d1a-32b41a49b661",
+      "66aaadac-5b1f-447a-af7d-72ae586b4e62"
+    ],
+    "created_at": "2025-11-10T18:23:03"
+  },
+  "0e0b3daa-3e6b-4e0e-99a0-610edf242d60": {
+    "titulo": "Reclamo de cuota alimentaria - Caso 1",
+    "fecha": "2024-08-26T00:00:00",
+    "participantes": [
+      "Madre",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 7,
+    "fragmentos_ids": [
+      "1bfeb27e-1923-4c86-85be-e93476a54bf9",
+      "907bdca5-30f4-4017-b20e-46c9180210e6",
+      "543e63df-d8d5-4ce3-b835-4de1c0446a44",
+      "5f77918b-d07e-4eb4-9d4b-8481c3dba57b",
+      "4257db43-d990-487d-afc1-e1a65d3e6563",
+      "4eb6814d-7e89-44bc-a66f-d50480937631",
+      "ae24b2c6-30b9-40d5-9a9b-f18754e4b291"
+    ],
+    "created_at": "2025-11-10T18:23:04"
+  },
+  "6077a433-3284-4ef6-8b6c-b3f1f6440fab": {
+    "titulo": "Recurso contra multa tributaria - Caso 5",
+    "fecha": "2024-08-27T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "38fa90e1-dd80-4088-8b58-ad30b2e61331",
+      "c7d7eb04-34ad-4328-ab58-9f4644c76298",
+      "484c7fff-496d-4fc6-9989-a539d54065e2",
+      "74c539d9-4726-42dd-b93c-b90998cd6682",
+      "c690c732-ec80-4afd-b392-2e24c4a613b1"
+    ],
+    "created_at": "2025-11-10T18:23:05"
+  },
+  "ca5d6ee7-0bb7-4bf6-8713-9e82377fa045": {
+    "titulo": "Accidente de trabajo - Caso 6",
+    "fecha": "2024-08-31T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c336cdfc-2175-434c-91ea-90f79f99eee1",
+      "666655bc-fa6d-4c2a-a697-e2e39d8c0453",
+      "e4af7f49-a559-4789-a2db-58a7c93ea899",
+      "e445aa66-c318-4708-ae20-13f0fa9903fc",
+      "39ae328a-4370-416e-91c9-5bea5e0cdb36"
+    ],
+    "created_at": "2025-11-10T18:23:05"
+  },
+  "bb2d5949-4d9a-4594-97a9-dc0f2c7885cf": {
+    "titulo": "Trabajo no registrado - Caso 6",
+    "fecha": "2024-08-31T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "f4e86c13-9f31-4697-8660-976a5fa90e5d",
+      "31f904d6-f30d-4eb9-9e6c-c4efaea76afc",
+      "e36b8bed-b76e-4f7f-8563-960446289d34",
+      "9e20e680-0ea0-4550-a3ba-f33629687954",
+      "3606b542-6af3-425a-8b8a-ec7788208cfc"
+    ],
+    "created_at": "2025-11-10T18:23:06"
+  },
+  "12119611-2ef2-47e1-8bd6-d1deb5c41a8d": {
+    "titulo": "Incumplimiento de contrato comercial - Caso 3",
+    "fecha": "2024-08-31T00:00:00",
+    "participantes": [
+      "Empresa",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "8af3a575-f3e3-4dc4-891c-1c4991cb07fb",
+      "f9b93407-332c-4048-ac21-4c939585f644",
+      "ae550d04-03f4-4f5f-ae9f-6f9c429b2618",
+      "12a6176d-a93f-408e-a547-81317b585a46"
+    ],
+    "created_at": "2025-11-10T18:23:06"
+  },
+  "83cbf2e8-5e2d-4fe1-94f4-a3499851c637": {
+    "titulo": "Amparo por cobertura médica - Caso 1",
+    "fecha": "2024-09-09T00:00:00",
+    "participantes": [
+      "Paciente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "5b9e00b4-0e95-42cb-998a-7128e738d64a",
+      "d0e25391-d035-4c17-9fb1-db8cb4c321fe",
+      "96476d06-ce86-430d-a308-cdba7aea650b",
+      "274a493c-4600-419a-8597-86ab41bb96c0",
+      "9ae4a82e-a2af-4b1b-974b-ab57fc00eac5"
+    ],
+    "created_at": "2025-11-10T18:23:07"
+  },
+  "aa31f306-5d6c-4ce2-a94e-aeee15f6f93d": {
+    "titulo": "Cheque rechazado - Caso 5",
+    "fecha": "2024-09-13T00:00:00",
+    "participantes": [
+      "Comerciante",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "7286e28c-637a-4745-8249-42d911e30da0",
+      "e7908e49-5fbf-4ed3-af07-9cd8cb4be1e6",
+      "9506f6d5-fc45-4fd4-a4d8-23f81a62e30a",
+      "8b4f96ab-99f9-48f4-9cb2-3b2f7d95d464",
+      "895c2e05-3d16-4fd7-9895-0f2d18716373"
+    ],
+    "created_at": "2025-11-10T18:23:07"
+  },
+  "d1ae371a-21bc-4dc8-bce8-3efbcf543d06": {
+    "titulo": "Defensa en causa por estafa - Caso 2",
+    "fecha": "2024-09-20T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "4f5b99d2-2737-45f3-8a19-8a8eca3c15a0",
+      "ff3950a3-1df4-405d-ad06-dfec09e2b69d",
+      "cd231dca-d5dc-4a71-a01e-f91c32d8bd46",
+      "0630a066-c8a5-413e-8f1d-a7d8a8f8b0ed",
+      "c184c369-4082-43f9-b91d-0e00510881db"
+    ],
+    "created_at": "2025-11-10T18:23:08"
+  },
+  "648dc201-8339-46c7-88ca-05d65827d500": {
+    "titulo": "Recurso contra multa tributaria - Caso 2",
+    "fecha": "2024-09-22T00:00:00",
+    "participantes": [
+      "Contribuyente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "c78f5349-7941-461c-9e84-5d16f2a929d7",
+      "7fa7e37d-a690-434f-a41f-d8262b6a4d25",
+      "33b04ded-2689-430c-a042-8ee39f35577e",
+      "546e29be-92fd-4779-abd9-3322fa864149",
+      "76213651-065c-4d3f-992e-55f0b6693ea6"
+    ],
+    "created_at": "2025-11-10T18:23:08"
+  },
+  "d33902ea-bb68-42cd-9c91-5070ea7ce578": {
+    "titulo": "Solicitud de excarcelación - Caso 1",
+    "fecha": "2024-09-28T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "cf9942cb-f784-4390-8637-f8e8d35751fc",
+      "3024690f-d3a4-4681-b529-734d09ce5376",
+      "6ad10f9d-a424-4104-8b1e-7611c5414e8b",
+      "cbb7ae85-6614-4940-a52a-8d58602fea1f",
+      "b4eb9ea7-839c-479e-80ec-c46fc9af01ed",
+      "2ba73d78-0f4d-48ed-8fc0-afea7f2d0dc2"
+    ],
+    "created_at": "2025-11-10T18:23:09"
+  },
+  "6efea86c-657b-4f44-a327-bb199ea017ee": {
+    "titulo": "Accidente de trabajo - Caso 1",
+    "fecha": "2024-10-10T00:00:00",
+    "participantes": [
+      "Trabajador",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "reunion",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "4e990046-0266-4632-979d-7d7120675e1e",
+      "84cb7a9f-bd99-43af-aa3b-0242f9c3eaea",
+      "fe89f642-eefc-4d1b-ba44-e36d6feba78b",
+      "c6b8b602-02cd-439c-be2f-bddebf0a49ea",
+      "0b2ee1d8-15b6-4833-bc85-f5127a52b331"
+    ],
+    "created_at": "2025-11-10T18:23:10"
+  },
+  "f319b6cd-aef6-4cf9-9b2c-5e06cec4ca84": {
+    "titulo": "Defensa en causa por lesiones - Caso 3",
+    "fecha": "2024-10-20T00:00:00",
+    "participantes": [
+      "Imputado",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "3add1412-4d14-4aae-8d99-de87d2b52eac",
+      "187f7954-abda-4ccc-b4a3-e23e58d739f6",
+      "cf5a4753-8ece-41dc-9f65-0ac0538759d9",
+      "d5f48fbc-edba-4e01-b084-30df4a9429d7",
+      "e57ac45a-8e5e-42a2-9c96-008e08f89b78"
+    ],
+    "created_at": "2025-11-10T18:23:10"
+  },
+  "eb5f944b-a382-4cdd-8167-40da9bdd7041": {
+    "titulo": "Impugnación de testamento - Caso 2",
+    "fecha": "2024-10-21T00:00:00",
+    "participantes": [
+      "Heredero",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "57bf7efb-7fe2-47f7-b9fa-5ee319ebabd1",
+      "8a964409-5443-41a6-8e6d-d609fa10ae3e",
+      "5ebdee7b-045a-49c9-aca5-d8a2c37d6f10",
+      "ff8e865f-ebba-4996-916d-ca032b06225d"
+    ],
+    "created_at": "2025-11-10T18:23:11"
+  },
+  "3f8b5cf4-dfd2-422c-b9cc-6238d74a0f69": {
+    "titulo": "Divorcio contencioso con bienes - Caso 1",
+    "fecha": "2024-10-30T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "ae9b4828-e5b7-4a54-92c3-74615bf51ce5",
+      "7e6b34c8-746a-420d-aa5e-64dc13d42883",
+      "ef7f15a0-5eba-400a-ac2f-d939cf726a70",
+      "a37c325f-de4e-494a-b2b1-8312577d329a",
+      "148b7857-5b86-4f09-bc90-27770f1276c5",
+      "71e609c6-ecc1-480f-8d6c-ba27688a04bf",
+      "1d36fa14-b8e8-4698-89d8-6c1bf438e80f",
+      "94363690-eafb-4b66-8e0e-f5ed00703af2"
+    ],
+    "created_at": "2025-11-10T18:23:11"
+  },
+  "70f4da4b-e930-4a56-b71f-744d5aa213a3": {
+    "titulo": "Amparo por mora administrativa - Caso 5",
+    "fecha": "2024-11-06T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "332ea042-6ef9-41f7-b429-27a606360dca",
+      "f91c7a26-7f1a-4d2f-8538-f6e73458a5c2",
+      "24b9e21c-aa68-4c84-8788-0e4d518dcd72",
+      "5d1277a5-b7bf-452e-baa9-0498653a5fcc",
+      "f2105cdf-fc5d-4a80-8282-5c3cb13105fb"
+    ],
+    "created_at": "2025-11-10T18:23:12"
+  },
+  "83a890f7-35ad-4720-b50f-204308f061ff": {
+    "titulo": "Acción de inconstitucionalidad - Caso 1",
+    "fecha": "2024-11-11T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 4,
+    "fragmentos_ids": [
+      "f5eba515-5ef0-456e-8aa0-440bb3b22dd9",
+      "7e402bfc-5b48-4e7f-b601-e2264e5fc566",
+      "00df7a8f-b78f-46e6-876f-a5c7b3a4219c",
+      "ed94954d-431e-476a-bdd8-c56a119f0790"
+    ],
+    "created_at": "2025-11-10T18:23:12"
+  },
+  "7732f714-7fb5-4a94-a587-be37e541f4f4": {
+    "titulo": "Solicitud de excarcelación - Caso 2",
+    "fecha": "2024-11-12T00:00:00",
+    "participantes": [
+      "Familiar",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 6,
+    "fragmentos_ids": [
+      "1dc9dc75-6e76-4771-86a6-3ea75d4a7aab",
+      "0f933159-98bb-44ae-96ab-268920f6fa17",
+      "a1b80cb1-c14f-4600-af02-21c41e180c26",
+      "1bb200a7-c35d-423b-9093-3458d20c08f2",
+      "34848a3f-933e-47f2-874f-231f1a70a077",
+      "8cc10fd4-4b46-4b11-9429-474477e61648"
+    ],
+    "created_at": "2025-11-10T18:23:13"
+  },
+  "2ba2d33d-99c0-4ff6-8864-078be4216d6c": {
+    "titulo": "Divorcio contencioso con bienes - Caso 7",
+    "fecha": "2024-11-20T00:00:00",
+    "participantes": [
+      "Cliente",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 8,
+    "fragmentos_ids": [
+      "2afd5426-9646-441e-a206-e5d59216cbe8",
+      "d8b1a460-c28e-4e3d-9119-612457d37932",
+      "fd3041da-3c6a-4dd5-9e52-6f61c87f97c2",
+      "771df266-2b36-43c2-b707-c684358f642b",
+      "3f3419d5-9060-44af-9289-9eb2e1edc4d1",
+      "fd0105c0-c698-4176-9352-dfe00383afd5",
+      "2e9370ce-5735-4180-b9a5-2e273f2d01fe",
+      "6022dd91-1d1e-47f1-b32c-e8ea316dac7a"
+    ],
+    "created_at": "2025-11-10T18:23:14"
+  },
+  "58fc062d-1fa5-40fa-82ac-2fdd9bcf6066": {
+    "titulo": "Amparo por mora administrativa - Caso 4",
+    "fecha": "2024-11-23T00:00:00",
+    "participantes": [
+      "Ciudadano",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "565e9df7-377b-4fe4-9920-9e1bbe2c43db",
+      "f0f1f0c5-d8fc-41fa-98e5-48a33951e8d3",
+      "7147704e-6244-419e-b81f-4554e386de89",
+      "046d6abe-3bc8-4f40-9f95-b17fbaba15e4",
+      "58acabfd-7c8f-47d4-ade0-d2e5f27c7e8f"
+    ],
+    "created_at": "2025-11-10T18:23:14"
+  },
+  "f021a36c-f6ff-4bc5-b5bd-4a59e6f4a083": {
+    "titulo": "Disolución de sociedad - Caso 3",
+    "fecha": "2024-11-29T00:00:00",
+    "participantes": [
+      "Socio",
+      "Abogado"
+    ],
+    "metadata": {
+      "tipo": "general",
+      "participantes_detectados": 2,
+      "origen": "json"
+    },
+    "total_fragmentos": 5,
+    "fragmentos_ids": [
+      "77bd8f40-4e4a-483d-a4e5-f9fa1c4fef6b",
+      "7beb6cda-80cf-43bc-ae02-3bc353044559",
+      "0e84058b-a880-4fb4-9159-1c2268c183be",
+      "c52acb2b-c23c-45f3-bf75-61f5b1e8b34b",
+      "059f4597-8f07-4a77-aa15-ed4c67ba5462"
+    ],
+    "created_at": "2025-11-10T18:23:15"
   }
 }

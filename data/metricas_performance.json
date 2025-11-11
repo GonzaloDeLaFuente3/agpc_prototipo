@@ -990,5 +990,160 @@
     "contextos_utilizados": 12,
     "usa_propagacion": true,
     "timestamp": "2025-11-07T09:12:45.526895"
+  },
+  {
+    "tipo_operacion": "carga_dataset",
+    "tipo_dataset": "conversaciones",
+    "cantidad_items": 200,
+    "tiempo_ms": 110062.91,
+    "tiempo_segundos": 110.06,
+    "timestamp": "2025-11-10T18:23:15.922455",
+    "detalles": {
+      "total_fragmentos": 1045
+    }
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 6111.42,
+    "tiempo_segundos": 6.11,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T16:33:26.890503"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 8490.41,
+    "tiempo_segundos": 8.49,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T16:52:16.138502"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 7208.74,
+    "tiempo_segundos": 7.21,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T16:54:00.580841"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 7802.18,
+    "tiempo_segundos": 7.8,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T17:03:02.697237"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 38,
+    "tiempo_ms": 6592.03,
+    "tiempo_segundos": 6.59,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T17:06:35.254485"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 5956.7,
+    "tiempo_segundos": 5.96,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T17:13:54.566342"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 5476.36,
+    "tiempo_segundos": 5.48,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T17:41:00.145750"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 5144.47,
+    "tiempo_segundos": 5.14,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:21:42.272307"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 4220.2,
+    "tiempo_segundos": 4.22,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:21:58.798558"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 8058.04,
+    "tiempo_segundos": 8.06,
+    "contextos_utilizados": 20,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:22:13.984663"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 57,
+    "tiempo_ms": 3797.11,
+    "tiempo_segundos": 3.8,
+    "contextos_utilizados": 8,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:22:45.415817"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 69,
+    "tiempo_ms": 13003.2,
+    "tiempo_segundos": 13.0,
+    "contextos_utilizados": 45,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:27:44.401200"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 78,
+    "tiempo_ms": 7909.79,
+    "tiempo_segundos": 7.91,
+    "contextos_utilizados": 13,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:41:18.265125"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 78,
+    "tiempo_ms": 6924.27,
+    "tiempo_segundos": 6.92,
+    "contextos_utilizados": 13,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:48:44.747384"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 63,
+    "tiempo_ms": 4736.19,
+    "tiempo_segundos": 4.74,
+    "contextos_utilizados": 4,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:51:00.564891"
+  },
+  {
+    "tipo_operacion": "consulta",
+    "pregunta_length": 68,
+    "tiempo_ms": 4370.57,
+    "tiempo_segundos": 4.37,
+    "contextos_utilizados": 7,
+    "usa_propagacion": true,
+    "timestamp": "2025-11-11T18:56:33.617647"
   }
 ]

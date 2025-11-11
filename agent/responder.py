@@ -16,13 +16,25 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
     - Instrucciones claras sobre uso de contextos
     - Información temporal explícita
     - Manejo de fragmentos relacionados
+    - Detección de preguntas de enumeración (NUEVO)
+    - Indicación de cantidad de contextos disponibles (NUEVO)
     """
     
-    # Detectar si la pregunta es temporal
+    # NUEVO: Contar contextos disponibles
+    num_contextos = len(contextos)
+    
+    # Detectar si la pregunta es temporal (MANTENER)
     es_pregunta_temporal = any(palabra in pregunta.lower() for palabra in [
         'mañana', 'ayer', 'hoy', 'semana', 'mes', 'lunes', 'martes', 
         'miércoles', 'jueves', 'viernes', 'sábado', 'domingo',
         'cuando', 'cuándo', 'qué día', 'fecha'
+    ])
+    
+    # NUEVO: Detectar si la pregunta pide enumeración
+    es_pregunta_enumeracion = any(palabra in pregunta.lower() for palabra in [
+        'qué casos', 'cuáles', 'cuántos', 'qué reuniones', 'qué proyectos',
+        'qué documentos', 'lista', 'todos los', 'cuáles son', 'enumera',
+        'menciona todos', 'qué temas', 'qué conversaciones'
     ])
     
     # Clasificar contextos por tipo
@@ -89,38 +101,75 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
     
     # Construir prompt según tipo de pregunta
     if es_pregunta_temporal and tiene_timestamps:
-        # Prompt especializado para preguntas temporales
-        prompt = f"""Eres un asistente experto que ayuda a responder preguntas sobre eventos,conversaciones, actividades programadas y documentos.
+        # CASO 1: Pregunta TEMPORAL
+        prompt = f"""Eres un asistente experto que ayuda a responder preguntas sobre eventos, conversaciones, actividades programadas y documentos.
 
 **PREGUNTA DEL USUARIO:**
 "{pregunta}"
 
+**CONTEXTOS DISPONIBLES ({num_contextos} contextos en total):**
 {chr(10).join(secciones)}
 
-**INSTRUCCIONES:**
-1. Si la pregunta es sobre contenido de un documento o conversacion, explica detalladamente basándote en los fragmentos del documento o conversacion
-2. Si la pregunta es temporal (fechas, horarios), prioriza esa información
-3. Si hay múltiples fragmentos del mismo documento, sintetízalos en una respuesta coherente y completa
-4. Incluye fechas y horarios cuando estén disponibles
-5. Si los fragmentos son de documentos técnicos o conceptuales, explica en detalle
+**INSTRUCCIONES IMPORTANTES:**
+1. Se te proporcionan {num_contextos} contextos con información relevante
+2. La pregunta tiene componente TEMPORAL - prioriza fechas y horarios
+3. Si hay MÚLTIPLES eventos/casos/documentos, menciónalos TODOS de forma agrupada
+4. Sintetiza información común entre los contextos
+5. Incluye fechas y horarios cuando estén disponibles
+6. Si los contextos son fragmentos relacionados, combínalos en una respuesta coherente
+
+**FORMATO DE RESPUESTA:**
+- Si hay múltiples casos/eventos: Indica cuántos encontraste y enuméralos de forma concisa
+- Agrupa por patrones comunes cuando sea posible
+- Sé completo pero evita redundancias
+
+**RESPUESTA:**"""
+
+    elif es_pregunta_enumeracion:
+        # CASO 2: Pregunta de ENUMERACIÓN (NUEVO)
+        prompt = f"""Eres un asistente experto en análisis y síntesis de información legal y documental.
+
+**PREGUNTA DEL USUARIO:**
+"{pregunta}"
+
+**CONTEXTOS DISPONIBLES ({num_contextos} contextos en total):**
+{chr(10).join(secciones)}
+
+**INSTRUCCIONES CRÍTICAS:**
+1. Se te proporcionan {num_contextos} contextos relevantes
+2. La pregunta pide una ENUMERACIÓN o LISTA de elementos
+3. Debes mencionar TODOS los casos/documentos/elementos encontrados
+4. NO te limites solo al primer contexto - sintetiza TODOS
+5. Agrupa por patrones comunes si existen (ej: "8 casos de Amparo por mora administrativa")
+6. Sé completo pero conciso - evita repetir la misma información
+
+**FORMATO DE RESPUESTA ESPERADO:**
+- Primero: Indica el total encontrado y el patrón común si existe
+- Luego: Enumera los elementos de forma concisa (ej: "Casos 1, 2, 3, 4, 5, 6, 7 y 8")
+- Finalmente: Menciona características comunes relevantes
+
+**EJEMPLO DE BUENA RESPUESTA:**
+"Durante [periodo] se discutieron 8 casos de [tipo] (Casos 1, 2, 3, 4, 5, 6, 7 y 8). Todos estos casos comparten [características comunes]."
 
 **RESPUESTA:**"""
 
     else:
-        # Prompt general para preguntas estructurales y documentos
+        # CASO 3: Pregunta GENERAL (explicación, concepto, etc.)
         prompt = f"""Eres un asistente experto que ayuda a explicar y responder sobre contenido de documentos y conversaciones.
 
 **PREGUNTA:**
 "{pregunta}"
 
+**CONTEXTOS DISPONIBLES ({num_contextos} contextos en total):**
 {chr(10).join(secciones)}
 
 **INSTRUCCIONES:**
-1. Responde basándote ÚNICAMENTE en la información de los contextos proporcionados
-2. Si la pregunta es sobre un concepto o procedimiento en un documento, explícalo de forma detallada y clara
-3. Si hay varios fragmentos del mismo documento, combina la información para dar una respuesta completa
-4. Estructura tu respuesta de forma clara, usando párrafos cuando sea necesario
-5. Si necesitas referenciar un fragmento específico, menciona su fuente
+1. Se te proporcionan {num_contextos} contextos con información relevante
+2. Responde basándote en la información de TODOS los contextos proporcionados
+3. Si la pregunta es sobre un concepto o procedimiento, explícalo de forma detallada y clara
+4. Si hay varios fragmentos del mismo documento/tema, combina la información para dar una respuesta completa
+5. Estructura tu respuesta de forma clara, usando párrafos cuando sea necesario
+6. Si necesitas referenciar un fragmento específico, menciona su fuente
 
 **RESPUESTA:**"""
     
