@@ -453,6 +453,28 @@ def configurar_parametros_propagacion_endpoint(factor_decaimiento: float = None,
 def obtener_estado_propagacion_endpoint():
     """Obtiene el estado actual del sistema de propagación."""
     return grafo.obtener_estado_propagacion()
+
+@app.post("ic")
+def reiniciar_chromadb_endpoint():
+    """
+    ⚠️ ENDPOINT PELIGROSO: Elimina TODOS los embeddings de ChromaDB.
+    Usar solo cuando se necesita recargar el dataset completamente desde cero.
+    """
+    from agent.semantica import reiniciar_coleccion
+    resultado = reiniciar_coleccion()
+    return resultado
+
+@app.get("/verificar-chromadb/")
+def verificar_chromadb_endpoint():
+    """
+    Verifica el estado actual de ChromaDB (cuántos documentos hay indexados).
+    """
+    from agent.semantica import verificar_estado_coleccion
+    count = verificar_estado_coleccion()
+    return {
+        "total_documentos": count,
+        "mensaje": f"ChromaDB contiene {count} documentos indexados"
+    }
     
 @app.get("/buscar/")
 def buscar_por_texto(texto: str):

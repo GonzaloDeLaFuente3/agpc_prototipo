@@ -59,64 +59,91 @@ def _construir_prompt(pregunta: str, momento: datetime) -> str:
     dia_semana = dia_semana_es.get(momento.strftime('%A'), momento.strftime('%A'))
     fecha_actual = momento.strftime('%Y-%m-%d %H:%M')
     
-    return f"""Eres un asistente experto en análisis temporal. Tu tarea es detectar si una pregunta tiene intención temporal y generar ventanas de tiempo precisas.
+    return f"""Eres un clasificador de intención temporal extremadamente CONSERVADOR.
 
-**CONTEXTO ACTUAL:**
-- Fecha y hora: {fecha_actual}
-- Día de la semana: {dia_semana}
+**PREGUNTA:** "{pregunta}"
+**MOMENTO ACTUAL:** {fecha_actual} ({dia_semana})
 
-**PREGUNTA DEL USUARIO:**
-"{pregunta}"
+---
 
-**INSTRUCCIONES:**
-1. Analiza si la pregunta tiene intención temporal clara
-2. Si es temporal, calcula la ventana de tiempo (inicio y fin) en formato ISO
-3. Responde SOLO con JSON válido (sin markdown, sin explicaciones extra)
+**REGLA CRÍTICA #1:** Solo clasifica como TEMPORAL si la pregunta contiene AL MENOS UNA de estas palabras/frases:
 
-**REGLAS DE INTERPRETACIÓN:**
+**Palabras temporales absolutas:**
+- Hoy, ayer, mañana, anteayer, pasado mañana
+- Esta semana, este mes, este año, este trimestre
+- Semana pasada, mes pasado, año pasado
+- Próxima semana, próximo mes, próximo año
+
+**Fechas específicas:**
+- "enero 2023", "el 15 de marzo", "año 2024"
+- "el lunes", "el martes" (días específicos)
+
+**Períodos con números:**
+- "últimos 3 días", "hace 2 semanas", "en los próximos 5 meses"
+
+**Preguntas sobre programación:**
+- "¿cuándo es mi reunión?", "¿qué tengo programado para...?"
+
+---
+
+**REGLA CRÍTICA #2:** SIEMPRE clasifica como ESTRUCTURAL si:
+
+1. **Busca un concepto o definición:** "Amparo por mora administrativa", "¿Qué es un despido?"
+2. **Busca casos SIN mencionar tiempo:** "Casos de acoso laboral", "Precedentes de contratos"
+3. **Busca procedimientos:** "¿Cómo se calcula?", "¿Cuál es el proceso?"
+4. **NO tiene ninguna palabra temporal de la lista anterior**
+
+---
+
+**EJEMPLOS DE CLASIFICACIÓN:**
+
+❌ INCORRECTO:
+Pregunta: "Amparo por mora administrativa"
+Clasificación: TEMPORAL ← ERROR!
+Razón: No tiene palabras temporales, es un concepto
+
+✅ CORRECTO:
+Pregunta: "Amparo por mora administrativa"
+Clasificación: ESTRUCTURAL
+Razón: Busca concepto legal, sin referencia temporal
+
+✅ CORRECTO:
+Pregunta: "¿Qué casos de amparo tuvimos ayer?"
+Clasificación: TEMPORAL
+Razón: Contiene "ayer" (palabra temporal absoluta)
+
+✅ CORRECTO:
+Pregunta: "Casos de despido sin causa"
+Clasificación: ESTRUCTURAL
+Razón: Busca casos en general, sin restricción temporal
+
+✅ CORRECTO:
+Pregunta: "¿Qué reuniones tengo mañana?"
+Clasificación: TEMPORAL
+Razón: Contiene "mañana" (palabra temporal absoluta)
+
+---
+
+**EN CASO DE DUDA → SIEMPRE ESTRUCTURAL**
+
+---
+
+**REGLAS DE INTERPRETACIÓN TEMPORAL (solo para consultas TEMPORALES):**
 - "mañana" = día siguiente completo (00:00:00 a 23:59:59)
-- "por la mañana" = 06:00:00 a 12:00:00
-- "por la tarde" = 14:00:00 a 20:00:00
-- "por la noche" = 20:00:00 a 23:59:59
 - "ayer" = día anterior completo
 - "hoy" = día actual completo
-- "esta semana" = desde el lunes de esta semana hasta el domingo
-- "semana pasada" = lunes a domingo de la semana anterior
-- "este mes" = primer día a último día del mes actual
+- "esta semana" = desde lunes hasta domingo de esta semana
 - "mes pasado" = primer día a último día del mes anterior
-- "el lunes" (sin calificador) = próximo lunes
-- "lunes pasado" = lunes de la semana anterior
-- Fechas específicas: "15 de marzo", "el 20 de octubre"
 
-**FORMATO DE RESPUESTA (JSON válido):**
+---
+
+Responde ÚNICAMENTE con un JSON válido en este formato:
 {{
-    "es_temporal": true/false,
+    "es_temporal": true o false,
+    "confianza": 0.0-1.0,
     "ventana_inicio": "YYYY-MM-DDTHH:MM:SS" o null,
     "ventana_fin": "YYYY-MM-DDTHH:MM:SS" o null,
-    "confianza": 0.95,
-    "explicacion": "Descripción breve de la interpretación"
-}}
-
-**EJEMPLOS:**
-
-Pregunta: "¿Qué reuniones tengo mañana por la tarde?"
-Respuesta:
-{{
-    "es_temporal": true,
-    "ventana_inicio": "2025-10-11T14:00:00",
-    "ventana_fin": "2025-10-11T20:00:00",
-    "confianza": 0.95,
-    "explicacion": "Mañana (11/10) por la tarde (14:00-20:00)"
-}}
-
-Pregunta: "¿Cómo funciona el sistema de propagación?"
-Respuesta:
-{{
-    "es_temporal": false,
-    "ventana_inicio": null,
-    "ventana_fin": null,
-    "confianza": 0.90,
-    "explicacion": "Consulta estructural sin referencia temporal"
+    "explicacion": "Breve justificación de la clasificación"
 }}
 
 RESPONDE AHORA:"""

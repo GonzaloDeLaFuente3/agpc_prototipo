@@ -215,16 +215,35 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             "posicion_fragmento": frag_meta['posicion_en_conversacion']
         }
         
-        # Agregar a lista para indexado batch (NO indexar ahora)
+        # Agregar a lista para indexado batch CON verificación de duplicados
         fragmentos_para_indexar_ids.append(frag_id)
         fragmentos_para_indexar_textos.append(frag_meta['texto'])
         
         fragmentos_ids.append(frag_id)
+        
+        # 🔍 DEBUG: Verificar duplicados en textos
+        if i > 0 and frag_meta['texto'] == fragmentos[i-1]['metadata']['texto']:
+            print(f"      ⚠️ WARNING: Fragmento {i} es DUPLICADO del fragmento {i-1}")
+            print(f"         Texto: {frag_meta['texto'][:80]}...")
     
     # INDEXAR TODOS LOS FRAGMENTOS EN UN SOLO BATCH
     if fragmentos_para_indexar_ids:
         print(f"Indexando {len(fragmentos_para_indexar_ids)} fragmentos en batch...")
-        indexar_documentos_batch(fragmentos_para_indexar_ids, fragmentos_para_indexar_textos)
+        # Preparar metadatos para ChromaDB
+        fragmentos_para_indexar_metadatas = []
+        for frag_id in fragmentos_para_indexar_ids:
+            meta = metadatos_contextos.get(frag_id, {})
+            fragmentos_para_indexar_metadatas.append({
+                'titulo': meta.get('titulo', 'Sin título'),
+                'timestamp': meta.get('timestamp'),
+                'conversacion_id': meta.get('conversacion_id')
+            })
+
+        indexar_documentos_batch(
+            fragmentos_para_indexar_ids, 
+            fragmentos_para_indexar_textos,
+            fragmentos_para_indexar_metadatas  # ✅ PASAR METADATOS
+        )
     
     # AHORA sí, calcular relaciones incrementales para cada fragmento
     for i, fragmento in enumerate(fragmentos):
@@ -302,7 +321,21 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         # INDEXAR FRAGMENTOS PDF EN BATCH
         if fragmentos_pdf_para_indexar_ids:
             print(f"Indexando {len(fragmentos_pdf_para_indexar_ids)} fragmentos PDF en batch...")
-            indexar_documentos_batch(fragmentos_pdf_para_indexar_ids, fragmentos_pdf_para_indexar_textos)
+            # Preparar metadatos para PDFs
+            fragmentos_pdf_para_indexar_metadatas = []
+            for frag_id in fragmentos_pdf_para_indexar_ids:
+                meta = metadatos_contextos.get(frag_id, {})
+                fragmentos_pdf_para_indexar_metadatas.append({
+                    'titulo': meta.get('titulo', 'Sin título'),
+                    'timestamp': meta.get('timestamp'),
+                    'conversacion_id': meta.get('conversacion_id')
+                })
+
+            indexar_documentos_batch(
+                fragmentos_pdf_para_indexar_ids, 
+                fragmentos_pdf_para_indexar_textos,
+                fragmentos_pdf_para_indexar_metadatas  # ✅ PASAR METADATOS
+            )
         
         # AHORA calcular relaciones para PDFs
         for fragmento_id in fragmentos_pdf_ids:
@@ -338,7 +371,11 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
 
     # Al final de agregar_conversacion, antes del return
     verificar_estado_coleccion()
-    
+
+    # ✅ NUEVO: Verificar y reparar índice después de indexación batch
+    from agent.semantica import verificar_y_reparar_indice
+    verificar_y_reparar_indice()
+
     return resultado
 
 def _guardar_conversaciones():
@@ -469,8 +506,12 @@ def _calcular_similitud_estructural(claves_a: Set[str], claves_b: Set[str], text
         indexar_documento(temp_id, texto_a)
         
         # Buscar similitud con texto_b
+        # ✅ GENERAR EMBEDDING EXACTAMENTE COMO RAG
+        from agent.semantica import modelo_embeddings
+        embedding_b = modelo_embeddings.encode(texto_b)  # ⚠️ SIN LISTA, SIN [0]
+
         resultado = coleccion.query(
-            query_texts=[texto_b],
+            query_embeddings=[embedding_b.tolist()],
             n_results=10,
             include=['distances']
         )
@@ -1176,36 +1217,26 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                 print(f"\n   📅 Fallback exitoso: {len(contextos_en_ventana_completa)} contextos en ventana")
                 contextos_filtrados_temporalmente = 0
             else:
-                # PASO 2: Si no hay nada en ventana, buscar por proximidad
-                print(f"      ⚠️ Sin contextos en ventana. Buscando por proximidad temporal...")
+                # ✅ ESTRATEGIA 2 MEJORADA: Usar candidatos semánticos originales
+                print(f"      ⚠️ Sin contextos en ventana temporal")
+                print(f"      🔄 ESTRATEGIA 2: Recuperar candidatos semánticos originales")
                 
-                for ctx_id, meta in metadatos_contextos.items():
-                    timestamp = meta.get('timestamp')
-                    if timestamp:
-                        from agent.utils import parse_iso_datetime_safe
-                        fecha_ctx = parse_iso_datetime_safe(timestamp)
-                        if fecha_ctx:
-                            diferencia = abs((momento_consulta - fecha_ctx).days)
-                            contextos_con_fechas.append((ctx_id, diferencia, fecha_ctx))
+                # ✅ CRÍTICO: Usar ids_candidatos que ya están ordenados por similitud
+                ids_similares = ids_candidatos[:k_busqueda]
+                contextos_filtrados_temporalmente = 0
                 
-                if contextos_con_fechas:
-                    contextos_con_fechas.sort(key=lambda x: x[1])
-                    
-                    print(f"\n   📅 Contextos por proximidad temporal (top 10):")
-                    for ctx_id, dias_diff, fecha_ctx in contextos_con_fechas[:10]:
-                        meta = metadatos_contextos.get(ctx_id, {})
+                print(f"      ✅ Usando {len(ids_similares)} contextos semánticamente más relevantes")
+                print(f"      📝 Nota: Filtro temporal RELAJADO - priorizando relevancia semántica")
+                
+                # Mostrar qué contextos se van a usar
+                print(f"\n      📚 Contextos seleccionados (por similitud semántica):")
+                for i, ctx_id in enumerate(ids_similares[:5]):
+                    if ctx_id in metadatos_contextos:
+                        meta = metadatos_contextos[ctx_id]
                         titulo = meta.get('titulo', 'Sin título')
-                        print(f"      - {titulo[:40]}: {fecha_ctx.strftime('%d/%m/%Y')} (±{dias_diff} días)")
-                    
-                    print(f"\n   📄 Usando {min(k_busqueda, len(contextos_con_fechas))} contextos más cercanos temporalmente")
-                    ids_similares = [ctx_id for ctx_id, _, _ in contextos_con_fechas[:k_busqueda]]
-                    
-                    contextos_filtrados_temporalmente = 0
-                else:
-                    # Último recurso: búsqueda semántica pura
-                    print(f"\n   📄 ÚLTIMO RECURSO: Usando búsqueda semántica pura")
-                    ids_similares = ids_candidatos[:k_busqueda]
-                    contextos_filtrados_temporalmente = 0
+                        timestamp = meta.get('timestamp', 'Sin fecha')
+                        print(f"         {i+1}. {titulo[:50]}")
+                        print(f"            Fecha: {timestamp}")
     else:
         # ✅ CASO SEMÁNTICO/ESTRUCTURAL (SIN FILTRO TEMPORAL)
         print(f"\n📚 CONSULTA SEMÁNTICA/ESTRUCTURAL (sin filtro temporal)")

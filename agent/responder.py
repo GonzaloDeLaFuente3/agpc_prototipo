@@ -154,7 +154,7 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
 **RESPUESTA:**"""
 
     else:
-        # CASO 3: Pregunta GENERAL (explicación, concepto, etc.)
+        # CASO 3: Pregunta GENERAL (explicación, concepto, etc.) - MEJORADO
         prompt = f"""Eres un asistente experto que ayuda a explicar y responder sobre contenido de documentos y conversaciones.
 
 **PREGUNTA:**
@@ -163,13 +163,22 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
 **CONTEXTOS DISPONIBLES ({num_contextos} contextos en total):**
 {chr(10).join(secciones)}
 
-**INSTRUCCIONES:**
-1. Se te proporcionan {num_contextos} contextos con información relevante
-2. Responde basándote en la información de TODOS los contextos proporcionados
-3. Si la pregunta es sobre un concepto o procedimiento, explícalo de forma detallada y clara
-4. Si hay varios fragmentos del mismo documento/tema, combina la información para dar una respuesta completa
-5. Estructura tu respuesta de forma clara, usando párrafos cuando sea necesario
-6. Si necesitas referenciar un fragmento específico, menciona su fuente
+**INSTRUCCIONES CRÍTICAS - LEE CON ATENCIÓN:**
+1. Se te proporcionan {num_contextos} contextos relevantes para responder
+2. **DEBES ANALIZAR Y USAR TODOS LOS {num_contextos} CONTEXTOS** en tu respuesta
+3. Si varios contextos contienen casos o ejemplos similares, MENCIÓNALOS TODOS de forma concisa
+4. Si encuentras múltiples casos/documentos relacionados, AGRÚPALOS y haz una síntesis clara
+5. NO te limites solo al primer contexto - tu respuesta debe reflejar el análisis completo de todos los contextos
+6. Si los contextos son fragmentos del mismo tema, combínalos en una respuesta coherente
+
+**FORMATO DE RESPUESTA ESPERADO:**
+- Si hay múltiples casos/documentos similares: "Se encontraron {num_contextos} casos relacionados: [lista breve o agrupación]"
+- Si hay información común en varios contextos: "Los contextos mencionan como patrón común: [síntesis]"
+- Si son fragmentos relacionados: Integra la información en párrafos coherentes sin repetir
+
+**EJEMPLO DE BUENA RESPUESTA:**
+Si la pregunta es "¿Qué casos se discutieron?" y tienes 8 contextos de "Amparo por mora":
+"Se encontraron 8 casos de Amparo por mora administrativa (Casos 1, 2, 3, 4, 5, 6, 7 y 8). Todos comparten el patrón de que el proceso es rápido (30-60 días) y el Estado debe cumplir las órdenes judiciales bajo amenaza de multas."
 
 **RESPUESTA:**"""
     

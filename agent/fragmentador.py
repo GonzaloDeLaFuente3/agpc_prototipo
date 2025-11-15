@@ -7,14 +7,19 @@ from agent.extractor import extraer_palabras_clave
 from agent.temporal_parser import detectar_timestamps_fragmento
 from agent.utils import normalizar_timestamp_para_guardar
 
-def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300) -> List[str]:
+def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300, min_palabras: int = 50) -> List[str]:
     """
     Fragmenta una conversación en bloques semánticamente coherentes.
-    Criterios de fragmentación:
-    1. Cambios de hablante (si se detectan patrones como "Juan:", "- María:")
-    2. Párrafos largos (más de max_palabras)
-    3. Cambios de tema (detección básica por puntos/cambios abruptos)
-    4. Separadores explícitos (líneas con "---", "***", etc.)
+    
+    ESTRATEGIA MEJORADA:
+    1. Agrupa múltiples líneas de diálogo hasta alcanzar min_palabras
+    2. Corta en cambios de tema o cuando alcanza max_palabras
+    3. Mantiene contexto completo de intercambios
+    
+    Args:
+        texto: Texto completo de la conversación
+        max_palabras: Máximo de palabras por fragmento (default: 300)
+        min_palabras: Mínimo de palabras por fragmento (default: 50)
     """
     if not texto or not texto.strip():
         return []
@@ -33,38 +38,79 @@ def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300) -> Lis
             continue
             
         # 2. Detectar cambios de hablante
-        # Patrones: "Nombre:", "- Nombre:", "[Timestamp] Nombre:"
         patron_hablante = r'^(\s*-?\s*[A-ZÁÉÍÓÚ][a-záéíóúñ\s]+:|^\[\d+:\d+\]\s*[A-ZÁÉÍÓÚ][a-záéíóúñ\s]+:)'
         
         lineas = bloque.split('\n')
         fragmento_actual = []
+        palabras_actuales = 0
         
         for linea in lineas:
             linea = linea.strip()
             if not linea:
                 continue
-                
-            # Si detectamos cambio de hablante y ya tenemos contenido, crear fragmento
+            
+            palabras_linea = len(linea.split())
+            
+            # ✅ NUEVA LÓGICA: Solo crear fragmento si:
+            # 1. Ya tenemos suficiente contexto (>= min_palabras)
+            # 2. Y detectamos cambio de hablante
+            # 3. O alcanzamos max_palabras
+            
             if re.match(patron_hablante, linea) and fragmento_actual:
-                texto_fragmento = '\n'.join(fragmento_actual).strip()
-                if len(texto_fragmento.split()) > 10:  # Mínimo 10 palabras
-                    fragmentos_finales.extend(_dividir_por_tamaño(texto_fragmento, max_palabras))
-                fragmento_actual = [linea]
+                # Si ya tenemos suficiente contexto, crear fragmento
+                if palabras_actuales >= min_palabras or palabras_actuales + palabras_linea > max_palabras:
+                    texto_fragmento = '\n'.join(fragmento_actual).strip()
+                    if palabras_actuales >= 10:  # Mínimo absoluto
+                        fragmentos_finales.append(texto_fragmento)
+                    
+                    # Iniciar nuevo fragmento con esta línea
+                    fragmento_actual = [linea]
+                    palabras_actuales = palabras_linea
+                else:
+                    # Aún no tenemos suficiente contexto, seguir agregando
+                    fragmento_actual.append(linea)
+                    palabras_actuales += palabras_linea
             else:
+                # Agregar línea al fragmento actual
                 fragmento_actual.append(linea)
+                palabras_actuales += palabras_linea
+                
+                # Si alcanzamos max_palabras, forzar corte
+                if palabras_actuales >= max_palabras:
+                    texto_fragmento = '\n'.join(fragmento_actual).strip()
+                    if palabras_actuales >= 10:
+                        fragmentos_finales.append(texto_fragmento)
+                    fragmento_actual = []
+                    palabras_actuales = 0
         
         # Agregar último fragmento del bloque
         if fragmento_actual:
             texto_fragmento = '\n'.join(fragmento_actual).strip()
-            if len(texto_fragmento.split()) > 10:
-                fragmentos_finales.extend(_dividir_por_tamaño(texto_fragmento, max_palabras))
+            palabras = len(texto_fragmento.split())
+            
+            # Si es muy corto, intentar unir con el fragmento anterior
+            if palabras < min_palabras and fragmentos_finales:
+                fragmentos_finales[-1] = fragmentos_finales[-1] + '\n' + texto_fragmento
+            elif palabras >= 10:  # Mínimo absoluto
+                fragmentos_finales.append(texto_fragmento)
     
     # Si no se encontraron patrones especiales, fragmentar por párrafos y tamaño
     if not fragmentos_finales:
         fragmentos_finales = _dividir_por_parrafos_y_tamaño(texto, max_palabras)
     
-    # Limpieza final
-    return [f.strip() for f in fragmentos_finales if f.strip() and len(f.split()) >= 5]
+    # Limpieza final: eliminar fragmentos muy cortos
+    fragmentos_limpios = []
+    for f in fragmentos_finales:
+        f = f.strip()
+        palabras = len(f.split())
+        
+        # Si el fragmento es muy corto, intentar unir con el anterior
+        if palabras < 20 and fragmentos_limpios:
+            fragmentos_limpios[-1] = fragmentos_limpios[-1] + '\n' + f
+        elif palabras >= 10:
+            fragmentos_limpios.append(f)
+    
+    return fragmentos_limpios
 
 def _dividir_por_tamaño(texto: str, max_palabras: int) -> List[str]:
     """Divide un texto por tamaño máximo de palabras, respetando frases completas."""
