@@ -1,4 +1,4 @@
-# agent/grafo.py - Versión limpia y optimizada
+# agent/grafo.py 
 import networkx as nx
 import pickle
 import json
@@ -26,7 +26,7 @@ from agent.semantica import verificar_estado_coleccion
 # Variable global para el propagador
 propagador_global = None
 
-# Nuevas estructuras de datos
+#estructuras de datos
 conversaciones_metadata = {}
 fragmentos_metadata = {}
 
@@ -35,7 +35,7 @@ UMBRAL_SIMILITUD = 0.5
 
 def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
     """
-    VERSIÓN OPTIMIZADA - Actualiza relaciones usando batch de similitudes.
+    Actualiza relaciones usando batch de similitudes.
     Esto evita cálculos individuales y usa el poder de ChromaDB.
     """
     parametros = usar_parametros_configurables()
@@ -76,13 +76,13 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
         tipo_existente = metadatos_existente.get("tipo_contexto", "general")
         texto_existente = metadatos_existente.get("texto", "")
         
-        # Calcular similitud Jaccard (rápido, no necesita optimización)
+        # Calcular similitud Jaccard
         similitud_jaccard = _calcular_similitud_jaccard(claves_nuevo, claves_existente)
         
-        # Obtener similitud semántica del batch (ya calculada)
+        # Obtener similitud semántica del batch 
         similitud_semantica = similitudes_semanticas.get(nodo_existente, 0.0)
         
-        # Calcular similitud estructural (promedio)
+        # Calcular similitud estructural 
         similitud_estructural = (similitud_jaccard + similitud_semantica) / 2
         
         # Calcular relevancia temporal
@@ -127,8 +127,7 @@ def _actualizar_relaciones_incremental(nodo_nuevo: str) -> Dict:
 def agregar_conversacion(titulo: str, contenido: str, fecha: str = None, 
                         participantes: List[str] = None, metadata: Dict = None, attachments: Optional[List[Dict]] = None ) -> Dict:
     """
-    Agrega una conversación completa con actualización incremental por fragmento.
-    VERSIÓN OPTIMIZADA CON BATCH PROCESSING
+    Agrega una conversación completa con actualización incremental por fragmento.CON BATCH PROCESSING
     """
     # Normalizar fecha
     fecha_normalizada = None
@@ -136,22 +135,22 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     # Caso 1: Conversación explícitamente atemporal
     if fecha == 'ATEMPORAL':
         fecha_normalizada = None
-        print(f"⚪ Conversación ATEMPORAL - sin timestamp")
+        print(f" Conversación ATEMPORAL - sin timestamp")
     
     # Caso 2: Conversación con fecha específica
-    elif fecha and fecha.strip():  # ✅ Verificar que no sea string vacío
+    elif fecha and fecha.strip():  # Verificar que no sea string vacío
         fecha_normalizada = normalizar_timestamp_para_guardar(fecha)
         if not fecha_normalizada:
             # Si no se puede normalizar, rechazar (no usar fecha actual)
             raise ValueError(f"Formato de fecha inválido: {fecha}")
-        print(f"✅ Fecha normalizada: {fecha_normalizada}")
+        print(f" Fecha normalizada: {fecha_normalizada}")
     
     # Caso 3: No se especificó fecha (None o vacío) - CONVERSACIÓN NO TEMPORAL
     else:
         fecha_normalizada = None
-        print(f"⚪ Conversación NO TEMPORAL - sin timestamp asignado")
+        print(f"Conversación NO TEMPORAL - sin timestamp asignado")
     
-    print(f"📋 Resultado final - Fecha: {fecha_normalizada}")
+    print(f"Resultado final - Fecha: {fecha_normalizada}")
 
     # Preparar datos de conversación
     conversacion_data = {
@@ -183,7 +182,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         'created_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
     }
     
-    print(f"📝 Procesando conversación '{titulo}' con {len(fragmentos)} fragmentos...")
+    print(f" Procesando conversación '{titulo}' con {len(fragmentos)} fragmentos...")
     
     # Recolectar todos los fragmentos para indexado batch
     fragmentos_para_indexar_ids = []
@@ -201,7 +200,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         # Guardar metadatos del fragmento
         fragmentos_metadata[frag_id] = frag_meta
         
-        # También mantener compatibilidad con metadatos_contextos
+        #  mantener compatibilidad con metadatos_contextos
         metadatos_contextos[frag_id] = {
             "titulo": titulo_fragmento,
             "texto": frag_meta['texto'],
@@ -221,9 +220,9 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         
         fragmentos_ids.append(frag_id)
         
-        # 🔍 DEBUG: Verificar duplicados en textos
+        #  DEBUG: Verificar duplicados en textos
         if i > 0 and frag_meta['texto'] == fragmentos[i-1]['metadata']['texto']:
-            print(f"      ⚠️ WARNING: Fragmento {i} es DUPLICADO del fragmento {i-1}")
+            print(f"WARNING: Fragmento {i} es DUPLICADO del fragmento {i-1}")
             print(f"         Texto: {frag_meta['texto'][:80]}...")
     
     # INDEXAR TODOS LOS FRAGMENTOS EN UN SOLO BATCH
@@ -242,7 +241,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         indexar_documentos_batch(
             fragmentos_para_indexar_ids, 
             fragmentos_para_indexar_textos,
-            fragmentos_para_indexar_metadatas  # ✅ PASAR METADATOS
+            fragmentos_para_indexar_metadatas  # PASAR METADATOS
         )
     
     # AHORA sí, calcular relaciones incrementales para cada fragmento
@@ -255,7 +254,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         
         # Mostrar progreso cada 3 fragmentos
         if (i + 1) % 3 == 0:
-            print(f"  ✅ Fragmento {i+1}/{len(fragmentos)}: {stats_frag['conexiones_creadas']} conexiones creadas")
+            print(f" Fragmento {i+1}/{len(fragmentos)}: {stats_frag['conexiones_creadas']} conexiones creadas")
     
     # PROCESAR ATTACHMENTS (PDFs)
     fragmentos_pdf_ids = []
@@ -270,14 +269,14 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
         
         for att_idx, attachment in enumerate(attachments):
             if not attachment.get('extracted_text'):
-                print(f"⚠️ Attachment {att_idx} sin texto extraído, saltando...")
+                print(f" Attachment {att_idx} sin texto extraído, saltando...")
                 continue
             
             # Fragmentar texto del PDF
             texto_pdf = attachment['extracted_text']
             fragmentos_texto_pdf = fragmentar_texto_pdf(texto_pdf, max_palabras=500)
             
-            print(f"📄 PDF '{attachment['filename']}' generó {len(fragmentos_texto_pdf)} fragmentos")
+            print(f" PDF '{attachment['filename']}' generó {len(fragmentos_texto_pdf)} fragmentos")
             
             for frag_idx, fragmento_texto in enumerate(fragmentos_texto_pdf):
                 # Crear ID único para este fragmento de PDF
@@ -334,7 +333,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             indexar_documentos_batch(
                 fragmentos_pdf_para_indexar_ids, 
                 fragmentos_pdf_para_indexar_textos,
-                fragmentos_pdf_para_indexar_metadatas  # ✅ PASAR METADATOS
+                fragmentos_pdf_para_indexar_metadatas  # PASAR METADATOS
             )
         
         # AHORA calcular relaciones para PDFs
@@ -342,7 +341,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
             stats_pdf = _actualizar_relaciones_incremental(fragmento_id)
             estadisticas_pdf.append(stats_pdf)
         
-        print(f"✅ Procesados {len(fragmentos_pdf_ids)} fragmentos PDF con relaciones calculadas")
+        print(f" Procesados {len(fragmentos_pdf_ids)} fragmentos PDF con relaciones calculadas")
     
     # Actualizar IDs de conversación con PDFs
     conversaciones_metadata[conversacion_id]['fragmentos_ids'].extend(fragmentos_pdf_ids)
@@ -372,7 +371,7 @@ def agregar_conversacion(titulo: str, contenido: str, fecha: str = None,
     # Al final de agregar_conversacion, antes del return
     verificar_estado_coleccion()
 
-    # ✅ NUEVO: Verificar y reparar índice después de indexación batch
+    # Verificar y reparar índice después de indexación batch
     from agent.semantica import verificar_y_reparar_indice
     verificar_y_reparar_indice()
 
@@ -440,7 +439,7 @@ def usar_parametros_configurables():
         import main
         return main.parametros_sistema
     except (ImportError, AttributeError) as e:
-        print(f"⚠️  No se pudieron cargar parámetros configurables: {e}")
+        print(f"No se pudieron cargar parámetros configurables: {e}")
         # Usar valores por defecto si no están disponibles
         return {
             'umbral_similitud': 0.5,
@@ -498,17 +497,16 @@ def _calcular_similitud_estructural(claves_a: Set[str], claves_b: Set[str], text
     # Calcular Jaccard
     similitud_jaccard = _calcular_similitud_jaccard(claves_a, claves_b)
     
-    # Para similitud semántica, usar un cálculo directo simple
-    # (no podemos usar batch aquí porque solo comparamos 2 textos)
+    # Para similitud semántica, usar un cálculo directo simple(no podemos usar batch aquí porque solo comparamos 2 textos)
     try:
         # Indexar temporalmente texto_a
         temp_id = f"temp_{hash(texto_a)}"
         indexar_documento(temp_id, texto_a)
         
         # Buscar similitud con texto_b
-        # ✅ GENERAR EMBEDDING EXACTAMENTE COMO RAG
+        # GENERAR EMBEDDING  COMO RAG
         from agent.semantica import modelo_embeddings
-        embedding_b = modelo_embeddings.encode(texto_b)  # ⚠️ SIN LISTA, SIN [0]
+        embedding_b = modelo_embeddings.encode(texto_b)  #  SIN LISTA, SIN [0]
 
         resultado = coleccion.query(
             query_embeddings=[embedding_b.tolist()],
@@ -584,7 +582,7 @@ def _calcular_similitud_textual_exacta(texto_a: str, texto_b: str) -> float:
 
 def _recalcular_relaciones():
     """
-    VERSIÓN OPTIMIZADA: Recalcula todas las relaciones usando batch processing.
+    Recalcula todas las relaciones usando batch processing.
     Mucho más rápido que el método original.
     """
     print("Iniciando recálculo optimizado de relaciones...")
@@ -596,7 +594,7 @@ def _recalcular_relaciones():
     total_nodos = len(nodos)
     
     print(f"Recalculando relaciones para {total_nodos} nodos...")
-    print(f"⚙️  Umbral de similitud: {UMBRAL_SIMILITUD}")
+    print(f" Umbral de similitud: {UMBRAL_SIMILITUD}")
     
     pares_unicos_creados = 0
     total_comparaciones = (total_nodos * (total_nodos - 1)) // 2
@@ -671,13 +669,13 @@ def _recalcular_relaciones():
             # Mostrar progreso cada 5 nodos
             if (nodo_idx_global + 1) % 5 == 0:
                 porcentaje = (comparaciones_realizadas / total_comparaciones) * 100
-                print(f"  📈 Progreso: {nodo_idx_global + 1}/{total_nodos} nodos | "
+                print(f"  Progreso: {nodo_idx_global + 1}/{total_nodos} nodos | "
                       f"{porcentaje:.1f}% completado | "
                       f"Relaciones creadas: {pares_unicos_creados}")
     
     tiempo_total = time.time() - inicio_total
     
-    print(f"\n✅ Recálculo completado en {tiempo_total:.2f} segundos")
+    print(f"\n Recálculo completado en {tiempo_total:.2f} segundos")
     print(f"Pares únicos creados: {pares_unicos_creados}")
     print(f"Total aristas direccionales: {grafo_contextos.number_of_edges()}")
     print(f"Comparaciones procesadas: {comparaciones_realizadas:,}")
@@ -689,7 +687,7 @@ def _recalcular_relaciones():
     }
 
 def _guardar_grafo():
-    """Guarda el grafo y metadatos en disco - VERSIÓN OPTIMIZADA."""
+    """Guarda el grafo y metadatos en disco."""
     with _lock:
         os.makedirs("data", exist_ok=True)
         
@@ -699,7 +697,7 @@ def _guardar_grafo():
         with open(ARCHIVO_METADATOS, 'w', encoding='utf-8') as f:
             json.dump(metadatos_contextos, f, ensure_ascii=False, indent=2)
 
-        # NO llamar a actualizar_propagador() aquí - se hará al final de cada conversación
+        # NO llamar a actualizar_propagador() aquí. se hará al final de cada conversación
 
 # guardar al final del batch
 def _guardar_grafo_con_propagador():
@@ -807,10 +805,10 @@ def agregar_contexto(titulo: str, texto: str, es_temporal: bool = None, referenc
     _guardar_grafo()
     
     # Mostrar estadísticas de la actualización
-    print(f"✅ Contexto agregado: {titulo[:50]}...")
-    print(f"   🔗 Conexiones creadas: {stats_actualizacion['conexiones_creadas']}")
-    print(f"   ⚡ Tiempo: {stats_actualizacion['tiempo_ms']}ms")
-    print(f"   📊 Total relaciones: {stats_actualizacion['total_relaciones_grafo']}")
+    print(f"Contexto agregado: {titulo[:50]}...")
+    print(f"Conexiones creadas: {stats_actualizacion['conexiones_creadas']}")
+    print(f"Tiempo: {stats_actualizacion['tiempo_ms']}ms")
+    print(f"Total relaciones: {stats_actualizacion['total_relaciones_grafo']}")
     
     return id_contexto
 
@@ -860,7 +858,7 @@ def obtener_estadisticas() -> Dict:
     
     stats["tipos_contexto"] = tipos_count
 
-    print(f"🔍 DEBUG: Nodos={stats['total_contextos']}, Aristas unidireccionales={stats['total_relaciones']}, Aristas bidireccionales={stats['relaciones_bidireccionales']}")  # DEBUG
+    print(f"DEBUG: Nodos={stats['total_contextos']}, Aristas unidireccionales={stats['total_relaciones']}, Aristas bidireccionales={stats['relaciones_bidireccionales']}")  # DEBUG
     
     return stats
 
@@ -971,7 +969,7 @@ def exportar_grafo_para_visualizacion() -> Dict:
 def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia_temporal: Optional[str] = None, 
                            factor_refuerzo: float = 1.0, momento_consulta: Optional[datetime] = None) -> Dict:
     """Construye subgrafo considerando momento de consulta y similitud estructural."""
-    print(f"🔧 CONSTRUYENDO ÁRBOL con factor_refuerzo: {factor_refuerzo}")
+    print(f"CONSTRUYENDO ÁRBOL con factor_refuerzo: {factor_refuerzo}")
 
     if not contextos_ids:
         return {"nodes": [], "edges": [], "meta": {"error": "No hay contextos"}}
@@ -989,7 +987,7 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
     
     nodos = [{
         "id": raiz_id,
-        "label": f"❓ {pregunta_corta}",
+        "label": f" {pregunta_corta}",
         "title": f"Pregunta: {pregunta}\nConsultado: {momento_str}",
         "group": "pregunta"
     }]
@@ -1057,11 +1055,11 @@ def construir_arbol_consulta(pregunta: str, contextos_ids: List[str], referencia
         
         # Calcular peso efectivo según estrategia
         if intencion == "TEMPORAL" and rt > 0.5:
-            # 🕐 Fórmula temporal: base temporal + bonus semántico
+            # Fórmula temporal: base temporal + bonus semántico
             we = rt * factor_refuerzo * (1 + ws)
             estrategia_usada = "TEMPORAL"
         else:
-            # 📚 Fórmula estructural/mixta: base semántica + bonus temporal
+            # Fórmula estructural/mixta: base semántica + bonus temporal
             we = ws * (1 + rt * factor_refuerzo)
             estrategia_usada = "ESTRUCTURAL/MIXTA"
 
@@ -1101,7 +1099,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
     parametros = usar_parametros_configurables()
     factor_base = parametros.get('factor_refuerzo_temporal', 1.5)
     
-    # Analizar intención temporal con contexto MEJORADO
+    # Analizar intención temporal con contexto 
     analisis_intencion = analizar_temporalidad_con_llm(
         pregunta, 
         momento_consulta,
@@ -1125,8 +1123,8 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         print(f"❌ Error en búsqueda semántica: {e}")
         ids_candidatos = []
     
-    # 🔍 LOGGING: Mostrar contextos candidatos
-    print(f"\n📋 CONTEXTOS CANDIDATOS (top {min(10, len(ids_candidatos))}):")
+    #  LOGGING: Mostrar contextos candidatos
+    print(f"\nCONTEXTOS CANDIDATOS (top {min(10, len(ids_candidatos))}):")
     for i, ctx_id in enumerate(ids_candidatos[:10]):
         if ctx_id in metadatos_contextos:
             titulo = metadatos_contextos[ctx_id].get('titulo', 'Sin título')[:60]
@@ -1141,7 +1139,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         ventana_inicio = ventana_temporal['inicio']
         ventana_fin = ventana_temporal['fin']
         
-        print(f"\n🔍 APLICANDO FILTRO TEMPORAL:")
+        print(f"\nAPLICANDO FILTRO TEMPORAL:")
         print(f"   Ventana: {ventana_inicio} → {ventana_fin}")
         
         # Filtrar contextos por ventana temporal
@@ -1186,7 +1184,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         if ids_en_ventana:
             ids_similares = ids_en_ventana[:k_busqueda]
             contextos_filtrados_temporalmente = len(ids_candidatos) - len(ids_en_ventana)
-            print(f"\n   ✅ {len(ids_en_ventana)} contextos en ventana → seleccionando {len(ids_similares)}")
+            print(f"\n  {len(ids_en_ventana)} contextos en ventana → seleccionando {len(ids_similares)}")
         else:
             print(f"\n   ⚠️ NINGÚN CONTEXTO en ventana temporal. Aplicando fallback...")
             
@@ -1217,19 +1215,19 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                 print(f"\n   📅 Fallback exitoso: {len(contextos_en_ventana_completa)} contextos en ventana")
                 contextos_filtrados_temporalmente = 0
             else:
-                # ✅ ESTRATEGIA 2 MEJORADA: Usar candidatos semánticos originales
+                # Usar candidatos semánticos originales
                 print(f"      ⚠️ Sin contextos en ventana temporal")
-                print(f"      🔄 ESTRATEGIA 2: Recuperar candidatos semánticos originales")
+                print(f"ESTRATEGIA 2: Recuperar candidatos semánticos originales")
                 
-                # ✅ CRÍTICO: Usar ids_candidatos que ya están ordenados por similitud
+                # Usar ids_candidatos que ya están ordenados por similitud
                 ids_similares = ids_candidatos[:k_busqueda]
                 contextos_filtrados_temporalmente = 0
                 
-                print(f"      ✅ Usando {len(ids_similares)} contextos semánticamente más relevantes")
+                print(f"       Usando {len(ids_similares)} contextos semánticamente más relevantes")
                 print(f"      📝 Nota: Filtro temporal RELAJADO - priorizando relevancia semántica")
                 
                 # Mostrar qué contextos se van a usar
-                print(f"\n      📚 Contextos seleccionados (por similitud semántica):")
+                print(f"\n       Contextos seleccionados (por similitud semántica):")
                 for i, ctx_id in enumerate(ids_similares[:5]):
                     if ctx_id in metadatos_contextos:
                         meta = metadatos_contextos[ctx_id]
@@ -1238,7 +1236,7 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
                         print(f"         {i+1}. {titulo[:50]}")
                         print(f"            Fecha: {timestamp}")
     else:
-        # ✅ CASO SEMÁNTICO/ESTRUCTURAL (SIN FILTRO TEMPORAL)
+        #  CASO SEMÁNTICO/ESTRUCTURAL (SIN FILTRO TEMPORAL)
         print(f"\n📚 CONSULTA SEMÁNTICA/ESTRUCTURAL (sin filtro temporal)")
         ids_similares = ids_candidatos[:k_busqueda]
         contextos_filtrados_temporalmente = 0
@@ -1250,11 +1248,11 @@ def analizar_consulta_completa(pregunta: str, momento_consulta: Optional[datetim
         intencion_detectada = analisis_intencion.get('intencion_temporal', 'ESTRUCTURAL')
         construir_arbol_consulta._intencion_actual = intencion_detectada
         
-        print(f"\n🏗️  Construyendo árbol de consulta con intención: {intencion_detectada}")
+        print(f"\n Construyendo árbol de consulta con intención: {intencion_detectada}")
         
         arbol = construir_arbol_consulta(pregunta, ids_similares, referencia_temporal, factor_refuerzo, momento_consulta)
     else:
-        print(f"\n❌ NO SE ENCONTRARON CONTEXTOS RELEVANTES")
+        print(f"\n NO SE ENCONTRARON CONTEXTOS RELEVANTES")
         arbol = {"nodes": [], "edges": [], "meta": {"error": "No se encontraron contextos relevantes"}}
     
     return {
@@ -1289,11 +1287,11 @@ def _contexto_en_ventana_temporal(contexto_id: str, ventana_inicio: str, ventana
             # Usar la primera referencia encontrada
             timestamp = referencias[0][1]
         else:
-            print(f"⚠️ Contexto {contexto_id[:8]} sin timestamp - EXCLUIDO")
+            print(f"Contexto {contexto_id[:8]} sin timestamp - EXCLUIDO")
             return False
     
     try:
-        # USAR EL PARSER SEGURO MEJORADO
+        # USAR EL PARSER SEGURO 
         from agent.utils import parse_iso_datetime_safe
         
         fecha_contexto = parse_iso_datetime_safe(timestamp)
@@ -1419,7 +1417,7 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
                                                k_inicial: int = None,
                                                factor_refuerzo_temporal_custom: float = None) -> Dict:
     """
-    Análisis completo de consulta INCLUYENDO propagación dinámica desde contextos relevantes.
+    Análisis  de consulta INCLUYENDO propagación dinámica desde contextos relevantes.
         pregunta: Consulta del usuario
         momento_consulta: Momento de la consulta
         usar_propagacion: Si usar propagación además de búsqueda directa
@@ -1449,9 +1447,9 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
 
         # APLICAR PARÁMETROS CON DEBUGGING
         if factor_decaimiento is not None or umbral_activacion is not None:
-            print(f"🔧 CONFIGURANDO: factor={factor_decaimiento}, umbral={umbral_activacion}")
+            print(f" CONFIGURANDO: factor={factor_decaimiento}, umbral={umbral_activacion}")
             propagador.configurar_parametros(factor_decaimiento, umbral_activacion)
-            print(f"🔧 CONFIGURADO: factor={propagador.factor_decaimiento}, umbral={propagador.umbral_activacion}")
+            print(f" CONFIGURADO: factor={propagador.factor_decaimiento}, umbral={propagador.umbral_activacion}")
 
         # APLICAR PARÁMETROS SI SE PROPORCIONAN (sobrescribir configuración actual)
         if factor_decaimiento is not None or umbral_activacion is not None:
@@ -1493,14 +1491,14 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
             union = len(palabras_pregunta | palabras_contexto)
             activacion_inicial = interseccion / union if union > 0 else 0.3
             activacion_inicial = max(0.3, min(1.0, activacion_inicial))
-            print(f"🌱 PROPAGANDO desde {contexto_inicial[:8]}... con activación {activacion_inicial:.3f}")
+            print(f" PROPAGANDO desde {contexto_inicial[:8]}... con activación {activacion_inicial:.3f}")
 
             # Propagar desde este contexto
             resultado_propagacion = propagador.propagar_desde_nodo(
                 contexto_inicial, activacion_inicial, max_pasos
             )
 
-            # Extraer activaciones y profundidades (retrocompatible)
+            # Extraer activaciones y profundidades 
             if isinstance(resultado_propagacion, dict) and 'activaciones' in resultado_propagacion:
                 contextos_alcanzados = resultado_propagacion['activaciones']
                 profundidades_desde_origen = resultado_propagacion.get('profundidades', {})
@@ -1509,7 +1507,7 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
                 contextos_alcanzados = resultado_propagacion
                 profundidades_desde_origen = {}
 
-            print(f"📡 ALCANZADOS {len(contextos_alcanzados)} nodos desde {contexto_inicial[:8]}")
+            print(f" ALCANZADOS {len(contextos_alcanzados)} nodos desde {contexto_inicial[:8]}")
             
             # Acumular resultados (tomar máxima activación)
             for nodo_id, activacion in contextos_alcanzados.items():
@@ -1575,7 +1573,7 @@ def analizar_consulta_con_propagacion(pregunta: str, momento_consulta: Optional[
             'pasos_propagacion': max_pasos,
             'activaciones': {nodo: info['activacion'] for nodo, info in todos_contextos_propagados.items()},
             'fuentes_propagacion': {nodo: info['fuente_principal'] for nodo, info in todos_contextos_propagados.items()},
-            'profundidades': {nodo: info.get('profundidad', max_pasos) for nodo, info in todos_contextos_propagados.items()}  # NUEVO
+            'profundidades': {nodo: info.get('profundidad', max_pasos) for nodo, info in todos_contextos_propagados.items()}
         }
         
         # Respuesta enriquecida

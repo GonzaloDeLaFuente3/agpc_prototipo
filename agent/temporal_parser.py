@@ -1,4 +1,4 @@
-# agent/temporal_parser.py - Optimizado
+# agent/temporal_parser.py 
 from datetime import datetime, timedelta
 import re
 from typing import Optional, Tuple, List
@@ -57,7 +57,7 @@ def parsear_referencia_temporal(texto_referencia: str, fecha_base: Optional[date
         except ValueError:
             pass
     
-    # 3. NUEVO: Días de la semana específicos
+    # 3.  Días de la semana específicos
     dias_semana = {
         'lunes': 0, 'martes': 1, 'miércoles': 2, 'jueves': 3,
         'viernes': 4, 'sábado': 5, 'domingo': 6
@@ -136,7 +136,7 @@ def parsear_referencia_temporal(texto_referencia: str, fecha_base: Optional[date
             
             fecha_resultado = fecha_base + delta
             return fecha_resultado.isoformat(), "expresion_temporal"
-    # 6. NUEVO: Expresiones de rango ("los últimos 7 días", "las próximas 2 semanas")
+    # 6. Expresiones de rango ("los últimos 7 días", "las próximas 2 semanas")
     patron_rango = r'(?:los?\s+)?(?:últimos?|próximas?)\s+(\d+)\s+(día|días|semana|semanas)'
     match = re.search(patron_rango, texto)
     if match:
@@ -205,7 +205,7 @@ def extraer_referencias_del_texto(texto: str) -> List[Tuple[str, str, str]]:
     
     return referencias_encontradas
 
-# NUEVA FUNCIÓN: Detectar referencias temporales específicas en fragmentos
+# Detectar referencias temporales específicas en fragmentos
 def detectar_timestamps_fragmento(texto_fragmento: str, timestamp_base_conversacion: str) -> Optional[str]:
     """
     Detecta si un fragmento específico tiene referencias temporales propias

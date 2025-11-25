@@ -1,4 +1,4 @@
-# agent/responder.py - Optimizado con soporte temporal
+# agent/responder.py 
 import requests
 import os
 from datetime import datetime
@@ -11,26 +11,25 @@ genai.configure(api_key=GEMINI_API_KEY)
 def construir_prompt(pregunta: str, contextos: dict) -> str:
     """
     Construye prompt optimizado para respuestas temporales y documentos.
-    Mejoras:
     - Distingue entre fragmentos de conversaciones y documentos
     - Instrucciones claras sobre uso de contextos
     - Información temporal explícita
     - Manejo de fragmentos relacionados
-    - Detección de preguntas de enumeración (NUEVO)
-    - Indicación de cantidad de contextos disponibles (NUEVO)
+    - Detección de preguntas de enumeración 
+    - Indicación de cantidad de contextos disponibles
     """
     
-    # NUEVO: Contar contextos disponibles
+    #  Contar contextos disponibles
     num_contextos = len(contextos)
     
-    # Detectar si la pregunta es temporal (MANTENER)
+    # Detectar si la pregunta es temporal 
     es_pregunta_temporal = any(palabra in pregunta.lower() for palabra in [
         'mañana', 'ayer', 'hoy', 'semana', 'mes', 'lunes', 'martes', 
         'miércoles', 'jueves', 'viernes', 'sábado', 'domingo',
         'cuando', 'cuándo', 'qué día', 'fecha'
     ])
     
-    # NUEVO: Detectar si la pregunta pide enumeración
+    #  Detectar si la pregunta pide enumeración
     es_pregunta_enumeracion = any(palabra in pregunta.lower() for palabra in [
         'qué casos', 'cuáles', 'cuántos', 'qué reuniones', 'qué proyectos',
         'qué documentos', 'lista', 'todos los', 'cuáles son', 'enumera',
@@ -126,7 +125,7 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
 **RESPUESTA:**"""
 
     elif es_pregunta_enumeracion:
-        # CASO 2: Pregunta de ENUMERACIÓN (NUEVO)
+        # CASO 2: Pregunta de ENUMERACIÓN 
         prompt = f"""Eres un asistente experto en análisis y síntesis de información legal y documental.
 
 **PREGUNTA DEL USUARIO:**
@@ -154,7 +153,7 @@ def construir_prompt(pregunta: str, contextos: dict) -> str:
 **RESPUESTA:**"""
 
     else:
-        # CASO 3: Pregunta GENERAL (explicación, concepto, etc.) - MEJORADO
+        # CASO 3: Pregunta GENERAL (explicación, concepto, etc.) 
         prompt = f"""Eres un asistente experto que ayuda a explicar y responder sobre contenido de documentos y conversaciones.
 
 **PREGUNTA:**
@@ -188,12 +187,6 @@ Si la pregunta es "¿Qué casos se discutieron?" y tienes 8 contextos de "Amparo
 def responder_con_ia(pregunta: str, contextos: dict) -> str:
     """
     Genera respuesta usando Google Gemini con prompt optimizado.
-    Args:
-        pregunta: Pregunta del usuario
-        contextos: Dict de contextos con estructura {id: {titulo, texto, timestamp?, ...}}
-    
-    Returns:
-        Respuesta generada por el LLM
     """
     if not GEMINI_API_KEY:
         return "[ERROR] No se configuró GEMINI_API_KEY"
@@ -203,11 +196,11 @@ def responder_con_ia(pregunta: str, contextos: dict) -> str:
     
     prompt = construir_prompt(pregunta, contextos)
     
-    # ✅ Usar SDK de Google en lugar de requests
+    # Usar SDK de Google en lugar de requests
     try:
         model = genai.GenerativeModel('gemini-2.0-flash')
         
-        # Configuración optimizada (igual que RAG estándar)
+        # Configuración  (igual que RAG estándar)
         generation_config = {
             'temperature': 0.3,
             'top_p': 0.95,

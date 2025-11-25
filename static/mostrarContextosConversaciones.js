@@ -308,7 +308,7 @@
                             <div class="space-y-2 text-sm">
                                 <div><strong>ID:</strong> ${id}</div>
                                 <div><strong>Tipo:</strong> ${tipoContexto}</div>
-                                <div><strong>Temporal:</strong> ${esTemporal ? '✅ Sí' : '❌ No'}</div>
+                                <div><strong>Temporal:</strong> ${esTemporal ? 'Sí' : 'No'}</div>
                                 <div><strong>Creado:</strong> ${new Date(contexto.created_at).toLocaleString()}</div>
                                 ${esTemporal ? `<div><strong>Fecha referencia:</strong> ${fecha}</div>` : ''}
                             </div>

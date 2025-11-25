@@ -110,13 +110,6 @@ class PropagadorActivacion:
                                max_pasos: int = 2) -> Dict[str, Dict]:
         """
         Propaga activación desde una consulta, usando múltiples nodos como fuentes.
-        Args:
-            palabras_clave: Palabras clave de la consulta
-            texto_consulta: Texto completo de la consulta
-            nodos_iniciales: Nodos específicos como fuentes (opcional)
-            max_pasos: Pasos de propagación
-        Returns:
-            Dict con nodos alcanzados y su información de activación
         """
         # Si no se proporcionan nodos iniciales, usar búsqueda semántica
         if not nodos_iniciales:
@@ -171,12 +164,6 @@ class PropagadorActivacion:
                                    max_longitud: int = 3) -> List[List[str]]:
         """
         Encuentra todos los caminos indirectos entre dos nodos.
-        Args:
-            nodo_origen: Nodo de inicio
-            nodo_destino: Nodo de destino
-            max_longitud: Máxima longitud del camino
-        Returns:
-            Lista de caminos (cada camino es una lista de nodos)
         """
         if nodo_origen not in self.grafo or nodo_destino not in self.grafo:
             return []
@@ -255,7 +242,7 @@ class PropagadorActivacion:
             # Solo incluir conexiones con peso mínimo
             if peso_efectivo >= self.umbral_activacion:
                 vecinos.append((vecino, peso_efectivo))
-        print(f"🔍 Nodo {nodo[:8]}: {total_candidatos} candidatos -> {len(vecinos)} válidos (umbral={self.umbral_activacion})")
+        print(f"Nodo {nodo[:8]}: {total_candidatos} candidatos -> {len(vecinos)} válidos (umbral={self.umbral_activacion})")
         return vecinos
     
     def _calcular_activacion_propagada(self, activacion_origen: float, 
@@ -319,8 +306,7 @@ def propagar_desde_consulta_integrado(pregunta: str, grafo, metadatos_contextos,
                                     max_pasos: int = 2) -> Dict:
     """
     Función de integración que usa propagación para enriquecer consultas.
-    Returns:
-        Dict con contextos encontrados por propagación
+    retorna: Dict con contextos encontrados por propagación
     """
     # Crear propagador
     propagador = crear_propagador(grafo, metadatos_contextos)

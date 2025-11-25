@@ -10,16 +10,10 @@ from agent.utils import normalizar_timestamp_para_guardar
 def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300, min_palabras: int = 50) -> List[str]:
     """
     Fragmenta una conversación en bloques semánticamente coherentes.
-    
     ESTRATEGIA MEJORADA:
     1. Agrupa múltiples líneas de diálogo hasta alcanzar min_palabras
     2. Corta en cambios de tema o cuando alcanza max_palabras
     3. Mantiene contexto completo de intercambios
-    
-    Args:
-        texto: Texto completo de la conversación
-        max_palabras: Máximo de palabras por fragmento (default: 300)
-        min_palabras: Mínimo de palabras por fragmento (default: 50)
     """
     if not texto or not texto.strip():
         return []
@@ -51,7 +45,7 @@ def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300, min_pa
             
             palabras_linea = len(linea.split())
             
-            # ✅ NUEVA LÓGICA: Solo crear fragmento si:
+            #  Solo crear fragmento si:
             # 1. Ya tenemos suficiente contexto (>= min_palabras)
             # 2. Y detectamos cambio de hablante
             # 3. O alcanzamos max_palabras
@@ -60,7 +54,7 @@ def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300, min_pa
                 # Si ya tenemos suficiente contexto, crear fragmento
                 if palabras_actuales >= min_palabras or palabras_actuales + palabras_linea > max_palabras:
                     texto_fragmento = '\n'.join(fragmento_actual).strip()
-                    if palabras_actuales >= 10:  # Mínimo absoluto
+                    if palabras_actuales >= 10:  # Mínimo 
                         fragmentos_finales.append(texto_fragmento)
                     
                     # Iniciar nuevo fragmento con esta línea
@@ -91,7 +85,7 @@ def criterio_fragmentacion_semantica(texto: str, max_palabras: int = 300, min_pa
             # Si es muy corto, intentar unir con el fragmento anterior
             if palabras < min_palabras and fragmentos_finales:
                 fragmentos_finales[-1] = fragmentos_finales[-1] + '\n' + texto_fragmento
-            elif palabras >= 10:  # Mínimo absoluto
+            elif palabras >= 10:  # Mínimo 
                 fragmentos_finales.append(texto_fragmento)
     
     # Si no se encontraron patrones especiales, fragmentar por párrafos y tamaño
@@ -206,18 +200,18 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
         if timestamp_fragmento:
             timestamp_normalizado = normalizar_timestamp_para_guardar(timestamp_fragmento)
             timestamp_fragmento = timestamp_normalizado if timestamp_normalizado else timestamp_base_conversacion
-            print(f"  ✅ Fragmento {i+1} - timestamp específico normalizado: {timestamp_fragmento}")
+            print(f"Fragmento {i+1} - timestamp específico normalizado: {timestamp_fragmento}")
         elif timestamp_base_conversacion:
             # Heredar timestamp base (ya normalizado)
             timestamp_fragmento = timestamp_base_conversacion
-            print(f"  📋 Fragmento {i+1} - heredó timestamp base: {timestamp_fragmento}")
+            print(f"Fragmento {i+1} - heredó timestamp base: {timestamp_fragmento}")
         
         # Determinar si es temporal basado en timestamp específico
         es_temporal = bool(timestamp_fragmento)
         
         palabras_clave = extraer_palabras_clave(texto_fragmento)
         
-        # Crear metadatos del fragmento MEJORADOS
+        # Crear metadatos del fragmento 
         metadata_fragmento = {
             "fragmento_id": fragmento_id,
             "conversacion_id": conversacion_id,
@@ -227,13 +221,13 @@ def fragmentar_conversacion(conversacion: Dict) -> List[Dict]:
             "texto": texto_fragmento,
             "palabras_clave": palabras_clave,
             "timestamp": timestamp_fragmento,
-            "timestamp_original_conversacion": timestamp_base_conversacion,  # NUEVO: preservar original
+            "timestamp_original_conversacion": timestamp_base_conversacion,  
             "participantes": conversacion.get('participantes', []),
             "metadata_conversacion": conversacion.get('metadata', {}),
             "created_at": datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
             "es_temporal": es_temporal,
             "tipo_contexto": _detectar_tipo_fragmento(texto_fragmento, conversacion.get('metadata', {})),
-            "tiene_timestamp_especifico": timestamp_fragmento != timestamp_base_conversacion  # NUEVO: flag
+            "tiene_timestamp_especifico": timestamp_fragmento != timestamp_base_conversacion  
         }
         
         fragmentos_con_metadata.append({

@@ -6,10 +6,6 @@ import PyPDF2
 def extraer_texto_pdf(pdf_path: str) -> Optional[str]:
     """
     Extrae el texto completo de un archivo PDF.
-    Args:
-        pdf_path: Ruta del archivo PDF
-    Returns:
-        Texto extraído o None si hay error
     """
     try:
         texto_completo = []
@@ -27,7 +23,7 @@ def extraer_texto_pdf(pdf_path: str) -> Optional[str]:
         return "\n\n".join(texto_completo)
     
     except Exception as e:
-        print(f"❌ Error al extraer texto del PDF {pdf_path}: {e}")
+        print(f" Error al extraer texto del PDF {pdf_path}: {e}")
         return None
 
 
@@ -35,12 +31,6 @@ def fragmentar_texto_pdf(texto: str, max_palabras: int = 500) -> List[str]:
     """
     Fragmenta el texto extraído del PDF en segmentos manejables.
     Usa la misma lógica que la fragmentación de conversaciones.
-    Args:
-        texto: Texto completo del PDF
-        max_palabras: Máximo de palabras por fragmento
-        
-    Returns:
-        Lista de fragmentos de texto
     """
     if not texto:
         return []
@@ -100,13 +90,7 @@ def crear_attachment_pdf(
     conversacion_id: str
 ) -> Optional[Dict]:
     """
-    Procesa un PDF y crea la estructura de attachment.
-    Args:
-        pdf_path: Ruta del archivo PDF original
-        filename: Nombre del archivo
-        conversacion_id: ID de la conversación a la que pertenece
-    Returns:
-        Diccionario con la información del attachment
+    Procesa un PDF y crea la estructura de attachment(Diccionario con la informacion).
     """
     try:
         # Extraer texto
@@ -143,12 +127,6 @@ def guardar_pdf_en_storage(
 ) -> Optional[str]:
     """
     Guarda el archivo PDF en el directorio de storage.
-    Args:
-        archivo_bytes: Contenido del archivo en bytes
-        filename: Nombre del archivo
-        conversacion_id: ID de la conversación
-    Returns:
-        Ruta donde se guardó el archivo o None si hay error
     """
     try:
         # Crear directorio para la conversación

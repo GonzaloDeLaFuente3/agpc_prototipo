@@ -36,9 +36,6 @@ function mostrarNotificacion(mensaje, tipo = 'error', duracion = 5000) {
     
     document.body.appendChild(toast);
     
-    // Animación de entrada
-    // setTimeout(() => toast.classList.add('animate-pulse'), 100);
-    
     setTimeout(() => {
         toast.style.transition = 'transform 0.3s ease';
         toast.style.transform = 'translateY(-20px)';
@@ -188,7 +185,7 @@ async function preguntarConPropagacion() {
         
         const res = await axios.get(`/preguntar-con-propagacion/?${params}`);
         
-        // CAPTURAR TIEMPO DE RESPUESTA ⏱️
+        // CAPTURAR TIEMPO DE RESPUESTA 
         const tiempoMs = res.data.tiempo_respuesta_ms || 0;
         
         // Mostrar respuesta con badge de tiempo
@@ -240,7 +237,7 @@ function mostrarInformacionEstrategia(data, elementos) {
     if (propagacion.total_nodos_alcanzados > 0) {
         estrategiaHtml += `
             <div class="mt-2 pt-2 border-t border-yellow-300 text-xs">
-                <div class="font-medium text-green-700 mb-1">🔄 Detalles de Propagación:</div>
+                <div class="font-medium text-green-700 mb-1">Detalles de Propagación:</div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>Directos: <span class="font-bold">${propagacion.contextos_directos?.length || 0}</span></div>
                     <div>Indirectos: <span class="font-bold">${propagacion.contextos_indirectos?.length || 0}</span></div>
@@ -295,7 +292,7 @@ async function agregarRespuestaComoContexto() {
     
     if (!titulo || !titulo.trim()) return mostrarNotificacion("Se necesita un título.", 'warning');
 
-    const esTemporal = confirm("🕐 ¿Hacer este contexto TEMPORAL?\n\n✅ SÍ = Con fecha actual\n❌ NO = Atemporal (No Temporal)");
+    const esTemporal = confirm("🕐 ¿Hacer este contexto TEMPORAL?\n\nSÍ = Con fecha actual\nNO = Atemporal (No Temporal)");
 
     try {
         const respuestaLimpia = ultimaRespuesta.split('\n\n📚 Contextos:')[0];
@@ -636,7 +633,7 @@ function abrirModalArbol(subgrafo) {
             edges: new vis.DataSet(edges) 
         }, options);
 
-        // ✅ NUEVO: Permitir movimiento libre de nodos
+        // Permitir movimiento libre de nodos
         network.on("dragEnd", function(params) {
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
@@ -725,7 +722,7 @@ async function agregarConversacion() {
         // Agregar PDF si existe
         if (pdfFile) {
             formData.append('pdf_file', pdfFile);
-            console.log('📎 Adjuntando PDF:', pdfFile.name);
+            console.log('Adjuntando PDF:', pdfFile.name);
         }
         
         // Enviar al servidor
@@ -792,8 +789,8 @@ async function cargarEstadisticas() {
         
         if (res.data.status === 'success') {
             const stats = res.data.estadisticas;
-            console.log('📊 Stats recibidas:', stats);
-            console.log('📊 relaciones_bidireccionales:', stats.relaciones_bidireccionales);
+            console.log('Stats recibidas:', stats);
+            console.log('relaciones_bidireccionales:', stats.relaciones_bidireccionales);
             
             document.getElementById('estadisticas').innerHTML = `
                 <div class="space-y-2">
@@ -884,7 +881,7 @@ async function cargarEstadisticasDobleNivel() {
 }
 
 async function forzarRecalculoRelaciones() {
-    const confirmar = confirm('⚠️ ¿Deseas recalcular todas las relaciones con el nuevo umbral?\n\n' +
+    const confirmar = confirm('¿Deseas recalcular todas las relaciones con el nuevo umbral?\n\n' +
         'Esto puede tomar varios minutos dependiendo del tamaño del grafo.\n\n');
     
     if (!confirmar) {
@@ -1108,8 +1105,8 @@ async function confirmarYProcesarConversaciones() {
             // CONSTRUIR MENSAJE CON TIEMPO
             const tiempoSegundos = data.tiempo_procesamiento_segundos || 0;
             let mensaje = `✅ ${data.total_procesadas} conversación(es) guardada(s)\n`;
-            mensaje += `📊 ${totalFragmentos} fragmentos creados\n`;
-            mensaje += `⚡ Tiempo de procesamiento: ${tiempoSegundos}s`;
+            mensaje += `${totalFragmentos} fragmentos creados\n`;
+            mensaje += `Tiempo de procesamiento: ${tiempoSegundos}s`;
             
             // Determinar tipo de notificación según velocidad
             let tipoNotificacion = 'exito';
@@ -1379,7 +1376,7 @@ async function limpiarMetricas() {
     }
     
     try {
-        mostrarNotificacion('🗑️ Limpiando métricas...', 'info', 2000);
+        mostrarNotificacion('Limpiando métricas...', 'info', 2000);
         
         const response = await axios.delete('/metricas/limpiar/');
         

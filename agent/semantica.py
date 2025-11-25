@@ -1,4 +1,4 @@
-# agent/semantica.py - OPTIMIZADO CON BATCHES
+# agent/semantica.py 
 import chromadb
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from typing import List, Dict
@@ -7,11 +7,11 @@ import traceback
 # Cliente y colección únicos
 client = chromadb.PersistentClient(path="./chroma_db")
 
-# ✅ CREAR MODELO EXPLÍCITO (generar embeddings manualmente)
+#  CREAR MODELO EXPLÍCITO (generar embeddings manualmente)
 from sentence_transformers import SentenceTransformer
 modelo_embeddings = SentenceTransformer('all-MiniLM-L6-v2')
 
-# ✅ CREAR COLECCIÓN CON CONFIGURACIÓN HNSW OPTIMIZADA
+# CREAR COLECCIÓN CON CONFIGURACIÓN HNSW OPTIMIZADA
 coleccion = client.get_or_create_collection(
     name="contextos",
     metadata={
@@ -28,7 +28,7 @@ _embedding_cache = {}
 def indexar_documento(id: str, texto: str):
     """Indexa un documento para búsqueda semántica."""
     try:
-        # ✅ Generar embedding explícitamente
+        # Generar embedding explícitamente
         embedding = modelo_embeddings.encode([texto])[0]
         
         # Verificar si el documento ya existe
@@ -38,14 +38,14 @@ def indexar_documento(id: str, texto: str):
             coleccion.update(
                 documents=[texto], 
                 ids=[id],
-                embeddings=[embedding.tolist()]  # ✅ PASAR EMBEDDING
+                embeddings=[embedding.tolist()]  # PASAR EMBEDDING
             )
         else:
             # Si no existe, agregar
             coleccion.add(
                 documents=[texto], 
                 ids=[id],
-                embeddings=[embedding.tolist()]  # ✅ PASAR EMBEDDING
+                embeddings=[embedding.tolist()]  # PASAR EMBEDDING
             )
         
         # Guardar en caché
@@ -54,14 +54,14 @@ def indexar_documento(id: str, texto: str):
     except Exception as e:
         print(f"Error indexando documento {id}: {e}")
 
-# NUEVA FUNCIÓN: INDEXADO POR LOTES
+# INDEXADO POR LOTES
 def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[Dict] = None):
     """
     Indexa múltiples documentos en un solo batch.
     MUCHO más eficiente que indexar uno por uno.
     """
     if not ids or not textos or len(ids) != len(textos):
-        print("⚠️ Error: IDs y textos deben tener la misma longitud")
+        print(" Error: IDs y textos deben tener la misma longitud")
         return
     
     # Si no se proporcionan metadatos, crear lista vacía
@@ -74,7 +74,7 @@ def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[
             existing = coleccion.get(ids=ids)
             existing_ids = set(existing['ids']) if existing and existing['ids'] else set()
         except Exception as e:
-            print(f"⚠️ Error al verificar existentes: {e}")
+            print(f" Error al verificar existentes: {e}")
             existing_ids = set()
         
         # Separar en nuevos y existentes
@@ -95,7 +95,7 @@ def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[
                 textos_nuevos.append(texto)
                 metadatas_nuevos.append(metadata)
         
-        # ✅ NUEVO: Generar embeddings explícitamente para documentos nuevos
+        # Generar embeddings explícitamente para documentos nuevos
         if ids_nuevos:
             print(f"🔄 Generando embeddings para {len(ids_nuevos)} documentos nuevos...")
             embeddings_nuevos = modelo_embeddings.encode(textos_nuevos, show_progress_bar=False)
@@ -104,13 +104,13 @@ def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[
                 documents=textos_nuevos, 
                 ids=ids_nuevos,
                 embeddings=embeddings_nuevos.tolist(),
-                metadatas=metadatas_nuevos  # ✅ PASAR METADATOS
+                metadatas=metadatas_nuevos  # PASAR METADATOS
             )
-            print(f"✅ Indexados {len(ids_nuevos)} documentos nuevos en batch")
+            print(f" Indexados {len(ids_nuevos)} documentos nuevos en batch")
         
-        # ✅ NUEVO: Generar embeddings para actualizaciones
+        # Generar embeddings para actualizaciones
         if ids_actualizar:
-            print(f"🔄 Generando embeddings para {len(ids_actualizar)} documentos a actualizar...")
+            print(f" Generando embeddings para {len(ids_actualizar)} documentos a actualizar...")
             embeddings_actualizar = modelo_embeddings.encode(textos_actualizar, show_progress_bar=False)
             
             coleccion.update(
@@ -119,9 +119,9 @@ def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[
                 embeddings=embeddings_actualizar.tolist(),
                 metadatas=metadatas_actualizar  # ✅ PASAR METADATOS
             )
-            print(f"✅ Actualizados {len(ids_actualizar)} documentos en batch")
+            print(f" Actualizados {len(ids_actualizar)} documentos en batch")
         
-        # Importante: Asegurar que ChromaDB persista los cambios
+        #  Asegurar que ChromaDB persista los cambios
         try:
             coleccion.peek(limit=1)
         except:
@@ -131,53 +131,53 @@ def indexar_documentos_batch(ids: List[str], textos: List[str], metadatas: List[
         for id, texto in zip(ids, textos):
             _embedding_cache[id] = texto
             
-        print(f"✅ Total indexado correctamente: {len(ids)} documentos")
+        print(f" Total indexado correctamente: {len(ids)} documentos")
             
     except Exception as e:
-        print(f"❌ Error en indexado batch: {e}")
+        print(f" Error en indexado batch: {e}")
         traceback.print_exc()
         
         # FALLBACK: Si el batch falla, intentar uno por uno
-        print("⚠️ Intentando indexado individual como fallback...")
+        print(" Intentando indexado individual como fallback...")
         for id, texto in zip(ids, textos):
             try:
                 indexar_documento(id, texto)
             except Exception as e2:
-                print(f"❌ Error indexando {id}: {e2}")
+                print(f" Error indexando {id}: {e2}")
 
 def buscar_similares(texto_consulta: str, k: int = 3):
     """Busca documentos semánticamente similares CON embedding explícito."""
     try:
-        # ✅ GENERAR EMBEDDING EXACTAMENTE COMO RAG
-        print(f"🔍 Buscando similares para: '{texto_consulta[:50]}...'")
-        embedding_consulta = modelo_embeddings.encode(texto_consulta)  # ⚠️ SIN LISTA, SIN [0]
-        print(f"✅ Embedding generado: shape={embedding_consulta.shape}")
+        # GENERAR EMBEDDING EXACTAMENTE COMO RAG
+        print(f" Buscando similares para: '{texto_consulta[:50]}...'")
+        embedding_consulta = modelo_embeddings.encode(texto_consulta)  # SIN LISTA, SIN [0]
+        print(f" Embedding generado: shape={embedding_consulta.shape}")
         
-        # ✅ BUSCAR usando embedding explícito
+        # BUSCAR usando embedding explícito
         resultado = coleccion.query(
-            query_embeddings=[embedding_consulta.tolist()],  # ✅ USAR EMBEDDING
+            query_embeddings=[embedding_consulta.tolist()],  #  USAR EMBEDDING
             n_results=k,
-            include=['documents', 'distances']  # ✅ Incluir info para debugging
+            include=['documents', 'distances']  #  Incluir info para debugging
         )
         
         if resultado and resultado.get('ids') and resultado['ids'][0]:
-            print(f"✅ Encontrados {len(resultado['ids'][0])} resultados similares")
+            print(f" Encontrados {len(resultado['ids'][0])} resultados similares")
             # Mostrar los primeros 3 resultados para debugging
             for i, (id, dist) in enumerate(zip(resultado['ids'][0][:3], resultado['distances'][0][:3])):
                 doc_preview = resultado['documents'][0][i][:50] if resultado.get('documents') else 'N/A'
                 print(f"   {i+1}. {id[:8]}... (dist={dist:.3f}): {doc_preview}...")
             return resultado["ids"][0]
         else:
-            print("⚠️ No se encontraron resultados")
+            print(" No se encontraron resultados")
             return []
             
     except Exception as e:
-        print(f"❌ Error en búsqueda semántica: {e}")
+        print(f" Error en búsqueda semántica: {e}")
         import traceback
         traceback.print_exc()
         return []
 
-# NUEVA FUNCIÓN: SIMILITUD BATCH
+# SIMILITUD BATCH
 def calcular_similitudes_batch(texto_nuevo: str, nodos_existentes: List[str]) -> Dict[str, float]:
     """
     Calcula similitud de un texto nuevo contra múltiples nodos existentes.
@@ -187,7 +187,7 @@ def calcular_similitudes_batch(texto_nuevo: str, nodos_existentes: List[str]) ->
         return {}
     
     if not texto_nuevo or not texto_nuevo.strip():
-        print("⚠️ Texto nuevo vacío en calcular_similitudes_batch")
+        print("Texto nuevo vacío en calcular_similitudes_batch")
         return {}
     
     try:
@@ -200,17 +200,17 @@ def calcular_similitudes_batch(texto_nuevo: str, nodos_existentes: List[str]) ->
         # Buscar los k vecinos más cercanos
         k = min(len(nodos_existentes), 100)
         
-        # ✅ GENERAR EMBEDDING EXPLÍCITAMENTE
-        embedding_consulta = modelo_embeddings.encode(texto_nuevo)  # ⚠️ SIN LISTA, SIN [0]
+        #  GENERAR EMBEDDING EXPLÍCITAMENTE
+        embedding_consulta = modelo_embeddings.encode(texto_nuevo)  #  SIN LISTA, SIN [0]
 
         resultado = coleccion.query(
-            query_embeddings=[embedding_consulta.tolist()],  # ✅ USAR EMBEDDING
+            query_embeddings=[embedding_consulta.tolist()],  #  USAR EMBEDDING
             n_results=k,
             include=['distances']
         )
         
         if not resultado or not resultado.get('ids') or not resultado['ids'][0]:
-            print("⚠️ No se obtuvieron resultados de la búsqueda")
+            print(" No se obtuvieron resultados de la búsqueda")
             return {}
         
         # Convertir distancias a similitudes
@@ -223,11 +223,11 @@ def calcular_similitudes_batch(texto_nuevo: str, nodos_existentes: List[str]) ->
                 similitud = max(0.0, 1.0 - distance / 2.0)
                 similitudes[nodo_id] = similitud
         
-        print(f"✅ Calculadas {len(similitudes)} similitudes de {len(nodos_existentes)} nodos")
+        print(f" Calculadas {len(similitudes)} similitudes de {len(nodos_existentes)} nodos")
         return similitudes
         
     except Exception as e:
-        print(f"❌ Error en similitud batch: {e}")
+        print(f" Error en similitud batch: {e}")
         traceback.print_exc()
         
         # FALLBACK: Retornar similitudes vacías (se usará solo Jaccard)
@@ -239,7 +239,7 @@ def limpiar_cache():
     """Limpia el caché de embeddings (útil después de procesar muchos datos)"""
     global _embedding_cache
     _embedding_cache = {}
-    print("🧹 Caché de embeddings limpiado")
+    print(" Caché de embeddings limpiado")
 
 def verificar_estado_coleccion():
     """Función de diagnóstico para verificar el estado de ChromaDB"""
@@ -254,7 +254,7 @@ def verificar_estado_coleccion():
         
         return count
     except Exception as e:
-        print(f"❌ Error verificando colección: {e}")
+        print(f" Error verificando colección: {e}")
         return 0
     
 def reiniciar_coleccion():
@@ -268,18 +268,18 @@ def reiniciar_coleccion():
     try:
         # Eliminar colección existente
         client.delete_collection(name="contextos")
-        print("🗑️  Colección 'contextos' eliminada")
+        print("  Colección 'contextos' eliminada")
         
         # Recrear colección vacía
         coleccion = client.get_or_create_collection(
             name="contextos",
             metadata={"hnsw:space": "cosine"}  # ✅ SIN embedding_function
         )
-        print("✅ Colección 'contextos' recreada (vacía)")
+        print(" Colección 'contextos' recreada (vacía)")
         
         # Limpiar caché
         _embedding_cache = {}
-        print("🧹 Caché de embeddings limpiado")
+        print(" Caché de embeddings limpiado")
         
         # Verificar estado
         count = coleccion.count()
@@ -292,7 +292,7 @@ def reiniciar_coleccion():
         }
         
     except Exception as e:
-        print(f"❌ Error al reiniciar colección: {e}")
+        print(f" Error al reiniciar colección: {e}")
         import traceback
         traceback.print_exc()
         return {
@@ -320,21 +320,21 @@ def verificar_y_reparar_indice():
             n_results=min(10, count)
         )
         
-        print(f"✅ Índice verificado - {len(resultado['ids'][0])} resultados en consulta de prueba")
+        print(f" Índice verificado - {len(resultado['ids'][0])} resultados en consulta de prueba")
         
         # Verificar que los embeddings están presentes
         sample = coleccion.get(limit=3, include=['embeddings'])
         
         if sample and sample.get('embeddings'):
-            print(f"✅ Embeddings presentes en {len(sample['embeddings'])} documentos de muestra")
+            print(f" Embeddings presentes en {len(sample['embeddings'])} documentos de muestra")
         else:
-            print(f"❌ ERROR: Los embeddings NO están presentes en la base de datos")
+            print(f" ERROR: Los embeddings NO están presentes en la base de datos")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Error verificando índice: {e}")
+        print(f" Error verificando índice: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -350,30 +350,30 @@ def diagnosticar_chromadb_detallado():
     try:
         # 1. Información básica
         count = coleccion.count()
-        print(f"\n1️⃣ ESTADÍSTICAS BÁSICAS:")
+        print(f"\n1 ESTADÍSTICAS BÁSICAS:")
         print(f"   Total documentos: {count}")
         
         if count == 0:
-            print("   ⚠️ Colección vacía")
+            print("    Colección vacía")
             return
         
         # 2. Verificar que los embeddings están presentes
-        print(f"\n2️⃣ VERIFICAR EMBEDDINGS:")
+        print(f"\n2 VERIFICAR EMBEDDINGS:")
         sample = coleccion.get(limit=5, include=['embeddings', 'documents'])
         
         if sample and sample.get('embeddings') is not None and len(sample.get('embeddings', [])) > 0:
-            print(f"   ✅ Embeddings presentes en muestra")
+            print(f"    Embeddings presentes en muestra")
             for i, emb in enumerate(sample['embeddings'][:3]):
                 if emb:
                     print(f"   - Doc {i+1}: embedding dimension = {len(emb)}")
                 else:
-                    print(f"   - Doc {i+1}: ❌ SIN embedding")
+                    print(f"   - Doc {i+1}:  SIN embedding")
         else:
-            print(f"   ❌ NO se encontraron embeddings")
+            print(f"    NO se encontraron embeddings")
             return
         
         # 3. Buscar documentos con "amparo" y obtener sus embeddings
-        print(f"\n3️⃣ ANÁLISIS DE DOCUMENTOS CON 'AMPARO':")
+        print(f"\n3 ANÁLISIS DE DOCUMENTOS CON 'AMPARO':")
         
         todos_docs = coleccion.get(include=['documents', 'embeddings'])
         docs_con_amparo = []
@@ -389,11 +389,11 @@ def diagnosticar_chromadb_detallado():
         print(f"   Encontrados {len(docs_con_amparo)} documentos con 'amparo'")
         
         if not docs_con_amparo:
-            print("   ❌ No se encontraron documentos con 'amparo'")
+            print("    No se encontraron documentos con 'amparo'")
             return
         
         # 4. Probar búsqueda semántica con el PRIMER documento de amparo
-        print(f"\n4️⃣ PRUEBA DE BÚSQUEDA SEMÁNTICA:")
+        print(f"\n4 PRUEBA DE BÚSQUEDA SEMÁNTICA:")
         
         doc_amparo = docs_con_amparo[0]
         print(f"   Usando como consulta: {doc_amparo['texto'][:80]}...")
@@ -438,10 +438,10 @@ def diagnosticar_chromadb_detallado():
             
             print(f"   Similitud coseno (manual): {similitud:.4f}")
             print(f"   Distancia coseno (manual): {distancia:.4f}")
-            print(f"   ℹ️ Esta distancia debería ser ~0.0 (documento idéntico)")
+            print(f"   Esta distancia debería ser ~0.0 (documento idéntico)")
             
             if distancia > 0.1:
-                print(f"   ⚠️ ADVERTENCIA: Distancia muy alta para documento idéntico")
+                print(f"   ADVERTENCIA: Distancia muy alta para documento idéntico")
                 print(f"   Esto indica que ChromaDB NO está usando los embeddings correctos")
         
         print("\n" + "="*70)
@@ -449,6 +449,6 @@ def diagnosticar_chromadb_detallado():
         print("="*70)
         
     except Exception as e:
-        print(f"\n❌ Error en diagnóstico: {e}")
+        print(f"\n Error en diagnóstico: {e}")
         import traceback
         traceback.print_exc()

@@ -137,7 +137,7 @@ function aplicarFiltroConversacion() {
     }
 }
 
-// PROCESAMIENTO DE NODOS CON COLORES MEJORADOS
+// PROCESAMIENTO DE NODOS CON COLORES 
 function procesarNodos(nodos, vista) {
     return nodos.map(node => {
         const esPDF = node.es_pdf || node.tipo_contexto === 'documento';
@@ -329,7 +329,7 @@ async function cargarGrafo() {
                 break;
             case 'micro-filtrada':
                 if (!conversacionFiltroSeleccionada) {
-                    container.innerHTML = '<div class="flex items-center justify-center h-full text-orange-500"><p>⚠️ Selecciona una conversación para visualizar</p></div>';
+                    container.innerHTML = '<div class="flex items-center justify-center h-full text-orange-500"><p> Selecciona una conversación para visualizar</p></div>';
                     return;
                 }
                 url = `/grafo/micro/conversacion/${conversacionFiltroSeleccionada}`;

@@ -7,8 +7,8 @@ from datetime import datetime
 class VisualizadorDobleNivel:
     """
     Genera visualizaciones de doble nivel:
-    - Vista Macro: Conversaciones como nodos, relaciones agregadas
-    - Vista Micro: Fragmentos individuales con conexiones precisas
+    - Vista Macro: Conversaciones como nodos
+    - Vista Micro: Fragmentos individuales con conexiones 
     """
     def __init__(self, grafo_contextos, metadatos_contextos, conversaciones_metadata, fragmentos_metadata):
         self.grafo_contextos = grafo_contextos
@@ -187,9 +187,7 @@ Tipos: {tipos_str}"""
     
     def generar_vista_micro_fragmentos(self, filtro_conversacion: str = None) -> Dict:
         """
-        Vista MICRO: Nodos = fragmentos individuales, aristas = conexiones precisas.
-        
-        Args:
+        Vista MICRO: Nodos = fragmentos individuales, aristas = conexiones prcisas.
             filtro_conversacion: Si se especifica, solo muestra fragmentos de esa conversación
         """
         # Usar la función existente pero con filtros opcionales

@@ -233,8 +233,8 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         k_busqueda = k_inicial if k_inicial is not None else parametros_sistema.get('k_resultados', 5)
         # Obtener factor base configurado
         factor_base = parametros_sistema.get('factor_refuerzo_temporal', 1.5)
-        print(f"⚙️ Factor base configurado: {factor_base}")
-        print(f"⚙️ k_inicial: {k_busqueda}") 
+        print(f"Factor base configurado: {factor_base}")
+        print(f"k_inicial: {k_busqueda}") 
         
         # Análisis con propagación
         analisis_completo = grafo.analizar_consulta_con_propagacion(
@@ -279,7 +279,7 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
                 "tipo_contexto": ctx.get("tipo_contexto", "general")
             }
 
-            # NUEVO: Agregar información de profundidad si viene de propagación
+            # Agregar información de profundidad si viene de propagación
             if analisis_completo.get('propagacion'):
                 profundidades = analisis_completo['propagacion'].get('profundidades', {})
                 contextos_directos = analisis_completo['propagacion'].get('contextos_directos', [])
@@ -369,12 +369,11 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         usa_propagacion=usar_propagacion
     )
 
-    # ============ NUEVO: LOGGING DE MÉTRICAS DE PROFUNDIDAD ============
-    
+    # LOGGING DE MÉTRICAS DE PROFUNDIDAD 
     # Solo mostrar si hay propagación activa
     if usar_propagacion and info_propagacion.get('profundidades'):
         print("\n" + "=" * 80)
-        print("📊 MÉTRICAS DE PROFUNDIDAD DE PROPAGACIÓN")
+        print(" MÉTRICAS DE PROFUNDIDAD DE PROPAGACIÓN")
         print("=" * 80)
         
         profundidades = info_propagacion['profundidades']
@@ -389,10 +388,10 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         CIR = (contextos_propagados / total_contextos * 100) if total_contextos > 0 else 0
         
         # Mostrar métricas principales
-        print(f"\n✅ Profundidad de Propagación (PP): {PP:.2f} saltos")
+        print(f"\nProfundidad de Propagación (PP): {PP:.2f} saltos")
         print(f"   └─ Promedio de saltos desde nodos semilla hasta nodos objetivo")
         
-        print(f"\n✅ Contextos Indirectos Recuperados (CIR): {CIR:.1f}%")
+        print(f"\nContextos Indirectos Recuperados (CIR): {CIR:.1f}%")
         print(f"   ├─ Por propagación: {contextos_propagados}")
         print(f"   ├─ Por búsqueda directa: {contextos_directos}")
         print(f"   └─ Total contextos: {total_contextos}")
@@ -400,14 +399,14 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         # Distribución de profundidades
         from collections import Counter
         distribucion = Counter(valores_profundidad)
-        print(f"\n📊 Distribución de profundidades:")
+        print(f"\nDistribución de profundidades:")
         for profundidad in sorted(distribucion.keys()):
             cantidad = distribucion[profundidad]
             barra = "█" * cantidad
             print(f"   {profundidad} saltos: {barra} ({cantidad} contextos)")
         
         # Detalle de contextos con profundidad
-        print(f"\n📋 DETALLE DE CONTEXTOS RECUPERADOS:")
+        print(f"\n DETALLE DE CONTEXTOS RECUPERADOS:")
         print("-" * 80)
         
         for i, ctx_info in enumerate(contextos_utilizados_info, 1):
@@ -428,8 +427,7 @@ def preguntar_con_propagacion(pregunta: str, usar_propagacion: bool = True, max_
         
         print("\n" + "=" * 80 + "\n")
     
-    # ============ FIN LOGGING ============
-    
+    # FIN LOGGING 
     return {
         "respuesta": respuesta_completa,
         "contextos_utilizados": contextos_utilizados_info,
@@ -448,7 +446,7 @@ def configurar_parametros_propagacion_endpoint(factor_decaimiento: float = None,
     resultado = grafo.configurar_parametros_propagacion(factor_decaimiento, umbral_activacion)
     return resultado
 
-# TAMBIÉN MANTENER el endpoint de estado:
+# endpoint de estado:
 @app.get("/estado-propagacion/")
 def obtener_estado_propagacion_endpoint():
     """Obtiene el estado actual del sistema de propagación."""
@@ -457,7 +455,7 @@ def obtener_estado_propagacion_endpoint():
 @app.post("ic")
 def reiniciar_chromadb_endpoint():
     """
-    ⚠️ ENDPOINT PELIGROSO: Elimina TODOS los embeddings de ChromaDB.
+    ENDPOINT PELIGROSO: Elimina TODOS los embeddings de ChromaDB.
     Usar solo cuando se necesita recargar el dataset completamente desde cero.
     """
     from agent.semantica import reiniciar_coleccion
@@ -529,7 +527,7 @@ async def agregar_conversacion_con_pdf(
             # CASO 1: Verificar si es atemporal explícito
             if fecha == 'ATEMPORAL':
                 fecha_procesada = None
-                print(f"⚪ Conversación ATEMPORAL (sin fecha)")
+                print(f"Conversación ATEMPORAL (sin fecha)")
             
             # CASO 2: Conversación con fecha específica
             else:
@@ -550,7 +548,7 @@ async def agregar_conversacion_con_pdf(
         # Procesar PDF si existe
         attachments = []
         if pdf_file and pdf_file.filename:
-            print(f"📎 Procesando PDF: {pdf_file.filename}")
+            print(f"Procesando PDF: {pdf_file.filename}")
             
             # Validar que sea PDF
             if not pdf_file.filename.lower().endswith('.pdf'):
@@ -607,11 +605,11 @@ async def agregar_conversacion_con_pdf(
             attachments=attachments
         )
 
-        # ⏱️ CALCULAR TIEMPO
+        #CALCULAR TIEMPO
         tiempo_fin = time.time()
         tiempo_ms = (tiempo_fin - tiempo_inicio) * 1000
         
-        # 📊 REGISTRAR MÉTRICA
+        #REGISTRAR MÉTRICA
         total_fragmentos = resultado.get('total_fragmentos', 0)
         metricas_sistema.registrar_carga_dataset(
             tipo='conversacion_individual',
@@ -743,7 +741,7 @@ def configurar_parametros_sistema(config: ConfiguracionParametros):
         # RECALCULAR RELACIONES SI CAMBIÓ EL UMBRAL
         mensaje_recalculo = ""
         if recalcular_relaciones:
-            print(f"🔄 Recalculando relaciones con nuevo umbral: {config.umbral_similitud}")
+            print(f"Recalculando relaciones con nuevo umbral: {config.umbral_similitud}")
             stats_antes = grafo.obtener_estadisticas()
             grafo._recalcular_relaciones()
             grafo._guardar_grafo()
@@ -761,13 +759,13 @@ def configurar_parametros_sistema(config: ConfiguracionParametros):
     except Exception as e:
         return {"status": "error", "mensaje": str(e)}
 
-# Nuevo endpoint para forzar recálculo
+#para forzar recálculo
 def forzar_recalculo_relaciones():
     """Fuerza el recálculo de todas las relaciones con los parámetros actuales."""
     try:
         inicio = time.time()
         stats_antes = grafo.obtener_estadisticas()
-        print(f"🔄 Iniciando recálculo de relaciones con umbral: {parametros_sistema['umbral_similitud']}")
+        print(f"Iniciando recálculo de relaciones con umbral: {parametros_sistema['umbral_similitud']}")
         
         # Usar la versión optimizada
         resultado_recalculo = grafo._recalcular_relaciones()
