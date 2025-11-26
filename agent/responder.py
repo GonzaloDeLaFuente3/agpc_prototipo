@@ -5,7 +5,12 @@ from datetime import datetime
 from typing import Dict
 import google.generativeai as genai
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDcCbQs_swG7s41Q0cjmk_ESfyMjg4hfmU")
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") 
+
+if not GEMINI_API_KEY:
+    raise ValueError("❌ ERROR: No se encontró GEMINI_API_KEY en el archivo .env")
+
 genai.configure(api_key=GEMINI_API_KEY)
 
 def construir_prompt(pregunta: str, contextos: dict) -> str:

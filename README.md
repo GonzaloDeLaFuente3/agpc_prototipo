@@ -33,6 +33,19 @@ cd <carpeta-del-proyecto>
 # instalar las depedencias 
 pip install -r requirements.txt
 
+# Descargar Modelo de Lenguaje (Spacy)
+Necesario para el procesamiento de texto en español:
+python -m spacy download es_core_news_sm
+
+# Configuración de la API Key (Importante)
+Por seguridad, las claves no se suben al código. Debes configurar tu propia clave de Google Gemini localmente.
+
+Crea un archivo nuevo en la raíz del proyecto llamado .env.
+
+Abre el archivo y pega tu API Key con el siguiente formato (sin espacios extra ni comillas):
+GEMINI_API_KEY=AIzaSy...Tu_Clave_Aqui...
+Nota: Asegúrate de que el archivo .env esté incluido en tu .gitignore para no subirlo accidentalmente a GitHub.
+
 # usar el siguiente comando para arrancar el servidor (ejecutar)
 uvicorn main:app --reload
 Esto levantará el servidor local con recarga automática. Abrí el navegador en http://localhost:8000.

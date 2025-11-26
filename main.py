@@ -1,4 +1,9 @@
 # main.py
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno del archivo .env
+load_dotenv()
 import json
 from fastapi import FastAPI
 from fastapi.responses import FileResponse

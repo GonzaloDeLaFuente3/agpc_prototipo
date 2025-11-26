@@ -7,8 +7,12 @@ from typing import Dict, Optional
 import google.generativeai as genai
 
 # Configurar Gemini con API key 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyDcCbQs_swG7s41Q0cjmk_ESfyMjg4hfmU")
-genai.configure(api_key=GEMINI_API_KEY)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    print("⚠️ ADVERTENCIA: GEMINI_API_KEY no encontrada, el parser temporal fallará.")
+else:
+    genai.configure(api_key=GEMINI_API_KEY)
 
 
 def analizar_temporalidad_con_llm(
@@ -92,27 +96,27 @@ def _construir_prompt(pregunta: str, momento: datetime) -> str:
 
 **EJEMPLOS DE CLASIFICACIÓN:**
 
-❌ INCORRECTO:
+INCORRECTO:
 Pregunta: "Amparo por mora administrativa"
 Clasificación: TEMPORAL ← ERROR!
 Razón: No tiene palabras temporales, es un concepto
 
-✅ CORRECTO:
+CORRECTO:
 Pregunta: "Amparo por mora administrativa"
 Clasificación: ESTRUCTURAL
 Razón: Busca concepto legal, sin referencia temporal
 
-✅ CORRECTO:
+CORRECTO:
 Pregunta: "¿Qué casos de amparo tuvimos ayer?"
 Clasificación: TEMPORAL
 Razón: Contiene "ayer" (palabra temporal absoluta)
 
-✅ CORRECTO:
+CORRECTO:
 Pregunta: "Casos de despido sin causa"
 Clasificación: ESTRUCTURAL
 Razón: Busca casos en general, sin restricción temporal
 
-✅ CORRECTO:
+CORRECTO:
 Pregunta: "¿Qué reuniones tengo mañana?"
 Clasificación: TEMPORAL
 Razón: Contiene "mañana" (palabra temporal absoluta)

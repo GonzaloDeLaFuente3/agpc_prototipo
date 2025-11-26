@@ -11,6 +11,7 @@ venv/
 
 # Archivos de configuración locales
 *.env
+.env
 *.DS_Store
 
 # Archivos temporales del sistema
