@@ -151,7 +151,7 @@ RESPONDE AHORA:"""
 def _llamar_gemini(prompt: str) -> str:
     """Llama a Google Gemini con configuración """
     try:
-        model = genai.GenerativeModel('gemini-2.0-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         generation_config = {
             'temperature': 0.1,  # Baja temperatura para respuestas consistentes

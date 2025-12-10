@@ -203,7 +203,7 @@ def responder_con_ia(pregunta: str, contextos: dict) -> str:
     
     # Usar SDK de Google en lugar de requests
     try:
-        model = genai.GenerativeModel('gemini-2.0-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Configuración  (igual que RAG estándar)
         generation_config = {
